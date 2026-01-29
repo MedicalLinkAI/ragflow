@@ -197,4 +197,4 @@ ragflow_cli.egg-info
 backup
 
 
-.hypothesis
+.hypothesis.worktrees/

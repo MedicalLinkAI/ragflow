@@ -154,6 +154,14 @@ dependencies = [
     "python-gitlab>=7.0.0",
 ]
 
+[project.optional-dependencies]
+deepseek-ocr2 = [
+    "transformers>=4.46.3",
+    "tokenizers>=0.20.3",
+    "PyMuPDF>=1.24.0",
+    "einops",
+]
+
 [dependency-groups]
 test = [
     "hypothesis>=6.132.0",

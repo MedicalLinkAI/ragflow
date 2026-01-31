@@ -26,5 +26,8 @@ def normalize_layout_recognizer(layout_recognizer_raw: Any) -> tuple[Any, str | 
         if lowered.endswith("@mineru"):
             parser_model_name = layout_recognizer_raw.rsplit("@", 1)[0]
             layout_recognizer = "MinerU"
+        elif lowered.endswith("@deepseek-ocr2"):
+            parser_model_name = layout_recognizer_raw.rsplit("@", 1)[0]
+            layout_recognizer = "DeepSeek-OCR2"
 
     return layout_recognizer, parser_model_name

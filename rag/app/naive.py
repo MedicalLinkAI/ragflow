@@ -38,6 +38,7 @@ from deepdoc.parser.figure_parser import VisionFigureParser, vision_figure_parse
 from deepdoc.parser.pdf_parser import PlainParser, VisionParser
 from deepdoc.parser.docling_parser import DoclingParser
 from deepdoc.parser.tcadp_parser import TCADPParser
+from deepdoc.parser.deepseek_ocr2_parser import DeepSeekOcr2Parser
 from common.parser_config_utils import normalize_layout_recognizer
 from rag.nlp import concat_img, find_codec, naive_merge, naive_merge_with_images, naive_merge_docx, rag_tokenizer, \
     tokenize_chunks, tokenize_chunks_with_images, tokenize_table, attach_media_context, append_context2table_image4pdf
@@ -172,11 +173,91 @@ def by_plaintext(filename, binary=None, from_page=0, to_page=100000, callback=No
     return sections, tables, pdf_parser
 
 
+def by_deepseek_ocr2(
+        filename,
+        binary=None,
+        from_page=0,
+        to_page=100000,
+        lang="Chinese",
+        callback=None,
+        pdf_cls=None,
+        tenant_id: str | None = None,
+        **kwargs,
+):
+    """
+    Parse PDF using DeepSeek-OCR2 with Visual Causal Flow.
+    
+    Supports two modes:
+    1. Direct mode: Uses DeepSeekOcr2Parser directly with environment variables
+    2. LLMBundle mode: Uses configured OCR model from tenant settings
+    """
+    pdf_parser = None
+    
+    # Try to use LLMBundle if tenant_id is provided
+    if tenant_id:
+        try:
+            from api.db.services.tenant_llm_service import TenantLLMService
+            
+            # Look for configured DeepSeek-OCR2 model
+            candidates = TenantLLMService.query(
+                tenant_id=tenant_id, 
+                llm_factory="DeepSeek-OCR2", 
+                model_type=LLMType.OCR
+            )
+            if candidates:
+                ocr_model = LLMBundle(
+                    tenant_id=tenant_id, 
+                    llm_type=LLMType.OCR, 
+                    llm_name=candidates[0].llm_name, 
+                    lang=lang
+                )
+                pdf_parser = ocr_model.mdl
+                sections, tables = pdf_parser.parse_pdf(
+                    filepath=filename,
+                    binary=binary,
+                    callback=callback,
+                    page_from=from_page,
+                    page_to=to_page,
+                    lang=lang,
+                    **kwargs,
+                )
+                return sections, tables, pdf_parser
+        except Exception as e:
+            logging.warning(f"Failed to load DeepSeek-OCR2 via LLMBundle: {e}, falling back to direct mode")
+    
+    # Fallback: Direct mode using environment variables
+    try:
+        pdf_parser = DeepSeekOcr2Parser()
+        
+        ok, reason = pdf_parser.check_available()
+        if not ok:
+            if callback:
+                callback(-1, f"DeepSeek-OCR2 not available: {reason}")
+            return None, None, pdf_parser
+        
+        sections, tables = pdf_parser.parse_pdf(
+            filepath=filename,
+            binary=binary,
+            callback=callback,
+            page_from=from_page,
+            page_to=to_page,
+            **kwargs,
+        )
+        return sections, tables, pdf_parser
+        
+    except Exception as e:
+        logging.error(f"DeepSeek-OCR2 parsing failed: {e}")
+        if callback:
+            callback(-1, f"DeepSeek-OCR2 parsing failed: {e}")
+        return None, None, None
+
+
 PARSERS = {
     "deepdoc": by_deepdoc,
     "mineru": by_mineru,
     "docling": by_docling,
     "tcadp": by_tcadp,
+    "deepseek-ocr2": by_deepseek_ocr2,
     "plaintext": by_plaintext,  # default
 }
 

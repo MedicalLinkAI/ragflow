@@ -5525,6 +5525,14 @@
             ]
         },
         {
+            "name": "DeepSeek-OCR2",
+            "logo": "",
+            "tags": "OCR",
+            "status": "1",
+            "rank": "898",
+            "llm": []
+        },
+        {
             "name": "MinerU",
             "logo": "",
             "tags": "OCR",

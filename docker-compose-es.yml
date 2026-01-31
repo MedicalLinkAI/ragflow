@@ -1,0 +1,32 @@
+services:
+  es01:
+    image: elasticsearch:8.11.3
+    container_name: ragflow-es01
+    environment:
+      - node.name=es01
+      - ELASTIC_PASSWORD=infini_rag_flow
+      - bootstrap.memory_lock=false
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+    ports:
+      - "1200:9200"
+    volumes:
+      - ragflow_esdata:/usr/share/elasticsearch/data
+    mem_limit: 8073741824
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:9200"]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+    restart: unless-stopped
+    networks:
+      - ragflow
+
+networks:
+  ragflow:
+    name: ragflow-network
+
+volumes:
+  ragflow_esdata:

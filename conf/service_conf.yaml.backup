@@ -13,17 +13,9 @@ mysql:
   max_connections: 900
   stale_timeout: 300
   max_allowed_packet: 1073741824
-postgres:
-  name: 'ragflow'
-  user: 'noeticai'
-  password: 'noeticai'
-  host: 'localhost'
-  port: 5432
-  max_connections: 900
-  stale_timeout: 300
 minio:
   user: 'minioadmin'
-  password: 'minioadmin123'
+  password: 'minioadmin'
   host: 'localhost:9000'
   bucket: 'ragflow'
   prefix_path: ''
@@ -47,4 +39,4 @@ user_default_llm:
     embedding_model:
       api_key: 'sk-fad19b13dde544f6a5ca9e9725b133a3'
       base_url: 'https://dashscope.aliyuncs.com/compatible-mode/v1'
-      name: 'text-embedding-v4'
+      name: 'text-embedding-v1'

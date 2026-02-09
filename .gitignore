@@ -198,6 +198,7 @@ backup
 
 
 .hypothesis.worktrees/
+.worktrees/
 
 # local validation outputs
 validation_report_*.json

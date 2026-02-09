@@ -1,70 +1,62 @@
 #!/bin/bash
 # RAGflow 一键启动脚本（前后端）
 
-set -e
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
+mkdir -p logs
+
+if [ -z "${RAGFLOW_ENV:-}" ] && [ -z "${RAGFLOW_CONF:-}" ]; then
+    echo "❌ 必须显式指定 RAGFLOW_ENV 或 RAGFLOW_CONF，禁止默认启动"
+    echo "示例: RAGFLOW_ENV=dev WS=1 START_FRONTEND=0 bash start_all.sh"
+    exit 1
+fi
+
 echo "=========================================="
 echo "RAGflow 一键启动脚本"
 echo "=========================================="
-echo ""
+echo "环境变量: RAGFLOW_ENV=${RAGFLOW_ENV:-default} RAGFLOW_CONF=${RAGFLOW_CONF:-<auto>}"
+echo
 
-# 创建日志目录
-mkdir -p logs
-
-# 1. 启动后端
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "步骤 1/2: 启动后端服务"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 bash start_backend.sh
-BACKEND_STATUS=$?
 
-if [ $BACKEND_STATUS -ne 0 ]; then
-    echo ""
-    echo "❌ 后端启动失败，终止启动流程"
-    exit 1
-fi
+echo
+sleep 2
 
-echo ""
-sleep 3
-
-# 2. 启动前端
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "步骤 2/2: 启动前端服务"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-bash start_frontend.sh
-FRONTEND_STATUS=$?
-
-echo ""
-echo "=========================================="
-if [ $FRONTEND_STATUS -eq 0 ]; then
-    echo "✅ RAGflow 启动完成！"
-    echo "=========================================="
-    echo ""
-    echo "📝 访问信息:"
-    echo "   访问地址: http://localhost (nginx 统一代理)"
-    echo ""
-    echo "📊 服务状态:"
-    echo "   - PostgreSQL: localhost:5432 ✅"
-    echo "   - Redis: localhost:6379 (db:2) ✅"
-    echo "   - MinIO: localhost:9000 ✅"
-    echo "   - Elasticsearch: localhost:1200 ✅"
-    echo "   - Nginx 前端: localhost:80 ✅"
-    echo "   - 后端 API: localhost:9380 ✅"
-    echo ""
-    echo "📋 日志文件:"
-    echo "   - 后端: tail -f logs/backend.log"
-    echo "   - 前端: tail -f logs/frontend.log"
-    echo ""
-    echo "🛑 停止服务:"
-    echo "   bash stop_all.sh"
-    echo ""
-    echo "🌐 请在浏览器打开: http://localhost"
-    echo "=========================================="
+if [ "${START_FRONTEND:-1}" = "1" ]; then
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "步骤 2/2: 启动前端服务"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    bash start_frontend.sh
 else
-    echo "❌ 前端启动失败"
-    echo "=========================================="
-    exit 1
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "步骤 2/2: 跳过前端启动 (START_FRONTEND=0)"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 fi
+
+echo
+if [ -d ".venv" ]; then
+    # shellcheck disable=SC1091
+    source .venv/bin/activate
+    export PYTHONPATH="$SCRIPT_DIR"
+    eval "$(python scripts/resolve_runtime_conf.py --format shell)"
+fi
+
+echo "=========================================="
+echo "✅ RAGflow 启动流程完成"
+echo "=========================================="
+echo "📊 环境信息:"
+echo "   - 环境: ${ACTIVE_ENV:-default}"
+echo "   - 配置: ${ACTIVE_CONF_PATH:-unknown}"
+if [ -n "${RAGFLOW_PORT:-}" ]; then
+    echo "   - API 地址: http://localhost:${RAGFLOW_PORT}"
+fi
+echo
+echo "🛑 停止服务:"
+echo "   RAGFLOW_ENV=${RAGFLOW_ENV:-default} bash stop_all.sh"
+echo "=========================================="

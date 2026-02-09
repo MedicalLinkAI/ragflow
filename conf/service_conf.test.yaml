@@ -1,0 +1,31 @@
+ragflow:
+  host: 0.0.0.0
+  http_port: 29380
+admin:
+  host: 0.0.0.0
+  http_port: 29381
+postgres:
+  name: 'ragflow_test'
+  user: 'noeticai'
+  password: 'noeticai'
+  host: 'localhost'
+  port: 5432
+  max_connections: 200
+  stale_timeout: 300
+minio:
+  user: 'minioadmin'
+  password: 'minioadmin123'
+  host: 'localhost:9000'
+  bucket: 'ragflow-test'
+  prefix_path: 'test/'
+es:
+  hosts: 'http://localhost:1200'
+  username: 'elastic'
+  password: 'infini_rag_flow'
+redis:
+  db: 13
+  username: ''
+  password: ''
+  host: 'localhost:6379'
+task_executor:
+  message_queue_type: 'redis'

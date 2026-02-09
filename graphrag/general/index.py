@@ -77,6 +77,7 @@ async def run_graphrag(
                 chat_model,
                 embedding_model,
                 callback,
+                extraction_prompt=row["kb_parser_config"]["graphrag"].get("extraction_prompt"),
             ),
             timeout=timeout_sec,
         )
@@ -258,7 +259,8 @@ async def run_graphrag_for_kb(
                             chat_model,
                             embedding_model,
                             callback,
-                            task_id=row["id"]
+                            task_id=row["id"],
+                            extraction_prompt=kb_parser_config.get("graphrag", {}).get("extraction_prompt"),
                         ),
                         timeout=deadline,
                     )
@@ -403,6 +405,7 @@ async def generate_subgraph(
     embed_bdl,
     callback,
     task_id: str = "",
+    extraction_prompt: str | None = None,
 ):
     if task_id and has_canceled(task_id):
         callback(msg=f"Task {task_id} cancelled during subgraph generation for doc {doc_id}.")
@@ -413,10 +416,12 @@ async def generate_subgraph(
         callback(msg=f"Graph already contains {doc_id}")
         return None
     start = asyncio.get_running_loop().time()
+    logging.info(f"[generate_subgraph] doc={doc_id}, extraction_prompt={'CUSTOM('+str(len(extraction_prompt))+' chars)' if extraction_prompt else 'DEFAULT'}, entity_types={entity_types}")
     ext = extractor(
         llm_bdl,
         language=language,
         entity_types=entity_types,
+        extraction_prompt=extraction_prompt,
     )
     ents, rels = await ext(doc_id, chunks, callback, task_id=task_id)
     subgraph = nx.Graph()

@@ -552,14 +552,25 @@ def run_graphrag(tenant_id,dataset_id):
     if not ok:
         return get_error_data_result(message="Invalid Dataset ID")
 
-    task_id = kb.graphrag_task_id
-    if task_id:
-        ok, task = TaskService.get_by_id(task_id)
-        if not ok:
-            logging.warning(f"A valid GraphRAG task id is expected for Dataset {dataset_id}")
+    # 支持 request body 传入 doc_ids，实现按文档拆分并行
+    req_doc_ids = None
+    if request.data:
+        try:
+            req_body = request.get_json(silent=True) or {}
+            req_doc_ids = req_body.get("doc_ids")
+        except Exception:
+            pass
 
-        if task and task.progress not in [-1, 1]:
-            return get_error_data_result(message=f"Task {task_id} in progress with status {task.progress}. A Graph Task is already running.")
+    # 如果未指定 doc_ids，检查是否有正在运行的任务（兼容原逻辑）
+    if not req_doc_ids:
+        task_id = kb.graphrag_task_id
+        if task_id:
+            ok, task = TaskService.get_by_id(task_id)
+            if not ok:
+                logging.warning(f"A valid GraphRAG task id is expected for Dataset {dataset_id}")
+
+            if task and task.progress not in [-1, 1]:
+                return get_error_data_result(message=f"Task {task_id} in progress with status {task.progress}. A Graph Task is already running.")
 
     documents, _ = DocumentService.get_by_kb_id(
         kb_id=dataset_id,
@@ -575,13 +586,23 @@ def run_graphrag(tenant_id,dataset_id):
     if not documents:
         return get_error_data_result(message=f"No documents in Dataset {dataset_id}")
 
+    # 按 doc_ids 过滤文档（如果指定了）
+    if req_doc_ids:
+        req_doc_ids_set = set(req_doc_ids)
+        filtered_docs = [d for d in documents if d["id"] in req_doc_ids_set]
+        if not filtered_docs:
+            return get_error_data_result(message=f"None of the specified doc_ids found in Dataset {dataset_id}")
+        documents = filtered_docs
+
     sample_document = documents[0]
     document_ids = [document["id"] for document in documents]
 
     task_id = queue_raptor_o_graphrag_tasks(sample_doc_id=sample_document, ty="graphrag", priority=0, fake_doc_id=GRAPH_RAPTOR_FAKE_DOC_ID, doc_ids=list(document_ids))
 
-    if not KnowledgebaseService.update_by_id(kb.id, {"graphrag_task_id": task_id}):
-        logging.warning(f"Cannot save graphrag_task_id for Dataset {dataset_id}")
+    # 只在非拆分模式下更新 kb 的 graphrag_task_id（拆分模式有多个 task）
+    if not req_doc_ids:
+        if not KnowledgebaseService.update_by_id(kb.id, {"graphrag_task_id": task_id}):
+            logging.warning(f"Cannot save graphrag_task_id for Dataset {dataset_id}")
 
     return get_result(data={"graphrag_task_id": task_id})
 

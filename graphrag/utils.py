@@ -314,7 +314,7 @@ async def graph_node_to_chunk(kb_id, embd_mdl, ent_name, meta, chunks):
     ebd = get_embed_cache(embd_mdl.llm_name, ent_name)
     if ebd is None:
         async with chat_limiter:
-            timeout = 3 if enable_timeout_assertion else 30000000
+            timeout = 3 if enable_timeout_assertion else 180
             ebd, _ = await asyncio.wait_for(
                 asyncio.to_thread(embd_mdl.encode, [ent_name]),
                 timeout=timeout
@@ -368,7 +368,7 @@ async def graph_edge_to_chunk(kb_id, embd_mdl, from_ent_name, to_ent_name, meta,
     ebd = get_embed_cache(embd_mdl.llm_name, txt)
     if ebd is None:
         async with chat_limiter:
-            timeout = 3 if enable_timeout_assertion else 300000000
+            timeout = 3 if enable_timeout_assertion else 180
             ebd, _ = await asyncio.wait_for(
                 asyncio.to_thread(
                     embd_mdl.encode,
@@ -520,41 +520,73 @@ async def set_graph(tenant_id: str, kb_id: str, embd_mdl, graph: nx.Graph, chang
             }
         )
 
-    tasks = []
-    for ii, node in enumerate(change.added_updated_nodes):
-        node_attrs = graph.nodes[node]
-        tasks.append(asyncio.create_task(
-            graph_node_to_chunk(kb_id, embd_mdl, node, node_attrs, chunks)
-        ))
-        if ii % 100 == 9 and callback:
-            callback(msg=f"Get embedding of nodes: {ii}/{len(change.added_updated_nodes)}")
-    try:
-        await asyncio.gather(*tasks, return_exceptions=False)
-    except Exception as e:
-        logging.error(f"Error in get_embedding_of_nodes: {e}")
-        for t in tasks:
-            t.cancel()
-        await asyncio.gather(*tasks, return_exceptions=True)
-        raise
+    # Process node embeddings in batches with retry for transient failures (DNS, network)
+    batch_sz = 200
+    total_nodes = len(change.added_updated_nodes)
+    node_list = list(change.added_updated_nodes)
+    for batch_start in range(0, total_nodes, batch_sz):
+        batch_end = min(batch_start + batch_sz, total_nodes)
+        batch_nodes = node_list[batch_start:batch_end]
+        tasks = []
+        for node in batch_nodes:
+            node_attrs = graph.nodes[node]
+            tasks.append(asyncio.create_task(
+                graph_node_to_chunk(kb_id, embd_mdl, node, node_attrs, chunks)
+            ))
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        # Retry failed tasks up to 3 times
+        failed = [(i, batch_nodes[i]) for i, r in enumerate(results) if isinstance(r, Exception)]
+        for retry_round in range(3):
+            if not failed:
+                break
+            logging.warning(f"Retrying {len(failed)} failed node embeddings (round {retry_round+1}): {failed[0][1]}")
+            await asyncio.sleep(5)
+            retry_tasks = []
+            for idx, node in failed:
+                node_attrs = graph.nodes[node]
+                retry_tasks.append((idx, asyncio.create_task(
+                    graph_node_to_chunk(kb_id, embd_mdl, node, node_attrs, chunks)
+                )))
+            retry_results = await asyncio.gather(*[t for _, t in retry_tasks], return_exceptions=True)
+            failed = [(retry_tasks[j][0], node) for j, ((_, node_name), r) in enumerate(zip([(i, n) for i, n in failed], retry_results)) if isinstance(r, Exception)]
+        if failed:
+            logging.error(f"{len(failed)} node embeddings failed after retries: {[n for _, n in failed[:5]]}")
+            raise failed[0][1] if isinstance(results[failed[0][0]], Exception) else RuntimeError(f"{len(failed)} embeddings failed")
+        if callback:
+            callback(msg=f"Get embedding of nodes: {batch_end}/{total_nodes}")
 
-    tasks = []
-    for ii, (from_node, to_node) in enumerate(change.added_updated_edges):
-        edge_attrs = graph.get_edge_data(from_node, to_node)
-        if not edge_attrs:
-            continue
-        tasks.append(asyncio.create_task(
-            graph_edge_to_chunk(kb_id, embd_mdl, from_node, to_node, edge_attrs, chunks)
-        ))
-        if ii % 100 == 9 and callback:
-            callback(msg=f"Get embedding of edges: {ii}/{len(change.added_updated_edges)}")
-    try:
-        await asyncio.gather(*tasks, return_exceptions=False)
-    except Exception as e:
-        logging.error(f"Error in get_embedding_of_edges: {e}")
-        for t in tasks:
-            t.cancel()
-        await asyncio.gather(*tasks, return_exceptions=True)
-        raise
+    # Process edge embeddings in batches with retry
+    edge_list = [(f, t) for f, t in change.added_updated_edges if graph.get_edge_data(f, t)]
+    total_edges = len(edge_list)
+    for batch_start in range(0, total_edges, batch_sz):
+        batch_end = min(batch_start + batch_sz, total_edges)
+        batch_edges = edge_list[batch_start:batch_end]
+        tasks = []
+        for from_node, to_node in batch_edges:
+            edge_attrs = graph.get_edge_data(from_node, to_node)
+            tasks.append(asyncio.create_task(
+                graph_edge_to_chunk(kb_id, embd_mdl, from_node, to_node, edge_attrs, chunks)
+            ))
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        failed = [(i, batch_edges[i]) for i, r in enumerate(results) if isinstance(r, Exception)]
+        for retry_round in range(3):
+            if not failed:
+                break
+            logging.warning(f"Retrying {len(failed)} failed edge embeddings (round {retry_round+1})")
+            await asyncio.sleep(5)
+            retry_tasks = []
+            for idx, (fn, tn) in failed:
+                edge_attrs = graph.get_edge_data(fn, tn)
+                retry_tasks.append((idx, asyncio.create_task(
+                    graph_edge_to_chunk(kb_id, embd_mdl, fn, tn, edge_attrs, chunks)
+                )))
+            retry_results = await asyncio.gather(*[t for _, t in retry_tasks], return_exceptions=True)
+            failed = [(retry_tasks[j][0], edge) for j, (edge, r) in enumerate(zip([e for _, e in failed], retry_results)) if isinstance(r, Exception)]
+        if failed:
+            logging.error(f"{len(failed)} edge embeddings failed after retries")
+            raise results[failed[0][0]] if isinstance(results[failed[0][0]], Exception) else RuntimeError(f"{len(failed)} embeddings failed")
+        if callback:
+            callback(msg=f"Get embedding of edges: {batch_end}/{total_edges}")
 
     now = asyncio.get_running_loop().time()
     if callback:

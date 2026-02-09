@@ -61,6 +61,7 @@ class GraphExtractor(Extractor):
         join_descriptions=True,
         max_gleanings: int | None = None,
         on_error: ErrorHandlerFn | None = None,
+        extraction_prompt: str | None = None,
     ):
         super().__init__(llm_invoker, language, entity_types)
         """Init method definition."""
@@ -74,7 +75,11 @@ class GraphExtractor(Extractor):
             completion_delimiter_key or "completion_delimiter"
         )
         self._entity_types_key = entity_types_key or "entity_types"
-        self._extraction_prompt = GRAPH_EXTRACTION_PROMPT
+        # Use custom extraction_prompt if provided, otherwise use default
+        if extraction_prompt and extraction_prompt.strip():
+            self._extraction_prompt = extraction_prompt
+        else:
+            self._extraction_prompt = GRAPH_EXTRACTION_PROMPT
         self._max_gleanings = (
             max_gleanings
             if max_gleanings is not None

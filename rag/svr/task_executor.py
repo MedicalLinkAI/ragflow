@@ -405,6 +405,7 @@ async def build_chunks(task, progress_callback):
                     cached = await gen_metadata(chat_mdl,
                                                 metadata_schema(task["parser_config"]["metadata"]),
                                                 d["content_with_weight"])
+                    logging.info(f"gen_metadata result: {cached[:500] if cached else 'None'}")
                 set_llm_cache(chat_mdl.llm_name, d["content_with_weight"], cached, "metadata",
                               task["parser_config"]["metadata"])
             if cached:
@@ -423,7 +424,9 @@ async def build_chunks(task, progress_callback):
             raise
         metadata = {}
         for doc in docs:
-            metadata = update_metadata_to(metadata, doc["metadata_obj"])
+            if "metadata_obj" in doc:
+                logging.info(f"Merging metadata_obj: {str(doc.get('metadata_obj', ''))[:200]}")
+                metadata = update_metadata_to(metadata, doc["metadata_obj"])
             del doc["metadata_obj"]
         if metadata:
             e, doc = DocumentService.get_by_id(task["doc_id"])

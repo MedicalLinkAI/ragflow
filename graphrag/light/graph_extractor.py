@@ -38,6 +38,7 @@ class GraphExtractor(Extractor):
         entity_types: list[str] | None = None,
         example_number: int = 2,
         max_gleanings: int | None = None,
+        extraction_prompt: str | None = None,
     ):
         super().__init__(llm_invoker, language, entity_types)
         """Init method definition."""
@@ -55,7 +56,13 @@ class GraphExtractor(Extractor):
         # add example's format
         examples = examples.format(**example_context_base)
 
-        self._entity_extract_prompt = PROMPTS["entity_extraction"]
+        # Use custom extraction_prompt if provided, otherwise use default
+        if extraction_prompt and extraction_prompt.strip():
+            self._entity_extract_prompt = extraction_prompt
+            logging.info(f"[LightKGExt] Using CUSTOM extraction_prompt ({len(extraction_prompt)} chars): {extraction_prompt[:80]}...")
+        else:
+            self._entity_extract_prompt = PROMPTS["entity_extraction"]
+            logging.info("[LightKGExt] Using DEFAULT extraction_prompt (LightRAG built-in)")
         self._context_base = dict(
             tuple_delimiter=PROMPTS["DEFAULT_TUPLE_DELIMITER"],
             record_delimiter=PROMPTS["DEFAULT_RECORD_DELIMITER"],

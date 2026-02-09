@@ -340,6 +340,14 @@ class GraphragConfig(Base):
     method: Annotated[Literal["light", "general"], Field(default="light")]
     community: Annotated[bool, Field(default=False)]
     resolution: Annotated[bool, Field(default=False)]
+    extraction_prompt: Annotated[str | None, Field(default=None, max_length=32000)]
+
+
+class MetadataFieldConfig(Base):
+    """Configuration for a single metadata field to extract."""
+    key: Annotated[str, StringConstraints(min_length=1, max_length=64), Field(...)]
+    description: Annotated[str | None, Field(default=None, max_length=512)]
+    enum: Annotated[list[str] | None, Field(default=None)]
 
 
 class ParserConfig(Base):
@@ -356,6 +364,12 @@ class ParserConfig(Base):
     filename_embd_weight: Annotated[float | None, Field(default=0.1, ge=0.0, le=1.0)]
     task_page_size: Annotated[int | None, Field(default=None, ge=1)]
     pages: Annotated[list[list[int]] | None, Field(default=None)]
+    # KCA metadata extraction fields
+    enable_metadata: Annotated[bool, Field(default=False)]
+    metadata: Annotated[list[MetadataFieldConfig] | None, Field(default=None)]
+    llm_id: Annotated[str | None, Field(default=None, max_length=255)]
+    image_context_size: Annotated[int | None, Field(default=None, ge=0)]
+    table_context_size: Annotated[int | None, Field(default=None, ge=0)]
 
 
 class CreateDatasetReq(Base):

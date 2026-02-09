@@ -538,7 +538,7 @@ def delete_knowledge_graph(tenant_id, dataset_id):
 
 @manager.route("/datasets/<dataset_id>/run_graphrag", methods=["POST"])  # noqa: F821
 @token_required
-def run_graphrag(tenant_id,dataset_id):
+async def run_graphrag(tenant_id,dataset_id):
     if not dataset_id:
         return get_error_data_result(message='Lack of "Dataset ID"')
     if not KnowledgebaseService.accessible(dataset_id, tenant_id):
@@ -554,12 +554,11 @@ def run_graphrag(tenant_id,dataset_id):
 
     # 支持 request body 传入 doc_ids，实现按文档拆分并行
     req_doc_ids = None
-    if request.data:
-        try:
-            req_body = request.get_json(silent=True) or {}
-            req_doc_ids = req_body.get("doc_ids")
-        except Exception:
-            pass
+    try:
+        req_body = await request.get_json(silent=True) or {}
+        req_doc_ids = req_body.get("doc_ids") if isinstance(req_body, dict) else None
+    except Exception:
+        pass
 
     # 如果未指定 doc_ids，检查是否有正在运行的任务（兼容原逻辑）
     if not req_doc_ids:
@@ -623,7 +622,8 @@ def trace_graphrag(tenant_id,dataset_id):
     if not ok:
         return get_error_data_result(message="Invalid Dataset ID")
 
-    task_id = kb.graphrag_task_id
+    # 支持按 task_id 直接查询指定 task 的进度（按文档隔离模式）
+    task_id = request.args.get("task_id", "").strip() or kb.graphrag_task_id
     if not task_id:
         return get_result(data={})
 

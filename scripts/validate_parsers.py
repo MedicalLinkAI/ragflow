@@ -28,15 +28,21 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 
 def install_dependencies():
-    """Install required dependencies for validation"""
+    """Install required dependencies for validation.
+
+    Note: this is intentionally "lightweight" (script dependencies + common PDF libs).
+    Full RAGFlow runtime deps should be installed via the repo's normal install path.
+    """
     deps = [
         "psutil",
-        "tabulate", 
+        "tabulate",
         "PyMuPDF",
-        "python-docx",
+        "pypdf",
         "pdfplumber",
         "Pillow",
         "numpy",
+        "beartype",  # required by deepdoc/__init__.py
+        "python-docx",  # optional, but avoid import surprises
         "docling",  # IBM Docling parser
     ]
     print("Installing required dependencies...")
@@ -49,10 +55,16 @@ def install_dependencies():
     print("Dependencies installed!\n")
 
 
+def _pop_flag(flag: str) -> bool:
+    if flag in sys.argv:
+        sys.argv.remove(flag)
+        return True
+    return False
+
+
 # Check for --install-deps flag
-if "--install-deps" in sys.argv:
+if _pop_flag("--install-deps"):
     install_dependencies()
-    sys.argv.remove("--install-deps")
 
 
 try:
@@ -96,7 +108,7 @@ class ParserResult:
 
 
 def get_memory_usage() -> float:
-    """Get current process memory in MB"""
+    """Get current process RSS memory in MB (best-effort)."""
     if psutil:
         process = psutil.Process(os.getpid())
         return process.memory_info().rss / 1024 / 1024
@@ -104,67 +116,55 @@ def get_memory_usage() -> float:
 
 
 def validate_deepdoc(pdf_path: str) -> ParserResult:
-    """Validate DeepDOC parser (RAGflow native)"""
+    """Validate DeepDOC parser (RAGFlow native PDF parser)."""
     result = ParserResult("DeepDOC")
     try:
-        # Direct import to avoid __init__.py chain
-        import importlib.util
-        spec = importlib.util.spec_from_file_location(
-            "pdf_parser", 
-            PROJECT_ROOT / "deepdoc" / "parser" / "pdf_parser.py"
-        )
-        if spec is None or spec.loader is None:
-            result.error_msg = "Cannot load pdf_parser module"
-            return result
-        
-        # Try simpler approach - use pdfplumber directly as fallback
-        try:
-            import pdfplumber
-        except ImportError:
-            result.error_msg = "pdfplumber not installed"
-            return result
-        
         mem_before = get_memory_usage()
         start = time.time()
-        
-        # Use pdfplumber for text extraction (similar to DeepDOC core)
-        full_text = ""
-        sections = []
-        tables = []
-        
-        with pdfplumber.open(pdf_path) as pdf:
-            for i, page in enumerate(pdf.pages):
-                # Extract text
-                page_text = page.extract_text() or ""
-                if page_text.strip():
-                    sections.append({
-                        "page": i + 1,
-                        "text": page_text
-                    })
-                    full_text += page_text + "\n"
-                
-                # Extract tables
-                page_tables = page.extract_tables()
-                for tbl in page_tables:
-                    if tbl:
-                        tables.append({
-                            "page": i + 1,
-                            "rows": len(tbl),
-                            "cols": len(tbl[0]) if tbl else 0
-                        })
-        
+
+        # IMPORTANT: Use the same core parser implementation RAGFlow uses for PDFs.
+        # Avoid importing deepdoc.parser (which may pull optional deps).
+        try:
+            from deepdoc.parser.pdf_parser import RAGFlowPdfParser
+        except ModuleNotFoundError as e:
+            result.error_msg = (
+                f"RAGFlow deps missing: {e}. "
+                "Run: python3 scripts/validate_parsers.py --install-deps <pdf_or_dir> "
+                "or install RAGFlow requirements (recommended for real comparison)."
+            )
+            return result
+
+        parser = RAGFlowPdfParser()
+        bboxes, tables = parser(pdf_path, need_image=False)
+
+        # Flatten bboxes -> text
+        full_text_parts = []
+        sections = 0
+        for page_bxs in (bboxes or []):
+            page_text = "".join((bx.get("text") or "") for bx in (page_bxs or []) if isinstance(bx, dict))
+            if page_text.strip():
+                sections += 1
+                full_text_parts.append(page_text)
+
+        full_text = "\n".join(full_text_parts)
+
         result.time_seconds = time.time() - start
-        result.memory_mb = get_memory_usage() - mem_before
+        result.memory_mb = max(0.0, get_memory_usage() - mem_before)
         result.text_length = len(full_text)
-        result.sections_count = len(sections)
-        result.tables_count = len(tables)
+        result.sections_count = sections
+        result.tables_count = len(tables) if tables else 0
         result.sample_text = full_text[:500] if full_text else ""
-        result.success = True
-        
+
+        if result.text_length == 0:
+            result.success = False
+            result.error_msg = "DeepDOC produced empty text"
+        else:
+            result.success = True
+
     except Exception as e:
         result.error_msg = str(e)
         traceback.print_exc()
-    
+
     return result
 
 
@@ -245,87 +245,66 @@ def validate_docling(pdf_path: str) -> ParserResult:
 
 
 def validate_deepseek_ocr2(pdf_path: str) -> ParserResult:
-    """Validate DeepSeek-OCR2 parser"""
+    """Validate DeepSeek-OCR2 parser."""
     result = ParserResult("DeepSeek-OCR2")
     try:
-        # Direct import to avoid __init__.py chain issues
-        import importlib.util
-        spec = importlib.util.spec_from_file_location(
-            "deepseek_ocr2_parser", 
-            PROJECT_ROOT / "deepdoc" / "parser" / "deepseek_ocr2_parser.py"
-        )
-        if spec is None or spec.loader is None:
-            result.error_msg = "Cannot load deepseek_ocr2_parser module"
-            return result
-        
-        module = importlib.util.module_from_spec(spec)
-        
-        # Mock the parent module dependencies
-        import types
-        fake_deepdoc = types.ModuleType("deepdoc")
-        fake_parser = types.ModuleType("deepdoc.parser")
-        fake_pdf = types.ModuleType("deepdoc.parser.pdf_parser")
-        
-        # Create minimal mock class
-        class MockRAGFlowPdfParser:
-            def __init__(self, *args, **kwargs):
-                pass
-        
-        fake_pdf.RAGFlowPdfParser = MockRAGFlowPdfParser
-        sys.modules["deepdoc"] = fake_deepdoc
-        sys.modules["deepdoc.parser"] = fake_parser
-        sys.modules["deepdoc.parser.pdf_parser"] = fake_pdf
-        
-        try:
-            spec.loader.exec_module(module)
-            DeepSeekOcr2Parser = module.DeepSeekOcr2Parser
-        except Exception as e:
-            result.error_msg = f"Failed to load parser module: {e}"
-            return result
-        
         mem_before = get_memory_usage()
         start = time.time()
-        
-        # Check if model is available
-        parser = DeepSeekOcr2Parser()
-        
-        if not parser.check_available():
-            # Try HTTP backend check
-            api_url = os.environ.get("DEEPSEEK_OCR2_API_URL", "")
-            if not api_url:
-                result.error_msg = "DeepSeek-OCR2 not available. Set DEEPSEEK_OCR2_API_URL or install local model with GPU"
-                return result
-        
-        # Parse the PDF
+
+        try:
+            from deepdoc.parser.deepseek_ocr2_parser import DeepSeekOcr2Parser
+        except ModuleNotFoundError as e:
+            result.error_msg = (
+                f"RAGFlow deps missing: {e}. "
+                "Run with --install-deps, then install torch+transformers on GPU host."
+            )
+            return result
+
+        parser = DeepSeekOcr2Parser(
+            backend=os.environ.get("DEEPSEEK_OCR2_BACKEND", "local"),
+            api_url=os.environ.get("DEEPSEEK_OCR2_API_URL"),
+            api_key=os.environ.get("DEEPSEEK_OCR2_API_KEY"),
+        )
+
+        ok, reason = parser.check_available()
+        if not ok:
+            result.error_msg = reason or "DeepSeek-OCR2 not available"
+            return result
+
         sections, tables = parser.parse_pdf(pdf_path)
-        
+
         result.time_seconds = time.time() - start
-        result.memory_mb = get_memory_usage() - mem_before
-        
-        # Calculate metrics
-        full_text = ""
-        for sec in sections:
-            if isinstance(sec, dict) and 'text' in sec:
-                full_text += sec['text'] + "\n"
+        result.memory_mb = max(0.0, get_memory_usage() - mem_before)
+
+        full_text_parts = []
+        for sec in (sections or []):
+            if isinstance(sec, dict) and "text" in sec:
+                full_text_parts.append(sec["text"] or "")
             elif isinstance(sec, str):
-                full_text += sec + "\n"
-        
+                full_text_parts.append(sec)
+
+        full_text = "\n".join(t for t in full_text_parts if t)
         result.text_length = len(full_text)
-        result.sections_count = len(sections)
+        result.sections_count = len(sections) if sections else 0
         result.tables_count = len(tables) if tables else 0
         result.sample_text = full_text[:500] if full_text else ""
-        result.success = True
-        
+
+        if result.text_length == 0:
+            result.success = False
+            result.error_msg = "DeepSeek-OCR2 produced empty text"
+        else:
+            result.success = True
+
     except Exception as e:
         result.error_msg = str(e)
         traceback.print_exc()
-    
+
     return result
 
 
 def calculate_score(result: ParserResult, baseline_chars: int) -> int:
-    """Calculate overall score (0-100) for a parser result"""
-    if not result.success:
+    """Calculate overall score (0-100) for a parser result."""
+    if (not result.success) or result.text_length == 0:
         return 0
     
     score = 0

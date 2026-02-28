@@ -500,25 +500,32 @@ def knowledge_graph(tenant_id, dataset_id):
         req = {
             "kb_id": [dataset_id],
             "knowledge_graph_kwd": ["subgraph"],
-            "source_id": [doc_id]
+            "fields": ["source_id", "content_with_weight", "knowledge_graph_kwd"],
         }
-        
+
         obj = {"graph": {}, "mind_map": {}}
         if not settings.docStoreConn.index_exist(search.index_name(kb.tenant_id), dataset_id):
             return get_result(data=obj)
-        
+
         sres = settings.retriever.search(req, search.index_name(kb.tenant_id), [dataset_id])
         if not len(sres.ids):
             return get_result(data=obj)
-        
-        # 返回完整 subgraph（不截断）
-        for id in sres.ids[:1]:
+
+        # 按 doc_id 精确过滤：subgraph 文档的 source_id 字段存储的就是文档 doc_id
+        # retriever.search 不支持 source_id 精确过滤，在 Python 层做精确匹配
+        for id in sres.ids:
+            src_ids = sres.field[id].get("source_id", [])
+            if isinstance(src_ids, str):
+                src_ids = [src_ids]
+            if doc_id not in src_ids:
+                continue
             try:
                 content_json = json.loads(sres.field[id]["content_with_weight"])
                 obj["graph"] = content_json
             except Exception:
                 continue
-        
+            break  # 找到匹配的 subgraph，退出
+
         return get_result(data=obj)
     
     # 原有逻辑：全局 graph（256 节点截断）

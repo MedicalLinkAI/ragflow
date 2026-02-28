@@ -488,7 +488,40 @@ def knowledge_graph(tenant_id, dataset_id):
             message='No authorization.',
             code=RetCode.AUTHENTICATION_ERROR
         )
+    
+    # 新增：支持 doc_id + type 参数
+    doc_id = request.args.get("doc_id")
+    graph_type = request.args.get("type", "graph")
+    
     _, kb = KnowledgebaseService.get_by_id(dataset_id)
+    
+    # 新分支：按文档查 subgraph（完整子图，无截断）
+    if doc_id and graph_type == "subgraph":
+        req = {
+            "kb_id": [dataset_id],
+            "knowledge_graph_kwd": ["subgraph"],
+            "source_id": [doc_id]
+        }
+        
+        obj = {"graph": {}, "mind_map": {}}
+        if not settings.docStoreConn.index_exist(search.index_name(kb.tenant_id), dataset_id):
+            return get_result(data=obj)
+        
+        sres = settings.retriever.search(req, search.index_name(kb.tenant_id), [dataset_id])
+        if not len(sres.ids):
+            return get_result(data=obj)
+        
+        # 返回完整 subgraph（不截断）
+        for id in sres.ids[:1]:
+            try:
+                content_json = json.loads(sres.field[id]["content_with_weight"])
+                obj["graph"] = content_json
+            except Exception:
+                continue
+        
+        return get_result(data=obj)
+    
+    # 原有逻辑：全局 graph（256 节点截断）
     req = {
         "kb_id": [dataset_id],
         "knowledge_graph_kwd": ["graph"]

@@ -95,7 +95,13 @@ class SmartSplitter(ProcessBase, LLM):
         sections = []  # [(text, position_tag), ...]
         section_images = []
         for o in json_result:
-            sections.append((o.get("text", ""), o.get("position_tag", "")))
+            pos_tag = o.get("position_tag", "")
+            # Fallback: table/figure bboxes from Parser have positions but no position_tag.
+            # Reconstruct position_tag from positions using the same format as _line_tag().
+            if not pos_tag and o.get("positions"):
+                p = o["positions"][0]  # [page, x0, x1, top, bottom]
+                pos_tag = "@@{}\t{:.1f}\t{:.1f}\t{:.1f}\t{:.1f}##".format(*p)
+            sections.append((o.get("text", ""), pos_tag))
             section_images.append(
                 id2image(o.get("img_id"),
                          partial(settings.STORAGE_IMPL.get, tenant_id=self._canvas._tenant_id))

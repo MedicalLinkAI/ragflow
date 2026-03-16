@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in deepdoc/parser/deepseek_ocr2_parser.py rag/llm/ocr_model.py requirements-deepseek-ocr2.txt test/deepdoc/parser/test_deepseek_ocr2_parser.py test/integration/test_deepseek_ocr2_integration.py test/unit_test/rag_llm/test_deepseek_ocr2_model.py)",
+      "Bash(do echo:*)",
+      "Bash(done)"
+    ]
+  }
+}

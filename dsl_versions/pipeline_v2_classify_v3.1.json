@@ -1,0 +1,869 @@
+{
+  "path": [],
+  "graph": {
+    "edges": [
+      {
+        "id": "xy-edge__Filestart-Parser:MedLinkend",
+        "source": "File",
+        "target": "Parser:MedLink",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Parser:MedLinkstart-Splitter:MedLinkend",
+        "source": "Parser:MedLink",
+        "target": "Splitter:MedLink",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Splitter:MedLinkstart-Extractor:Classifyend",
+        "source": "Splitter:MedLink",
+        "target": "Extractor:Classify",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Extractor:Classifystart-ChunkRouter:Routerend",
+        "data": {
+          "isHovered": false
+        },
+        "source": "Extractor:Classify",
+        "target": "ChunkRouter:Router",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:LabExamend",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:LabExam",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Imagingend",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Imaging",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Clinicalend",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Clinical",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Defaultend",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Default",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Extractor:Defaultstart-ChunkMerger:Mergerend",
+        "source": "Extractor:Default",
+        "target": "ChunkMerger:Merger",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkMerger:Mergerstart-Tokenizer:MedEmbedend",
+        "source": "ChunkMerger:Merger",
+        "target": "Tokenizer:MedEmbed",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "File",
+        "data": {
+          "name": "File",
+          "label": "File"
+        },
+        "type": "beginNode",
+        "measured": {
+          "width": 200,
+          "height": 50
+        },
+        "position": {
+          "x": 50,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Parser:MedLink",
+        "data": {
+          "form": {
+            "setups": [
+              {
+                "fileFormat": "pdf",
+                "parse_method": "DeepDOC",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "spreadsheet",
+                "parse_method": "DeepDOC",
+                "output_format": "html"
+              },
+              {
+                "fileFormat": "image",
+                "parse_method": "ocr",
+                "output_format": "text"
+              },
+              {
+                "fileFormat": "word",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "slides",
+                "parse_method": "DeepDOC",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "text&markdown",
+                "output_format": "text"
+              },
+              {
+                "fields": [
+                  "from",
+                  "to",
+                  "cc",
+                  "bcc",
+                  "date",
+                  "subject",
+                  "body",
+                  "attachments"
+                ],
+                "fileFormat": "email",
+                "output_format": "text"
+              }
+            ],
+            "outputs": {
+              "html": {
+                "type": "string",
+                "value": ""
+              },
+              "json": {
+                "type": "Array<object>",
+                "value": []
+              },
+              "text": {
+                "type": "string",
+                "value": ""
+              },
+              "markdown": {
+                "type": "string",
+                "value": ""
+              }
+            }
+          },
+          "name": "Parser_0",
+          "label": "Parser"
+        },
+        "type": "parserNode",
+        "measured": {
+          "width": 200,
+          "height": 198
+        },
+        "position": {
+          "x": 300,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Splitter:MedLink",
+        "data": {
+          "form": {
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "delimiters": [
+              {
+                "value": "\n"
+              }
+            ],
+            "enable_children": false,
+            "chunk_token_size": 1024,
+            "overlapped_percent": 0,
+            "children_delimiters": [],
+            "image_table_context_window": 0
+          },
+          "name": "Splitter_0",
+          "label": "Splitter"
+        },
+        "type": "splitterNode",
+        "measured": {
+          "width": 200,
+          "height": 74
+        },
+        "position": {
+          "x": 550,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Classify",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "deepseek-v3.2",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{Splitter:MedLink@chunks}",
+            "field_name": "classify_result_tks",
+            "max_tokens": 256,
+            "sys_prompt": "你是一个医疗文档分类专家。根据以下医疗文档片段，提取文档类型、就诊日期和科室信息。\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## JSON Schema\n\n{\n  \"type\": \"<string, 必填, 枚举值见下方>\",\n  \"record_count\": <integer, 该片段中包含的独立记录条数>,\n  \"encounter_dates\": [\"<YYYY-MM-DD>\", ...],\n  \"department\": \"<string|null, 就诊科室>\"\n}\n\n## type 枚举值（必须使用英文值，禁止使用中文）\n\n- OutpatientRecord — 门诊病历（含复诊记录）。特征：有完整的就诊时间+主诉+诊断+处理/医嘱\n- AdmissionRecord — 入院记录\n- DischargeRecord — 出院小结/出院记录。特征：有入院日期、出院日期、出院诊断、出院医嘱\n- LabReport — 检验报告（血常规、生化、免疫等）。特征：有检验项目数据（项目名/结果/单位/参考区间），或检验报告的附属说明/脚注\n- ExamReport — 检查报告（心电图、B超等）\n- ImagingReport — 影像报告（X光、CT、MRI等）\n- SurgeryRecord — 手术记录\n- MedicationRecord — 购药记录/取药单。特征：药房名称、购药时间、药品名+数量+价格。即使开头残留了上一页的门诊病历片段（如诊断、处理），只要主体内容是购药凭证/取药单，仍分为 MedicationRecord\n- NursingRecord — 护理记录\n- Other — 无法归类的文档（如纯收费票据、广告等）\n\n## 关键判定规则（必须遵守）\n\n### 规则1：混合内容判定——看主体内容和临床完整性\n当片段同时包含门诊病历要素和购药/取药/检验信息时，按以下规则判分类：\n- 如果片段有**完整的门诊就诊流程**（就诊时间+主诉+现病史+诊断+处理），即使附带了取药单/支付截图/检验数据 → OutpatientRecord\n- 如果片段有**主诉+诊断+治疗处理意见**，即使后面跟着检验报告数据 → OutpatientRecord（临床诊疗要素优先于检验数据）\n- 如果片段有**诊断+处理措施/医嘱**（含具体药品用法用量），即使购药凭证篇幅更大 → OutpatientRecord（临床诊疗信息不可丢失）\n- 如果片段只有**少量不完整的上页残留**（如单独几行诊断/处理，无体格检查无辅助检查），而购药凭证构成独立完整记录（有独立购药时间） → MedicationRecord\n- 如果片段只有检验项目表格数据（项目名/结果/单位/参考区间），没有主诉/诊断/治疗意见 → LabReport\n\n### 规则2：以实际数据内容判分类，不以标题/开头文字为准\nOCR 可能在页面顶部混入其他文档的标题（如\"出院记录\"出现在检验报告前面）。判分类时看实际数据内容，不被开头几个字误导。\n\n### 规则3：日期提取要完整\n仔细扫描全文的所有\"就诊时间\"、\"收款日期\"、\"检验日期\"、\"购药时间\"等标记，不要遗漏。\n\n## 示例\n\n输入：济宁市第二人民医院 门（急）诊病历 就诊时间：2023年09月12日 就诊科室：内科门诊 主诉：膝关节疼痛 ...医生签名：xxx 济宁市第二人民医院 门（急）诊病历 就诊时间：2023年09月26日 就诊科室：内科门诊 主诉：类风湿性关节炎复查\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 2, \"encounter_dates\": [\"2023-09-12\", \"2023-09-26\"], \"department\": \"内科门诊\"}\n\n输入：菏泽市定陶区人民医院检验报告单 血沉 44.00 mm/h 0~20\n输出：{\"type\": \"LabReport\", \"record_count\": 1, \"encounter_dates\": [], \"department\": null}\n\n输入：本次结果仅适用于此次标本（注：带互认标识为全国医学检验互认项目）\n输出：{\"type\": \"LabReport\", \"record_count\": 1, \"encounter_dates\": [], \"department\": null}\n\n输入：幸福人大药房 收款日期：2024-09-08 甲氨蝶呤片 2.5mg*16片 67.0元 ...购药凭证 收款日期：2024-10-28 甲氨蝶呤片 2.5mg*16片 67.0元\n输出：{\"type\": \"MedicationRecord\", \"record_count\": 2, \"encounter_dates\": [\"2024-09-08\", \"2024-10-28\"], \"department\": null}\n\n输入：门诊病历 就诊时间：2024-07-25 主诉：类风湿性关节炎复查 诊断：类风湿性关节炎 处理：阿达木单抗注射液 ...支付成功 2024年07月25日 ...取药执行单 阿达木单抗注射液 964.5元\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [\"2024-07-25\"], \"department\": null}\n\n输入：出院记录 检验报告单 科室：风湿免疫科 白细胞总数（WBC） 7.41 10^9/L 3.50-9.50 淋巴细胞绝对值（LYM#） 3.15 10^9/L\n输出：{\"type\": \"LabReport\", \"record_count\": 1, \"encounter_dates\": [], \"department\": \"风湿免疫科\"}\n\n输入：体格检查：多关节肿痛 诊断：类风湿性关节炎 处理措施：甲氨蝶呤片×2 塞来昔布胶囊×2 ...幸福人大药房 购药凭证 收款日期：2024-07-18 甲氨蝶呤片 67.0元\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [\"2024-07-18\"], \"department\": null}\n\n输入：诊断：类风湿性关节炎 处理：甲氨蝶呤片10mg口服 塞来昔布胶囊0.2g口服 ...立健药店 购药凭证 购药时间：2024-12-09 甲氨蝶呤片 77.0元 ...购药凭证 购药时间：2025-01-28 甲氨蝶呤片 134.0元\n输出：{\"type\": \"MedicationRecord\", \"record_count\": 2, \"encounter_dates\": [\"2024-12-09\", \"2025-01-28\"], \"department\": null}\n\n输入：体格检查：多关节肿痛活动受限 过敏史：无 既往史：无 辅助检查：风湿五项 初步诊断：类风湿性关节炎 处理措施：甲氨蝶呤片2.5mg×2盒 每次10mg每周一次 塞来昔布胶囊0.2g×2盒 每次0.2g每天一次 ...幸福人大药房 购药凭证 收款日期：2024-07-18 甲氨蝶呤片 67.0元\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [\"2024-07-18\"], \"department\": null}\n\n输入：主诉：类风湿10余年复诊 体格检查：四肢多关节畸形活动受限 辅助检查：CRP 7.2mg/L 血沉 30mm/h 诊断：类风湿性关节炎 治疗处理意见：复查血常规风湿三项 ...检验报告 CRP 7.2 mg/L 0.0-8.0 血沉 30 mm/h 0-20\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [], \"department\": null}",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Classify",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 90
+        },
+        "position": {
+          "x": 800,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Tokenizer:MedEmbed",
+        "data": {
+          "form": {
+            "fields": [
+              "text"
+            ],
+            "outputs": {},
+            "search_method": [
+              "full_text",
+              "embedding"
+            ],
+            "filename_embd_weight": 0.1
+          },
+          "name": "Tokenizer_0",
+          "label": "Tokenizer"
+        },
+        "type": "tokenizerNode",
+        "measured": {
+          "width": 200,
+          "height": 114
+        },
+        "position": {
+          "x": 2050,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "ChunkRouter:Router",
+        "data": {
+          "form": {
+            "route_map": {
+              "Other": "chunks_Default",
+              "LabReport": "chunks_LabExam",
+              "ExamReport": "chunks_LabExam",
+              "ImagingReport": "chunks_Imaging",
+              "NursingRecord": "chunks_Clinical",
+              "SurgeryRecord": "chunks_Clinical",
+              "AdmissionRecord": "chunks_Clinical",
+              "DischargeRecord": "chunks_Clinical",
+              "MedicationRecord": "chunks_Default",
+              "OutpatientRecord": "chunks_Clinical"
+            },
+            "default_route": "chunks_Default",
+            "type_json_key": "type",
+            "classify_field": "classify_result_tks"
+          },
+          "name": "Router",
+          "label": "ChunkRouter"
+        },
+        "type": "ragNode",
+        "measured": {
+          "width": 200,
+          "height": 49
+        },
+        "position": {
+          "x": 1050,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:LabExam",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_LabExam}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗检验检查报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（LabReport / ExamReport / ImagingReport 通用）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检验/检查项目名称>\",\n      \"value\": \"<string, 结果数值，原样保留>\",\n      \"unit\": \"<string|null, 单位>\",\n      \"reference_range\": \"<string|null, 参考范围>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留（如\"44.00\"不要改为\"44\"）\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正\n5. 每个检验项目都必须逐条提取到 items 数组中，不得遗漏",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "LabExam",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 100
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Imaging",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Imaging}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗影像报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（ImagingReport）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检查项目名称>\",\n      \"value\": \"<string, 检查所见/结果描述，原样保留>\",\n      \"unit\": \"<string|null, 单位，影像通常为null>\",\n      \"reference_range\": \"<string|null, 参考范围，影像通常为null>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 影像报告的 value 字段应保留完整的检查所见描述\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Imaging",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 250
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Clinical",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Clinical}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗病历结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的就诊时间标识）：输出 JSON 数组，每个元素为一条记录的完整提取结果\n\n## 提取 Schema（OutpatientRecord / AdmissionRecord / DischargeRecord / SurgeryRecord / NursingRecord）\n\n{\n  \"encounter_date\": \"<string|null, 该条记录的就诊日期 YYYY-MM-DD, 多记录时必填>\",\n  \"chief_complaint\": \"<string|null, 主诉>\",\n  \"present_illness\": \"<string|null, 现病史，保留完整用药史、剂量、频次>\",\n  \"past_history\": \"<string|null, 既往史>\",\n  \"diagnosis\": \"<string|null, 诊断，保留中西医双诊断>\",\n  \"treatment_plan\": \"<string|object|array|null, 治疗方案，保留药品名+剂量+频次+给药途径>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正\n5. 如果原文包含多次就诊记录，必须逐条提取每次就诊的完整信息，不得遗漏\n6. 诊断列表必须按原文顺序逐条完整提取，不得遗漏、不得合并\n\n## 示例：多次门诊记录\n\n上游分类：{\"type\": \"OutpatientRecord\", \"record_count\": 2, \"encounter_dates\": [\"2023-09-12\", \"2023-09-26\"], \"department\": \"内科门诊\"}\n\n输出：\n[\n  {\n    \"encounter_date\": \"2023-09-12\",\n    \"chief_complaint\": \"膝关节，腕关节疼痛2周余\",\n    \"present_illness\": \"患者自述3年前无明显诱因下出现多关节肿痛，于外院就诊后确诊为类风湿性关节炎\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  },\n  {\n    \"encounter_date\": \"2023-09-26\",\n    \"chief_complaint\": \"类风湿性关节炎复查\",\n    \"present_illness\": \"患者二周前于我院接受阿达木单抗注射液治疗，今来我院就诊复查\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  }\n]",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Clinical",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 400
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Default",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Default}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的收款日期/处方日期标识）：输出 JSON 数组\n\n## MedicationRecord Schema\n\n{\n  \"encounter_date\": \"<string|null, 购药/处方日期 YYYY-MM-DD, 多记录时必填>\",\n  \"medications\": [\n    {\n      \"name\": \"<string, 药品名称，含商品名>\",\n      \"dosage\": \"<string|null, 单次剂量>\",\n      \"frequency\": \"<string|null, 给药频次>\",\n      \"route\": \"<string|null, 给药途径>\",\n      \"start_date\": \"<string|null, 开始日期 YYYY-MM-DD>\"\n    }\n  ]\n}\n\n## Other Schema\n\n{\n  \"content_summary\": \"<string, 内容摘要>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 如果原文包含多张购药凭证，必须全部逐条提取，不得遗漏\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Default",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 550
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "ChunkMerger:Merger",
+        "data": {
+          "form": {
+            "chunks_field": "chunks",
+            "source_components": [
+              "Extractor:LabExam",
+              "Extractor:Imaging",
+              "Extractor:Clinical",
+              "Extractor:Default"
+            ]
+          },
+          "name": "Merger",
+          "label": "ChunkMerger"
+        },
+        "type": "ragNode",
+        "measured": {
+          "width": 200,
+          "height": 49
+        },
+        "position": {
+          "x": 1700,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      }
+    ]
+  },
+  "globals": {},
+  "history": [],
+  "messages": [],
+  "retrieval": [],
+  "variables": {},
+  "components": {
+    "File": {
+      "obj": {
+        "params": {},
+        "component_name": "File"
+      },
+      "upstream": [],
+      "downstream": [
+        "Parser:MedLink"
+      ]
+    },
+    "Parser:MedLink": {
+      "obj": {
+        "params": {
+          "setups": {
+            "pdf": {
+              "suffix": [
+                "pdf"
+              ],
+              "parse_method": "DeepDOC",
+              "output_format": "json"
+            },
+            "word": {
+              "suffix": [
+                "doc",
+                "docx"
+              ],
+              "output_format": "json"
+            },
+            "email": {
+              "fields": [
+                "from",
+                "to",
+                "cc",
+                "bcc",
+                "date",
+                "subject",
+                "body",
+                "attachments"
+              ],
+              "suffix": [
+                "eml",
+                "msg"
+              ],
+              "output_format": "text"
+            },
+            "image": {
+              "suffix": [
+                "jpg",
+                "jpeg",
+                "png",
+                "gif"
+              ],
+              "parse_method": "ocr",
+              "output_format": "text"
+            },
+            "slides": {
+              "suffix": [
+                "pptx",
+                "ppt"
+              ],
+              "parse_method": "DeepDOC",
+              "output_format": "json"
+            },
+            "spreadsheet": {
+              "suffix": [
+                "xls",
+                "xlsx",
+                "csv"
+              ],
+              "parse_method": "DeepDOC",
+              "output_format": "html"
+            },
+            "text&markdown": {
+              "suffix": [
+                "md",
+                "markdown",
+                "mdx",
+                "txt"
+              ],
+              "output_format": "text"
+            }
+          },
+          "outputs": {
+            "html": {
+              "type": "string",
+              "value": ""
+            },
+            "json": {
+              "type": "Array<object>",
+              "value": []
+            },
+            "text": {
+              "type": "string",
+              "value": ""
+            },
+            "markdown": {
+              "type": "string",
+              "value": ""
+            }
+          }
+        },
+        "component_name": "Parser"
+      },
+      "upstream": [
+        "File"
+      ],
+      "downstream": [
+        "Splitter:MedLink"
+      ]
+    },
+    "Splitter:MedLink": {
+      "obj": {
+        "params": {
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "delimiters": [
+            "\n"
+          ],
+          "enable_children": false,
+          "chunk_token_size": 1024,
+          "image_context_size": 0,
+          "overlapped_percent": 0,
+          "table_context_size": 0,
+          "children_delimiters": []
+        },
+        "component_name": "Splitter"
+      },
+      "upstream": [
+        "Parser:MedLink"
+      ],
+      "downstream": [
+        "Extractor:Classify"
+      ]
+    },
+    "Extractor:Default": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Default}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的收款日期/处方日期标识）：输出 JSON 数组\n\n## MedicationRecord Schema\n\n{\n  \"encounter_date\": \"<string|null, 购药/处方日期 YYYY-MM-DD, 多记录时必填>\",\n  \"medications\": [\n    {\n      \"name\": \"<string, 药品名称，含商品名>\",\n      \"dosage\": \"<string|null, 单次剂量>\",\n      \"frequency\": \"<string|null, 给药频次>\",\n      \"route\": \"<string|null, 给药途径>\",\n      \"start_date\": \"<string|null, 开始日期 YYYY-MM-DD>\"\n    }\n  ]\n}\n\n## Other Schema\n\n{\n  \"content_summary\": \"<string, 内容摘要>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 如果原文包含多张购药凭证，必须全部逐条提取，不得遗漏\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": [
+        "ChunkMerger:Merger"
+      ]
+    },
+    "Extractor:Imaging": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Imaging}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗影像报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（ImagingReport）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检查项目名称>\",\n      \"value\": \"<string, 检查所见/结果描述，原样保留>\",\n      \"unit\": \"<string|null, 单位，影像通常为null>\",\n      \"reference_range\": \"<string|null, 参考范围，影像通常为null>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 影像报告的 value 字段应保留完整的检查所见描述\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    },
+    "Extractor:LabExam": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_LabExam}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗检验检查报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（LabReport / ExamReport / ImagingReport 通用）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检验/检查项目名称>\",\n      \"value\": \"<string, 结果数值，原样保留>\",\n      \"unit\": \"<string|null, 单位>\",\n      \"reference_range\": \"<string|null, 参考范围>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留（如\"44.00\"不要改为\"44\"）\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正\n5. 每个检验项目都必须逐条提取到 items 数组中，不得遗漏",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    },
+    "ChunkMerger:Merger": {
+      "obj": {
+        "params": {
+          "chunks_field": "chunks",
+          "source_components": [
+            "Extractor:LabExam",
+            "Extractor:Imaging",
+            "Extractor:Clinical",
+            "Extractor:Default"
+          ]
+        },
+        "component_name": "ChunkMerger"
+      },
+      "upstream": [
+        "Extractor:Default"
+      ],
+      "downstream": [
+        "Tokenizer:MedEmbed"
+      ]
+    },
+    "ChunkRouter:Router": {
+      "obj": {
+        "params": {
+          "route_map": {
+            "Other": "chunks_Default",
+            "LabReport": "chunks_LabExam",
+            "ExamReport": "chunks_LabExam",
+            "ImagingReport": "chunks_Imaging",
+            "NursingRecord": "chunks_Clinical",
+            "SurgeryRecord": "chunks_Clinical",
+            "AdmissionRecord": "chunks_Clinical",
+            "DischargeRecord": "chunks_Clinical",
+            "MedicationRecord": "chunks_Default",
+            "OutpatientRecord": "chunks_Clinical"
+          },
+          "default_route": "chunks_Default",
+          "type_json_key": "type",
+          "classify_field": "classify_result_tks"
+        },
+        "component_name": "ChunkRouter"
+      },
+      "upstream": [
+        "Extractor:Classify"
+      ],
+      "downstream": [
+        "Extractor:LabExam",
+        "Extractor:Imaging",
+        "Extractor:Clinical",
+        "Extractor:Default"
+      ]
+    },
+    "Extractor:Classify": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "deepseek-v3.2",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{Splitter:MedLink@chunks}"
+            }
+          ],
+          "field_name": "classify_result_tks",
+          "max_tokens": 256,
+          "sys_prompt": "你是一个医疗文档分类专家。根据以下医疗文档片段，提取文档类型、就诊日期和科室信息。\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## JSON Schema\n\n{\n  \"type\": \"<string, 必填, 枚举值见下方>\",\n  \"record_count\": <integer, 该片段中包含的独立记录条数>,\n  \"encounter_dates\": [\"<YYYY-MM-DD>\", ...],\n  \"department\": \"<string|null, 就诊科室>\"\n}\n\n## type 枚举值（必须使用英文值，禁止使用中文）\n\n- OutpatientRecord — 门诊病历（含复诊记录）。特征：有完整的就诊时间+主诉+诊断+处理/医嘱\n- AdmissionRecord — 入院记录\n- DischargeRecord — 出院小结/出院记录。特征：有入院日期、出院日期、出院诊断、出院医嘱\n- LabReport — 检验报告（血常规、生化、免疫等）。特征：有检验项目数据（项目名/结果/单位/参考区间），或检验报告的附属说明/脚注\n- ExamReport — 检查报告（心电图、B超等）\n- ImagingReport — 影像报告（X光、CT、MRI等）\n- SurgeryRecord — 手术记录\n- MedicationRecord — 购药记录/取药单。特征：药房名称、购药时间、药品名+数量+价格。即使开头残留了上一页的门诊病历片段（如诊断、处理），只要主体内容是购药凭证/取药单，仍分为 MedicationRecord\n- NursingRecord — 护理记录\n- Other — 无法归类的文档（如纯收费票据、广告等）\n\n## 关键判定规则（必须遵守）\n\n### 规则1：混合内容判定——看主体内容和临床完整性\n当片段同时包含门诊病历要素和购药/取药/检验信息时，按以下规则判分类：\n- 如果片段有**完整的门诊就诊流程**（就诊时间+主诉+现病史+诊断+处理），即使附带了取药单/支付截图/检验数据 → OutpatientRecord\n- 如果片段有**主诉+诊断+治疗处理意见**，即使后面跟着检验报告数据 → OutpatientRecord（临床诊疗要素优先于检验数据）\n- 如果片段有**诊断+处理措施/医嘱**（含具体药品用法用量），即使购药凭证篇幅更大 → OutpatientRecord（临床诊疗信息不可丢失）\n- 如果片段只有**少量不完整的上页残留**（如单独几行诊断/处理，无体格检查无辅助检查），而购药凭证构成独立完整记录（有独立购药时间） → MedicationRecord\n- 如果片段只有检验项目表格数据（项目名/结果/单位/参考区间），没有主诉/诊断/治疗意见 → LabReport\n\n### 规则2：以实际数据内容判分类，不以标题/开头文字为准\nOCR 可能在页面顶部混入其他文档的标题（如\"出院记录\"出现在检验报告前面）。判分类时看实际数据内容，不被开头几个字误导。\n\n### 规则3：日期提取要完整\n仔细扫描全文的所有\"就诊时间\"、\"收款日期\"、\"检验日期\"、\"购药时间\"等标记，不要遗漏。\n\n## 示例\n\n输入：济宁市第二人民医院 门（急）诊病历 就诊时间：2023年09月12日 就诊科室：内科门诊 主诉：膝关节疼痛 ...医生签名：xxx 济宁市第二人民医院 门（急）诊病历 就诊时间：2023年09月26日 就诊科室：内科门诊 主诉：类风湿性关节炎复查\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 2, \"encounter_dates\": [\"2023-09-12\", \"2023-09-26\"], \"department\": \"内科门诊\"}\n\n输入：菏泽市定陶区人民医院检验报告单 血沉 44.00 mm/h 0~20\n输出：{\"type\": \"LabReport\", \"record_count\": 1, \"encounter_dates\": [], \"department\": null}\n\n输入：本次结果仅适用于此次标本（注：带互认标识为全国医学检验互认项目）\n输出：{\"type\": \"LabReport\", \"record_count\": 1, \"encounter_dates\": [], \"department\": null}\n\n输入：幸福人大药房 收款日期：2024-09-08 甲氨蝶呤片 2.5mg*16片 67.0元 ...购药凭证 收款日期：2024-10-28 甲氨蝶呤片 2.5mg*16片 67.0元\n输出：{\"type\": \"MedicationRecord\", \"record_count\": 2, \"encounter_dates\": [\"2024-09-08\", \"2024-10-28\"], \"department\": null}\n\n输入：门诊病历 就诊时间：2024-07-25 主诉：类风湿性关节炎复查 诊断：类风湿性关节炎 处理：阿达木单抗注射液 ...支付成功 2024年07月25日 ...取药执行单 阿达木单抗注射液 964.5元\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [\"2024-07-25\"], \"department\": null}\n\n输入：出院记录 检验报告单 科室：风湿免疫科 白细胞总数（WBC） 7.41 10^9/L 3.50-9.50 淋巴细胞绝对值（LYM#） 3.15 10^9/L\n输出：{\"type\": \"LabReport\", \"record_count\": 1, \"encounter_dates\": [], \"department\": \"风湿免疫科\"}\n\n输入：体格检查：多关节肿痛 诊断：类风湿性关节炎 处理措施：甲氨蝶呤片×2 塞来昔布胶囊×2 ...幸福人大药房 购药凭证 收款日期：2024-07-18 甲氨蝶呤片 67.0元\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [\"2024-07-18\"], \"department\": null}\n\n输入：诊断：类风湿性关节炎 处理：甲氨蝶呤片10mg口服 塞来昔布胶囊0.2g口服 ...立健药店 购药凭证 购药时间：2024-12-09 甲氨蝶呤片 77.0元 ...购药凭证 购药时间：2025-01-28 甲氨蝶呤片 134.0元\n输出：{\"type\": \"MedicationRecord\", \"record_count\": 2, \"encounter_dates\": [\"2024-12-09\", \"2025-01-28\"], \"department\": null}\n\n输入：体格检查：多关节肿痛活动受限 过敏史：无 既往史：无 辅助检查：风湿五项 初步诊断：类风湿性关节炎 处理措施：甲氨蝶呤片2.5mg×2盒 每次10mg每周一次 塞来昔布胶囊0.2g×2盒 每次0.2g每天一次 ...幸福人大药房 购药凭证 收款日期：2024-07-18 甲氨蝶呤片 67.0元\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [\"2024-07-18\"], \"department\": null}\n\n输入：主诉：类风湿10余年复诊 体格检查：四肢多关节畸形活动受限 辅助检查：CRP 7.2mg/L 血沉 30mm/h 诊断：类风湿性关节炎 治疗处理意见：复查血常规风湿三项 ...检验报告 CRP 7.2 mg/L 0.0-8.0 血沉 30 mm/h 0-20\n输出：{\"type\": \"OutpatientRecord\", \"record_count\": 1, \"encounter_dates\": [], \"department\": null}",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "Splitter:MedLink"
+      ],
+      "downstream": [
+        "ChunkRouter:Router"
+      ]
+    },
+    "Extractor:Clinical": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Clinical}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗病历结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的就诊时间标识）：输出 JSON 数组，每个元素为一条记录的完整提取结果\n\n## 提取 Schema（OutpatientRecord / AdmissionRecord / DischargeRecord / SurgeryRecord / NursingRecord）\n\n{\n  \"encounter_date\": \"<string|null, 该条记录的就诊日期 YYYY-MM-DD, 多记录时必填>\",\n  \"chief_complaint\": \"<string|null, 主诉>\",\n  \"present_illness\": \"<string|null, 现病史，保留完整用药史、剂量、频次>\",\n  \"past_history\": \"<string|null, 既往史>\",\n  \"diagnosis\": \"<string|null, 诊断，保留中西医双诊断>\",\n  \"treatment_plan\": \"<string|object|array|null, 治疗方案，保留药品名+剂量+频次+给药途径>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正\n5. 如果原文包含多次就诊记录，必须逐条提取每次就诊的完整信息，不得遗漏\n6. 诊断列表必须按原文顺序逐条完整提取，不得遗漏、不得合并\n\n## 示例：多次门诊记录\n\n上游分类：{\"type\": \"OutpatientRecord\", \"record_count\": 2, \"encounter_dates\": [\"2023-09-12\", \"2023-09-26\"], \"department\": \"内科门诊\"}\n\n输出：\n[\n  {\n    \"encounter_date\": \"2023-09-12\",\n    \"chief_complaint\": \"膝关节，腕关节疼痛2周余\",\n    \"present_illness\": \"患者自述3年前无明显诱因下出现多关节肿痛，于外院就诊后确诊为类风湿性关节炎\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  },\n  {\n    \"encounter_date\": \"2023-09-26\",\n    \"chief_complaint\": \"类风湿性关节炎复查\",\n    \"present_illness\": \"患者二周前于我院接受阿达木单抗注射液治疗，今来我院就诊复查\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  }\n]",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    },
+    "Tokenizer:MedEmbed": {
+      "obj": {
+        "params": {
+          "fields": [
+            "text"
+          ],
+          "outputs": {},
+          "search_method": [
+            "full_text",
+            "embedding"
+          ],
+          "filename_embd_weight": 0.1
+        },
+        "component_name": "Tokenizer"
+      },
+      "upstream": [
+        "ChunkMerger:Merger"
+      ],
+      "downstream": []
+    }
+  }
+}

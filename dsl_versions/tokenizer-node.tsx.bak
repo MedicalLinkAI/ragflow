@@ -6,7 +6,7 @@ import { NodeHandleId } from '../../constant';
 import { TokenizerFormSchemaType } from '../../form/tokenizer-form';
 import { LabelCard } from './card';
 import { CommonHandle } from './handle';
-import { LeftHandleStyle, RightHandleStyle } from './handle-icon';
+import { LeftHandleStyle } from './handle-icon';
 import NodeHeader from './node-header';
 import { NodeWrapper } from './node-wrapper';
 import { ToolBar } from './toolbar';
@@ -35,15 +35,6 @@ function TokenizerNode({
           isConnectable={isConnectable}
           style={LeftHandleStyle}
           nodeId={id}
-        ></CommonHandle>
-        <CommonHandle
-          type="source"
-          position={Position.Right}
-          isConnectable={isConnectable}
-          id={NodeHandleId.Start}
-          style={RightHandleStyle}
-          nodeId={id}
-          isConnectableEnd={false}
         ></CommonHandle>
         <NodeHeader id={id} name={data.name} label={data.label}></NodeHeader>
         <LabelCard className="text-text-primary flex justify-between flex-col gap-1">

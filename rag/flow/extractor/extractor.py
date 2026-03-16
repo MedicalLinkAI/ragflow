@@ -15,9 +15,28 @@
 import json
 import logging
 import random
+import re
 from copy import deepcopy
 
 import xxhash
+
+
+def strip_markdown_json_fence(text: str) -> str:
+    """Strip markdown code fences from LLM JSON output.
+
+    LLMs sometimes wrap JSON in ```json ... ``` despite being told not to.
+    This is a deterministic safeguard — prompt is probabilistic.
+    """
+    if not isinstance(text, str):
+        return text
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        # Remove opening fence (```json, ```JSON, or just ```)
+        stripped = re.sub(r"^```(?:json|JSON)?\s*\n?", "", stripped)
+        # Remove closing fence
+        stripped = re.sub(r"\n?```\s*$", "", stripped)
+        return stripped.strip()
+    return text
 
 from agent.component.llm import LLMParam, LLM
 from rag.flow.base import ProcessBase, ProcessParamBase
@@ -96,9 +115,13 @@ class Extractor(ProcessBase, LLM):
             prog = 0
             for i, ck in enumerate(chunks):
                 args[chunks_key] = ck["text"]
+                # Pass through upstream business fields so downstream prompts can reference them via {field_name}
+                for _fn, _fv in ck.items():
+                    if _fn not in ("text", "image", "positions", "img_id", "id", "doc_id", "mom"):
+                        args[_fn] = _fv
                 msg, sys_prompt = self._sys_prompt_and_msg([], args)
                 msg.insert(0, {"role": "system", "content": sys_prompt})
-                ck[self._param.field_name] = await self._generate_async(msg)
+                ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
                 prog += 1./len(chunks)
                 if i % (len(chunks)//100+1) == 1:
                     self.callback(prog, f"{i+1} / {len(chunks)}")
@@ -106,6 +129,6 @@ class Extractor(ProcessBase, LLM):
         else:
             msg, sys_prompt = self._sys_prompt_and_msg([], args)
             msg.insert(0, {"role": "system", "content": sys_prompt})
-            self.set_output("chunks", [{self._param.field_name: await self._generate_async(msg)}])
+            self.set_output("chunks", [{self._param.field_name: strip_markdown_json_fence(await self._generate_async(msg))}])
 
 

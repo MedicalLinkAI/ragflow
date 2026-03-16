@@ -1,0 +1,589 @@
+{
+  "components": {
+    "File": {
+      "obj": {
+        "component_name": "File",
+        "params": {}
+      },
+      "downstream": [
+        "Parser:MedLink"
+      ],
+      "upstream": []
+    },
+    "Parser:MedLink": {
+      "obj": {
+        "component_name": "Parser",
+        "params": {
+          "outputs": {
+            "html": {
+              "type": "string",
+              "value": ""
+            },
+            "json": {
+              "type": "Array<object>",
+              "value": []
+            },
+            "markdown": {
+              "type": "string",
+              "value": ""
+            },
+            "text": {
+              "type": "string",
+              "value": ""
+            }
+          },
+          "setups": {
+            "pdf": {
+              "output_format": "json",
+              "suffix": [
+                "pdf"
+              ],
+              "parse_method": "DeepDOC"
+            },
+            "spreadsheet": {
+              "output_format": "html",
+              "suffix": [
+                "xls",
+                "xlsx",
+                "csv"
+              ],
+              "parse_method": "DeepDOC"
+            },
+            "image": {
+              "output_format": "text",
+              "suffix": [
+                "jpg",
+                "jpeg",
+                "png",
+                "gif"
+              ],
+              "parse_method": "ocr"
+            },
+            "word": {
+              "output_format": "json",
+              "suffix": [
+                "doc",
+                "docx"
+              ]
+            },
+            "slides": {
+              "output_format": "json",
+              "suffix": [
+                "pptx",
+                "ppt"
+              ],
+              "parse_method": "DeepDOC"
+            },
+            "text&markdown": {
+              "output_format": "text",
+              "suffix": [
+                "md",
+                "markdown",
+                "mdx",
+                "txt"
+              ]
+            },
+            "email": {
+              "output_format": "text",
+              "suffix": [
+                "eml",
+                "msg"
+              ],
+              "fields": [
+                "from",
+                "to",
+                "cc",
+                "bcc",
+                "date",
+                "subject",
+                "body",
+                "attachments"
+              ]
+            }
+          }
+        }
+      },
+      "downstream": [
+        "Splitter:MedLink"
+      ],
+      "upstream": [
+        "File"
+      ]
+    },
+    "Splitter:MedLink": {
+      "obj": {
+        "component_name": "Splitter",
+        "params": {
+          "children_delimiters": [],
+          "chunk_token_size": 1024,
+          "delimiters": [
+            "\n"
+          ],
+          "enable_children": false,
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "overlapped_percent": 0,
+          "table_context_size": 0,
+          "image_context_size": 0
+        }
+      },
+      "downstream": [
+        "Extractor:Classify"
+      ],
+      "upstream": [
+        "Parser:MedLink"
+      ]
+    },
+    "Extractor:Classify": {
+      "obj": {
+        "component_name": "Extractor",
+        "params": {
+          "cite": true,
+          "field_name": "classify_result_tks",
+          "frequency_penalty": 0.7,
+          "llm_id": "deepseek-v3.2",
+          "max_tokens": 256,
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "presence_penalty": 0.4,
+          "prompts": [
+            {
+              "content": "{Splitter:MedLink@chunks}",
+              "role": "user"
+            }
+          ],
+          "sys_prompt": "你是一个医疗文档分类专家。根据以下医疗文档片段，提取文档类型、就诊日期和科室信息。\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## JSON Schema\n\n{\n  \"type\": \"<string, 必填, 枚举值见下方>\",\n  \"encounter_date\": \"<string|null, 就诊/检验/购药日期, 格式 YYYY-MM-DD>\",\n  \"department\": \"<string|null, 就诊科室, 从原文提取>\"\n}\n\n## type 枚举值（必须使用英文值，禁止使用中文）\n\n- OutpatientRecord — 门诊病历（含复诊记录）\n- AdmissionRecord — 入院记录\n- DischargeRecord — 出院小结/出院记录\n- LabReport — 检验报告（血常规、生化、免疫等）\n- ExamReport — 检查报告（心电图、B超等）\n- ImagingReport — 影像报告（X光、CT、MRI等）\n- SurgeryRecord — 手术记录\n- MedicationRecord — 用药记录/处方/购药凭证/取药单\n- NursingRecord — 护理记录\n- Other — 无法归类的文档（如纯收费票据、广告等）\n\n## 字段提取规则\n\n1. encounter_date：提取文档中的就诊日期、检验日期或购药日期。如有多个日期，取最主要的那个。格式统一为 YYYY-MM-DD。无法确定则填 null。\n2. department：提取文档中的科室名称（如\"骨外科一门诊\"、\"风湿骨科\"、\"内科门诊\"）。无法确定则填 null。\n\n## 示例\n\n输入：济宁市第二人民医院 门（急）诊病历 就诊时间：2023年09月12日 就诊科室：内科门诊 主诉：膝关节，腕关节疼痛2周余\n输出：{\"type\": \"OutpatientRecord\", \"encounter_date\": \"2023-09-12\", \"department\": \"内科门诊\"}\n\n输入：菏泽市定陶区人民医院检验报告单 血沉 44.00 mm/h 0~20\n输出：{\"type\": \"LabReport\", \"encounter_date\": null, \"department\": null}\n\n输入：幸福人大药房 收款日期：2024-09-08 甲氨蝶呤片 2.5mg*16片 67.0元\n输出：{\"type\": \"MedicationRecord\", \"encounter_date\": \"2024-09-08\", \"department\": null}",
+          "temperature": 0.1,
+          "top_p": 0.3
+        }
+      },
+      "downstream": [
+        "Extractor:Extract"
+      ],
+      "upstream": [
+        "Splitter:MedLink"
+      ]
+    },
+    "Extractor:Extract": {
+      "obj": {
+        "component_name": "Extractor",
+        "params": {
+          "cite": true,
+          "field_name": "extracted_data_tks",
+          "frequency_penalty": 0.7,
+          "llm_id": "qwen3-max",
+          "max_tokens": 2048,
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "presence_penalty": 0.4,
+          "prompts": [
+            {
+              "content": "{Extractor:Classify@chunks}",
+              "role": "user"
+            }
+          ],
+          "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取规则\n\n根据分类结果中的 type 字段，按以下 schema 提取：\n\n### OutpatientRecord / AdmissionRecord / DischargeRecord\n{\n  \"chief_complaint\": \"<string|null, 主诉>\",\n  \"present_illness\": \"<string|null, 现病史，保留完整用药史、剂量、频次>\",\n  \"past_history\": \"<string|null, 既往史>\",\n  \"diagnosis\": \"<string|null, 诊断，保留中西医双诊断>\",\n  \"treatment_plan\": \"<string|object|array|null, 治疗方案，保留药品名+剂量+频次+给药途径>\"\n}\n\n### LabReport / ExamReport / ImagingReport\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检验项目名称>\",\n      \"value\": \"<string, 结果数值，原样保留>\",\n      \"unit\": \"<string|null, 单位>\",\n      \"reference_range\": \"<string|null, 参考范围>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n### MedicationRecord\n{\n  \"medications\": [\n    {\n      \"name\": \"<string, 药品名称，含商品名>\",\n      \"dosage\": \"<string|null, 单次剂量>\",\n      \"frequency\": \"<string|null, 给药频次>\",\n      \"route\": \"<string|null, 给药途径>\",\n      \"start_date\": \"<string|null, 开始日期 YYYY-MM-DD>\"\n    }\n  ]\n}\n\n### Other\n{\n  \"content_summary\": \"<string, 内容摘要>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留（如\"44.00\"不要改为\"44\"）\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正（如\"益风湿\"→\"类风湿\"）\n5. 如果原文包含多条药品记录或多张购药凭证，必须全部逐条提取到 medications 数组中，不得遗漏\n6. 如果原文包含多次就诊记录，只提取与上游分类结果中 encounter_date 对应的那次就诊的信息，不要混入其他就诊日期的内容\n7. 诊断列表必须按原文顺序逐条完整提取，不得遗漏、不得合并、不得调整顺序",
+          "temperature": 0.1,
+          "top_p": 0.3
+        }
+      },
+      "downstream": [
+        "Extractor:Critique"
+      ],
+      "upstream": [
+        "Extractor:Classify"
+      ]
+    },
+    "Extractor:Critique": {
+      "obj": {
+        "component_name": "Extractor",
+        "params": {
+          "cite": true,
+          "field_name": "critique_result_kwd",
+          "frequency_penalty": 0.7,
+          "llm_id": "deepseek-v3.2",
+          "max_tokens": 32,
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "presence_penalty": 0.4,
+          "prompts": [
+            {
+              "content": "{Extractor:Extract@chunks}",
+              "role": "user"
+            }
+          ],
+          "sys_prompt": "你是一个医疗数据质量审核专家。审核提取结果是否忠实于原文。\n\n## 上游数据\n分类结果：{classify_result_tks}\n提取结果：{extracted_data_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹。\n\n{\"judgment\": \"<CONFIRMED|HALLUCINATED|UNCERTAIN>\", \"reason\": \"<string, 判断理由>\"}\n\n## 判断标准\n\n- CONFIRMED：提取的关键信息在原文中有对应来源（允许 OCR 纠正和合理格式化）\n- HALLUCINATED：提取结果中包含原文中完全不存在、无法从原文任何部分推断的信息（凭空编造）\n- UNCERTAIN：信息来源模糊，无法确定\n\n## 必须遵守的审核原则（违反任何一条即为误判）\n\n### 原则1：OCR 合理纠正不是幻觉\nOCR 扫描件文字有识别误差是正常的。以下纠正都是正确行为：\n- \"益风湿\" → \"类风湿\"（常见 OCR 错字）\n- \"109/L\" → \"10^9/L\"（OCR 把上标识别为普通数字）\n- \"0.47ml:252ot\" → \"0.47ml:25mg\"（OCR 乱码纠正）\n- \"--\" → \"-\"（参考范围分隔符标准化）\n- \"每次1天\" → \"每天1次\"（OCR 导致的语序错误纠正）\n\n### 原则2：原文中存在的信息不是幻觉\n审核前必须完整阅读原文，不要只看部分段落。如果信息在原文的任何位置出现过，就不是幻觉。特别注意：\n- 处方信息和购药凭证可能同时出现在一个 chunk 中，两者都是有效来源\n- 中药方和西药处方可能分布在原文的不同段落中\n- 出院医嘱中的用药信息是有效的 treatment_plan 来源\n\n### 原则3：格式差异不是幻觉\n以下情况不应判为 HALLUCINATED：\n- dosage 写 \"10mg\" 而原文写 \"每次10mg\"（省略\"每次\"是正确的格式化）\n- 参考范围格式标准化（如 \"3.0--10.0\" → \"3.0-10.0\"）\n- 单位标准化（如 \"g/1\" → \"g/L\"）\n- 缩写标准化（如 \"CR\" → \"Ccr\"）\n\n### 原则4：null 字段不是幻觉\n原文中不存在的字段填 null 是正确行为\n\n### 原则5：购药日期作为 start_date 是合理推断\n购药凭证中的收款日期作为用药开始日期是合理的业务推断，不算幻觉\n\n### 原则6：诊断对该患者正确即可\n如果一个 chunk 包含同一患者的多次就诊记录，提取的诊断在该 chunk 的任何就诊记录中出现过，就不算幻觉\n\n## 判定流程\n1. 完整阅读原文全文\n2. 逐个核对提取结果中的每个字段值\n3. 对于每个值，在原文中寻找对应来源\n4. 只有当某个值在原文中完全找不到任何来源、且无法通过 OCR 纠正或合理推断得到时，才判 HALLUCINATED\n5. 如果只是格式差异、OCR 纠正、合理推断，一律判 CONFIRMED",
+          "temperature": 0.1,
+          "top_p": 0.3
+        }
+      },
+      "downstream": [
+        "Tokenizer:MedEmbed"
+      ],
+      "upstream": [
+        "Extractor:Extract"
+      ]
+    },
+    "Tokenizer:MedEmbed": {
+      "obj": {
+        "component_name": "Tokenizer",
+        "params": {
+          "fields": [
+            "text"
+          ],
+          "filename_embd_weight": 0.1,
+          "outputs": {},
+          "search_method": [
+            "full_text",
+            "embedding"
+          ]
+        }
+      },
+      "downstream": [],
+      "upstream": [
+        "Extractor:Critique"
+      ]
+    }
+  },
+  "globals": {},
+  "graph": {
+    "nodes": [
+      {
+        "data": {
+          "label": "File",
+          "name": "File"
+        },
+        "id": "File",
+        "measured": {
+          "height": 49,
+          "width": 200
+        },
+        "position": {
+          "x": 50,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "beginNode"
+      },
+      {
+        "data": {
+          "form": {
+            "outputs": {
+              "html": {
+                "type": "string",
+                "value": ""
+              },
+              "json": {
+                "type": "Array<object>",
+                "value": []
+              },
+              "markdown": {
+                "type": "string",
+                "value": ""
+              },
+              "text": {
+                "type": "string",
+                "value": ""
+              }
+            },
+            "setups": [
+              {
+                "fileFormat": "pdf",
+                "output_format": "json",
+                "parse_method": "DeepDOC"
+              },
+              {
+                "fileFormat": "spreadsheet",
+                "output_format": "html",
+                "parse_method": "DeepDOC"
+              },
+              {
+                "fileFormat": "image",
+                "output_format": "text",
+                "parse_method": "ocr"
+              },
+              {
+                "fileFormat": "word",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "slides",
+                "output_format": "json",
+                "parse_method": "DeepDOC"
+              },
+              {
+                "fileFormat": "text&markdown",
+                "output_format": "text"
+              },
+              {
+                "fields": [
+                  "from",
+                  "to",
+                  "cc",
+                  "bcc",
+                  "date",
+                  "subject",
+                  "body",
+                  "attachments"
+                ],
+                "fileFormat": "email",
+                "output_format": "text"
+              }
+            ]
+          },
+          "label": "Parser",
+          "name": "Parser_0"
+        },
+        "id": "Parser:MedLink",
+        "measured": {
+          "height": 197,
+          "width": 200
+        },
+        "position": {
+          "x": 320,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "parserNode"
+      },
+      {
+        "data": {
+          "form": {
+            "children_delimiters": [],
+            "chunk_token_size": 1024,
+            "delimiters": [
+              "\n"
+            ],
+            "enable_children": false,
+            "image_table_context_window": 0,
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "overlapped_percent": 0
+          },
+          "label": "Splitter",
+          "name": "Splitter_0"
+        },
+        "id": "Splitter:MedLink",
+        "measured": {
+          "height": 73,
+          "width": 200
+        },
+        "position": {
+          "x": 590,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "splitterNode"
+      },
+      {
+        "data": {
+          "form": {
+            "cite": true,
+            "field_name": "classify_result_tks",
+            "frequency_penalty": 0.7,
+            "llm_id": "deepseek-v3.2",
+            "max_tokens": 256,
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "presence_penalty": 0.4,
+            "prompts": "{Splitter:MedLink@chunks}",
+            "sys_prompt": "你是一个医疗文档分类专家。根据以下医疗文档片段，提取文档类型、就诊日期和科室信息。\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## JSON Schema\n\n{\n  \"type\": \"<string, 必填, 枚举值见下方>\",\n  \"encounter_date\": \"<string|null, 就诊/检验/购药日期, 格式 YYYY-MM-DD>\",\n  \"department\": \"<string|null, 就诊科室, 从原文提取>\"\n}\n\n## type 枚举值（必须使用英文值，禁止使用中文）\n\n- OutpatientRecord — 门诊病历（含复诊记录）\n- AdmissionRecord — 入院记录\n- DischargeRecord — 出院小结/出院记录\n- LabReport — 检验报告（血常规、生化、免疫等）\n- ExamReport — 检查报告（心电图、B超等）\n- ImagingReport — 影像报告（X光、CT、MRI等）\n- SurgeryRecord — 手术记录\n- MedicationRecord — 用药记录/处方/购药凭证/取药单\n- NursingRecord — 护理记录\n- Other — 无法归类的文档（如纯收费票据、广告等）\n\n## 字段提取规则\n\n1. encounter_date：提取文档中的就诊日期、检验日期或购药日期。如有多个日期，取最主要的那个。格式统一为 YYYY-MM-DD。无法确定则填 null。\n2. department：提取文档中的科室名称（如\"骨外科一门诊\"、\"风湿骨科\"、\"内科门诊\"）。无法确定则填 null。\n\n## 示例\n\n输入：济宁市第二人民医院 门（急）诊病历 就诊时间：2023年09月12日 就诊科室：内科门诊 主诉：膝关节，腕关节疼痛2周余\n输出：{\"type\": \"OutpatientRecord\", \"encounter_date\": \"2023-09-12\", \"department\": \"内科门诊\"}\n\n输入：菏泽市定陶区人民医院检验报告单 血沉 44.00 mm/h 0~20\n输出：{\"type\": \"LabReport\", \"encounter_date\": null, \"department\": null}\n\n输入：幸福人大药房 收款日期：2024-09-08 甲氨蝶呤片 2.5mg*16片 67.0元\n输出：{\"type\": \"MedicationRecord\", \"encounter_date\": \"2024-09-08\", \"department\": null}",
+            "temperature": 0.1,
+            "top_p": 0.3
+          },
+          "label": "Extractor",
+          "name": "Classify"
+        },
+        "id": "Extractor:Classify",
+        "measured": {
+          "height": 89,
+          "width": 200
+        },
+        "position": {
+          "x": 860,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "contextNode"
+      },
+      {
+        "data": {
+          "form": {
+            "cite": true,
+            "field_name": "extracted_data_tks",
+            "frequency_penalty": 0.7,
+            "llm_id": "qwen3-max",
+            "max_tokens": 2048,
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "presence_penalty": 0.4,
+            "prompts": "{Extractor:Classify@chunks}",
+            "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取规则\n\n根据分类结果中的 type 字段，按以下 schema 提取：\n\n### OutpatientRecord / AdmissionRecord / DischargeRecord\n{\n  \"chief_complaint\": \"<string|null, 主诉>\",\n  \"present_illness\": \"<string|null, 现病史，保留完整用药史、剂量、频次>\",\n  \"past_history\": \"<string|null, 既往史>\",\n  \"diagnosis\": \"<string|null, 诊断，保留中西医双诊断>\",\n  \"treatment_plan\": \"<string|object|array|null, 治疗方案，保留药品名+剂量+频次+给药途径>\"\n}\n\n### LabReport / ExamReport / ImagingReport\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检验项目名称>\",\n      \"value\": \"<string, 结果数值，原样保留>\",\n      \"unit\": \"<string|null, 单位>\",\n      \"reference_range\": \"<string|null, 参考范围>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n### MedicationRecord\n{\n  \"medications\": [\n    {\n      \"name\": \"<string, 药品名称，含商品名>\",\n      \"dosage\": \"<string|null, 单次剂量>\",\n      \"frequency\": \"<string|null, 给药频次>\",\n      \"route\": \"<string|null, 给药途径>\",\n      \"start_date\": \"<string|null, 开始日期 YYYY-MM-DD>\"\n    }\n  ]\n}\n\n### Other\n{\n  \"content_summary\": \"<string, 内容摘要>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留（如\"44.00\"不要改为\"44\"）\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正（如\"益风湿\"→\"类风湿\"）\n5. 如果原文包含多条药品记录或多张购药凭证，必须全部逐条提取到 medications 数组中，不得遗漏\n6. 如果原文包含多次就诊记录，只提取与上游分类结果中 encounter_date 对应的那次就诊的信息，不要混入其他就诊日期的内容\n7. 诊断列表必须按原文顺序逐条完整提取，不得遗漏、不得合并、不得调整顺序",
+            "temperature": 0.1,
+            "top_p": 0.3
+          },
+          "label": "Extractor",
+          "name": "Extract"
+        },
+        "id": "Extractor:Extract",
+        "measured": {
+          "height": 89,
+          "width": 200
+        },
+        "position": {
+          "x": 1130,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "contextNode"
+      },
+      {
+        "data": {
+          "form": {
+            "cite": true,
+            "field_name": "critique_result_kwd",
+            "frequency_penalty": 0.7,
+            "llm_id": "deepseek-v3.2",
+            "max_tokens": 32,
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "presence_penalty": 0.4,
+            "prompts": "{Extractor:Extract@chunks}",
+            "sys_prompt": "你是一个医疗数据质量审核专家。审核提取结果是否忠实于原文。\n\n## 上游数据\n分类结果：{classify_result_tks}\n提取结果：{extracted_data_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹。\n\n{\"judgment\": \"<CONFIRMED|HALLUCINATED|UNCERTAIN>\", \"reason\": \"<string, 判断理由>\"}\n\n## 判断标准\n\n- CONFIRMED：提取的关键信息在原文中有对应来源（允许 OCR 纠正和合理格式化）\n- HALLUCINATED：提取结果中包含原文中完全不存在、无法从原文任何部分推断的信息（凭空编造）\n- UNCERTAIN：信息来源模糊，无法确定\n\n## 必须遵守的审核原则（违反任何一条即为误判）\n\n### 原则1：OCR 合理纠正不是幻觉\nOCR 扫描件文字有识别误差是正常的。以下纠正都是正确行为：\n- \"益风湿\" → \"类风湿\"（常见 OCR 错字）\n- \"109/L\" → \"10^9/L\"（OCR 把上标识别为普通数字）\n- \"0.47ml:252ot\" → \"0.47ml:25mg\"（OCR 乱码纠正）\n- \"--\" → \"-\"（参考范围分隔符标准化）\n- \"每次1天\" → \"每天1次\"（OCR 导致的语序错误纠正）\n\n### 原则2：原文中存在的信息不是幻觉\n审核前必须完整阅读原文，不要只看部分段落。如果信息在原文的任何位置出现过，就不是幻觉。特别注意：\n- 处方信息和购药凭证可能同时出现在一个 chunk 中，两者都是有效来源\n- 中药方和西药处方可能分布在原文的不同段落中\n- 出院医嘱中的用药信息是有效的 treatment_plan 来源\n\n### 原则3：格式差异不是幻觉\n以下情况不应判为 HALLUCINATED：\n- dosage 写 \"10mg\" 而原文写 \"每次10mg\"（省略\"每次\"是正确的格式化）\n- 参考范围格式标准化（如 \"3.0--10.0\" → \"3.0-10.0\"）\n- 单位标准化（如 \"g/1\" → \"g/L\"）\n- 缩写标准化（如 \"CR\" → \"Ccr\"）\n\n### 原则4：null 字段不是幻觉\n原文中不存在的字段填 null 是正确行为\n\n### 原则5：购药日期作为 start_date 是合理推断\n购药凭证中的收款日期作为用药开始日期是合理的业务推断，不算幻觉\n\n### 原则6：诊断对该患者正确即可\n如果一个 chunk 包含同一患者的多次就诊记录，提取的诊断在该 chunk 的任何就诊记录中出现过，就不算幻觉\n\n## 判定流程\n1. 完整阅读原文全文\n2. 逐个核对提取结果中的每个字段值\n3. 对于每个值，在原文中寻找对应来源\n4. 只有当某个值在原文中完全找不到任何来源、且无法通过 OCR 纠正或合理推断得到时，才判 HALLUCINATED\n5. 如果只是格式差异、OCR 纠正、合理推断，一律判 CONFIRMED",
+            "temperature": 0.1,
+            "top_p": 0.3
+          },
+          "label": "Extractor",
+          "name": "Critique"
+        },
+        "id": "Extractor:Critique",
+        "measured": {
+          "height": 89,
+          "width": 200
+        },
+        "position": {
+          "x": 1400,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "contextNode"
+      },
+      {
+        "data": {
+          "form": {
+            "fields": [
+              "text"
+            ],
+            "filename_embd_weight": 0.1,
+            "outputs": {},
+            "search_method": [
+              "full_text",
+              "embedding"
+            ]
+          },
+          "label": "Tokenizer",
+          "name": "Tokenizer_0"
+        },
+        "id": "Tokenizer:MedEmbed",
+        "measured": {
+          "height": 113,
+          "width": 200
+        },
+        "position": {
+          "x": 1670,
+          "y": 200
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left",
+        "type": "tokenizerNode"
+      }
+    ],
+    "edges": [
+      {
+        "id": "xy-edge__Filestart-Parser:MedLinkend",
+        "source": "File",
+        "sourceHandle": "start",
+        "target": "Parser:MedLink",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Parser:MedLinkstart-Splitter:MedLinkend",
+        "source": "Parser:MedLink",
+        "sourceHandle": "start",
+        "target": "Splitter:MedLink",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Splitter:MedLinkstart-Extractor:Classifyend",
+        "source": "Splitter:MedLink",
+        "sourceHandle": "start",
+        "target": "Extractor:Classify",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Extractor:Classifystart-Extractor:Extractend",
+        "source": "Extractor:Classify",
+        "sourceHandle": "start",
+        "target": "Extractor:Extract",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Extractor:Extractstart-Extractor:Critiqueend",
+        "source": "Extractor:Extract",
+        "sourceHandle": "start",
+        "target": "Extractor:Critique",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Extractor:Critiquestart-Tokenizer:MedEmbedend",
+        "source": "Extractor:Critique",
+        "sourceHandle": "start",
+        "target": "Tokenizer:MedEmbed",
+        "targetHandle": "end"
+      }
+    ]
+  },
+  "history": [],
+  "messages": [],
+  "path": [],
+  "retrieval": [],
+  "variables": {}
+}

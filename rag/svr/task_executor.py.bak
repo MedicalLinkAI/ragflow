@@ -185,17 +185,14 @@ async def collect():
 
     if not redis_msg:
         return None, None
-    logging.info(f"[DEBUG-COLLECT] got redis_msg, msg_id={redis_msg.get_msg_id()}")
     msg = redis_msg.get_message()
     if not msg:
         logging.error(f"collect got empty message of {redis_msg.get_msg_id()}")
         redis_msg.ack()
         return None, None
 
-    logging.info(f"[DEBUG-COLLECT] msg keys={list(msg.keys())}, task_type={msg.get('task_type','?')}, id={msg.get('id','?')}")
     canceled = False
     if msg.get("doc_id", "") in [GRAPH_RAPTOR_FAKE_DOC_ID, CANVAS_DEBUG_DOC_ID]:
-        logging.info(f"[DEBUG-COLLECT] special doc_id branch")
         task = msg
         if task["task_type"] in PIPELINE_SPECIAL_PROGRESS_FREEZE_TASK_TYPES:
             task = TaskService.get_task(msg["id"], msg["doc_ids"])
@@ -203,13 +200,10 @@ async def collect():
                 task["doc_id"] = msg["doc_id"]
                 task["doc_ids"] = msg.get("doc_ids", []) or []
     elif msg.get("task_type") == PipelineTaskType.MEMORY.lower():
-        logging.info(f"[DEBUG-COLLECT] memory branch")
         _, task_obj = TaskService.get_by_id(msg["id"])
         task = task_obj.to_dict()
     else:
-        logging.info(f"[DEBUG-COLLECT] normal branch, calling TaskService.get_task({msg['id']})")
         task = TaskService.get_task(msg["id"])
-        logging.info(f"[DEBUG-COLLECT] get_task returned: {type(task)}, is_none={task is None}")
 
     if task:
         canceled = has_canceled(task["id"])

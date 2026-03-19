@@ -36,7 +36,7 @@ def _get_langfuse_client(tenant_id: str):
       - NO auth_check(): it's a synchronous HTTP call that would block the
         event loop and violate "never impact business latency". If credentials
         are wrong, start_span() will silently fail inside try-except.
-      - TTL-based cache: re-reads DB keys every 5 minutes so key rotation
+      - TTL-based cache: re-reads DB keys every 1 hour so key rotation
         takes effect without process restart. Old clients are replaced.
     """
     if not _LANGFUSE_AVAILABLE:
@@ -111,9 +111,8 @@ def langfuse_span(
                 try:
                     from quart import request as quart_request, g as quart_g
                     trace_input = await quart_request.get_json(silent=True) or {}
-                    trace_id = client.create_trace_id()
-                    # store trace context in request scope so downstream
-                    # LLMBundle.encode_queries etc. can join the same trace
+                    # cross-service: reuse upstream trace_id if passed via header
+                    trace_id = quart_request.headers.get("X-Langfuse-Trace-Id") or client.create_trace_id()
                     quart_g._langfuse_trace_context = {"trace_id": trace_id}
                     span = client.start_span(
                         trace_context={"trace_id": trace_id},
@@ -158,11 +157,18 @@ def langfuse_span(
             client = _get_langfuse_client(tenant_id) if tenant_id else None
 
             span = None
+            trace_id = None
             t0 = time.time()
 
             if client:
                 try:
                     trace_id = client.create_trace_id()
+                    # share trace context for LLMBundle (same as async_wrapper)
+                    try:
+                        from quart import g as quart_g
+                        quart_g._langfuse_trace_context = {"trace_id": trace_id}
+                    except Exception:
+                        pass
                     span = client.start_span(
                         trace_context={"trace_id": trace_id},
                         name=trace_name,

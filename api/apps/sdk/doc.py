@@ -46,6 +46,7 @@ from rag.prompts.generator import cross_languages, keyword_extraction
 from common.string_utils import remove_redundant_spaces
 from common.constants import RetCode, LLMType, ParserType, TaskStatus, FileSource
 from common import settings
+from api.utils.langfuse_trace import langfuse_span
 
 MAXIMUM_OF_UPLOADING_FILES = 256
 
@@ -1416,6 +1417,7 @@ async def update_chunk(tenant_id, dataset_id, document_id, chunk_id):
 
 @manager.route("/retrieval", methods=["POST"])  # noqa: F821
 @token_required
+@langfuse_span("retrieval_api")
 async def retrieval_test(tenant_id):
     """
     Retrieve chunks based on a query.

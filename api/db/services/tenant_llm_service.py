@@ -344,5 +344,16 @@ class LLM4Tenant:
                                 host=langfuse_keys.host)
             if langfuse.auth_check():
                 self.langfuse = langfuse
-                trace_id = self.langfuse.create_trace_id()
-                self.trace_context = {"trace_id": trace_id}
+                # reuse trace_id from request context (set by @langfuse_span decorator)
+                # so encode_queries/chat etc. join the same trace as the API span
+                shared_ctx = None
+                try:
+                    from quart import g as quart_g
+                    shared_ctx = getattr(quart_g, '_langfuse_trace_context', None)
+                except Exception:
+                    pass
+                if shared_ctx:
+                    self.trace_context = shared_ctx
+                else:
+                    trace_id = self.langfuse.create_trace_id()
+                    self.trace_context = {"trace_id": trace_id}

@@ -573,6 +573,10 @@ class OCR:
                     self.text_recognizer = [TextRecognizer(model_dir)]
 
             except Exception:
+                # [EXTENSION] non-default versions have no HuggingFace fallback — fail fast
+                if ocr_version and ocr_version != "PP-OCRv4":
+                    raise
+                # Original behavior: download default (v4) models from HuggingFace
                 model_dir = snapshot_download(repo_id="InfiniFlow/deepdoc",
                                               local_dir=model_dir,
                                               local_dir_use_symlinks=False)

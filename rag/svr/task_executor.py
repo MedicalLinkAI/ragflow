@@ -720,6 +720,14 @@ async def run_dataflow(task: dict):
             add_positions(ck, ck["positions"])
             del ck["positions"]
 
+        # ── 增强：row_positions → row_position_int（与 positions→position_int 对称） ──
+        if "row_positions" in ck:
+            ck["row_position_int"] = [
+                (int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(p[4]))
+                for p in ck["row_positions"]
+            ]
+            del ck["row_positions"]
+
     if metadata:
         e, doc = DocumentService.get_by_id(doc_id)
         if e:

@@ -1081,6 +1081,7 @@ def list_chunks(tenant_id, dataset_id, document_id):
             "image_id": chunk.get("img_id", ""),
             "available": bool(chunk.get("available_int", 1)),
             "positions": chunk.get("position_int", []),
+            "row_position_int": chunk.get("row_position_int", []),
         }
         res["chunks"].append(final_chunk)
         _ = Chunk(**final_chunk)
@@ -1100,6 +1101,7 @@ def list_chunks(tenant_id, dataset_id, document_id):
                 "image_id": sres.field[id].get("img_id", ""),
                 "available": bool(int(sres.field[id].get("available_int", "1"))),
                 "positions": sres.field[id].get("position_int", []),
+                "row_position_int": sres.field[id].get("row_position_int", []),
             }
             res["chunks"].append(d)
             _ = Chunk(**d)  # validate the chunk

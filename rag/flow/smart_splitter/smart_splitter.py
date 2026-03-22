@@ -94,6 +94,8 @@ class SmartSplitter(ProcessBase, LLM):
         # ── Step 1: Build sections from bboxes (same as Splitter) ──
         sections = []  # [(text, position_tag), ...]
         section_images = []
+        # ── 增强：收集每个 bbox 的 row_positions（仅表格 bbox 有） ──
+        section_row_positions = []
         for o in json_result:
             pos_tag = o.get("position_tag", "")
             # Fallback: table/figure bboxes from Parser have positions but no position_tag.
@@ -106,6 +108,7 @@ class SmartSplitter(ProcessBase, LLM):
                 id2image(o.get("img_id"),
                          partial(settings.STORAGE_IMPL.get, tenant_id=self._canvas._tenant_id))
             )
+            section_row_positions.append(o.get("row_positions"))  # ← 增强：透传 row_positions
 
         self.callback(0.1, f"Loaded {len(sections)} OCR bboxes.")
 
@@ -249,6 +252,38 @@ class SmartSplitter(ProcessBase, LLM):
             self.set_output("_ERROR", "Failed to locate any LLM segments in document text.")
             return
 
+        # ── Step 4.5: Sort & deduplicate cut_points by position ──
+        # LLM first_line anchors may match out-of-order when documents contain
+        # repeated headings (e.g. "XX医院门诊病历" appearing 6+ times).
+        # Strategy 3/4 (short match / backtrack) can produce non-monotonic positions,
+        # causing chunk slicing to generate empty or overlapping text ranges.
+        original_len = len(cut_points)
+        cut_points.sort(key=lambda x: x[0])
+        # Deduplicate: if multiple segments matched the same position, keep only the first
+        deduped = []
+        seen_positions = set()
+        for pos, seg in cut_points:
+            if pos not in seen_positions:
+                deduped.append((pos, seg))
+                seen_positions.add(pos)
+            else:
+                logging.warning(
+                    f"[SmartSplitter] Duplicate cut_point at pos={pos}, "
+                    f"dropping segment type={seg.get('type', '?')} dates={seg.get('encounter_dates', [])}"
+                )
+        cut_points = deduped
+        if len(cut_points) != original_len:
+            logging.info(
+                f"[SmartSplitter] cut_points: {original_len} raw → sorted → {len(cut_points)} after dedup"
+            )
+
+        # Debug: log final cut_points for diagnostics
+        for i, (p, s) in enumerate(cut_points):
+            logging.info(
+                f"[SmartSplitter] cut_point[{i}]: pos={p}, type={s.get('type','?')}, "
+                f"dates={s.get('encounter_dates', [])}, first_line='{s.get('first_line', '')[:30]}'"
+            )
+
         # ── Step 5: Extract text slices and assign bboxes/positions ──
         cks = []
         for idx, (start_char, seg_data) in enumerate(cut_points):
@@ -314,6 +349,32 @@ class SmartSplitter(ProcessBase, LLM):
                 "positions": positions,
                 self._param.classify_field: json.dumps(classify_data, ensure_ascii=False),
             }
+
+            # ── 增强：透传 row_positions（仅含表格 section 的 chunk 才有） ──
+            # row_positions[i] 坐标对应 content 中第 i 个 <tr>
+            # 精确裁剪：部分重叠时只取 chunk 文本范围内的 <tr> 对应坐标
+            chunk_row_positions = []
+            for bi, (b_start, b_end) in enumerate(bbox_ranges):
+                if b_end > start_char and b_start < end_char:
+                    if section_row_positions[bi]:
+                        # Fast path: bbox 完全在 chunk 内 → 全部保留
+                        if b_start >= start_char and b_end <= end_char:
+                            chunk_row_positions.extend(section_row_positions[bi])
+                        else:
+                            # Partial overlap: 只取重叠区间内的 <tr> 坐标
+                            bbox_text = full_text[b_start:b_end]
+                            ov_start = max(b_start, start_char) - b_start
+                            ov_end = min(b_end, end_char) - b_start
+                            ov_text = bbox_text[ov_start:ov_end]
+                            tr_in_ov = ov_text.lower().count("<tr")
+                            if tr_in_ov > 0:
+                                tr_before = bbox_text[:ov_start].lower().count("<tr")
+                                chunk_row_positions.extend(
+                                    section_row_positions[bi][tr_before:tr_before + tr_in_ov]
+                                )
+            if chunk_row_positions:
+                ck["row_positions"] = chunk_row_positions
+
             cks.append(ck)
 
         self.callback(0.8, f"Built {len(cks)} chunks. Saving images...")

@@ -344,14 +344,21 @@ class TableStructureRecognizer(Recognizer):
                 hdset.add(i)
 
         if html:
-            return TableStructureRecognizer.__html_table(cap, hdset, TableStructureRecognizer.__cal_spans(boxes, rows, cols, tbl, True))
+            # ── 增强：支持返回行级 bbox（用于字段高亮） ──
+            return TableStructureRecognizer.__html_table(
+                cap, hdset,
+                TableStructureRecognizer.__cal_spans(boxes, rows, cols, tbl, True),
+                rows=rows if kwargs.get("return_row_bboxes") else None,
+            )
 
         return TableStructureRecognizer.__desc_table(cap, hdset, TableStructureRecognizer.__cal_spans(boxes, rows, cols, tbl, False), is_english)
 
     @staticmethod
-    def __html_table(cap, hdset, tbl):
+    def __html_table(cap, hdset, tbl, rows=None):
         # constrcut HTML
         html = "<table>"
+        # ── 增强：行级 bbox 收集（与实际 <tr> 天然一一对应） ──
+        row_bboxes = [] if rows is not None else None
         if cap:
             html += f"<caption>{cap}</caption>"
         for i in range(len(tbl)):
@@ -380,7 +387,7 @@ class TableStructureRecognizer(Recognizer):
 
             if i in hdset:
                 if all([t in hdset for t in txts]):
-                    continue
+                    continue    # ← skip 条件 1：表头去重；跳过的行不收集 bbox
                 for t in txts:
                     hdset.add(t)
 
@@ -388,8 +395,25 @@ class TableStructureRecognizer(Recognizer):
                 row += "</tr>"
             else:
                 row = ""
+                continue        # ← skip 条件 2：空行；跳过的行不收集 bbox
+
             html += "\n" + row
+
+            # ── 增强：skip 判断之后收集，与实际输出的 <tr> 天然一一对应 ──
+            if row_bboxes is not None and i < len(rows) and rows[i]:
+                raw_row = rows[i]
+                row_bboxes.append({
+                    "rn": i,
+                    "page_number": raw_row[0]["page_number"],
+                    "x0": min(b["x0"] for b in raw_row),
+                    "x1": max(b["x1"] for b in raw_row),
+                    "top": min(b["top"] for b in raw_row),
+                    "bottom": max(b["bottom"] for b in raw_row),
+                })
+
         html += "\n</table>"
+        if row_bboxes is not None:
+            return html, row_bboxes
         return html
 
     @staticmethod

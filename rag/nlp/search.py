@@ -91,6 +91,7 @@ class Dealer:
 
         src = req.get("fields",
                       ["docnm_kwd", "content_ltks", "kb_id", "img_id", "title_tks", "important_kwd", "position_int",
+                       "row_position_int",
                        "doc_id", "page_num_int", "top_int", "create_timestamp_flt", "knowledge_graph_kwd",
                        "question_kwd", "question_tks", "doc_type_kwd",
                        "available_int", "content_with_weight", "mom_id", PAGERANK_FLD, TAG_FLD])
@@ -473,6 +474,7 @@ class Dealer:
                 "term_similarity": float(tsim[i]),
                 "vector": chunk.get(vector_column, zero_vector),
                 "positions": position_int,
+                "row_position_int": chunk.get("row_position_int", []),
                 "doc_type_kwd": chunk.get("doc_type_kwd", ""),
                 "mom_id": chunk.get("mom_id", ""),
             }
@@ -641,6 +643,7 @@ class Dealer:
                 "term_similarity": sim,
                 "vector": [0.0] * vector_size,
                 "positions": chunk.get("position_int", []),
+                "row_position_int": chunk.get("row_position_int", []),
                 "doc_type_kwd": chunk.get("doc_type_kwd", "")
             }
             for k in chunk.keys():
@@ -689,6 +692,7 @@ class Dealer:
                 "term_similarity": np.mean([ck["similarity"] for ck in cks]),
                 "vector": [0.0] * vector_size,
                 "positions": chunk.get("position_int", []),
+                "row_position_int": chunk.get("row_position_int", []),
                 "doc_type_kwd": chunk.get("doc_type_kwd", "")
             }
             for k in cks[0].keys():

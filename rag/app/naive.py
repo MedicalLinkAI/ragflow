@@ -560,7 +560,7 @@ class Pdf(PdfParser):
         callback(0.67, "Text merged ({:.2f}s)".format(timer() - start))
 
         if separate_tables_figures:
-            tbls, figures = self._extract_table_figure(True, zoomin, True, True, True)
+            tbls, figures, _ = self._extract_table_figure(True, zoomin, True, True, True)  # ← 增强：忽略 row_bboxes_list（naive 不需要）
             self._concat_downward()
             logging.info("layouts cost: {}s".format(timer() - first_start))
             return [(b["text"], self._line_tag(b, zoomin)) for b in self.boxes], tbls, figures

@@ -889,6 +889,8 @@ class RAGFlowPdfParser:
 
         res = []
         positions = []
+        # ── 增强：对应 res 中每个表格条目的行级 bbox 列表 ──
+        row_bboxes_list = []
         figure_results = []
         figure_positions = []
         # crop figure out and add caption
@@ -913,13 +915,21 @@ class RAGFlowPdfParser:
 
             poss = []
 
-            res.append((cropout(bxs, "table", poss), self.tbl_det.construct_table(bxs, html=return_html, is_english=self.is_english)))
+            # ── 增强：获取行级 bbox 用于字段高亮 ──
+            tbl_html_result = self.tbl_det.construct_table(bxs, html=return_html, is_english=self.is_english, return_row_bboxes=True)
+            if isinstance(tbl_html_result, tuple):
+                tbl_html, tbl_row_bboxes = tbl_html_result
+            else:
+                tbl_html, tbl_row_bboxes = tbl_html_result, []
+            res.append((cropout(bxs, "table", poss), tbl_html))
+            row_bboxes_list.append(tbl_row_bboxes)
             positions.append(poss)
 
         if separate_tables_figures:
             assert len(positions) + len(figure_positions) == len(res) + len(figure_results)
             if need_position:
-                return list(zip(res, positions)), list(zip(figure_results, figure_positions))
+                # ── 增强：同时返回 row_bboxes_list（与 tbls 一一对应） ──
+                return list(zip(res, positions)), list(zip(figure_results, figure_positions)), row_bboxes_list
             else:
                 return res, figure_results
         else:
@@ -1213,9 +1223,10 @@ class RAGFlowPdfParser:
             callback(0.92, "Text merged ({:.2f}s)".format(timer() - start))
 
         start = timer()
-        tbls, figs = self._extract_table_figure(True, zoomin, True, True, True)
+        # ── 增强：接收 row_bboxes_list（与 tbls 一一对应） ──
+        tbls, figs, tbl_row_bboxes_list = self._extract_table_figure(True, zoomin, True, True, True)
 
-        def insert_table_figures(tbls_or_figs, layout_type):
+        def insert_table_figures(tbls_or_figs, layout_type, row_bboxes_all=None):
             def min_rectangle_distance(rect1, rect2):
                 pn1, left1, right1, top1, bottom1 = rect1
                 pn2, left2, right2, top2, bottom2 = rect2
@@ -1233,12 +1244,12 @@ class RAGFlowPdfParser:
                     dy = top1 - bottom2
                 else:
                     dy = 0
-                return math.sqrt(dx * dx + dy * dy)  # + (pn2-pn1)*10000
+                return math.sqrt(dx * dx + dy * dy) + abs(pn1 - pn2) * 10000
 
-            for (img, txt), poss in tbls_or_figs:
+            for idx, ((img, txt), poss) in enumerate(tbls_or_figs):
                 bboxes = [(i, (b["page_number"], b["x0"], b["x1"], b["top"], b["bottom"])) for i, b in enumerate(self.boxes)]
                 dists = [
-                    (min_rectangle_distance((pn, left, right, top + self.page_cum_height[pn], bott + self.page_cum_height[pn]), rect), i) for i, rect in bboxes for pn, left, right, top, bott in poss
+                    (min_rectangle_distance((pn + 1, left, right, top + self.page_cum_height[pn], bott + self.page_cum_height[pn]), rect), i) for i, rect in bboxes for pn, left, right, top, bott in poss
                 ]
                 min_i = np.argmin(dists, axis=0)[0]
                 min_i, rect = bboxes[dists[min_i][-1]]
@@ -1247,27 +1258,43 @@ class RAGFlowPdfParser:
                 pn, left, right, top, bott = poss[0]
                 if self.boxes[min_i]["bottom"] < top + self.page_cum_height[pn]:
                     min_i += 1
-                self.boxes.insert(
-                    min_i,
-                    {
-                        "page_number": pn + 1,
-                        "x0": left,
-                        "x1": right,
-                        "top": top + self.page_cum_height[pn],
-                        "bottom": bott + self.page_cum_height[pn],
-                        "layout_type": layout_type,
-                        "text": txt,
-                        "image": img,
-                        "positions": [[pn + 1, int(left), int(right), int(top), int(bott)]],
-                    },
-                )
+
+                # ── 增强：将行级 bbox 转换为页面相对坐标 ──
+                row_positions = None
+                if row_bboxes_all and idx < len(row_bboxes_all) and row_bboxes_all[idx]:
+                    row_positions = []
+                    for rb in row_bboxes_all[idx]:
+                        rb_pn = rb["page_number"] - 1  # 0-indexed
+                        ht = self.page_cum_height[rb_pn]
+                        row_positions.append([
+                            rb_pn + 1,                   # page（1-indexed，与 position_int 一致）
+                            int(rb["x0"]),               # x0
+                            int(rb["x1"]),               # x1
+                            int(rb["top"] - ht),         # top（页面相对坐标）
+                            int(rb["bottom"] - ht),      # bottom（页面相对坐标）
+                        ])
+
+                box_entry = {
+                    "page_number": pn + 1,
+                    "x0": left,
+                    "x1": right,
+                    "top": top + self.page_cum_height[pn],
+                    "bottom": bott + self.page_cum_height[pn],
+                    "layout_type": layout_type,
+                    "text": txt,
+                    "image": img,
+                    "positions": [[pn + 1, int(left), int(right), int(top), int(bott)]],
+                }
+                if row_positions is not None:
+                    box_entry["row_positions"] = row_positions  # ← 增强字段
+                self.boxes.insert(min_i, box_entry)
 
         for b in self.boxes:
             b["position_tag"] = self._line_tag(b, zoomin)
             b["image"] = self.crop(b["position_tag"], zoomin)
             b["positions"] = [[pos[0][-1] + 1, *pos[1:]] for pos in RAGFlowPdfParser.extract_positions(b["position_tag"])]
 
-        insert_table_figures(tbls, "table")
+        insert_table_figures(tbls, "table", row_bboxes_all=tbl_row_bboxes_list)
         insert_table_figures(figs, "figure")
         if callback:
             callback(1, "Structured ({:.2f}s)".format(timer() - start))

@@ -556,13 +556,11 @@ class OCR:
             - "PP-OCRv5": uses rag/res/deepdoc/PP-OCRv5/ — PP-OCRv5 ONNX models
         """
         if not model_dir:
+            # [EXTENSION] resolve target model directory based on version — shared by try and except
+            model_dir = os.path.join(
+                get_project_base_directory(),
+                "rag/res/deepdoc/PP-OCRv5" if ocr_version == "PP-OCRv5" else "rag/res/deepdoc")
             try:
-                # [EXTENSION] 1-line version routing — all downstream logic unchanged from upstream
-                sub = "rag/res/deepdoc/PP-OCRv5" if ocr_version == "PP-OCRv5" else "rag/res/deepdoc"
-                model_dir = os.path.join(
-                        get_project_base_directory(),
-                        sub)
-                
                 # Append muti-gpus task to the list
                 if settings.PARALLEL_DEVICES > 0:
                     self.text_detector = []
@@ -576,7 +574,7 @@ class OCR:
 
             except Exception:
                 model_dir = snapshot_download(repo_id="InfiniFlow/deepdoc",
-                                              local_dir=os.path.join(get_project_base_directory(), "rag/res/deepdoc"),
+                                              local_dir=model_dir,
                                               local_dir_use_symlinks=False)
                 
                 if settings.PARALLEL_DEVICES > 0:

@@ -37,7 +37,7 @@ except Exception:
         pass
 
 
-AlgorithmType = Literal["PaddleOCR-VL"]
+AlgorithmType = Literal["PaddleOCR-VL", "PaddleOCR-VL-1.5"]
 SectionTuple = tuple[str, ...]
 TableTuple = tuple[str, ...]
 ParseResult = tuple[list[SectionTuple], list[TableTuple]]
@@ -133,6 +133,8 @@ class PaddleOCRConfig:
         algorithm_config: dict[str, Any] = {}
         if algorithm == "PaddleOCR-VL":
             algorithm_config = asdict(PaddleOCRVLConfig())
+        elif algorithm == "PaddleOCR-VL-1.5":
+            algorithm_config = asdict(PaddleOCRVLConfig())
         algorithm_config_user = cfg.get("algorithm_config")
         if isinstance(algorithm_config_user, dict):
             algorithm_config.update({k: v for k, v in algorithm_config_user.items() if v is not None})
@@ -171,6 +173,35 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
     _ALGORITHM_FIELD_MAPPINGS: ClassVar[dict[str, dict[str, str]]] = {
         "PaddleOCR-VL": {
+            "use_doc_orientation_classify": "useDocOrientationClassify",
+            "use_doc_unwarping": "useDocUnwarping",
+            "use_layout_detection": "useLayoutDetection",
+            "use_chart_recognition": "useChartRecognition",
+            "use_seal_recognition": "useSealRecognition",
+            "use_ocr_for_image_block": "useOcrForImageBlock",
+            "layout_threshold": "layoutThreshold",
+            "layout_nms": "layoutNms",
+            "layout_unclip_ratio": "layoutUnclipRatio",
+            "layout_merge_bboxes_mode": "layoutMergeBboxesMode",
+            "layout_shape_mode": "layoutShapeMode",
+            "prompt_label": "promptLabel",
+            "format_block_content": "formatBlockContent",
+            "repetition_penalty": "repetitionPenalty",
+            "temperature": "temperature",
+            "top_p": "topP",
+            "min_pixels": "minPixels",
+            "max_pixels": "maxPixels",
+            "max_new_tokens": "maxNewTokens",
+            "merge_layout_blocks": "mergeLayoutBlocks",
+            "markdown_ignore_labels": "markdownIgnoreLabels",
+            "vlm_extra_args": "vlmExtraArgs",
+            "restructure_pages": "restructurePages",
+            "merge_tables": "mergeTables",
+            "relevel_titles": "relevelTitles",
+        },
+        # PaddleOCR-VL-1.5: same HTTP API interface as PaddleOCR-VL (unified interface per official docs).
+        # Model version is determined by which server is deployed (--model_name PaddleOCR-VL-1.5-0.9B).
+        "PaddleOCR-VL-1.5": {
             "use_doc_orientation_classify": "useDocOrientationClassify",
             "use_doc_unwarping": "useDocUnwarping",
             "use_layout_detection": "useLayoutDetection",

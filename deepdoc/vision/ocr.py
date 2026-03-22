@@ -540,7 +540,7 @@ class TextDetector:
 
 
 class OCR:
-    def __init__(self, model_dir=None):
+    def __init__(self, model_dir=None, ocr_version=None):
         """
         If you have trouble downloading HuggingFace models, -_^ this might help!!
 
@@ -551,38 +551,42 @@ class OCR:
         Good luck
         ^_-
 
+        Args:
+            model_dir: explicit model directory path. If None, resolved automatically by ocr_version.
+            ocr_version: OCR model version to use. Supported values:
+                - None or "PP-OCRv4" (default): uses rag/res/deepdoc/ (PP-OCRv4 ONNX models)
+                - "PP-OCRv5": uses rag/res/deepdoc/PP-OCRv5/ (PP-OCRv5 ONNX models)
         """
         if not model_dir:
-            try:
-                model_dir = os.path.join(
-                        get_project_base_directory(),
-                        "rag/res/deepdoc")
-                
-                # Append muti-gpus task to the list
-                if settings.PARALLEL_DEVICES > 0:
-                    self.text_detector = []
-                    self.text_recognizer = []
-                    for device_id in range(settings.PARALLEL_DEVICES):
-                        self.text_detector.append(TextDetector(model_dir, device_id))
-                        self.text_recognizer.append(TextRecognizer(model_dir, device_id))
-                else:
-                    self.text_detector = [TextDetector(model_dir)]
-                    self.text_recognizer = [TextRecognizer(model_dir)]
+            base_dir = os.path.join(get_project_base_directory(), "rag/res/deepdoc")
+            if ocr_version == "PP-OCRv5":
+                model_dir = os.path.join(base_dir, "PP-OCRv5")
+            else:
+                model_dir = base_dir  # default: PP-OCRv4
 
-            except Exception:
-                model_dir = snapshot_download(repo_id="InfiniFlow/deepdoc",
-                                              local_dir=os.path.join(get_project_base_directory(), "rag/res/deepdoc"),
-                                              local_dir_use_symlinks=False)
-                
-                if settings.PARALLEL_DEVICES > 0:
-                    self.text_detector = []
-                    self.text_recognizer = []
-                    for device_id in range(settings.PARALLEL_DEVICES):
-                        self.text_detector.append(TextDetector(model_dir, device_id))
-                        self.text_recognizer.append(TextRecognizer(model_dir, device_id))
-                else:
-                    self.text_detector = [TextDetector(model_dir)]
-                    self.text_recognizer = [TextRecognizer(model_dir)]
+        def _init_detectors_recognizers(md):
+            if settings.PARALLEL_DEVICES > 0:
+                self.text_detector = []
+                self.text_recognizer = []
+                for device_id in range(settings.PARALLEL_DEVICES):
+                    self.text_detector.append(TextDetector(md, device_id))
+                    self.text_recognizer.append(TextRecognizer(md, device_id))
+            else:
+                self.text_detector = [TextDetector(md)]
+                self.text_recognizer = [TextRecognizer(md)]
+
+        try:
+            _init_detectors_recognizers(model_dir)
+        except Exception:
+            # HuggingFace fallback: only for default PP-OCRv4 path
+            if ocr_version is None or ocr_version == "PP-OCRv4":
+                model_dir = snapshot_download(
+                    repo_id="InfiniFlow/deepdoc",
+                    local_dir=os.path.join(get_project_base_directory(), "rag/res/deepdoc"),
+                    local_dir_use_symlinks=False)
+                _init_detectors_recognizers(model_dir)
+            else:
+                raise
 
         self.drop_score = 0.5
         self.crop_image_res_index = 0

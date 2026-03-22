@@ -555,26 +555,13 @@ class OCR:
             - None (default): uses rag/res/deepdoc/ — PP-OCRv4 ONNX models (original behavior)
             - "PP-OCRv5": uses rag/res/deepdoc/PP-OCRv5/ — PP-OCRv5 ONNX models
         """
-        # [EXTENSION] PP-OCRv5: resolve model directory upfront, then init directly (no HuggingFace fallback)
-        if not model_dir and ocr_version == "PP-OCRv5":
-            model_dir = os.path.join(
-                get_project_base_directory(), "rag/res/deepdoc", "PP-OCRv5")
-            if settings.PARALLEL_DEVICES > 0:
-                self.text_detector = []
-                self.text_recognizer = []
-                for device_id in range(settings.PARALLEL_DEVICES):
-                    self.text_detector.append(TextDetector(model_dir, device_id))
-                    self.text_recognizer.append(TextRecognizer(model_dir, device_id))
-            else:
-                self.text_detector = [TextDetector(model_dir)]
-                self.text_recognizer = [TextRecognizer(model_dir)]
-
-        # [ORIGINAL] PP-OCRv4 default path with HuggingFace fallback — unchanged from upstream
         if not model_dir:
             try:
+                # [EXTENSION] 1-line version routing — all downstream logic unchanged from upstream
+                sub = "rag/res/deepdoc/PP-OCRv5" if ocr_version == "PP-OCRv5" else "rag/res/deepdoc"
                 model_dir = os.path.join(
                         get_project_base_directory(),
-                        "rag/res/deepdoc")
+                        sub)
                 
                 # Append muti-gpus task to the list
                 if settings.PARALLEL_DEVICES > 0:

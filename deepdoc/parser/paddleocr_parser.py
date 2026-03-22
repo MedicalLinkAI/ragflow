@@ -126,7 +126,7 @@ class PaddleOCRConfig:
         algorithm = cfg.get("algorithm", "PaddleOCR-VL")
 
         # Validate algorithm
-        if algorithm not in ("PaddleOCR-VL"):
+        if algorithm not in ("PaddleOCR-VL", "PaddleOCR-VL-1.5"):
             raise ValueError(f"Unsupported algorithm: {algorithm}")
 
         # Extract algorithm-specific configuration
@@ -419,7 +419,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
         """Convert API response to section tuples."""
         sections: list[SectionTuple] = []
 
-        if algorithm in ("PaddleOCR-VL",):
+        if algorithm in ("PaddleOCR-VL", "PaddleOCR-VL-1.5"):
             layout_parsing_results = result.get("layoutParsingResults", [])
 
             for page_idx, layout_result in enumerate(layout_parsing_results):

@@ -759,16 +759,18 @@ export const useSubmitPaddleOCR = () => {
       if (!isVerify) {
         setSaveLoading(true);
       }
-      const cfg: any = {
-        ...payload,
-      };
-      const req: IAddLlmRequestBody = {
+      // 后端 apikey_json(["paddleocr_api_url", "paddleocr_access_token", "paddleocr_algorithm"])
+      // 从 req 顶层取字段，不能嵌套在 api_key 里，需要 flatten 发送
+      const req = {
         llm_factory: LLMFactory.PaddleOCR,
         llm_name: payload.llm_name,
         model_type: 'ocr',
-        api_key: cfg,
         api_base: '',
         max_tokens: 0,
+        // flatten paddleocr fields to top-level so backend apikey_json can find them
+        paddleocr_api_url: payload.paddleocr_api_url,
+        paddleocr_access_token: payload.paddleocr_access_token ?? '',
+        paddleocr_algorithm: payload.paddleocr_algorithm,
       };
       const ret = await addLlm({ ...req, verify: isVerify });
       if (!isVerify) {

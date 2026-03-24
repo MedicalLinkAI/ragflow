@@ -6,7 +6,7 @@ import { buildOptions } from '@/utils/form';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-const algorithmOptions = buildOptions(['PaddleOCR-VL']);
+const algorithmOptions = buildOptions(['PaddleOCR-VL', 'PaddleOCR-VL-1.5']);
 
 export function PaddleOCROptionsFormField({
   namePrefix = 'parser_config',
@@ -57,7 +57,10 @@ export function PaddleOCROptionsFormField({
 
       <RAGFlowFormItem
         name={buildName('paddleocr_access_token')}
-        label={t('knowledgeConfiguration.paddleocrAccessToken', 'AI Studio Access Token')}
+        label={t(
+          'knowledgeConfiguration.paddleocrAccessToken',
+          'AI Studio Access Token',
+        )}
         tooltip={t(
           'knowledgeConfiguration.paddleocrAccessTokenTip',
           'Access token for PaddleOCR API (optional)',
@@ -67,14 +70,19 @@ export function PaddleOCROptionsFormField({
         {(field) => (
           <Input
             {...field}
-            placeholder={t('knowledgeConfiguration.paddleocrAccessTokenPlaceholder')}
+            placeholder={t(
+              'knowledgeConfiguration.paddleocrAccessTokenPlaceholder',
+            )}
           />
         )}
       </RAGFlowFormItem>
 
       <RAGFlowFormItem
         name={buildName('paddleocr_algorithm')}
-        label={t('knowledgeConfiguration.paddleocrAlgorithm', 'PaddleOCR Algorithm')}
+        label={t(
+          'knowledgeConfiguration.paddleocrAlgorithm',
+          'PaddleOCR Algorithm',
+        )}
         tooltip={t(
           'knowledgeConfiguration.paddleocrAlgorithmTip',
           'Algorithm to use for PaddleOCR parsing',

@@ -231,3 +231,13 @@ internal/cpp/cmake-build-debug/
 # Go server build output
 bin/*
 !bin/.gitkeep
+
+# ragflow-research 本地隔离环境配置（不提交，不合并）
+conf/service_conf.yaml
+conf/service_conf.yaml.backup
+web/vite.config.ts
+start-research.sh
+test_ocr_complete.py
+test_ocr_minimal.py
+test_ocr_standalone.py
+test_ocr_versions.py

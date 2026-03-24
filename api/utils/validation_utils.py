@@ -389,6 +389,12 @@ class ParserConfig(Base):
     task_page_size: Annotated[int | None, Field(default=None, ge=1)]
     pages: Annotated[list[list[int]] | None, Field(default=None)]
     ext: Annotated[dict, Field(default={})]
+    # PaddleOCR-VL parser options (per-dataset override)
+    paddleocr_api_url: Annotated[str | None, Field(default=None)]
+    paddleocr_access_token: Annotated[str | None, Field(default=None)]
+    paddleocr_algorithm: Annotated[str | None, Field(default=None)]
+    # DeepDOC OCR version selector (per-dataset override): None=default(PP-OCRv4), "PP-OCRv5"=v5
+    ocr_version: Annotated[str | None, Field(default=None)]
 
 
 class CreateDatasetReq(Base):

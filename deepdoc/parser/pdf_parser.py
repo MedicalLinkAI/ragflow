@@ -67,7 +67,9 @@ class RAGFlowPdfParser:
 
         """
 
-        self.ocr = OCR()
+        # [EXTENSION] support ocr_version routing: None=default(v4), "PP-OCRv5"=v5
+        ocr_version = kwargs.get("ocr_version", None)
+        self.ocr = OCR(ocr_version=ocr_version)
         self.parallel_limiter = None
         if settings.PARALLEL_DEVICES > 1:
             self.parallel_limiter = [asyncio.Semaphore(1) for _ in range(settings.PARALLEL_DEVICES)]

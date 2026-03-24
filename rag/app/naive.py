@@ -86,7 +86,10 @@ def _normalize_section_text_for_rtl_presentation_forms(sections):
 def by_deepdoc(filename, binary=None, from_page=0, to_page=100000, lang="Chinese", callback=None, pdf_cls=None, **kwargs):
     callback = callback
     binary = binary
-    pdf_parser = pdf_cls() if pdf_cls else Pdf()
+    # [EXTENSION] support ocr_version from parser_config for PP-OCRv5 routing
+    parser_config = kwargs.get("parser_config", {})
+    ocr_version = parser_config.get("ocr_version", None)
+    pdf_parser = pdf_cls(ocr_version=ocr_version) if pdf_cls else Pdf(ocr_version=ocr_version)
     sections, tables = pdf_parser(filename if not binary else binary, from_page=from_page, to_page=to_page, callback=callback)
 
     tables = vision_figure_parser_pdf_wrapper(
@@ -534,8 +537,8 @@ class Docx(DocxParser):
 
 
 class Pdf(PdfParser):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def __call__(self, filename, binary=None, from_page=0, to_page=100000, zoomin=3, callback=None, separate_tables_figures=False):
         start = timer()

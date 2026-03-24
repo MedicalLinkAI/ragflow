@@ -224,7 +224,7 @@ async def add_llm():
         api_key = apikey_json(["api_key", "provider_order"])
 
     elif factory == "PaddleOCR":
-        api_key = apikey_json(["api_key", "provider_order"])
+        api_key = apikey_json(["paddleocr_api_url", "paddleocr_access_token", "paddleocr_algorithm"])
 
     llm = {
         "tenant_id": current_user.id,

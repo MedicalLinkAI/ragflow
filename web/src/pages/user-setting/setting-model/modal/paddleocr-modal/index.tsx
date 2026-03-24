@@ -28,7 +28,7 @@ const FormSchema = z.object({
     message: t('setting.paddleocr.apiUrlRequired'),
   }),
   paddleocr_access_token: z.string().optional(),
-  paddleocr_algorithm: z.string().default('PaddleOCR-VL'),
+  paddleocr_algorithm: z.string().default('PaddleOCR-VL-1.5'),
 });
 
 export type PaddleOCRFormValues = z.infer<typeof FormSchema>;
@@ -45,6 +45,7 @@ export interface IModalProps<T> {
 
 const algorithmOptions: RAGFlowSelectOptionType[] = [
   { label: 'PaddleOCR-VL', value: 'PaddleOCR-VL' },
+  { label: 'PaddleOCR-VL-1.5', value: 'PaddleOCR-VL-1.5' },
 ];
 
 const PaddleOCRModal = ({
@@ -59,7 +60,7 @@ const PaddleOCRModal = ({
   const form = useForm<PaddleOCRFormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      paddleocr_algorithm: 'PaddleOCR-VL',
+      paddleocr_algorithm: 'PaddleOCR-VL-1.5',
     },
   });
 

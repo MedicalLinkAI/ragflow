@@ -55,7 +55,14 @@ def list_agents(tenant_id):
         desc = False
     else:
         desc = True
-    canvas = UserCanvasService.get_list(tenant_id, page_number, items_per_page, order_by, desc, id, title)
+    # Support canvas_category param; default to Agent for backward compatibility.
+    # Pass canvas_category=dataflow_canvas to query DataFlow pipeline canvases.
+    canvas_category_param = request.args.get("canvas_category")
+    if canvas_category_param and canvas_category_param in [c.value for c in CanvasCategory]:
+        canvas_category = CanvasCategory(canvas_category_param)
+    else:
+        canvas_category = CanvasCategory.Agent
+    canvas = UserCanvasService.get_list(tenant_id, page_number, items_per_page, order_by, desc, id, title, canvas_category)
     return get_result(data=canvas)
 
 

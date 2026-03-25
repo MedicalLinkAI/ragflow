@@ -1,0 +1,961 @@
+{
+  "path": [],
+  "graph": {
+    "edges": [
+      {
+        "id": "xy-edge__Filestart-Parser:MedLinkend",
+        "type": "buttonEdge",
+        "source": "File",
+        "target": "Parser:MedLink",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:LabExamend",
+        "type": "buttonEdge",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:LabExam",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Imagingend",
+        "type": "buttonEdge",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Imaging",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Clinicalend",
+        "data": {
+          "isHovered": false
+        },
+        "type": "buttonEdge",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Clinical",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkMerger:Mergerstart-Tokenizer:MedEmbedend",
+        "type": "buttonEdge",
+        "source": "ChunkMerger:Merger",
+        "target": "Tokenizer:MedEmbed",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Parser:MedLinkstart-SmartSplitter:MedLinkend",
+        "type": "buttonEdge",
+        "source": "Parser:MedLink",
+        "target": "SmartSplitter:MedLink",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__SmartSplitter:MedLinkstart-ChunkRouter:Routerend",
+        "type": "buttonEdge",
+        "source": "SmartSplitter:MedLink",
+        "target": "ChunkRouter:Router",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Tokenizer:MedEmbedstart-Invoke:SyncChunksend",
+        "type": "buttonEdge",
+        "source": "Tokenizer:MedEmbed",
+        "target": "Invoke:SyncChunks",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Medicationend",
+        "data": {
+          "isHovered": false
+        },
+        "type": "buttonEdge",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Medication",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__ChunkRouter:Routerstart-Extractor:Prescriptionend",
+        "data": {
+          "isHovered": false
+        },
+        "type": "buttonEdge",
+        "source": "ChunkRouter:Router",
+        "target": "Extractor:Prescription",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      },
+      {
+        "id": "xy-edge__Extractor:Medicationstart-ChunkMerger:Mergerend",
+        "data": {
+          "isHovered": false
+        },
+        "type": "buttonEdge",
+        "source": "Extractor:Medication",
+        "target": "ChunkMerger:Merger",
+        "sourceHandle": "start",
+        "targetHandle": "end"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "File",
+        "data": {
+          "name": "File",
+          "label": "File"
+        },
+        "type": "beginNode",
+        "measured": {
+          "width": 200,
+          "height": 49
+        },
+        "position": {
+          "x": 50,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Parser:MedLink",
+        "data": {
+          "form": {
+            "setups": [
+              {
+                "fileFormat": "pdf",
+                "parse_method": "DeepDOC",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "spreadsheet",
+                "parse_method": "DeepDOC",
+                "output_format": "html"
+              },
+              {
+                "fileFormat": "image",
+                "parse_method": "ocr",
+                "output_format": "text"
+              },
+              {
+                "fileFormat": "word",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "slides",
+                "parse_method": "DeepDOC",
+                "output_format": "json"
+              },
+              {
+                "fileFormat": "text&markdown",
+                "output_format": "text"
+              },
+              {
+                "fields": [
+                  "from",
+                  "to",
+                  "cc",
+                  "bcc",
+                  "date",
+                  "subject",
+                  "body",
+                  "attachments"
+                ],
+                "fileFormat": "email",
+                "output_format": "text"
+              }
+            ],
+            "outputs": {
+              "html": {
+                "type": "string",
+                "value": ""
+              },
+              "json": {
+                "type": "Array<object>",
+                "value": []
+              },
+              "text": {
+                "type": "string",
+                "value": ""
+              },
+              "markdown": {
+                "type": "string",
+                "value": ""
+              }
+            }
+          },
+          "name": "Parser_0",
+          "label": "Parser"
+        },
+        "type": "parserNode",
+        "measured": {
+          "width": 200,
+          "height": 197
+        },
+        "position": {
+          "x": 300,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Tokenizer:MedEmbed",
+        "data": {
+          "form": {
+            "fields": [
+              "text"
+            ],
+            "outputs": {},
+            "search_method": [
+              "full_text",
+              "embedding"
+            ],
+            "filename_embd_weight": 0.1
+          },
+          "name": "Tokenizer_0",
+          "label": "Tokenizer"
+        },
+        "type": "tokenizerNode",
+        "measured": {
+          "width": 200,
+          "height": 113
+        },
+        "position": {
+          "x": 2050,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "ChunkRouter:Router",
+        "data": {
+          "form": {
+            "route_map": {
+              "Other": "chunks_Medication",
+              "LabReport": "chunks_LabExam",
+              "ExamReport": "chunks_LabExam",
+              "ImagingReport": "chunks_Imaging",
+              "NursingRecord": "chunks_Clinical",
+              "SurgeryRecord": "chunks_Clinical",
+              "AdmissionRecord": "chunks_Clinical",
+              "DischargeRecord": "chunks_Clinical",
+              "MedicationRecord": "chunks_Medication",
+              "OutpatientRecord": "chunks_Clinical",
+              "PrescriptionRecord": "chunks_Prescription"
+            },
+            "default_route": "chunks_Medication",
+            "type_json_key": "type",
+            "classify_field": "classify_result_tks"
+          },
+          "name": "Router",
+          "label": "ChunkRouter"
+        },
+        "type": "ragNode",
+        "measured": {
+          "width": 200,
+          "height": 49
+        },
+        "position": {
+          "x": 1050,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:LabExam",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_LabExam}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗检验检查报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（LabReport / ExamReport / ImagingReport 通用）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检验项目中文名称>\",\n      \"name_en\": \"<string|null, 检验项目英文缩写>\",\n      \"item_code\": \"<string|null, 项目编码>\",\n      \"value\": \"<string, 结果数值，原样保留>\",\n      \"unit\": \"<string|null, 单位>\",\n      \"reference_range\": \"<string|null, 参考范围>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留（如\"44.00\"不要改为\"44\"）\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正\n5. 每个检验项目都必须逐条提取到 items 数组中，不得遗漏\n6. 项目名称提取规则：\n   - 如果报告有中文名和英文缩写两列，name 填中文全名，name_en 填英文缩写\n   - 如果只有中文名，name 填中文名，name_en 填 null\n   - 如果只有英文缩写，name 填英文缩写，name_en 填 null（不要翻译）\n   示例（双列报告）：\n   原文：| ALT | 丙氨酸氨基转移酶 | 16.9 | U/L | 7.0-40.0 |\n   输出：{\"name\": \"丙氨酸氨基转移酶\", \"name_en\": \"ALT\", \"value\": \"16.9\", \"unit\": \"U/L\", \"reference_range\": \"7.0-40.0\", \"abnormal\": false}",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "LabExam",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 100
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Imaging",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Imaging}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗影像报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（ImagingReport）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检查项目名称>\",\n      \"value\": \"<string, 检查所见/结果描述，原样保留>\",\n      \"unit\": \"<string|null, 单位，影像通常为null>\",\n      \"reference_range\": \"<string|null, 参考范围，影像通常为null>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 影像报告的 value 字段应保留完整的检查所见描述\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Imaging",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 250
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Clinical",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Clinical}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗病历结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的就诊时间标识）：输出 JSON 数组，每个元素为一条记录的完整提取结果\n\n## 提取 Schema（OutpatientRecord / AdmissionRecord / DischargeRecord / SurgeryRecord / NursingRecord）\n\n{\n  \"encounter_date\": \"<string|null, 该条记录的就诊日期 YYYY-MM-DD, 多记录时必填>\",\n  \"chief_complaint\": \"<string|null, 主诉>\",\n  \"present_illness\": \"<string|null, 现病史，保留完整用药史、剂量、频次>\",\n  \"past_history\": \"<string|null, 既往史>\",\n  \"diagnosis\": \"<string|null, 诊断，保留中西医双诊断>\",\n  \"treatment_plan\": \"<string|object|array|null, 治疗方案，保留药品名+剂量+频次+给药途径>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留\n4. OCR 纠错规则（重要）：\n   - 医学术语中的常见 OCR 错别字必须纠正为正确写法：\n     ✗ \"类风显性关节炎\" → ✓ \"类风湿性关节炎\"（\"湿\"=氵+显，OCR 常丢失三点水偏旁）\n     ✗ \"美洛昔庚\" → ✓ \"美洛昔康\"（药名标准写法）\n   - 日期中出现月份=00或日期=00为 OCR 数字错误，尝试从上下文（如票据编号、正文日期）推断正确日期。\n     若无法推断，保留原值并在该记录中添加 \"date_uncertain\": true\n     ✗ \"2023-10-00\" → 可能是 \"2023-10-02\"（OCR 将\"2\"误识别为\"0\"）\n     ✗ \"2023-00-15\" → 可能是 \"2023-09-13\"（OCR 将\"09\"误识别为\"00\"）\n   - 纠正原则：仅纠正高置信度的标准医学术语和明显无效格式，不得对非标准文本臆测\n5. 如果原文包含多次就诊记录，必须逐条提取每次就诊的完整信息，不得遗漏\n6. 诊断列表必须按原文顺序逐条完整提取，不得遗漏、不得合并\n\n## 示例：多次门诊记录\n\n上游分类：{\"type\": \"OutpatientRecord\", \"record_count\": 2, \"encounter_dates\": [\"2023-09-12\", \"2023-09-26\"], \"department\": \"内科门诊\"}\n\n输出：\n[\n  {\n    \"encounter_date\": \"2023-09-12\",\n    \"chief_complaint\": \"膝关节，腕关节疼痛2周余\",\n    \"present_illness\": \"患者自述3年前无明显诱因下出现多关节肿痛，于外院就诊后确诊为类风湿性关节炎\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  },\n  {\n    \"encounter_date\": \"2023-09-26\",\n    \"chief_complaint\": \"类风湿性关节炎复查\",\n    \"present_illness\": \"患者二周前于我院接受阿达木单抗注射液治疗，今来我院就诊复查\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  }\n]",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Clinical",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1350,
+          "y": 400
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "ChunkMerger:Merger",
+        "data": {
+          "form": {
+            "chunks_field": "chunks",
+            "source_components": [
+              "Extractor:LabExam",
+              "Extractor:Imaging",
+              "Extractor:Clinical",
+              "Extractor:Medication",
+              "Extractor:Prescription"
+            ]
+          },
+          "name": "Merger",
+          "label": "ChunkMerger"
+        },
+        "type": "ragNode",
+        "measured": {
+          "width": 200,
+          "height": 49
+        },
+        "position": {
+          "x": 1700,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "SmartSplitter:MedLink",
+        "data": {
+          "form": {
+            "llm_id": "deepseek-v3.2",
+            "prompts": [
+              {
+                "role": "user",
+                "content": "{chunks}"
+              }
+            ],
+            "sys_prompt": "你是一个医疗文档切分与分类专家。下面是一份完整的 OCR 扫描医疗文档，可能包含多种不同类型的文档内容混排在一起。\n\n请你：\n1. 按照医疗文档类型的语义边界进行切分——每个片段只包含一种文档类型\n2. 同时给每个切分片段分类并提取元数据\n\n## 文档类型定义\n\n### OutpatientRecord（门诊病历）\n完整的门诊就诊记录，核心特征：有就诊时间 + 主诉/现病史/诊断/处理意见等临床要素。\n- 通常以\"XX医院门诊病历\"或\"门诊复诊病历记录\"开头\n- 从\"就诊时间\"到\"医生签名\"或\"处理意见\"结束是一个完整记录\n- ⚠️ 如果chunk同时有门诊病历+检验数据/购药凭证，以门诊病历为主分类\n\n### PrescriptionRecord（处方用药/取药执行单）\n医院开具的处方或取药执行单。核心特征：有就诊科室 + 就诊医生 + 疾病诊断 + 药品用法用量。\n- 通常以\"XX医院 取药执行单\"开头，或附带微信/支付宝付款截图\n- 包含：就诊科室、就诊医生、诊断、药品名称、剂量、频次、给药途径\n- 每张独立的取药执行单/处方是一个片段\n\n### MedicationRecord（购药凭证）\n药房/药店购药小票。核心特征：药店名称 + 药品条目 + 零售价 + 应收金额。\n- 通常以\"XX药店/药房 购药凭证\"开头\n- 包含：药单编号、收银员/款台号、品名、规格、零售价、数量、应收金额、实收金额\n- 每张独立的购药凭证/小票是一个片段\n- **切分规则（强制）**：\n  - 按购药日期切分，每个不同日期的购药凭证必须是独立的 segment\n  - 关键识别特征：购药时间（YYYY-MM-DD HH:MM:SS）、药单编号、药店名称\n  - 即使两张购药凭证在物理页面上连续，只要购药时间不同，必须分为两个 segment\n  - 每个 segment 只包含一个购药时间点的记录\n\n### LabReport（检验报告）\n实验室检验报告。核心特征：检验项目 + 数值 + 参考范围。\n- 通常以\"XX医院检验报告单\"或直接以检验项目表格开头\n- 包含多个检验指标和参考范围\n- 同一份报告（含多页）不要拆开\n\n### DischargeRecord（出院记录）\n住院出院记录。核心特征：入院日期 + 出院日期 + 出院诊断 + 住院经过。\n\n## 输出格式\n严格输出纯 JSON 数组，禁止 ```json 代码块。每个元素：\n{\n  \"type\": \"<文档类型>\",\n  \"first_line\": \"<该片段第一行的前30个字符>\",\n  \"last_line\": \"<该片段最后一行的前30个字符>\",\n  \"encounter_dates\": [\"YYYY-MM-DD\"],\n  \"department\": \"<科室名称|null>\",\n  \"record_count\": 1\n}\n\n## 切分规则\n1. 同一次门诊就诊记录不要拆开（从\"就诊时间\"到\"处理意见/医生签名\"是一个完整记录）\n2. 同一份检验报告不要拆开（含多页表格）\n3. 药房购药凭证和取药执行单各自独立——每张票据/执行单一个片段，二者是不同的 type\n4. 出院记录不要拆开\n5. 如果文档末尾有几个字的残留碎片（<50字），合并到前一个片段\n\n## 日期提取规则\n- 从文本中提取实际日期，格式 YYYY-MM-DD\n- 如果日期无法识别（OCR损坏），使用空数组 []\n- 不要猜测日期\n\n## OCR 纠错规则（可选）\n\n如果发现明显的 OCR 识别错误（常见医学术语错别字），可在输出的 segment 文本中纠正：\n- \"阿运木\" → \"阿达木\"（阿达木单抗注射液）\n- \"甲氨喋呤\" → \"甲氨蝶呤\"\n- \"塞来昔布胺囊\" → \"塞来昔布胶囊\"\n- \"类风显性关节炎\" → \"类风湿性关节炎\"\n- \"美洛昔庚\" → \"美洛昔康\"\n\n纠正原则：\n1. 仅纠正高置信度的标准医学术语\n2. 不确定的不要纠正\n3. 纠正后的文本应保持原文的语义和结构",
+            "temperature": 0,
+            "classify_field": "classify_result_tks",
+            "temperatureEnabled": false
+          },
+          "name": "SmartSplitter:MedLink",
+          "label": "SmartSplitter"
+        },
+        "type": "splitterNode",
+        "width": 200,
+        "height": 50,
+        "measured": {
+          "width": 200,
+          "height": 50
+        },
+        "position": {
+          "x": 675,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Invoke:SyncChunks",
+        "data": {
+          "form": {
+            "url": "http://127.0.0.1:8100/api/v1/sync/chunks",
+            "proxy": "",
+            "method": "post",
+            "headers": "",
+            "outputs": {},
+            "timeout": 120,
+            "datatype": "json",
+            "variables": [
+              {
+                "key": "chunks",
+                "ref": "ChunkMerger:Merger@chunks"
+              }
+            ],
+            "clean_html": false,
+            "max_retries": 0,
+            "delay_after_error": 5
+          },
+          "name": "SyncChunks",
+          "label": "Invoke"
+        },
+        "type": "ragNode",
+        "measured": {
+          "width": 200,
+          "height": 49
+        },
+        "position": {
+          "x": 2350,
+          "y": 300
+        },
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Medication",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Medication}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的收款日期标识）：输出 JSON 数组\n\n## MedicationRecord Schema\n\n{\n  \"encounter_date\": \"<string|null, 购药日期 YYYY-MM-DD, 多记录时必填>\",\n  \"pharmacy\": \"<string|null, 药房/药店名称>\",\n  \"medications\": [\n    {\n      \"name\": \"<string, 药品名称，含商品名>\",\n      \"specification\": \"<string|null, 药品规格，如 2.5mg*16粒*盒>\",\n      \"dosage\": \"<string|null, 单次剂量>\",\n      \"quantity\": \"<number|null, 购买数量（盒/支/瓶）>\",\n      \"unit_price\": \"<number|null, 单价（元）>\",\n      \"total_price\": \"<number|null, 金额小计（元）>\",\n      \"frequency\": \"<string|null, 给药频次>\",\n      \"route\": \"<string|null, 给药途径>\",\n      \"manufacturer\": \"<string|null, 生产厂商>\",\n      \"approval_number\": \"<string|null, 批准文号>\"\n    }\n  ],\n  \"payment_total\": \"<number|null, 支付总金额（元）>\",\n  \"payment_method\": \"<string|null, 支付方式>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 如果原文包含多张购药凭证，必须全部逐条提取，不得遗漏\n4. OCR 纠错规则（重要）：\n   - 药品名称中的常见 OCR 错别字必须纠正为正确写法：\n     ✗ \"甲氨喋呤\" → ✓ \"甲氨蝶呤\"\n     ✗ \"塞来昔布胺囊\" → ✓ \"塞来昔布胶囊\"（OCR 常将\"胶\"误识别）\n   - 日期中出现月份=00或日期=00为 OCR 数字错误，尝试从上下文推断正确日期。\n     若无法推断，保留原值并添加 \"date_uncertain\": true\n   - 纠正原则：仅纠正高置信度的标准药品名称和明显无效日期格式，不得臆测\n5. 数量和金额必须从原文中精确提取，不要通过计算推导",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Medication",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "dragging": false,
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1376.6666666666667,
+          "y": 561.6666666666666
+        },
+        "selected": false,
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      },
+      {
+        "id": "Extractor:Prescription",
+        "data": {
+          "form": {
+            "cite": true,
+            "top_p": 0.3,
+            "llm_id": "qwen3-max",
+            "outputs": {
+              "chunks": {
+                "type": "Array<Object>",
+                "value": []
+              }
+            },
+            "prompts": "{ChunkRouter:Router@chunks_Prescription}",
+            "field_name": "extracted_data_tks",
+            "max_tokens": 2048,
+            "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取处方/取药执行单的结构化数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条处方：输出单个 JSON 对象\n- 如果原文包含多条处方（由不同的处方日期标识）：输出 JSON 数组\n\n## PrescriptionRecord Schema\n\n{\n  \"encounter_date\": \"<string|null, 处方/取药日期 YYYY-MM-DD>\",\n  \"prescription_type\": \"<string|null, 处方类型：门诊处方/住院处方/出院带药/取药执行单>\",\n  \"prescriber\": \"<string|null, 处方医师/开方医生姓名>\",\n  \"department\": \"<string|null, 开方科室>\",\n  \"diagnosis\": \"<string|null, 临床诊断（处方上的诊断信息）>\",\n  \"items\": [\n    {\n      \"drug_generic_name\": \"<string, 药品通用名>\",\n      \"drug_trade_name\": \"<string|null, 药品商品名>\",\n      \"drug_category\": \"<string|null, 药品分类：西药/中成药/中草药/生物制品>\",\n      \"dosage\": \"<string|null, 剂量（如 500mg、0.8ml）>\",\n      \"frequency\": \"<string|null, 频次（如 bid/tid/qd/每二周一次）>\",\n      \"route\": \"<string|null, 给药途径（口服/静脉/皮下注射/肌注等）>\",\n      \"duration_days\": \"<number|null, 用药天数>\",\n      \"quantity\": \"<string|null, 数量（如 1盒、2支）>\",\n      \"notes\": \"<string|null, 备注（如 饭后服用、需冷藏）>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 取药执行单中的每味药品必须逐条提取，不得遗漏\n4. OCR 纠错规则（重要）：\n   - 药品名称中的常见 OCR 错别字必须纠正为正确写法：\n     ✗ \"甲氨喋呤\" → ✓ \"甲氨蝶呤\"\n     ✗ \"塞来昔布胺囊\" → ✓ \"塞来昔布胶囊\"（OCR 常将\"胶\"误识别）\n     ✗ \"美洛昔庚\" → ✓ \"美洛昔康\"\n   - 日期中出现月份=00或日期=00为 OCR 数字错误，尝试从上下文推断正确日期。\n     若无法推断，保留原值并添加 \"date_uncertain\": true\n   - 纠正原则：仅纠正高置信度的标准药品名称和明显无效日期格式，不得臆测\n5. 如果原文包含多张处方，必须全部逐条提取，不得遗漏",
+            "temperature": 0.1,
+            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7
+          },
+          "name": "Prescription",
+          "label": "Extractor"
+        },
+        "type": "contextNode",
+        "dragging": false,
+        "measured": {
+          "width": 200,
+          "height": 89
+        },
+        "position": {
+          "x": 1386.6666666666667,
+          "y": 760
+        },
+        "selected": true,
+        "sourcePosition": "right",
+        "targetPosition": "left"
+      }
+    ]
+  },
+  "globals": {},
+  "history": [],
+  "messages": [],
+  "retrieval": [],
+  "variables": {},
+  "components": {
+    "File": {
+      "obj": {
+        "params": {},
+        "component_name": "File"
+      },
+      "upstream": [],
+      "downstream": [
+        "Parser:MedLink"
+      ]
+    },
+    "Parser:MedLink": {
+      "obj": {
+        "params": {
+          "setups": {
+            "pdf": {
+              "suffix": [
+                "pdf"
+              ],
+              "parse_method": "DeepDOC",
+              "output_format": "json"
+            },
+            "word": {
+              "suffix": [
+                "doc",
+                "docx"
+              ],
+              "output_format": "json"
+            },
+            "email": {
+              "fields": [
+                "from",
+                "to",
+                "cc",
+                "bcc",
+                "date",
+                "subject",
+                "body",
+                "attachments"
+              ],
+              "suffix": [
+                "eml",
+                "msg"
+              ],
+              "output_format": "text"
+            },
+            "image": {
+              "suffix": [
+                "jpg",
+                "jpeg",
+                "png",
+                "gif"
+              ],
+              "parse_method": "ocr",
+              "output_format": "text"
+            },
+            "slides": {
+              "suffix": [
+                "pptx",
+                "ppt"
+              ],
+              "parse_method": "DeepDOC",
+              "output_format": "json"
+            },
+            "spreadsheet": {
+              "suffix": [
+                "xls",
+                "xlsx",
+                "csv"
+              ],
+              "parse_method": "DeepDOC",
+              "output_format": "html"
+            },
+            "text&markdown": {
+              "suffix": [
+                "md",
+                "markdown",
+                "mdx",
+                "txt"
+              ],
+              "output_format": "text"
+            }
+          },
+          "outputs": {
+            "html": {
+              "type": "string",
+              "value": ""
+            },
+            "json": {
+              "type": "Array<object>",
+              "value": []
+            },
+            "text": {
+              "type": "string",
+              "value": ""
+            },
+            "markdown": {
+              "type": "string",
+              "value": ""
+            }
+          }
+        },
+        "component_name": "Parser"
+      },
+      "upstream": [
+        "File"
+      ],
+      "downstream": [
+        "SmartSplitter:MedLink"
+      ]
+    },
+    "Extractor:Imaging": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Imaging}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗影像报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（ImagingReport）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检查项目名称>\",\n      \"value\": \"<string, 检查所见/结果描述，原样保留>\",\n      \"unit\": \"<string|null, 单位，影像通常为null>\",\n      \"reference_range\": \"<string|null, 参考范围，影像通常为null>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 影像报告的 value 字段应保留完整的检查所见描述\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    },
+    "Extractor:LabExam": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_LabExam}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗检验检查报告结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n## 提取 Schema（LabReport / ExamReport / ImagingReport 通用）\n\n{\n  \"report_date\": \"<string|null, 报告日期 YYYY-MM-DD>\",\n  \"items\": [\n    {\n      \"name\": \"<string, 检验/检查项目名称>\",\n      \"item_code\": \"<string|null, 英文缩写/代码，如 WBC、RBC、HGB、PLT、ESR 等>\",\n      \"value\": \"<string, 结果数值，原样保留>\",\n      \"unit\": \"<string|null, 单位>\",\n      \"reference_range\": \"<string|null, 参考范围>\",\n      \"abnormal\": \"<boolean, 是否异常>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留（如\"44.00\"不要改为\"44\"）\n4. OCR 扫描件可能有识别错误，遇到明显 OCR 错字可纠正\n5. 每个检验项目都必须逐条提取到 items 数组中，不得遗漏\n6. item_code 提取规则：如果原文中有英文缩写（如表格列\"英文名称\"或项目旁的括号注释），提取为 item_code；若原文无英文缩写则填 null\n\n## 边界场景：单位推断规则\n部分检验报告表格没有独立的\"单位\"列（例如血常规报告仅有\"项目名称|英文名称|结果|提示|参考范围\"五列）。\n此时按以下规则处理：\n- 如果参考范围中包含单位信息（如\"4.00-10.00×10^9/L\"），从参考范围中提取单位（此例为\"×10^9/L\"）\n- 如果参考范围无单位且原文无任何单位信息，填 null\n- 举例：\n  - 白细胞(WBC)，结果=6.70，参考范围=4.00-10.00×10^9/L → unit=\"×10^9/L\"\n  - 红细胞(RBC)，结果=4.58，参考范围=3.50-5.50×10^12/L → unit=\"×10^12/L\"\n  - 血红蛋白(HGB)，结果=114.00，参考范围=110.00-160.00g/L → unit=\"g/L\"\n  - 血小板(PLT)，结果=197.00，参考范围=100.00-300.00×10^9/L → unit=\"×10^9/L\"\n  - 红细胞沉降率(ESR)，结果=14，参考范围=0-20mm/h → unit=\"mm/h\"",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    },
+    "Invoke:SyncChunks": {
+      "obj": {
+        "params": {
+          "url": "http://127.0.0.1:8100/api/v1/sync/chunks",
+          "proxy": "",
+          "method": "post",
+          "headers": "",
+          "outputs": {},
+          "timeout": 120,
+          "datatype": "json",
+          "variables": [
+            {
+              "key": "chunks",
+              "ref": "ChunkMerger:Merger@chunks"
+            }
+          ],
+          "clean_html": false,
+          "max_retries": 0,
+          "delay_after_error": 5
+        },
+        "component_name": "Invoke"
+      },
+      "upstream": [
+        "Tokenizer:MedEmbed"
+      ],
+      "downstream": []
+    },
+    "ChunkMerger:Merger": {
+      "obj": {
+        "params": {
+          "chunks_field": "chunks",
+          "source_components": [
+            "Extractor:LabExam",
+            "Extractor:Imaging",
+            "Extractor:Clinical",
+            "Extractor:Medication",
+            "Extractor:Prescription"
+          ]
+        },
+        "component_name": "ChunkMerger"
+      },
+      "upstream": [
+        "Extractor:Medication"
+      ],
+      "downstream": [
+        "Tokenizer:MedEmbed"
+      ]
+    },
+    "ChunkRouter:Router": {
+      "obj": {
+        "params": {
+          "route_map": {
+            "Other": "chunks_Medication",
+            "LabReport": "chunks_LabExam",
+            "ExamReport": "chunks_LabExam",
+            "ImagingReport": "chunks_Imaging",
+            "NursingRecord": "chunks_Clinical",
+            "SurgeryRecord": "chunks_Clinical",
+            "AdmissionRecord": "chunks_Clinical",
+            "DischargeRecord": "chunks_Clinical",
+            "MedicationRecord": "chunks_Medication",
+            "OutpatientRecord": "chunks_Clinical",
+            "PrescriptionRecord": "chunks_Prescription"
+          },
+          "default_route": "chunks_Medication",
+          "type_json_key": "type",
+          "classify_field": "classify_result_tks"
+        },
+        "component_name": "ChunkRouter"
+      },
+      "upstream": [
+        "SmartSplitter:MedLink"
+      ],
+      "downstream": [
+        "Extractor:LabExam",
+        "Extractor:Imaging",
+        "Extractor:Clinical",
+        "Extractor:Medication",
+        "Extractor:Prescription"
+      ]
+    },
+    "Extractor:Clinical": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Clinical}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗病历结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的就诊时间标识）：输出 JSON 数组，每个元素为一条记录的完整提取结果\n\n## 提取 Schema（OutpatientRecord / AdmissionRecord / DischargeRecord / SurgeryRecord / NursingRecord）\n\n{\n  \"encounter_date\": \"<string|null, 该条记录的就诊日期 YYYY-MM-DD, 多记录时必填>\",\n  \"chief_complaint\": \"<string|null, 主诉>\",\n  \"present_illness\": \"<string|null, 现病史，保留完整用药史、剂量、频次>\",\n  \"past_history\": \"<string|null, 既往史>\",\n  \"diagnosis\": \"<string|null, 诊断，保留中西医双诊断>\",\n  \"treatment_plan\": \"<string|object|array|null, 治疗方案，保留药品名+剂量+频次+给药途径>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 数值必须原样保留\n4. OCR 纠错规则（重要）：\n   - 医学术语中的常见 OCR 错别字必须纠正为正确写法：\n     ✗ \"类风显性关节炎\" → ✓ \"类风湿性关节炎\"（\"湿\"=氵+显，OCR 常丢失三点水偏旁）\n     ✗ \"美洛昔庚\" → ✓ \"美洛昔康\"（药名标准写法）\n   - 日期中出现月份=00或日期=00为 OCR 数字错误，尝试从上下文（如票据编号、正文日期）推断正确日期。\n     若无法推断，保留原值并在该记录中添加 \"date_uncertain\": true\n     ✗ \"2023-10-00\" → 可能是 \"2023-10-02\"（OCR 将\"2\"误识别为\"0\"）\n     ✗ \"2023-00-15\" → 可能是 \"2023-09-13\"（OCR 将\"09\"误识别为\"00\"）\n   - 纠正原则：仅纠正高置信度的标准医学术语和明显无效格式，不得对非标准文本臆测\n5. 如果原文包含多次就诊记录，必须逐条提取每次就诊的完整信息，不得遗漏\n6. 诊断列表必须按原文顺序逐条完整提取，不得遗漏、不得合并\n\n## 示例：多次门诊记录\n\n上游分类：{\"type\": \"OutpatientRecord\", \"record_count\": 2, \"encounter_dates\": [\"2023-09-12\", \"2023-09-26\"], \"department\": \"内科门诊\"}\n\n输出：\n[\n  {\n    \"encounter_date\": \"2023-09-12\",\n    \"chief_complaint\": \"膝关节，腕关节疼痛2周余\",\n    \"present_illness\": \"患者自述3年前无明显诱因下出现多关节肿痛，于外院就诊后确诊为类风湿性关节炎\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  },\n  {\n    \"encounter_date\": \"2023-09-26\",\n    \"chief_complaint\": \"类风湿性关节炎复查\",\n    \"present_illness\": \"患者二周前于我院接受阿达木单抗注射液治疗，今来我院就诊复查\",\n    \"past_history\": \"无传染病，无药物过敏史\",\n    \"diagnosis\": \"西医：类风湿性关节炎 中医：痹症\",\n    \"treatment_plan\": \"阿达木单抗注射液（泰博维-40mg*0.8ml）0.8ml SC 每二周一次 1盒\"\n  }\n]",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    },
+    "Tokenizer:MedEmbed": {
+      "obj": {
+        "params": {
+          "fields": [
+            "text"
+          ],
+          "outputs": {},
+          "search_method": [
+            "full_text",
+            "embedding"
+          ],
+          "filename_embd_weight": 0.1
+        },
+        "component_name": "Tokenizer"
+      },
+      "upstream": [
+        "ChunkMerger:Merger"
+      ],
+      "downstream": [
+        "Invoke:SyncChunks"
+      ]
+    },
+    "Extractor:Medication": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Medication}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取结构化临床数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条记录：输出单个 JSON 对象\n- 如果原文包含多条独立记录（由不同的收款日期标识）：输出 JSON 数组\n\n## MedicationRecord Schema\n\n{\n  \"encounter_date\": \"<string|null, 购药日期 YYYY-MM-DD, 多记录时必填>\",\n  \"pharmacy\": \"<string|null, 药房/药店名称>\",\n  \"medications\": [\n    {\n      \"name\": \"<string, 药品名称，含商品名>\",\n      \"specification\": \"<string|null, 药品规格，如 2.5mg*16粒*盒>\",\n      \"dosage\": \"<string|null, 单次剂量>\",\n      \"quantity\": \"<number|null, 购买数量（盒/支/瓶）>\",\n      \"unit_price\": \"<number|null, 单价（元）>\",\n      \"total_price\": \"<number|null, 金额小计（元）>\",\n      \"frequency\": \"<string|null, 给药频次>\",\n      \"route\": \"<string|null, 给药途径>\",\n      \"manufacturer\": \"<string|null, 生产厂商>\",\n      \"approval_number\": \"<string|null, 批准文号>\"\n    }\n  ],\n  \"payment_total\": \"<number|null, 支付总金额（元）>\",\n  \"payment_method\": \"<string|null, 支付方式>\"\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 如果原文包含多张购药凭证，必须全部逐条提取，不得遗漏\n4. OCR 纠错规则（重要）：\n   - 药品名称中的常见 OCR 错别字必须纠正为正确写法：\n     ✗ \"甲氨喋呤\" → ✓ \"甲氨蝶呤\"\n     ✗ \"塞来昔布胺囊\" → ✓ \"塞来昔布胶囊\"（OCR 常将\"胶\"误识别）\n   - 日期中出现月份=00或日期=00为 OCR 数字错误，尝试从上下文推断正确日期。\n     若无法推断，保留原值并添加 \"date_uncertain\": true\n   - 纠正原则：仅纠正高置信度的标准药品名称和明显无效日期格式，不得臆测\n5. 数量和金额必须从原文中精确提取，不要通过计算推导",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": [
+        "ChunkMerger:Merger"
+      ]
+    },
+    "SmartSplitter:MedLink": {
+      "obj": {
+        "params": {
+          "llm_id": "deepseek-v3.2",
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{chunks}"
+            }
+          ],
+          "sys_prompt": "你是一个医疗文档切分与分类专家。下面是一份完整的 OCR 扫描医疗文档，可能包含多种不同类型的文档内容混排在一起。\n\n**重要：文档中每个文本块都有编号前缀 `[BBOX-0]`, `[BBOX-1]`, ... `[BBOX-N]`，这是文档的阅读顺序索引。**\n\n请你：\n1. 按照医疗文档类型的语义边界进行切分——每个片段只包含一种文档类型\n2. 同时给每个切分片段分类并提取元数据\n3. **返回每个片段的 bbox 索引范围（bbox_start 和 bbox_end）**\n\n## 文档类型定义\n\n### OutpatientRecord（门诊病历）\n完整的门诊就诊记录，核心特征：有就诊时间 + 主诉/现病史/诊断/处理意见等临床要素。\n- 通常以\"XX医院门诊病历\"或\"门诊复诊病历记录\"开头\n- 从\"就诊时间\"到\"医生签名\"或\"处理意见\"结束是一个完整记录\n- ⚠️ 门诊病历中提到的辅助检查结果（如\"ESR 50mm/h\"）是病历正文的一部分，不要把它切出来当作独立的 LabReport\n\n### PrescriptionRecord（处方用药/取药执行单）\n医院开具的处方或取药执行单。核心特征：有就诊科室 + 就诊医生 + 疾病诊断 + 药品用法用量。\n- 通常以\"XX医院 取药执行单\"开头\n- 包含：就诊科室、就诊医生、诊断、药品名称、剂量、频次、给药途径\n- 每张独立的取药执行单/处方是一个片段\n\n⚠️ 区分要点：如果文档含有\"收款\"+\"操作员\"+\"凭条仅为…交款依据\"等交款凭条特征，\n但缺少\"疾病诊断\"且无\"取药执行单\"标题 → 应归为 MedicationRecord，不是 PrescriptionRecord。\n医院缴费/交款凭条虽然有科室和医生信息，但本质是购药付款凭证。\n\n### MedicationRecord（购药凭证）\n药店或医院购药的付款凭证。核心特征：有付款金额 + 药品清单，但无医生诊断和用法用量。\n- 通常包含\"微信支付\"\"支付宝\"\"交易单号\"\"收款方\"等支付信息\n- 或医院收费票据（含\"收费员\"\"收款\"字样）\n\n### LabReport（检验报告）\n医院检验科出具的检验报告单。核心特征：有检验项目 + 检验结果 + 参考范围。\n- 通常以\"XX医院检验报告单\"或直接以检验项目表格开头\n- 包含多个检验指标和参考范围\n\n### DischargeRecord（出院记录/出院小结）\n住院出院记录或出院小结。核心特征：出院诊断 + 出院医嘱 + 住院经过。\n- 即使包含检验数据（如ESR、CRP等数值），只要有\"出院诊断\"和\"出院医嘱\"→ DischargeRecord\n\n## 忽略的内容（不切分、不输出）\n以下内容不属于临床医疗文档，直接跳过，不要为其生成切分片段：\n- 微信/支付宝支付凭证（OCR 文本包含\"支付成功\"+\"交易单号\"+\"财付通支付科技有限公司\"或\"支付宝\"等关键词，但不包含药品名称、规格、数量、单价）\n- 医院收费票据/发票（含大写金额、发票号，无药品用法用量）\n- 临床照片（患者手/足/关节等照片页，无文字内容或仅有少量 OCR 碎片）\n\n## 输出格式\n严格输出纯 JSON 数组，格式：[{...}, {...}, ...]，禁止 ```json 代码块。每个元素：\n{\n  \"type\": \"<文档类型>\",\n  \"bbox_start\": <起始 bbox 编号>,\n  \"bbox_end\": <结束 bbox 编号>,\n  \"encounter_dates\": [\"YYYY-MM-DD\"],\n  \"department\": \"<科室名称|null>\",\n  \"record_count\": 1\n}\n\n**bbox_start 和 bbox_end 是整数，表示该片段包含的 bbox 索引范围（inclusive）。**\n例如：`\"bbox_start\": 0, \"bbox_end\": 5` 表示该片段包含 [BBOX-0] 到 [BBOX-5] 的所有文本块。\n\n## 切分规则\n1. 每次门诊就诊是一个独立片段。从\"就诊时间\"到\"处理意见/医生签名\"是一个完整记录——不要拆开，也不要把不同日期的多次就诊合并\n2. 检验报告按\"检验日期 + 报告单\"切分——每份独立的检验报告单是一个片段（如：血常规报告单、肝功能报告单、血沉报告单各自独立）；同一份报告单含多页表格时不要拆开\n3. 购药凭证和取药执行单各自独立——每张票据/执行单是一个独立片段（不同日期或不同单号 = 不同片段），二者是不同的 type\n4. 出院记录不要拆开\n5. 如果文档末尾有几个字的残留碎片（<50字），合并到前一个片段\n\n## OCR 常见误识别纠正（切分和分类时参考）\nOCR 扫描可能导致药品名称识别错误，以下是本数据集常见的 OCR 错误，切分时请注意：\n- \"阿运木单抗\" → 应理解为\"阿达木单抗\"（adalimumab）\n- \"来氟未胺\" → 应理解为\"来氟米特\"（leflunomide）\n- \"甲氨喋呤\" → 应理解为\"甲氨蝶呤\"（methotrexate）\n如果在文本中看到这些误识别药名，在理解语义时按正确名称处理。\n\n## 日期提取规则\n- 从文本中提取实际日期，格式 YYYY-MM-DD\n- 如果日期无法识别（OCR损坏），使用空数组 []\n- 不要猜测日期\n",
+          "temperature": 0,
+          "classify_field": "classify_result_tks",
+          "temperatureEnabled": false
+        },
+        "component_name": "SmartSplitter"
+      },
+      "upstream": [
+        "Parser:MedLink"
+      ],
+      "downstream": [
+        "ChunkRouter:Router"
+      ]
+    },
+    "Extractor:Prescription": {
+      "obj": {
+        "params": {
+          "cite": true,
+          "top_p": 0.3,
+          "llm_id": "qwen3-max",
+          "outputs": {
+            "chunks": {
+              "type": "Array<Object>",
+              "value": []
+            }
+          },
+          "prompts": [
+            {
+              "role": "user",
+              "content": "{ChunkRouter:Router@chunks_Prescription}"
+            }
+          ],
+          "field_name": "extracted_data_tks",
+          "max_tokens": 2048,
+          "sys_prompt": "你是一个医疗文档结构化提取专家。根据文档分类结果和原文内容，提取处方/取药执行单的结构化数据。\n\n## 上游分类结果\n{classify_result_tks}\n\n## 输出格式\n\n严格输出纯 JSON，禁止使用 ```json 代码块包裹，禁止输出任何非 JSON 文字。\n\n**多记录规则：**\n- 如果原文只包含 1 条处方：输出单个 JSON 对象\n- 如果原文包含多条处方（由不同的处方日期标识）：输出 JSON 数组\n\n## PrescriptionRecord Schema\n\n{\n  \"encounter_date\": \"<string|null, 处方/取药日期 YYYY-MM-DD>\",\n  \"prescription_type\": \"<string|null, 处方类型：门诊处方/住院处方/出院带药/取药执行单>\",\n  \"prescriber\": \"<string|null, 处方医师/开方医生姓名>\",\n  \"department\": \"<string|null, 开方科室>\",\n  \"diagnosis\": \"<string|null, 临床诊断（处方上的诊断信息）>\",\n  \"items\": [\n    {\n      \"drug_generic_name\": \"<string, 药品通用名>\",\n      \"drug_trade_name\": \"<string|null, 药品商品名>\",\n      \"drug_category\": \"<string|null, 药品分类：西药/中成药/中草药/生物制品>\",\n      \"dosage\": \"<string|null, 剂量（如 500mg、0.8ml）>\",\n      \"frequency\": \"<string|null, 频次（如 bid/tid/qd/每二周一次）>\",\n      \"route\": \"<string|null, 给药途径（口服/静脉/皮下注射/肌注等）>\",\n      \"duration_days\": \"<number|null, 用药天数>\",\n      \"quantity\": \"<string|null, 数量（如 1盒、2支）>\",\n      \"notes\": \"<string|null, 备注（如 饭后服用、需冷藏）>\"\n    }\n  ]\n}\n\n## 关键约束\n1. 所有提取字段的值必须来源于原文，禁止编造原文中不存在的信息\n2. 原文中不存在的字段填 null，不要猜测\n3. 取药执行单中的每味药品必须逐条提取，不得遗漏\n4. OCR 纠错规则（重要）：\n   - 药品名称中的常见 OCR 错别字必须纠正为正确写法：\n     ✗ \"甲氨喋呤\" → ✓ \"甲氨蝶呤\"\n     ✗ \"塞来昔布胺囊\" → ✓ \"塞来昔布胶囊\"（OCR 常将\"胶\"误识别）\n     ✗ \"美洛昔庚\" → ✓ \"美洛昔康\"\n   - 日期中出现月份=00或日期=00为 OCR 数字错误，尝试从上下文推断正确日期。\n     若无法推断，保留原值并添加 \"date_uncertain\": true\n   - 纠正原则：仅纠正高置信度的标准药品名称和明显无效日期格式，不得臆测\n5. 如果原文包含多张处方，必须全部逐条提取，不得遗漏",
+          "temperature": 0.1,
+          "presence_penalty": 0.4,
+          "frequency_penalty": 0.7
+        },
+        "component_name": "Extractor"
+      },
+      "upstream": [
+        "ChunkRouter:Router"
+      ],
+      "downstream": []
+    }
+  }
+}

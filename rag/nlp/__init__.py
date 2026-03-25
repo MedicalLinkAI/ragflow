@@ -762,6 +762,11 @@ def add_positions(d, poss):
     position_int = []
     top_int = []
     for pn, left, right, top, bottom in poss:
+        # ✨ 坐标归一化：确保 left < right, top < bottom
+        # 修复 OCR bbox 坐标反转问题（2026-03-23）
+        left, right = min(left, right), max(left, right)
+        top, bottom = min(top, bottom), max(top, bottom)
+        
         page_num_int.append(int(pn + 1))
         top_int.append(int(top))
         position_int.append((int(pn + 1), int(left), int(right), int(top), int(bottom)))

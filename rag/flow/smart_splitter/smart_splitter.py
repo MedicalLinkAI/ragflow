@@ -38,6 +38,45 @@ def strip_markdown_json_fence(text: str) -> str:
     return text
 
 
+def _add_row_markers(html_text: str, bbox_idx: int) -> str:
+    """在表格 HTML 的每个 <tr> 前插入行号标记 [BBOX-{idx}-R{n}]，供 LLM 引用。
+    
+    仅用于构建发给 LLM 的 user_message，不影响最终 chunk content。
+    """
+    counter = [0]
+    def replacer(match):
+        rn = counter[0]
+        counter[0] += 1
+        return f"[BBOX-{bbox_idx}-R{rn}]{match.group(0)}"
+    return re.sub(r"<tr>", replacer, html_text, flags=re.IGNORECASE)
+
+
+def _trim_table_rows(html_text: str, row_start: int, row_end: int) -> str:
+    """从表格 HTML 中提取 [row_start, row_end] 范围的 <tr> 行，保留 <table> 包裹。
+    
+    同时去掉行号标记 [BBOX-N-Rn]（它们只是给 LLM 看的，不应出现在最终 content 中）。
+    """
+    # 去掉行号标记
+    clean = re.sub(r"\[BBOX-\d+-R\d+\]", "", html_text)
+    
+    rows = re.findall(r"<tr>[\s\S]*?</tr>", clean, re.IGNORECASE)
+    if not rows:
+        return html_text  # 无 <tr>，原样返回
+    
+    # 裁剪行范围
+    selected = rows[row_start:row_end + 1]
+    if not selected:
+        return html_text  # 范围无效，原样返回
+    
+    # 保留 <caption>（如果有）
+    caption = ""
+    cap_match = re.search(r"<caption>[\s\S]*?</caption>", clean, re.IGNORECASE)
+    if cap_match:
+        caption = cap_match.group(0) + "\n"
+    
+    return f"<table>\n{caption}" + "\n".join(selected) + "\n</table>"
+
+
 # ─── Default prompt ──────────────────────────────────────────────
 DEFAULT_SMART_SPLIT_PROMPT = ""  # Will be set via DSL sys_prompt
 
@@ -114,21 +153,28 @@ class SmartSplitter(ProcessBase, LLM):
 
         # ── Step 2: Concatenate all bbox text into full document text ──
         #    Keep track of each bbox's char range in the full text
+        #    ✨ Enhancement: Add bbox index prefix for LLM to reference
         bbox_ranges = []  # [(start_char, end_char), ...] for each bbox
         full_text_parts = []
         char_offset = 0
-        for text, _pos_tag in sections:
+        for i, (text, _pos_tag) in enumerate(sections):
             clean_text = text.strip()
             if not clean_text:
                 bbox_ranges.append((char_offset, char_offset))
                 continue
             start = char_offset
-            full_text_parts.append(clean_text)
-            char_offset += len(clean_text) + 1  # +1 for \n separator
+            # ✨ Enhancement: Add row markers [BBOX-N-Rn] for table bboxes with row_positions
+            display_text = clean_text
+            if "<tr>" in clean_text.lower() and section_row_positions[i]:
+                display_text = _add_row_markers(clean_text, i)
+            # ✨ Add bbox index prefix: [BBOX-0], [BBOX-1], ...
+            indexed_text = f"[BBOX-{i}] {display_text}"
+            full_text_parts.append(indexed_text)
+            char_offset += len(indexed_text) + 1  # +1 for \n separator
             bbox_ranges.append((start, char_offset - 1))  # end is exclusive of \n
 
         full_text = "\n".join(full_text_parts)
-        self.callback(0.15, f"Full document: {len(full_text)} chars, {len(full_text_parts)} text blocks.")
+        self.callback(0.15, f"Full document: {len(full_text)} chars, {len(sections)} bboxes.")
 
         if not full_text.strip():
             self.set_output("chunks", [])
@@ -168,7 +214,159 @@ class SmartSplitter(ProcessBase, LLM):
 
         self.callback(0.55, f"LLM returned {len(segments)} segments. Cutting text...")
 
-        # ── Step 4: Cut full_text by first_line anchors (sequential find) ──
+        # ── Step 4: Cut by bbox_id (priority) or first_line (fallback) ──
+        #    ✨ Enhancement: If LLM returns bbox_start/bbox_end, use direct bbox slicing.
+        #    Otherwise, fallback to first_line matching (existing logic).
+        
+        chunks = []
+        segments_using_bbox = 0
+        segments_using_firstline = 0
+        
+        for seg_idx, seg in enumerate(segments):
+            # ✨ Priority path: bbox_id-based slicing
+            if "bbox_start" in seg and "bbox_end" in seg:
+                b_start = seg.get("bbox_start")
+                b_end = seg.get("bbox_end")
+                
+                # Validate bbox_id range
+                if not isinstance(b_start, int) or not isinstance(b_end, int):
+                    logging.warning(f"[SmartSplitter] Segment {seg_idx} has non-integer bbox_id: start={b_start}, end={b_end}, fallback to first_line")
+                elif b_start < 0 or b_end >= len(sections) or b_start > b_end:
+                    logging.warning(f"[SmartSplitter] Segment {seg_idx} has invalid bbox_id range [{b_start}, {b_end}] (total {len(sections)} bboxes), fallback to first_line")
+                else:
+                    # ✅ Valid bbox_id range — direct slicing
+                    chunk_text_parts = []
+                    chunk_position_tags = []
+                    chunk_images = []
+                    
+                    # ── 增强：读取 LLM 返回的行范围（二级索引，可选） ──
+                    row_start = seg.get("row_start")
+                    row_end = seg.get("row_end")
+                    has_valid_row_range = (
+                        row_start is not None and row_end is not None
+                        and isinstance(row_start, int) and isinstance(row_end, int)
+                    )
+                    
+                    for i in range(b_start, b_end + 1):
+                        text, pos_tag = sections[i]
+                        clean = text.strip()
+                        if not clean:
+                            if pos_tag:
+                                chunk_position_tags.append(pos_tag)
+                            continue
+                        
+                        # ── 增强：表格 bbox + 有效行范围 → 按行裁剪 content ──
+                        if has_valid_row_range and "<tr>" in clean.lower() and section_row_positions[i]:
+                            trimmed = _trim_table_rows(clean, row_start, row_end)
+                            chunk_text_parts.append(trimmed)
+                        else:
+                            chunk_text_parts.append(clean)
+                        
+                        if pos_tag:
+                            chunk_position_tags.append(pos_tag)
+                        if section_images[i] is not None:
+                            chunk_images.append(section_images[i].copy())
+                    
+                    chunk_text = "\n".join(chunk_text_parts)
+                    
+                    # Build position-tagged text
+                    tagged_parts = []
+                    for i in range(b_start, b_end + 1):
+                        text, pos_tag = sections[i]
+                        if text.strip():
+                            tagged_parts.append(f"{pos_tag}{text.strip()}")
+                    tagged_text = "\n".join(tagged_parts)
+                    
+                    # Extract positions
+                    positions = [
+                        [pos[0][-1], *pos[1:]]
+                        for pos in RAGFlowPdfParser.extract_positions(tagged_text)
+                    ]
+                    
+                    # Merge images
+                    merged_image = None
+                    for img in chunk_images:
+                        merged_image = concat_img(merged_image, img)
+                    
+                    # ── 增强：按 row_start/row_end 裁剪 row_positions（二级索引） ──
+                    chunk_row_positions = []
+                    for i in range(b_start, b_end + 1):
+                        rp = section_row_positions[i]
+                        if not rp:
+                            continue
+                        
+                        if has_valid_row_range:
+                            # 二级索引模式：只取 [row_start, row_end] 范围内的行
+                            if 0 <= row_start <= row_end < len(rp):
+                                chunk_row_positions.extend(rp[row_start:row_end + 1])
+                            else:
+                                # row 索引越界 → 降级：给全部
+                                logging.warning(
+                                    f"[SmartSplitter] Segment {seg_idx} row range [{row_start},{row_end}] "
+                                    f"out of bounds (total {len(rp)} rows), fallback to full row_positions"
+                                )
+                                chunk_row_positions.extend(rp)
+                        else:
+                            # 无二级索引 → 现有行为：全部给
+                            chunk_row_positions.extend(rp)
+                    
+                    # Build chunk (same format as first_line path)
+                    chunk = {
+                        "text": chunk_text,
+                        "image": merged_image,
+                        "positions": positions,
+                        self._param.classify_field: json.dumps(seg, ensure_ascii=False),
+                    }
+                    if chunk_row_positions:
+                        chunk["row_positions"] = chunk_row_positions
+                    
+                    chunks.append(chunk)
+                    segments_using_bbox += 1
+                    continue  # Skip fallback
+            
+            # ── Fallback path: first_line matching (existing logic) ──
+            segments_using_firstline += 1
+            # (existing first_line matching code will be preserved below)
+        
+        # If all segments used bbox_id, skip the old first_line matching logic
+        if segments_using_bbox == len(segments):
+            self.callback(0.8, f"All {len(segments)} segments used bbox_id slicing. Saving images...")
+            
+            # Save images
+            tasks = []
+            for d in chunks:
+                tasks.append(asyncio.create_task(
+                    image2id(d, partial(settings.STORAGE_IMPL.put, tenant_id=self._canvas._tenant_id), get_uuid())
+                ))
+            try:
+                await asyncio.gather(*tasks, return_exceptions=False)
+            except Exception as e:
+                logging.error(f"[SmartSplitter] Error saving images: {e}")
+                for t in tasks:
+                    t.cancel()
+                await asyncio.gather(*tasks, return_exceptions=True)
+                raise
+            
+            self.set_output("chunks", chunks)
+            
+            # Log summary
+            type_counts = {}
+            for ck in chunks:
+                try:
+                    t = json.loads(ck[self._param.classify_field]).get("type", "?")
+                except Exception:
+                    t = "?"
+                type_counts[t] = type_counts.get(t, 0) + 1
+            
+            summary = f"SmartSplitter done: {len(chunks)} chunks from {len(segments)} LLM segments (all bbox_id). Types: {type_counts}"
+            logging.info(f"[SmartSplitter] {summary}")
+            self.callback(1, summary)
+            return
+        
+        # Otherwise, process segments that need first_line matching
+        self.callback(0.6, f"{segments_using_bbox} segments used bbox_id, {segments_using_firstline} need first_line matching...")
+        
+        # ── Step 4 (original): Cut full_text by first_line anchors (sequential find) ──
         #    Enhanced matching: exact → strip-space → progressive shorten → backtrack
         def _normalize_for_search(s: str) -> str:
             """Remove spaces/punctuation for fuzzy matching."""
@@ -202,6 +400,13 @@ class SmartSplitter(ProcessBase, LLM):
         cut_points = []  # [(start_char, segment_data), ...]
         search_from = 0
         for seg_idx, seg in enumerate(segments):
+            # Skip segments that already used bbox_id
+            if "bbox_start" in seg and "bbox_end" in seg:
+                b_start = seg.get("bbox_start")
+                b_end = seg.get("bbox_end")
+                if isinstance(b_start, int) and isinstance(b_end, int) and 0 <= b_start <= b_end < len(sections):
+                    continue  # Already processed in priority path
+            
             first_line = seg.get("first_line", "").strip()
             if not first_line:
                 logging.warning(f"[SmartSplitter] Segment {seg_idx} missing first_line: {seg}")
@@ -248,34 +453,13 @@ class SmartSplitter(ProcessBase, LLM):
             search_from = pos + 1
 
         if not cut_points:
-            logging.error("[SmartSplitter] No segments could be located in text!")
-            self.set_output("_ERROR", "Failed to locate any LLM segments in document text.")
-            return
-
-        # ── Step 4.5: Sort & deduplicate cut_points by position ──
-        # LLM first_line anchors may match out-of-order when documents contain
-        # repeated headings (e.g. "XX医院门诊病历" appearing 6+ times).
-        # Strategy 3/4 (short match / backtrack) can produce non-monotonic positions,
-        # causing chunk slicing to generate empty or overlapping text ranges.
-        original_len = len(cut_points)
-        cut_points.sort(key=lambda x: x[0])
-        # Deduplicate: if multiple segments matched the same position, keep only the first
-        deduped = []
-        seen_positions = set()
-        for pos, seg in cut_points:
-            if pos not in seen_positions:
-                deduped.append((pos, seg))
-                seen_positions.add(pos)
+            # If some segments were already processed via bbox_id, that's OK
+            if chunks:
+                logging.info(f"[SmartSplitter] No first_line segments located, but {len(chunks)} chunks already created via bbox_id.")
             else:
-                logging.warning(
-                    f"[SmartSplitter] Duplicate cut_point at pos={pos}, "
-                    f"dropping segment type={seg.get('type', '?')} dates={seg.get('encounter_dates', [])}"
-                )
-        cut_points = deduped
-        if len(cut_points) != original_len:
-            logging.info(
-                f"[SmartSplitter] cut_points: {original_len} raw → sorted → {len(cut_points)} after dedup"
-            )
+                logging.error("[SmartSplitter] No segments could be located in text!")
+                self.set_output("_ERROR", "Failed to locate any LLM segments in document text.")
+                return
 
         # Debug: log final cut_points for diagnostics
         for i, (p, s) in enumerate(cut_points):
@@ -377,11 +561,14 @@ class SmartSplitter(ProcessBase, LLM):
 
             cks.append(ck)
 
-        self.callback(0.8, f"Built {len(cks)} chunks. Saving images...")
+        # ✨ Merge chunks from bbox_id path and first_line path
+        all_chunks = chunks + cks  # bbox_id chunks first, then first_line chunks
+        
+        self.callback(0.8, f"Built {len(all_chunks)} chunks ({len(chunks)} from bbox_id, {len(cks)} from first_line). Saving images...")
 
         # ── Step 6: Save images to storage (same as Splitter) ──
         tasks = []
-        for d in cks:
+        for d in all_chunks:
             tasks.append(asyncio.create_task(
                 image2id(d, partial(settings.STORAGE_IMPL.put, tenant_id=self._canvas._tenant_id), get_uuid())
             ))
@@ -394,17 +581,17 @@ class SmartSplitter(ProcessBase, LLM):
             await asyncio.gather(*tasks, return_exceptions=True)
             raise
 
-        self.set_output("chunks", cks)
+        self.set_output("chunks", all_chunks)
 
         # Log summary
         type_counts = {}
-        for ck in cks:
+        for ck in all_chunks:
             try:
                 t = json.loads(ck[self._param.classify_field]).get("type", "?")
             except Exception:
                 t = "?"
             type_counts[t] = type_counts.get(t, 0) + 1
 
-        summary = f"SmartSplitter done: {len(cks)} chunks from {len(segments)} LLM segments. Types: {type_counts}"
+        summary = f"SmartSplitter done: {len(all_chunks)} chunks from {len(segments)} LLM segments ({len(chunks)} bbox_id, {len(cks)} first_line). Types: {type_counts}"
         logging.info(f"[SmartSplitter] {summary}")
         self.callback(1, summary)

@@ -50,6 +50,7 @@ export const FilterButton = React.forwardRef<
   );
 });
 
+FilterButton.displayName = 'FilterButton';
 export default function ListFilterBar({
   title,
   children,

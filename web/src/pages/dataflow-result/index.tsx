@@ -29,7 +29,7 @@ import { Routes } from '@/routes';
 import { LucideArrowBigLeft } from 'lucide-react';
 import TimelineDataFlow from './components/time-line';
 import { TimelineNodeType } from './constant';
-import styles from './index.less';
+import styles from './index.module.less';
 import { IDslComponent, IPipelineFileLogDetail } from './interface';
 import ParserContainer from './parser';
 

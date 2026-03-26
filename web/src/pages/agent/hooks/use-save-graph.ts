@@ -10,7 +10,7 @@ import {
 import { formatDate } from '@/utils/date';
 import { useDebounceEffect } from 'ahooks';
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'umi';
+import { useParams } from 'react-router';
 import useGraphStore from '../store';
 import { useBuildDslData } from './use-build-dsl';
 

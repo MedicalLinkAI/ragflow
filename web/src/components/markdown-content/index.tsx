@@ -36,7 +36,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '../ui/hover-card';
-import styles from './index.less';
+import styles from './index.module.less';
 
 const getChunkIndex = (match: string) => parseCitationIndex(match);
 

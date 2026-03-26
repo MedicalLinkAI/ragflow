@@ -16,7 +16,7 @@ import { preprocessLaTeX } from '@/utils/chat';
 import { citationMarkerReg } from '@/utils/citation-utils';
 import { getDirAttribute } from '@/utils/text-direction';
 import { useIsDarkTheme } from '../theme-provider';
-import styles from './index.less';
+import styles from './index.module.less';
 
 const HighLightMarkdown = ({
   className,

@@ -534,7 +534,7 @@ class TextDetector:
 
 
 class OCR:
-    def __init__(self, model_dir=None):
+    def __init__(self, model_dir=None, ocr_version=None):
         """
         If you have trouble downloading HuggingFace models, -_^ this might help!!
 
@@ -545,13 +545,21 @@ class OCR:
         Good luck
         ^_-
 
+        ocr_version: optional version selector. Supported values:
+            - None (default): uses rag/res/deepdoc/ — PP-OCRv4 ONNX models (original behavior)
+            - "PP-OCRv5": uses rag/res/deepdoc/PP-OCRv5/ — PP-OCRv5 ONNX models
+            Must be passed explicitly; no env-var fallback (R6 safety fix).
         """
+        # normalize version label for logging
+        _version_label = ocr_version if ocr_version in ("PP-OCRv5",) else "PP-OCRv4"
+
         if not model_dir:
+            # [EXTENSION] resolve target model directory based on version — shared by try and except
+            model_dir = os.path.join(
+                get_project_base_directory(),
+                "rag/res/deepdoc/PP-OCRv5" if ocr_version == "PP-OCRv5" else "rag/res/deepdoc")
+            logging.info(f"🔧 OCR.__init__: ocr_version={ocr_version or 'default(v4)'}, model_dir={model_dir}")
             try:
-                model_dir = os.path.join(
-                        get_project_base_directory(),
-                        "rag/res/deepdoc")
-                
                 # Append muti-gpus task to the list
                 if settings.PARALLEL_DEVICES > 0:
                     self.text_detector = []
@@ -564,9 +572,13 @@ class OCR:
                     self.text_recognizer = [TextRecognizer(model_dir)]
 
             except Exception:
-                model_dir = snapshot_download(repo_id="InfiniFlow/deepdoc",
-                                              local_dir=os.path.join(get_project_base_directory(), "rag/res/deepdoc"),
-                                              local_dir_use_symlinks=False)
+                # [EXTENSION] non-default versions have no HuggingFace fallback — fail fast
+                if ocr_version and ocr_version != "PP-OCRv4":
+                    raise
+                # Original behavior: download default (v4) models from HuggingFace to model_dir
+                snapshot_download(repo_id="InfiniFlow/deepdoc",
+                                  local_dir=model_dir,
+                                  local_dir_use_symlinks=False)
                 
                 if settings.PARALLEL_DEVICES > 0:
                     self.text_detector = []
@@ -580,6 +592,17 @@ class OCR:
 
         self.drop_score = 0.5
         self.crop_image_res_index = 0
+
+        # [EXTENSION] store resolved version for runtime logging
+        self._ocr_version_label = _version_label
+        self._ocr_model_dir = model_dir
+        self._ocr_first_call_logged = False
+
+        # ── VERSION BANNER（进程启动时可见）──────────────────────────────
+        logging.info("=" * 60)
+        logging.info(f"✅ [OCR VERSION] Using {self._ocr_version_label}")
+        logging.info(f"   model_dir : {self._ocr_model_dir}")
+        logging.info("=" * 60)
 
     def get_rotate_crop_image(self, img, points):
         """
@@ -709,6 +732,13 @@ class OCR:
         time_dict = {'det': 0, 'rec': 0, 'cls': 0, 'all': 0}
         if device_id is None:
             device_id = 0
+
+        # [EXTENSION] print version confirmation on first actual OCR inference call
+        if not self._ocr_first_call_logged:
+            logging.info("=" * 60)
+            logging.info(f"🚀 [OCR INFERENCE] First call — version={self._ocr_version_label}, model_dir={self._ocr_model_dir}")
+            logging.info("=" * 60)
+            self._ocr_first_call_logged = True
 
         if img is None:
             return None, None, time_dict

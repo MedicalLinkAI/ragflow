@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 slug: /launch_ragflow_from_source
 ---
 
@@ -88,7 +88,7 @@ docker compose -f docker/docker-compose-base.yml up -d
    ```
 
 3. **Optional:** If you cannot access HuggingFace, set the HF_ENDPOINT environment variable to use a mirror site:
- 
+
    ```bash
    export HF_ENDPOINT=https://hf-mirror.com
    ```

@@ -13,6 +13,9 @@ def get_current_tz_offset() -> int:
     return round(time_diff.total_seconds() / 3600)
 
 
+# Default request timeout, mostly used by connectors
+REQUEST_TIMEOUT_SECONDS = int(os.environ.get("REQUEST_TIMEOUT_SECONDS") or 60)
+
 ONE_MINUTE = 60
 ONE_HOUR = 3600
 ONE_DAY = ONE_HOUR * 24
@@ -58,8 +61,14 @@ class DocumentSource(str, Enum):
     GITHUB = "github"
     GITLAB = "gitlab"
     IMAP = "imap"
+    BITBUCKET = "bitbucket"
+    ZENDESK = "zendesk"
+    SEAFILE = "seafile"
+    MYSQL = "mysql"
+    POSTGRESQL = "postgresql"
+    DINGTALK_AI_TABLE = "dingtalk_ai_table"
 
-    
+
 class FileOrigin(str, Enum):
     """File origins"""
     CONNECTOR = "connector"
@@ -270,6 +279,10 @@ ASANA_CONNECTOR_SIZE_THRESHOLD = int(
 IMAP_CONNECTOR_SIZE_THRESHOLD = int(
     os.environ.get("IMAP_CONNECTOR_SIZE_THRESHOLD", 10 * 1024 * 1024)
 )
+
+ZENDESK_CONNECTOR_SKIP_ARTICLE_LABELS = os.environ.get(
+    "ZENDESK_CONNECTOR_SKIP_ARTICLE_LABELS", ""
+).split(",")
 
 _USER_NOT_FOUND = "Unknown Confluence User"
 

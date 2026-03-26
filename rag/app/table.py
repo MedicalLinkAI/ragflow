@@ -43,7 +43,7 @@ class Excel(ExcelParser):
             wb = Excel._load_excel_to_workbook(BytesIO(binary))
         total = 0
         for sheet_name in wb.sheetnames:
-            total += len(list(wb[sheet_name].rows))
+            total += Excel._get_actual_row_count(wb[sheet_name])
         res, fails, done = [], [], 0
         rn = 0
         flow_images = []
@@ -65,7 +65,7 @@ class Excel(ExcelParser):
                             flow_images.append(img)
 
             try:
-                rows = list(ws.rows)
+                rows = Excel._get_rows_limited(ws)
             except Exception as e:
                 logging.warning(f"Skip sheet '{sheet_name}' due to rows access error: {e}")
                 continue
@@ -114,7 +114,7 @@ class Excel(ExcelParser):
             tables.append(
                 (
                     (
-                        img["image"],  # Image.Image
+                        img["image"],  # Image.Image or LazyImage
                         [img["image_description"]]  # description list (must be list)
                     ),
                     [
@@ -303,9 +303,8 @@ class Excel(ExcelParser):
 def trans_datatime(s):
     try:
         return datetime_parse(s.strip()).strftime("%Y-%m-%d %H:%M:%S")
-    except Exception as e:
-        logging.warning(f"Failed to parse date from {s}, error: {e}")
-        pass
+    except Exception:
+        return None
 
 
 def trans_bool(s):

@@ -7,6 +7,7 @@ import { ReactNode, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { MinerUOptionsFormField } from './mineru-options-form-field';
 import { SelectWithSearch } from './originui/select-with-search';
+import { PaddleOCROptionsFormField } from './paddleocr-options-form-field';
 import {
   FormControl,
   FormField,
@@ -20,7 +21,6 @@ export const enum ParseDocumentType {
   PlainText = 'Plain Text',
   Docling = 'Docling',
   TCADPParser = 'TCADP Parser',
-  DeepSeekOCR2 = 'DeepSeek-OCR2',
 }
 
 export function LayoutRecognizeFormField({
@@ -29,12 +29,16 @@ export function LayoutRecognizeFormField({
   optionsWithoutLLM,
   label,
   showMineruOptions = true,
+  showPaddleocrOptions = true,
+  testId,
 }: {
   name?: string;
   horizontal?: boolean;
   optionsWithoutLLM?: { value: string; label: string }[];
   label?: ReactNode;
   showMineruOptions?: boolean;
+  showPaddleocrOptions?: boolean;
+  testId?: string;
 }) {
   const form = useFormContext();
 
@@ -49,7 +53,6 @@ export function LayoutRecognizeFormField({
           ParseDocumentType.PlainText,
           ParseDocumentType.Docling,
           ParseDocumentType.TCADPParser,
-          ParseDocumentType.DeepSeekOCR2,
         ].map((x) => ({
           label: x === ParseDocumentType.PlainText ? t(camelCase(x)) : x,
           value: x,
@@ -105,6 +108,7 @@ export function LayoutRecognizeFormField({
                     <SelectWithSearch
                       {...field}
                       options={options}
+                      testId={testId}
                     ></SelectWithSearch>
                   </FormControl>
                 </div>
@@ -115,6 +119,7 @@ export function LayoutRecognizeFormField({
               </div>
             </FormItem>
             {showMineruOptions && <MinerUOptionsFormField />}
+            {showPaddleocrOptions && <PaddleOCROptionsFormField />}
           </>
         );
       }}

@@ -1,16 +1,16 @@
 import {
   DSL,
+  DSLComponents,
   GlobalVariableType,
   IAgentForm,
   ICategorizeForm,
   ICategorizeItem,
   ICategorizeItemResult,
+  RAGFlowNodeType,
 } from '@/interfaces/database/agent';
-import { DSLComponents, RAGFlowNodeType } from '@/interfaces/database/flow';
 import { buildSelectOptions } from '@/utils/component-util';
 import { buildOptions, removeUselessFieldsFromValues } from '@/utils/form';
 import { Edge, Node, XYPosition } from '@xyflow/react';
-import { FormInstance, FormListFieldData } from 'antd';
 import { humanId } from 'human-id';
 import {
   curry,
@@ -214,6 +214,7 @@ function transformParserParams(params: ParserFormSchemaType) {
         ParserFormSchemaType['setups'][0] & { suffix: string[] }
       > = {
         output_format: cur.output_format,
+        preprocess: cur.preprocess,
         suffix: FileTypeSuffixMap[cur.fileFormat as FileType],
       };
 
@@ -556,22 +557,6 @@ export const getOperatorIndex = (handleTitle: string) => {
   return handleTitle.split(' ').at(-1);
 };
 
-// Get the value of other forms except itself
-export const getOtherFieldValues = (
-  form: FormInstance,
-  formListName: string = 'items',
-  field: FormListFieldData,
-  latestField: string,
-) =>
-  (form.getFieldValue([formListName]) ?? [])
-    .map((x: any) => {
-      return get(x, latestField);
-    })
-    .filter(
-      (x: string) =>
-        x !== form.getFieldValue([formListName, field.name, latestField]),
-    );
-
 export const generateSwitchHandleText = (idx: number) => {
   return `Case ${idx + 1}`;
 };
@@ -836,7 +821,7 @@ export function buildBeginQueryWithObject(
 }
 
 export function getArrayElementType(type: string) {
-  return typeof type === 'string' ? type.match(/<([^>]+)>/)?.at(1) ?? '' : '';
+  return typeof type === 'string' ? (type.match(/<([^>]+)>/)?.at(1) ?? '') : '';
 }
 
 export function buildConversationVariableSelectOptions() {

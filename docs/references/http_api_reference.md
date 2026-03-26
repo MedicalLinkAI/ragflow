@@ -63,6 +63,10 @@ curl --request POST \
         "stream": true,
         "extra_body": {
           "reference": true,
+          "reference_metadata": {
+            "include": true,
+            "fields": ["author", "year", "source"]
+          },
           "metadata_condition": {
             "logic": "and",
             "conditions": [
@@ -91,6 +95,9 @@ curl --request POST \
 - `extra_body` (*Body parameter*) `object`  
   Extra request parameters:  
   - `reference`: `boolean` - include reference in the final chunk (stream) or in the final message (non-stream).
+  - `reference_metadata`: `object` - include document metadata in each reference chunk.
+    - `include`: `boolean` - enable document metadata in reference chunks.
+    - `fields`: `list[string]` - optional allowlist of metadata keys. Omit to include all. Use an empty list to include none.
   - `metadata_condition`: `object` - metadata filter conditions applied to retrieval results.
 
 #### Response
@@ -273,6 +280,11 @@ data: {
                             "content": "```cd /usr/ports/editors/neovim/ && make install```## Android[Termux](https://github.com/termux/termux-app) offers a Neovim package.",
                             "document_id": "4bdd2ff65e1511f0907f09f583941b45",
                             "document_name": "INSTALL22.md",
+                            "document_metadata": {
+                                "author": "bob",
+                                "year": "2023",
+                                "source": "internal"
+                            },
                             "dataset_id": "456ce60c5e1511f0907f09f583941b45",
                             "image_id": "",
                             "positions": [
@@ -343,6 +355,11 @@ Non-stream:
                             "doc_type": "",
                             "document_id": "4bdd2ff65e1511f0907f09f583941b45",
                             "document_name": "INSTALL22.md",
+                            "document_metadata": {
+                                "author": "bob",
+                                "year": "2023",
+                                "source": "internal"
+                            },
                             "id": "4b8935ac0a22deb1",
                             "image_id": "",
                             "positions": [
@@ -619,7 +636,7 @@ Failure:
 ```json
 {
     "code": 101,
-    "message": "Dataset name 'RAGFlow example' already exists"
+    "message": "Field: <name> - Message: <String should have at least 1 character> - Value: <>"
 }
 ```
 
@@ -638,8 +655,9 @@ Deletes datasets by ID.
 - Headers:
   - `'content-Type: application/json'`
   - `'Authorization: Bearer <YOUR_API_KEY>'`
-  - Body:
-    - `"ids"`: `list[string]` or `null`
+- Body:
+  - `"ids"`: `list[string]` or `null`
+  - `"delete_all"`: `boolean`
 
 ##### Request example
 
@@ -653,13 +671,24 @@ curl --request DELETE \
      }'
 ```
 
+```bash
+curl --request DELETE \
+     --url http://{address}/api/v1/datasets \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+     "delete_all": true
+     }'
+```
+
 ##### Request parameters
 
-- `"ids"`: (*Body parameter*), `list[string]` or `null`,   *Required*  
+- `"ids"`: (*Body parameter*), `list[string]` or `null`
   Specifies the datasets to delete:
-  - If `null`, all datasets will be deleted.
-  - If an array of IDs, only the specified datasets will be deleted.
-  - If an empty array, no datasets will be deleted.
+  - If omitted, or set to `null` or an empty array, no datasets are deleted.
+  - If an array of IDs is provided, only the datasets matching those IDs are deleted.
+- `"delete_all"`: (*Body parameter*), `boolean`  
+  Whether to delete all datasets owned by the current user when`"ids"` is omitted, or set to `null` or an empty array. Defaults to `false`.
 
 #### Response
 
@@ -675,9 +704,10 @@ Failure:
 
 ```json
 {
-    "code": 102,
-    "message": "You don't own the dataset."
+    "code":108,
+    "message":"User '<tenant_id>' lacks permission for datasets: '<dataset_ids>'"
 }
+
 ```
 
 ---
@@ -816,14 +846,14 @@ Failure:
 
 ### List datasets
 
-**GET** `/api/v1/datasets?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={dataset_name}&id={dataset_id}`
+**GET** `/api/v1/datasets?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={dataset_name}&id={dataset_id}&include_parsing_status={include_parsing_status}`
 
 Lists datasets.
 
 #### Request
 
 - Method: GET
-- URL: `/api/v1/datasets?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={dataset_name}&id={dataset_id}`
+- URL: `/api/v1/datasets?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={dataset_name}&id={dataset_id}&include_parsing_status={include_parsing_status}`
 - Headers:
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 
@@ -832,6 +862,13 @@ Lists datasets.
 ```bash
 curl --request GET \
      --url http://{address}/api/v1/datasets?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={dataset_name}&id={dataset_id} \
+     --header 'Authorization: Bearer <YOUR_API_KEY>'
+```
+
+```bash
+# List datasets with parsing status
+curl --request GET \
+     --url 'http://{address}/api/v1/datasets?include_parsing_status=true' \
      --header 'Authorization: Bearer <YOUR_API_KEY>'
 ```
 
@@ -851,6 +888,13 @@ curl --request GET \
   The name of the dataset to retrieve.
 - `id`: (*Filter parameter*)  
   The ID of the dataset to retrieve.
+- `include_parsing_status`: (*Filter parameter*)  
+  Whether to include document parsing status counts in the response. Defaults to `false`. When set to `true`, each dataset object in the response will include the following additional fields:
+  - `unstart_count`: Number of documents not yet started parsing.
+  - `running_count`: Number of documents currently being parsed.
+  - `cancel_count`: Number of documents whose parsing was cancelled.
+  - `done_count`: Number of documents that have been successfully parsed.
+  - `fail_count`: Number of documents whose parsing failed.
 
 #### Response
 
@@ -894,7 +938,50 @@ Success:
             "vector_similarity_weight": 0.3
         }
     ],
-    "total": 1
+    "total_datasets": 1
+}
+```
+
+Success (with `include_parsing_status=true`):
+
+```json
+{
+    "code": 0,
+    "data": [
+        {
+            "avatar": null,
+            "cancel_count": 0,
+            "chunk_count": 30,
+            "chunk_method": "qa",
+            "create_date": "2026-03-09T18:57:13",
+            "create_time": 1773053833094,
+            "created_by": "928f92a210b911f1ac4cc39e0b8fa3ad",
+            "description": null,
+            "document_count": 1,
+            "done_count": 1,
+            "embedding_model": "text-embedding-v2@Tongyi-Qianwen",
+            "fail_count": 0,
+            "id": "ba6586c21ba611f1a3dc476f0709e75e",
+            "language": "English",
+            "name": "Test Dataset",
+            "parser_config": {
+                "graphrag": { "use_graphrag": false },
+                "llm_id": "deepseek-chat@DeepSeek",
+                "raptor": { "use_raptor": false }
+            },
+            "permission": "me",
+            "running_count": 0,
+            "similarity_threshold": 0.2,
+            "status": "1",
+            "tenant_id": "928f92a210b911f1ac4cc39e0b8fa3ad",
+            "token_num": 1746,
+            "unstart_count": 0,
+            "update_date": "2026-03-09T18:59:32",
+            "update_time": 1773053972723,
+            "vector_similarity_weight": 0.3
+        }
+    ],
+    "total_datasets": 1
 }
 ```
 
@@ -1725,6 +1812,7 @@ Deletes documents by ID.
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
   - `"ids"`: `list[string]`
+  - `"delete_all"`: `boolean`
 
 ##### Request example
 
@@ -1739,12 +1827,26 @@ curl --request DELETE \
      }'
 ```
 
+```bash
+curl --request DELETE \
+     --url http://{address}/api/v1/datasets/{dataset_id}/documents \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+          "delete_all": true
+     }'
+```
+
 ##### Request parameters
 
 - `dataset_id`: (*Path parameter*)  
   The associated dataset ID.
 - `"ids"`: (*Body parameter*), `list[string]`  
-  The IDs of the documents to delete. If it is not specified, all documents in the specified dataset will be deleted.
+  The IDs of the documents to delete.
+  - If omitted, or set to `null` or an empty array, no documents are deleted.
+  - If an array of IDs is provided, only the documents matching those IDs are deleted.
+- `"delete_all"`: (*Body parameter*), `boolean`  
+  Whether to delete all documents in the specified dataset when `"ids"` is omitted, or set to `null` or an empty array. Defaults to `false`.
 
 #### Response
 
@@ -1901,6 +2003,7 @@ Adds a chunk to a specified document in a specified dataset.
 - Body:
   - `"content"`: `string`
   - `"important_keywords"`: `list[string]`
+  - `"image_base64"`: `string`
 
 ##### Request example
 
@@ -1911,22 +2014,25 @@ curl --request POST \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --data '
      {
-          "content": "<CHUNK_CONTENT_HERE>"
+          "content": "<CHUNK_CONTENT_HERE>",
+          "image_base64": "<BASE64_ENCODED_IMAGE>"
      }'
 ```
 
 ##### Request parameters
 
-- `dataset_id`: (*Path parameter*)  
+- `dataset_id`: (*Path parameter*)
   The associated dataset ID.
-- `document_ids`: (*Path parameter*)  
+- `document_ids`: (*Path parameter*)
   The associated document ID.
-- `"content"`: (*Body parameter*), `string`, *Required*  
+- `"content"`: (*Body parameter*), `string`, *Required*
   The text content of the chunk.
-- `"important_keywords`(*Body parameter*), `list[string]`  
+- `"important_keywords`(*Body parameter*), `list[string]`
   The key terms or phrases to tag with the chunk.
 - `"questions"`(*Body parameter*), `list[string]`
   If there is a given question, the embedded chunks will be based on them
+- `"image_base64"`: (*Body parameter*), `string`
+  A base64-encoded image to associate with the chunk. If the chunk already has an image, the new image will be vertically concatenated below the existing one.
 
 #### Response
 
@@ -1943,6 +2049,7 @@ Success:
             "dataset_id": "72f36e1ebdf411efb7250242ac120006",
             "document_id": "61d68474be0111ef98dd0242ac120006",
             "id": "12ccdc56e59837e5",
+            "image_id": "",
             "important_keywords": [],
             "questions": []
         }
@@ -2083,6 +2190,7 @@ Deletes chunks by ID.
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
   - `"chunk_ids"`: `list[string]`
+  - `"delete_all"`: `boolean`
 
 ##### Request example
 
@@ -2097,6 +2205,16 @@ curl --request DELETE \
      }'
 ```
 
+```bash
+curl --request DELETE \
+     --url http://{address}/api/v1/datasets/{dataset_id}/documents/{document_id}/chunks \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+          "delete_all": true
+     }'
+```
+
 ##### Request parameters
 
 - `dataset_id`: (*Path parameter*)  
@@ -2104,7 +2222,11 @@ curl --request DELETE \
 - `document_ids`: (*Path parameter*)  
   The associated document ID.
 - `"chunk_ids"`: (*Body parameter*), `list[string]`  
-  The IDs of the chunks to delete. If it is not specified, all chunks of the specified document will be deleted.
+  The IDs of the chunks to delete.
+  - If omitted, or set to `null` or an empty array, no chunks are deleted.
+  - If an array of IDs is provided, only the chunks matching those IDs are deleted.
+- `"delete_all"`: (*Body parameter*), `boolean`  
+  Whether to delete all chunks of the specified documen when `"chunk_ids"` is omitted, or set to`null` or an empty array. Defaults to `false`.
 
 #### Response
 
@@ -2192,6 +2314,105 @@ Failure:
 {
     "code": 102,
     "message": "Can't find this chunk 29a2d9987e16ba331fb4d7d30d99b71d2"
+}
+```
+
+---
+
+### Update chunk availability
+
+**POST** `/api/v1/datasets/{dataset_id}/documents/{document_id}/chunks/switch`
+
+Updates or switches the availability status of specified chunks, controlling whether they are available for retrieval.
+
+#### Request
+
+- Method: POST
+- URL: `/api/v1/datasets/{dataset_id}/documents/{document_id}/chunks/switch`
+- Headers:
+  - `'Content-Type: application/json'`
+  - `'Authorization: Bearer <YOUR_API_KEY>'`
+- Body:
+  - `"chunk_ids"`: `list[string]` (*Required*)
+  - `"available_int"`: `integer` (*Optional*)
+  - `"available"`: `boolean` (*Optional*)
+
+##### Request example
+
+```bash
+curl --request POST \
+     --url http://{address}/api/v1/datasets/{dataset_id}/documents/{document_id}/chunks/switch \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '
+     {
+          "chunk_ids": ["chunk_id_1", "chunk_id_2"],
+          "available_int": 1
+     }'
+```
+
+##### Request parameters
+
+- `dataset_id`: (*Path parameter*)  
+  The ID of the dataset.
+- `document_id`: (*Path parameter*)  
+  The ID of the document.
+- `"chunk_ids"`: (*Body parameter*), `list[string]` (*Required*)  
+  IDs of the chunks whose availability status is to be updated.
+- `"available_int"`: (*Body parameter*), `integer` (*Optional*)  
+  Availability status for the specified chunks. Mutually exclusive with `"available"`. You must provide either `available_int` or `available`, *not* both.
+  - `1`: Available,
+  - `0`: Unavailable.
+- `"available"`: (*Body parameter*), `boolean` (*Optional*)  
+  Availability status of the specified chunks. Mutually exclusive with `"available_int"`. You must provide either `available` or `available_int`, *not* both.  
+  - `true`: Available,
+  - `false`: Unavailable.
+
+#### Response
+
+Success:
+
+```json
+{
+    "code": 0,
+    "data": true
+}
+```
+
+Failure:
+
+```json
+{
+    "code": 101,
+    "message": "You don't own the dataset {dataset_id}."
+}
+```
+
+```json
+{
+    "code": 101,
+    "message": "`chunk_ids` is required."
+}
+```
+
+```json
+{
+    "code": 101,
+    "message": "`available_int` or `available` is required."
+}
+```
+
+```json
+{
+    "code": 101,
+    "message": "Document not found!"
+}
+```
+
+```json
+{
+    "code": 101,
+    "message": "Index updating failure"
 }
 ```
 
@@ -2410,7 +2631,7 @@ curl --request POST \
 - `"top_k"`: (*Body parameter*), `integer`  
   The number of chunks engaged in vector cosine computation. Defaults to `1024`.
 - `"use_kg"`: (*Body parameter*), `boolean`  
-  Whether to search chunks related to the generated knowledge graph for multi-hop queries. Defaults to `False`. Before enabling this, ensure you have successfully constructed a knowledge graph for the specified datasets. See [here](https://ragflow.io/docs/dev/construct_knowledge_graph) for details.
+  Whether to search chunks related to the generated knowledge graph for multi-hop queries. Defaults to `False`. Before enabling this, ensure you have successfully constructed a knowledge graph for the specified datasets. See [here](../guides/dataset/advanced/construct_knowledge_graph.md) for details.
 - `"toc_enhance"`: (*Body parameter*), `boolean`  
   Whether to search chunks with extracted table of content. Defaults to `False`. Before enabling this, ensure you have enabled `TOC_Enhance` and successfully extracted table of contents for the specified datasets. See [here](https://ragflow.io/docs/dev/enable_table_of_contents) for details.
 - `"rerank_id"`: (*Body parameter*), `integer`  
@@ -2753,6 +2974,7 @@ Deletes chat assistants by ID.
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
   - `"ids"`: `list[string]`
+  - `"delete_all"`: `boolean`
 
 ##### Request example
 
@@ -2767,10 +2989,24 @@ curl --request DELETE \
      }'
 ```
 
+```bash
+curl --request DELETE \
+     --url http://{address}/api/v1/chats \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+          "delete_all": true
+     }'
+```
+
 ##### Request parameters
 
 - `"ids"`: (*Body parameter*), `list[string]`  
-  The IDs of the chat assistants to delete. If it is not specified, all chat assistants in the system will be deleted.
+  The IDs of the chat assistants to delete.
+  - If omitted, or set to `null` or an empty array, no chat assistants are deleted.
+  - If an array of IDs is provided, only the chat assistants matching those IDs are deleted.
+- `"delete_all"`: (*Body parameter*), `boolean`  
+  Whether to delete all chat assistants owned by the current user when `"ids"` is omitted, or set to`null` or an empty array. Defaults to `false`.
 
 #### Response
 
@@ -3129,6 +3365,7 @@ Deletes sessions of a chat assistant by ID.
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
   - `"ids"`: `list[string]`
+  - `"delete_all"`: `boolean`
 
 ##### Request example
 
@@ -3143,12 +3380,26 @@ curl --request DELETE \
      }'
 ```
 
+```bash
+curl --request DELETE \
+     --url http://{address}/api/v1/chats/{chat_id}/sessions \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+          "delete_all": true
+     }'
+```
+
 ##### Request Parameters
 
 - `chat_id`: (*Path parameter*)  
   The ID of the associated chat assistant.
 - `"ids"`: (*Body Parameter*), `list[string]`  
-  The IDs of the sessions to delete. If it is not specified, all sessions associated with the specified chat assistant will be deleted.
+  The IDs of the sessions to delete.
+  - If omitted, or set to `null` or an empty array, no sessions are deleted.
+  - If an array of IDs is provided, only the sessions matching those IDs are deleted.
+- `"delete_all"`: (*Body Parameter*), `boolean`  
+  Whether to delete all sessions of the specified chat assistant when `"ids"` is omitted, or set to `null` or an empty array. Defaults to `false`.
 
 #### Response
 
@@ -3655,15 +3906,16 @@ Asks a specified agent a question to start an AI-powered conversation.
   - `"session_id"`: `string` (optional)
   - `"inputs"`: `object` (optional)
   - `"user_id"`: `string` (optional)
-  - `"return_trace"`: `boolean` (optional, default `false`) — include execution trace logs.
+  - `"return_trace"`: `boolean` (optional, default `false`) — whether to include execution trace logs. See the `node_finished` event.
+  - `"release"`: `boolean` (optional, default `false`) - whether to visit the latest published canvas.
 
 #### Streaming events to handle
 
-When `stream=true`, the server sends Server-Sent Events (SSE). Clients should handle these `event` types:
+When `stream=true`, the server sends Server-Sent Events (SSE). A client should handle these events:
 
-- `message`: streaming content from Message components.
-- `message_end`: end of a Message component; may include `reference`/`attachment`.
-- `node_finished`: a component finishes; `data.inputs/outputs/error/elapsed_time` describe the node result. If `return_trace=true`, the trace is attached inside the same `node_finished` event (`data.trace`).
+- `message`: Streaming content from the **Message** components.
+- `message_end`: End of a **Message** component, which may include `reference`/`attachment`.
+- `node_finished`: A component finishes; `data.inputs/outputs/error/elapsed_time` describes the node result. If a component produces structured output, read it from that component's `data.outputs.structured`. If `return_trace=true`, the trace is attached inside the same `node_finished` event (`data.trace`).
 
 The stream terminates with `[DONE]`.
 
@@ -3939,7 +4191,11 @@ data: {
 data:[DONE]
 ```
 
+When `extra_body.reference_metadata.include` is `true`, each reference chunk may include a `document_metadata` object.
+
 Non-stream:
+
+If one or more components produce structured output, ensure you set `return_trace=true` and check each component's structured output via `trace`. The top-level `data.structured` field is a shortcut aggregated by `component_id`.
 
 ```json
 {
@@ -4490,6 +4746,7 @@ Deletes sessions of an agent by ID.
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
   - `"ids"`: `list[string]`
+  - `"delete_all"`: `boolean`
 
 ##### Request example
 
@@ -4504,12 +4761,26 @@ curl --request DELETE \
      }'
 ```
 
+```bash
+curl --request DELETE \
+     --url http://{address}/api/v1/agents/{agent_id}/sessions \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+          "delete_all": true
+     }'
+```
+
 ##### Request Parameters
 
 - `agent_id`: (*Path parameter*)  
   The ID of the associated agent.
 - `"ids"`: (*Body Parameter*), `list[string]`  
-  The IDs of the sessions to delete. If it is not specified, all sessions associated with the specified agent will be deleted.
+  The IDs of the sessions to delete.
+  - If omitted, or set to `null` or an empty array, no sessions are deleted.
+  - If an array of IDs is provided, only the sessions matching those IDs are deleted.
+- `"delete_all"`: (*Body Parameter*), `boolean`  
+  Whether to delete all sessions of the specified agent when `"ids"` is omitted, or set to `null` or an empty array. Defaults to `false`.
 
 #### Response
 
@@ -5000,14 +5271,14 @@ Explanation:
 
 ### Upload file
 
-**POST** `/api/v1/file/upload`
+**POST** `/api/v1/files`
 
 Uploads one or multiple files to the system.
 
 #### Request
 
 - Method: POST
-- URL: `/api/v1/file/upload`
+- URL: `/api/v1/files`
 - Headers:
   - `'Content-Type: multipart/form-data'`
   - `'Authorization: Bearer <YOUR_API_KEY>'`
@@ -5019,7 +5290,7 @@ Uploads one or multiple files to the system.
 
 ```bash
 curl --request POST \
-     --url http://{address}/api/v1/file/upload \
+     --url http://{address}/api/v1/files \
      --header 'Content-Type: multipart/form-data' \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --form 'file=@./test1.txt' \
@@ -5066,16 +5337,147 @@ Failure:
 
 ---
 
+### Upload document
+
+**POST** `/v1/document/upload_info`
+
+Uploads a file and creates the respective document.
+
+#### Request
+
+- Method: POST
+- URL: `/v1/document/upload_info`
+- Headers:
+  - `'Content-Type: multipart/form-data'`
+  - `'Authorization: Bearer <YOUR_API_KEY>'`
+- Form:
+  - `'file=@{FILE_PATH}'` (mutually exclusive with `url`)
+- Query:
+  - `url`: URL to crawl and convert to a runtime attachment (mutually exclusive with `file`).
+
+##### Request example
+
+Upload a local file:
+
+```bash
+curl --request POST \
+     --url http://{address}/v1/document/upload_info \
+     --header 'Content-Type: multipart/form-data' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --form 'file=@./test1.pdf'
+```
+
+Crawl a URL:
+
+```bash
+curl --request POST \
+     --url 'http://{address}/v1/document/upload_info?url=https://example.com/page' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>'
+```
+
+##### Request parameters
+
+- `'file'`: (*Form parameter*), `file`, *Optional*  
+  The file to upload. Mutually exclusive with `url`; either `file` or `url` must be provided.
+- `url`: (*Query parameter*), `string`, *Optional*  
+  A URL to crawl and store as an attachment. Mutually exclusive with `file`; either `url` or `file` must be provided.
+
+#### Response
+
+Success:
+
+```json
+{
+    "code": 0,
+    "data": {
+      "created_at": 1772451421.7924063,
+      "created_by": "be951084066611f18f5f00155d2f98f4",
+      "extension": "pdf",
+      "id": "2143a03d162c11f1b80f00155d334d02",
+      "mime_type": "application/pdf",
+      "name": "test1.pdf",
+      "preview_url": null,
+      "size": 49705
+    },
+    "message": "success"
+}
+```
+
+Failure:
+
+```json
+{
+    "code": 400,
+    "message": "Provide either multipart file(s) or ?url=...!"
+}
+```
+
+---
+
+### Download attachment
+
+**GET** `/v1/document/download/{attachment_id}`
+
+Downloads a runtime attachment previously uploaded via the [Upload document](#upload-document) method.
+
+#### Request
+
+- Method: GET
+- URL: `/v1/document/download/{attachment_id}`
+- Headers:
+  - `'Authorization: Bearer <YOUR_API_KEY>'`
+- Query parameter:
+  - `ext`: `string` (Optional)
+
+##### Request example
+
+```bash
+curl --request GET \
+     --url 'http://{address}/v1/document/download/{attachment_id}?ext=pdf' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --output ./downloaded_attachment.pdf
+```
+
+##### Request parameters
+
+- `attachment_id`: (*Path parameter*), `string`, *Required*  
+  The `id` value returned by the [Upload document](#upload-document) method.
+- `ext`: (*Query parameter*), `string`, *Optional*  
+  A file extension hint specifying the response's Content-Type. Defaults to `"markdown"`. Available values:  
+  - `"markdown"`
+  - `"html"`
+  - `"pdf"`
+  - `"docx"`
+  - `"xlsx"`
+  - `"csv"`
+
+#### Response
+
+Success:
+
+Returns the file content as a binary stream with the relevant Content-Type header.
+
+Failure:
+
+```json
+{
+    "code": 500,
+    "message": "Internal server error"
+}
+```
+
+---
+
 ### Create file or folder
 
-**POST** `/api/v1/file/create`
+**POST** `/api/v1/files`
 
 Creates a new file or folder in the system.
 
 #### Request
 
 - Method: POST
-- URL: `/api/v1/file/create`
+- URL: `/api/v1/files`
 - Headers:
   - `'Content-Type: application/json'`
   - `'Authorization: Bearer <YOUR_API_KEY>'`
@@ -5088,12 +5490,12 @@ Creates a new file or folder in the system.
 
 ```bash
 curl --request POST \
-     --url http://{address}/api/v1/file/create \
+     --url http://{address}/api/v1/files \
      --header 'Content-Type: application/json' \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --data '{
           "name": "New Folder",
-          "type": "FOLDER",
+          "type": "folder",
           "parent_id": "{folder_id}"
      }'
 ```
@@ -5106,8 +5508,8 @@ curl --request POST \
   The parent folder ID. If not specified, the file/folder will be created in the root folder.
 - `"type"`: (*Body parameter*), `string`  
   The type of the file to create. Available options:
-  - `"FOLDER"`: Create a folder
-  - `"VIRTUAL"`: Create a virtual file
+  - `"folder"`: Create a folder
+  - `"virtual"`: Create a virtual file
 
 #### Response
 
@@ -5119,7 +5521,7 @@ Success:
     "data": {
         "id": "b330ec2e91ec11efbc510242ac120004",
         "name": "New Folder",
-        "type": "FOLDER",
+        "type": "folder",
         "parent_id": "527fa74891e811ef9c650242ac120006",
         "size": 0,
         "create_time": 1729763127646
@@ -5140,14 +5542,14 @@ Failure:
 
 ### List files
 
-**GET** `/api/v1/file/list?parent_id={parent_id}&keywords={keywords}&page={page}&page_size={page_size}&orderby={orderby}&desc={desc}`
+**GET** `/api/v1/files?parent_id={parent_id}&keywords={keywords}&page={page}&page_size={page_size}&orderby={orderby}&desc={desc}`
 
 Lists files and folders under a specific folder.
 
 #### Request
 
 - Method: GET
-- URL: `/api/v1/file/list?parent_id={parent_id}&keywords={keywords}&page={page}&page_size={page_size}&orderby={orderby}&desc={desc}`
+- URL: `/api/v1/files?parent_id={parent_id}&keywords={keywords}&page={page}&page_size={page_size}&orderby={orderby}&desc={desc}`
 - Headers:
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 
@@ -5155,7 +5557,7 @@ Lists files and folders under a specific folder.
 
 ```bash
 curl --request GET \
-     --url 'http://{address}/api/v1/file/list?parent_id={folder_id}&page=1&page_size=15' \
+     --url 'http://{address}/api/v1/files?parent_id={folder_id}&page=1&page_size=15' \
      --header 'Authorization: Bearer <YOUR_API_KEY>'
 ```
 
@@ -5213,60 +5615,16 @@ Failure:
 
 ---
 
-### Get root folder
-
-**GET** `/api/v1/file/root_folder`
-
-Retrieves the user's root folder information.
-
-#### Request
-
-- Method: GET
-- URL: `/api/v1/file/root_folder`
-- Headers:
-  - `'Authorization: Bearer <YOUR_API_KEY>'`
-
-##### Request example
-
-```bash
-curl --request GET \
-     --url http://{address}/api/v1/file/root_folder \
-     --header 'Authorization: Bearer <YOUR_API_KEY>'
-```
-
-##### Request parameters
-
-No parameters required.
-
-#### Response
-
-Success:
-
-```json
-{
-    "code": 0,
-    "data": {
-        "root_folder": {
-            "id": "527fa74891e811ef9c650242ac120006",
-            "name": "root",
-            "type": "FOLDER"
-        }
-    }
-}
-```
-
----
-
 ### Get parent folder
 
-**GET** `/api/v1/file/parent_folder?file_id={file_id}`
+**GET** `/api/v1/files/{file_id}/parent`
 
 Retrieves the immediate parent folder information of a specified file.
 
 #### Request
 
 - Method: GET
-- URL: `/api/v1/file/parent_folder?file_id={file_id}`
+- URL: `/api/v1/files/{file_id}/parent`
 - Headers:
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 
@@ -5274,13 +5632,13 @@ Retrieves the immediate parent folder information of a specified file.
 
 ```bash
 curl --request GET \
-     --url 'http://{address}/api/v1/file/parent_folder?file_id={file_id}' \
+     --url 'http://{address}/api/v1/files/{file_id}/parent' \
      --header 'Authorization: Bearer <YOUR_API_KEY>'
 ```
 
 ##### Request parameters
 
-- `file_id`: (*Filter parameter*), `string`, *Required*  
+- `file_id`: (*Path parameter*), `string`, *Required*  
   The ID of the file whose immediate parent folder to retrieve.
 
 #### Response
@@ -5312,14 +5670,14 @@ Failure:
 
 ### Get all parent folders
 
-**GET** `/api/v1/file/all_parent_folder?file_id={file_id}`
+**GET** `/api/v1/files/{file_id}/ancestors`
 
 Retrieves all parent folders of a specified file in the folder hierarchy.
 
 #### Request
 
 - Method: GET
-- URL: `/api/v1/file/all_parent_folder?file_id={file_id}`
+- URL: `/api/v1/files/{file_id}/ancestors`
 - Headers:
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 
@@ -5327,13 +5685,13 @@ Retrieves all parent folders of a specified file in the folder hierarchy.
 
 ```bash
 curl --request GET \
-     --url 'http://{address}/api/v1/file/all_parent_folder?file_id={file_id}' \
+     --url 'http://{address}/api/v1/files/{file_id}/ancestors' \
      --header 'Authorization: Bearer <YOUR_API_KEY>'
 ```
 
 ##### Request parameters
 
-- `file_id`: (*Filter parameter*), `string`, *Required*  
+- `file_id`: (*Path parameter*), `string`, *Required*  
   The ID of the file whose parent folders to retrieve.
 
 #### Response
@@ -5371,35 +5729,35 @@ Failure:
 
 ### Delete files
 
-**POST** `/api/v1/file/rm`
+**DELETE** `/api/v1/files`
 
 Deletes one or multiple files or folders.
 
 #### Request
 
-- Method: POST
-- URL: `/api/v1/file/rm`
+- Method: DELETE
+- URL: `/api/v1/files`
 - Headers:
   - `'Content-Type: application/json'`
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
-  - `"file_ids"`: `list[string]`
+  - `"ids"`: `list[string]`
 
 ##### Request example
 
 ```bash
-curl --request POST \
-     --url http://{address}/api/v1/file/rm \
+curl --request DELETE \
+     --url http://{address}/api/v1/files \
      --header 'Content-Type: application/json' \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --data '{
-          "file_ids": ["file_id_1", "file_id_2"]
+          "ids": ["file_id_1", "file_id_2"]
      }'
 ```
 
 ##### Request parameters
 
-- `"file_ids"`: (*Body parameter*), `list[string]`, *Required*  
+- `"ids"`: (*Body parameter*), `list[string]`, *Required*  
   The IDs of the files or folders to delete.
 
 #### Response
@@ -5424,84 +5782,16 @@ Failure:
 
 ---
 
-### Rename file
-
-**POST** `/api/v1/file/rename`
-
-Renames a file or folder.
-
-#### Request
-
-- Method: POST
-- URL: `/api/v1/file/rename`
-- Headers:
-  - `'Content-Type: application/json'`
-  - `'Authorization: Bearer <YOUR_API_KEY>'`
-- Body:
-  - `"file_id"`: `string`
-  - `"name"`: `string`
-
-##### Request example
-
-```bash
-curl --request POST \
-     --url http://{address}/api/v1/file/rename \
-     --header 'Content-Type: application/json' \
-     --header 'Authorization: Bearer <YOUR_API_KEY>' \
-     --data '{
-          "file_id": "{file_id}",
-          "name": "new_name.txt"
-     }'
-```
-
-##### Request parameters
-
-- `"file_id"`: (*Body parameter*), `string`, *Required*  
-  The ID of the file or folder to rename.
-- `"name"`: (*Body parameter*), `string`, *Required*  
-  The new name for the file or folder. Note: Changing file extensions is *not* supported.
-
-#### Response
-
-Success:
-
-```json
-{
-    "code": 0,
-    "data": true
-}
-```
-
-Failure:
-
-```json
-{
-    "code": 400,
-    "message": "The extension of file can't be changed"
-}
-```
-
-or
-
-```json
-{
-    "code": 409,
-    "message": "Duplicated file name in the same folder."
-}
-```
-
----
-
 ### Download file
 
-**GET** `/api/v1/file/get/{file_id}`
+**GET** `/api/v1/files/{file_id}`
 
 Downloads a file from the system.
 
 #### Request
 
 - Method: GET
-- URL: `/api/v1/file/get/{file_id}`
+- URL: `/api/v1/files/{file_id}`
 - Headers:
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 
@@ -5509,7 +5799,7 @@ Downloads a file from the system.
 
 ```bash
 curl --request GET \
-     --url http://{address}/api/v1/file/get/{file_id} \
+     --url http://{address}/api/v1/files/{file_id} \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --output ./downloaded_file.txt
 ```
@@ -5536,28 +5826,35 @@ Failure:
 
 ---
 
-### Move files
+### Move or rename files
 
-**POST** `/api/v1/file/mv`
+**POST** `/api/v1/files/move`
 
-Moves one or multiple files or folders to a specified folder.
+Moves and/or renames files or folders. Follows Linux `mv` semantics: at least one of `dest_file_id` or `new_name` must be provided.
+
+- `dest_file_id` only: move files to a new folder, names unchanged.
+- `new_name` only: rename a single file or folder in place, no storage operation.
+- Both: move and rename simultaneously.
 
 #### Request
 
 - Method: POST
-- URL: `/api/v1/file/mv`
+- URL: `/api/v1/files/move`
 - Headers:
   - `'Content-Type: application/json'`
   - `'Authorization: Bearer <YOUR_API_KEY>'`
 - Body:
-  - `"src_file_ids"`: `list[string]`
-  - `"dest_file_id"`: `string`
+  - `"src_file_ids"`: `list[string]`, *Required*
+  - `"dest_file_id"`: `string`, *Optional*
+  - `"new_name"`: `string`, *Optional*
 
-##### Request example
+##### Request examples
+
+Move files to a folder:
 
 ```bash
 curl --request POST \
-     --url http://{address}/api/v1/file/mv \
+     --url http://{address}/api/v1/files/move \
      --header 'Content-Type: application/json' \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --data '{
@@ -5566,12 +5863,27 @@ curl --request POST \
      }'
 ```
 
+Rename a file in place:
+
+```bash
+curl --request POST \
+     --url http://{address}/api/v1/files/move \
+     --header 'Content-Type: application/json' \
+     --header 'Authorization: Bearer <YOUR_API_KEY>' \
+     --data '{
+          "src_file_ids": ["{file_id}"],
+          "new_name": "new_name.txt"
+     }'
+```
+
 ##### Request parameters
 
-- `"src_file_ids"`: (*Body parameter*), `list[string]`, *Required*  
-  The IDs of the files or folders to move.
-- `"dest_file_id"`: (*Body parameter*), `string`, *Required*  
-  The ID of the destination folder.
+- `"src_file_ids"`: (*Body parameter*), `list[string]`, *Required*
+  The IDs of the files or folders to move or rename.
+- `"dest_file_id"`: (*Body parameter*), `string`, *Optional*
+  The ID of the destination folder. Omit to rename in place.
+- `"new_name"`: (*Body parameter*), `string`, *Optional*
+  New name for the file or folder. Only valid when `src_file_ids` contains a single entry. Note: Changing file extensions is *not* supported.
 
 #### Response
 
@@ -5598,7 +5910,16 @@ or
 ```json
 {
     "code": 404,
-    "message": "Parent Folder not found!"
+    "message": "Parent folder not found!"
+}
+```
+
+or
+
+```json
+{
+    "code": 400,
+    "message": "The extension of file can't be changed"
 }
 ```
 
@@ -5606,14 +5927,14 @@ or
 
 ### Convert files to documents and link them to datasets
 
-**POST** `/api/v1/file/convert`
+**POST** `/v1/file2document/convert`
 
 Converts files to documents and links them to specified datasets.
 
 #### Request
 
 - Method: POST
-- URL: `/api/v1/file/convert`
+- URL: `/v1/file2document/convert`
 - Headers:
   - `'Content-Type: application/json'`
   - `'Authorization: Bearer <YOUR_API_KEY>'`
@@ -5625,7 +5946,7 @@ Converts files to documents and links them to specified datasets.
 
 ```bash
 curl --request POST \
-     --url http://{address}/api/v1/file/convert \
+     --url http://{address}/v1/file2document/convert \
      --header 'Content-Type: application/json' \
      --header 'Authorization: Bearer <YOUR_API_KEY>' \
      --data '{

@@ -7,7 +7,7 @@ hudet/
 cv/
 layout_app.py
 api/flask_session
-
+venv/
 # Remove Cargo.lock from gitignore if creating an executable, leave it for libraries
 # More information here https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html
 Cargo.lock
@@ -202,3 +202,40 @@ backup
 
 # local validation outputs
 validation_report_*.json
+
+*huqie.txt
+
+.hypothesis
+
+
+# Added by cargo
+
+/target
+
+# Do not include in PR (local dev / build artifacts)
+ragflow.egg-info/
+uv-aarch64*.tar.gz
+uv-aarch64-unknown-linux-gnu.tar.gz
+docker/launch_backend_service_windows.sh
+
+# C++ build directories
+internal/cpp/build/
+internal/cpp/cmake-build-release/
+internal/cpp/cmake-build-debug/
+
+# Trae IDE config
+.trae/
+
+# Go server build output
+bin/*
+!bin/.gitkeep
+
+# ragflow-research 本地隔离环境配置（不提交，不合并）
+conf/service_conf.yaml
+conf/service_conf.yaml.backup
+web/vite.config.ts
+start-research.sh
+test_ocr_complete.py
+test_ocr_minimal.py
+test_ocr_standalone.py
+test_ocr_versions.py

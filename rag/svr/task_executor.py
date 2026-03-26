@@ -738,6 +738,11 @@ async def run_dataflow(task: dict):
             ]
             del ck["row_positions"]
 
+        # ── 增强：position_line_map 直接透传到 ES（PaddleOCR 行映射） ──
+        # 当 content 行数 != position 数时，前端用此字段精确映射 lineIdx → posIdx
+        if "position_line_map" in ck:
+            ck["position_line_map"] = [int(v) for v in ck["position_line_map"]]
+
     if metadata:
         e, doc = DocumentService.get_by_id(doc_id)
         if e:

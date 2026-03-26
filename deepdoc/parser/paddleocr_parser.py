@@ -40,7 +40,9 @@ except Exception:
 AlgorithmType = Literal["PaddleOCR-VL", "PaddleOCR-VL-1.5"]
 SectionTuple = tuple[str, ...]
 TableTuple = tuple[str, ...]
-ParseResult = tuple[list[SectionTuple], list[TableTuple]]
+# ParseResult: sections are always list[SectionTuple]; tables can be list[TableTuple]
+# (legacy) or list[dict] (PaddleOCR-VL table info with row_positions).
+ParseResult = tuple[list[SectionTuple], list]
 
 
 _MARKDOWN_IMAGE_PATTERN = re.compile(
@@ -449,9 +451,77 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         return sections
 
-    def _transfer_to_tables(self, result: dict[str, Any]) -> list[TableTuple]:
-        """Convert API response to table tuples."""
-        return []
+    def _transfer_to_tables(self, result: dict[str, Any]) -> list[dict[str, Any]]:
+        """Extract table blocks from API response with row-level bounding boxes.
+
+        Returns a list of table info dicts, each containing:
+        - page: 1-indexed page number
+        - bbox: [x0, y0, x1, y1] in original pixel coordinates
+        - html: the <table> HTML content
+        - row_positions: list of [page(1-indexed), x0, x1, top, bottom]
+                         coordinates divided by _ZOOMIN (matching section tag coords)
+
+        The row_positions are computed by evenly dividing the table bbox height
+        by the number of <tr> rows — an approximation that enables row-level
+        highlight in the downstream SmartSplitter / ES pipeline.
+        """
+        tables: list[dict[str, Any]] = []
+
+        layout_parsing_results = result.get("layoutParsingResults", [])
+        for page_idx, layout_result in enumerate(layout_parsing_results):
+            pruned_result = layout_result.get("prunedResult", {})
+            parsing_res_list = pruned_result.get("parsing_res_list", [])
+
+            for block in parsing_res_list:
+                if block.get("block_label") != "table":
+                    continue
+
+                html_content = block.get("block_content", "").strip()
+                if not html_content:
+                    continue
+
+                block_bbox = block.get("block_bbox", [0, 0, 0, 0])
+                left, top, right, bottom = _normalize_bbox(block_bbox)
+
+                # Count <tr> rows in the HTML
+                tr_matches = re.findall(r"<tr[^>]*>", html_content, re.IGNORECASE)
+                num_rows = len(tr_matches)
+                if num_rows == 0:
+                    num_rows = 1  # fallback: treat entire table as 1 row
+
+                # Evenly divide table height into row-level bboxes
+                table_height = bottom - top
+                row_height = table_height / num_rows
+
+                # Use 1-based page to match DeepDOC convention and downstream expectations
+                # (frontend page-image API, SmartSplitter, task_executor all assume 1-based)
+                page_1based = page_idx + 1
+                zm = self._ZOOMIN
+
+                row_positions = []
+                for row_idx in range(num_rows):
+                    row_top = top + row_idx * row_height
+                    row_bottom = top + (row_idx + 1) * row_height
+                    row_positions.append([
+                        page_1based,
+                        int(left // zm),
+                        int(right // zm),
+                        int(row_top // zm),
+                        int(row_bottom // zm),
+                    ])
+
+                # position_tag uses 1-based page (matching _transfer_to_sections tag format)
+                page_1based = page_idx + 1
+                tables.append({
+                    "page": page_1based,
+                    "bbox": [left, top, right, bottom],
+                    "html": html_content,
+                    "row_positions": row_positions,
+                    # Position tag matching the format used by _transfer_to_sections
+                    "position_tag": f"@@{page_1based}\t{int(left // zm)}\t{int(right // zm)}\t{int(top // zm)}\t{int(bottom // zm)}##",
+                })
+
+        return tables
 
     def __images__(self, fnm, page_from=0, page_to=100, callback=None):
         """Generate page images from PDF for cropping."""

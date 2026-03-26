@@ -283,6 +283,21 @@ class SmartSplitter(ProcessBase, LLM):
                         for pos in RAGFlowPdfParser.extract_positions(tagged_text)
                     ]
                     
+                    # ── 构建 position_line_map：每行 content 对应的 position 索引 ──
+                    # chunk_text_parts[k] 是第 k 个 block 的文本（可能含 \n），
+                    # positions[k] 是第 k 个 block 的坐标。
+                    # 用 "\n" join 后，需要知道每行属于哪个 block。
+                    position_line_map = []
+                    for part_idx, part in enumerate(chunk_text_parts):
+                        part_lines = part.split("\n")
+                        for _ in part_lines:
+                            position_line_map.append(part_idx)
+                    # 裁剪到 positions 长度范围内（防止越界）
+                    if positions:
+                        position_line_map = [
+                            min(v, len(positions) - 1) for v in position_line_map
+                        ]
+                    
                     # Merge images
                     merged_image = None
                     for img in chunk_images:
@@ -319,6 +334,10 @@ class SmartSplitter(ProcessBase, LLM):
                     }
                     if chunk_row_positions:
                         chunk["row_positions"] = chunk_row_positions
+                    # 当 lines 和 positions 不对齐时，加入映射字段
+                    text_lines = chunk_text.split("\n")
+                    if len(text_lines) != len(positions) and position_line_map:
+                        chunk["position_line_map"] = position_line_map
                     
                     chunks.append(chunk)
                     segments_using_bbox += 1

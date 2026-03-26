@@ -474,7 +474,7 @@ class Parser(ProcessBase):
             ocr_model = LLMBundle(tenant_id, ocr_model_config)
             pdf_parser = ocr_model.mdl
 
-            lines, _ = pdf_parser.parse_pdf(
+            lines, tables = pdf_parser.parse_pdf(
                 filepath=name,
                 binary=blob,
                 callback=self.callback,
@@ -485,12 +485,48 @@ class Parser(ProcessBase):
                 # Get cropped image and positions
                 cropped_image, positions = pdf_parser.crop(poss, need_position=True)
 
+                # PaddleOCR's crop() returns 0-based page indices, but downstream
+                # (SmartSplitter, task_executor, frontend) expects 1-based pages
+                # (matching DeepDOC's convention: pdf_parser.py L1812 does pos[0][-1]+1).
+                # Fix: convert page from 0-based to 1-based here.
+                if positions:
+                    positions = [(p[0] + 1, *p[1:]) for p in positions]
+
                 box = {
                     "text": t,
                     "image": cropped_image,
                     "positions": positions,
                 }
                 bboxes.append(box)
+
+            # ── 增强：将 PaddleOCR 表格的 row_positions 补到对应的 bbox 上 ──
+            # tables 是 _transfer_to_tables 返回的 list[dict]，每个 dict 含
+            # position_tag / row_positions / html。通过 position_tag 匹配 bbox。
+            if tables:
+                # Build lookup: position_tag → table info
+                table_lookup = {}
+                for tbl in tables:
+                    tag = tbl.get("position_tag", "")
+                    if tag:
+                        table_lookup[tag] = tbl
+
+                for box in bboxes:
+                    # sections 的 text 末尾可能包含 position_tag（raw 模式下 tag 附在 text 里）
+                    # 也可能 position_tag 是 section tuple 的第二个元素（已被提取到 poss 里）
+                    # 重建 tag 来匹配
+                    text = box.get("text", "")
+                    if "<table" not in text.lower() and "<tr" not in text.lower():
+                        continue
+                    # 找到包含表格 HTML 的 bbox，用 positions 匹配
+                    if box.get("positions"):
+                        p = box["positions"][0]  # (page_1based, x0, x1, top, bottom)
+                        # position_tag uses 1-based page; positions are now also 1-based
+                        candidate_tag = "@@{}\t{}\t{}\t{}\t{}##".format(
+                            int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(p[4])
+                        )
+                        if candidate_tag in table_lookup:
+                            box["row_positions"] = table_lookup[candidate_tag]["row_positions"]
+                            box["layout_type"] = "table"
         else:
             if conf.get("parse_method"):
                 vision_model_config = get_model_config_by_type_and_name(self._canvas._tenant_id, LLMType.IMAGE2TEXT, conf["parse_method"])

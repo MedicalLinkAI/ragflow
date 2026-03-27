@@ -521,6 +521,13 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     "position_tag": f"@@{page_1based}\t{int(left // zm)}\t{int(right // zm)}\t{int(top // zm)}\t{int(bottom // zm)}##",
                 })
 
+                # ── DIAG-LOG-1: _transfer_to_tables 出口 ──
+                logging.info(
+                    f"[DIAG-TABLE] page={page_1based} bbox=[{left},{top},{right},{bottom}] "
+                    f"zm={zm} num_rows={num_rows} row_height={row_height:.2f} "
+                    f"row[0]=[{row_positions[0]}] row[-1]=[{row_positions[-1]}]"
+                )
+
         return tables
 
     def __images__(self, fnm, page_from=0, page_to=100, callback=None):

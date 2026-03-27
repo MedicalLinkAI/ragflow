@@ -334,6 +334,11 @@ class SmartSplitter(ProcessBase, LLM):
                     }
                     if chunk_row_positions:
                         chunk["row_positions"] = chunk_row_positions
+                        # ── DIAG-LOG-3: SmartSplitter chunk 输出 ──
+                        logging.info(
+                            f"[DIAG-SPLITTER] chunk row_positions len={len(chunk_row_positions)} "
+                            f"row[0]={chunk_row_positions[0]} row[-1]={chunk_row_positions[-1]}"
+                        )
                     # 当 lines 和 positions 不对齐时，加入映射字段
                     text_lines = chunk_text.split("\n")
                     if len(text_lines) != len(positions) and position_line_map:
@@ -577,6 +582,11 @@ class SmartSplitter(ProcessBase, LLM):
                                 )
             if chunk_row_positions:
                 ck["row_positions"] = chunk_row_positions
+                # ── DIAG-LOG-3b: SmartSplitter first_line path 输出 ──
+                logging.info(
+                    f"[DIAG-SPLITTER-FL] chunk row_positions len={len(chunk_row_positions)} "
+                    f"row[0]={chunk_row_positions[0]} row[-1]={chunk_row_positions[-1]}"
+                )
 
             cks.append(ck)
 

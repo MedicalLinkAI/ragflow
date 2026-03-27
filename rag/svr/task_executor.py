@@ -736,6 +736,12 @@ async def run_dataflow(task: dict):
                 (int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(p[4]))
                 for p in ck["row_positions"]
             ]
+            # ── DIAG-LOG-4: task_executor 写入 ES 前 ──
+            rpi = ck["row_position_int"]
+            logging.info(
+                f"[DIAG-EXECUTOR] row_position_int len={len(rpi)} "
+                f"row[0]={rpi[0]} row[-1]={rpi[-1]}"
+            )
             del ck["row_positions"]
 
         # ── 增强：position_line_map 直接透传到 ES（PaddleOCR 行映射） ──

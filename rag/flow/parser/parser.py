@@ -527,6 +527,14 @@ class Parser(ProcessBase):
                         if candidate_tag in table_lookup:
                             box["row_positions"] = table_lookup[candidate_tag]["row_positions"]
                             box["layout_type"] = "table"
+                            # ── DIAG-LOG-2: parser.py table_lookup 匹配后 ──
+                            rp = box["row_positions"]
+                            import logging as _stdlib_logging
+                            _stdlib_logging.info(
+                                f"[DIAG-PARSER] matched tag={candidate_tag} "
+                                f"row_positions len={len(rp)} "
+                                f"row[0]={rp[0]} row[-1]={rp[-1]}"
+                            )
         else:
             if conf.get("parse_method"):
                 vision_model_config = get_model_config_by_type_and_name(self._canvas._tenant_id, LLMType.IMAGE2TEXT, conf["parse_method"])

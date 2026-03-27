@@ -577,6 +577,40 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         det_boxes, (left, top, right, bottom), num_rows,
                     )
                     if clustered is not None:
+                        # ── Coverage check: bands must span a meaningful
+                        # portion of the table height. If detected text blocks
+                        # only cover a small slice (e.g. only header area),
+                        # precise modes are unreliable. Use refined-uniform
+                        # with a tighter effective region instead.
+                        bands_span = clustered[-1][1] - clustered[0][0]
+                        table_height = bottom - top
+                        coverage = bands_span / table_height if table_height > 0 else 0
+                        if coverage < 0.3 and len(clustered) >= 1:
+                            # Estimate effective data region from detected bands
+                            n_bands = len(clustered)
+                            avg_h = bands_span / max(n_bands - 1, 1)
+                            if avg_h < 1:
+                                avg_h = bands_span  # single band
+                            eff_top = max(clustered[0][0] - avg_h, top)
+                            # Extra rows beyond detected bands extend downward
+                            extra_rows = max(num_rows - n_bands, 1)
+                            eff_bot = min(
+                                clustered[-1][1] + avg_h * extra_rows * 1.5,
+                                bottom,
+                            )
+                            row_height = (eff_bot - eff_top) / num_rows
+                            for i in range(num_rows):
+                                row_positions.append([
+                                    page_1based,
+                                    int(left // zm),
+                                    int(right // zm),
+                                    int((eff_top + i * row_height) // zm),
+                                    int((eff_top + (i + 1) * row_height) // zm),
+                                ])
+                            mode = "refined-uniform-cov"
+                            clustered = None  # skip precise modes below
+
+                    if clustered is not None:
                         n_bands = len(clustered)
                         gap = num_rows - n_bands
 

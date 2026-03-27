@@ -426,6 +426,10 @@ class RAGFlowPdfParser:
         tbcnt = [0]
         MARGIN = 10
         self.tb_cpns = []
+        table_index = 0
+        table_layouts = []
+        self.table_rotations = {}
+        self.rotated_table_imgs = {}
         assert len(self.page_layout) == len(self.page_images)
         for p, tbls in enumerate(self.page_layout):  # for page
             tbls = [f for f in tbls if f["type"] == "table"]

@@ -451,6 +451,74 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         return sections
 
+    @staticmethod
+    def _cluster_row_boundaries(
+        boxes: list[dict],
+        table_bbox: tuple[float, float, float, float],
+        num_tr: int,
+        merge_gap: float = 12.0,
+    ) -> list[tuple[float, float]] | None:
+        """Cluster layout_det_res boxes inside *table_bbox* into row boundaries.
+
+        Returns a list of (row_top, row_bottom) in API pixel coordinates,
+        one per detected row, **sorted by y**.  Returns ``None`` when the
+        detected rows are too few to be useful (< 50 % of *num_tr*).
+
+        Algorithm
+        ---------
+        1. Collect every non-table box whose vertical centre falls inside the
+           table bbox.
+        2. Sort by y-top and merge nearby entries (gap < *merge_gap*) into the
+           same row band.
+        3. Each band's top = min(y_tops), bottom = max(y_bottoms) of its
+           members.
+        """
+        t_left, t_top, t_right, t_bottom = table_bbox
+
+        # Step 1 – collect candidate boxes inside the table region
+        candidates: list[tuple[float, float]] = []  # (y_top, y_bottom)
+        _skip_labels = {"table", "chart", "figure", "image"}
+        for b in boxes:
+            if b.get("label", "") in _skip_labels:
+                continue  # skip non-text boxes
+            coord = b.get("coordinate", [0, 0, 0, 0])
+            bx0, by0, bx1, by1 = coord[0], coord[1], coord[2], coord[3]
+            # Box centre must be inside the table bbox (with small tolerance)
+            cy = (by0 + by1) / 2
+            cx = (bx0 + bx1) / 2
+            if t_top - 5 <= cy <= t_bottom + 5 and t_left - 5 <= cx <= t_right + 5:
+                candidates.append((float(by0), float(by1)))
+
+        if not candidates:
+            return None
+
+        # Step 2 – sort by y-top, merge into row bands
+        candidates.sort()
+        bands: list[list[tuple[float, float]]] = [[candidates[0]]]
+        for y_top, y_bot in candidates[1:]:
+            last_band = bands[-1]
+            # Compare with the *average* y-top of the current band
+            avg_top = sum(t for t, _ in last_band) / len(last_band)
+            if y_top - avg_top < merge_gap:
+                last_band.append((y_top, y_bot))
+            else:
+                bands.append([(y_top, y_bot)])
+
+        # Step 3 – derive row boundaries from each band, clamped to table bbox
+        row_bounds: list[tuple[float, float]] = []
+        for band in bands:
+            band_top = max(min(t for t, _ in band), t_top)
+            band_bot = min(max(b for _, b in band), t_bottom)
+            if band_bot <= band_top:
+                continue  # degenerate band, skip
+            row_bounds.append((band_top, band_bot))
+
+        # Sanity check: at least 50 % of <tr> rows must be detected
+        if len(row_bounds) < max(num_tr * 0.5, 1):
+            return None
+
+        return row_bounds
+
     def _transfer_to_tables(self, result: dict[str, Any]) -> list[dict[str, Any]]:
         """Extract table blocks from API response with row-level bounding boxes.
 
@@ -461,9 +529,13 @@ class PaddleOCRParser(RAGFlowPdfParser):
         - row_positions: list of [page(1-indexed), x0, x1, top, bottom]
                          coordinates divided by _ZOOMIN (matching section tag coords)
 
-        The row_positions are computed by evenly dividing the table bbox height
-        by the number of <tr> rows — an approximation that enables row-level
-        highlight in the downstream SmartSplitter / ES pipeline.
+        Row positions are computed in two ways:
+        1. **Precise mode** – when ``layout_det_res.boxes`` contains enough
+           text-level bboxes inside the table, cluster them into row bands and
+           derive per-row top/bottom from the actual text positions.
+        2. **Uniform fallback** – evenly divide the table bbox height by the
+           number of ``<tr>`` rows (less accurate for tables with varying row
+           heights or embedded charts).
         """
         tables: list[dict[str, Any]] = []
 
@@ -471,6 +543,11 @@ class PaddleOCRParser(RAGFlowPdfParser):
         for page_idx, layout_result in enumerate(layout_parsing_results):
             pruned_result = layout_result.get("prunedResult", {})
             parsing_res_list = pruned_result.get("parsing_res_list", [])
+
+            # Gather layout_det_res boxes for this page (used by precise mode)
+            det_boxes = (
+                pruned_result.get("layout_det_res", {}).get("boxes", [])
+            )
 
             for block in parsing_res_list:
                 if block.get("block_label") != "table":
@@ -489,43 +566,160 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 if num_rows == 0:
                     num_rows = 1  # fallback: treat entire table as 1 row
 
-                # Evenly divide table height into row-level bboxes
-                table_height = bottom - top
-                row_height = table_height / num_rows
-
-                # Use 1-based page to match DeepDOC convention and downstream expectations
-                # (frontend page-image API, SmartSplitter, task_executor all assume 1-based)
                 page_1based = page_idx + 1
                 zm = self._ZOOMIN
+                mode = "uniform"  # track which mode was used (for logging)
 
+                # ── Try precise row positioning from layout_det_res ──
                 row_positions = []
-                for row_idx in range(num_rows):
-                    row_top = top + row_idx * row_height
-                    row_bottom = top + (row_idx + 1) * row_height
-                    row_positions.append([
-                        page_1based,
-                        int(left // zm),
-                        int(right // zm),
-                        int(row_top // zm),
-                        int(row_bottom // zm),
-                    ])
+                if det_boxes:
+                    clustered = self._cluster_row_boundaries(
+                        det_boxes, (left, top, right, bottom), num_rows,
+                    )
+                    if clustered is not None:
+                        n_bands = len(clustered)
+                        gap = num_rows - n_bands
 
-                # position_tag uses 1-based page (matching _transfer_to_sections tag format)
-                page_1based = page_idx + 1
+                        if gap == 0:
+                            # Exact match: 1:1 mapping using midpoints
+                            boundaries: list[float] = [top]
+                            for i in range(n_bands - 1):
+                                mid = (clustered[i][1] + clustered[i + 1][0]) / 2
+                                boundaries.append(mid)
+                            boundaries.append(bottom)
+                            for i in range(num_rows):
+                                row_positions.append([
+                                    page_1based,
+                                    int(left // zm),
+                                    int(right // zm),
+                                    int(boundaries[i] // zm),
+                                    int(boundaries[i + 1] // zm),
+                                ])
+                            mode = "precise"
+
+                        elif gap == 1:
+                            # One row undetected.  Determine whether it is the
+                            # header (top) or trailer (bottom) by checking how
+                            # far band[0] sits from the table top.
+                            avg_bh = (clustered[-1][1] - clustered[0][0]) / max(n_bands - 1, 1)
+                            header_gap = clustered[0][0] - top
+                            if header_gap > avg_bh * 0.5:
+                                # band[0] is far from table top → header missing
+                                row_positions.append([
+                                    page_1based,
+                                    int(left // zm),
+                                    int(right // zm),
+                                    int(top // zm),
+                                    int(clustered[0][0] // zm),
+                                ])
+                                for i in range(n_bands):
+                                    r_top = clustered[i][0] if i == 0 else (clustered[i - 1][1] + clustered[i][0]) / 2
+                                    r_bot = (clustered[i][1] + clustered[i + 1][0]) / 2 if i + 1 < n_bands else bottom
+                                    row_positions.append([
+                                        page_1based,
+                                        int(left // zm),
+                                        int(right // zm),
+                                        int(r_top // zm),
+                                        int(r_bot // zm),
+                                    ])
+                                mode = "precise-h"
+                            else:
+                                # band[0] starts near table top → trailer missing
+                                for i in range(n_bands):
+                                    r_top = top if i == 0 else (clustered[i - 1][1] + clustered[i][0]) / 2
+                                    r_bot = (clustered[i][1] + clustered[i + 1][0]) / 2 if i + 1 < n_bands else clustered[i][1]
+                                    row_positions.append([
+                                        page_1based,
+                                        int(left // zm),
+                                        int(right // zm),
+                                        int(r_top // zm),
+                                        int(r_bot // zm),
+                                    ])
+                                # Append trailer row
+                                row_positions.append([
+                                    page_1based,
+                                    int(left // zm),
+                                    int(right // zm),
+                                    int(clustered[-1][1] // zm),
+                                    int(bottom // zm),
+                                ])
+                                mode = "precise-t"
+
+                        elif gap == 2:
+                            # Header + trailer missing: prepend header, append trailer
+                            row_positions.append([
+                                page_1based,
+                                int(left // zm),
+                                int(right // zm),
+                                int(top // zm),
+                                int(clustered[0][0] // zm),
+                            ])
+                            for i in range(n_bands):
+                                r_top = clustered[i][0] if i == 0 else (clustered[i - 1][1] + clustered[i][0]) / 2
+                                r_bot = (clustered[i][1] + clustered[i + 1][0]) / 2 if i + 1 < n_bands else clustered[i][1]
+                                row_positions.append([
+                                    page_1based,
+                                    int(left // zm),
+                                    int(right // zm),
+                                    int(r_top // zm),
+                                    int(r_bot // zm),
+                                ])
+                            # Trailer row: from last band bottom to table bottom
+                            row_positions.append([
+                                page_1based,
+                                int(left // zm),
+                                int(right // zm),
+                                int(clustered[-1][1] // zm),
+                                int(bottom // zm),
+                            ])
+                            mode = "precise-ht"
+
+                        else:
+                            # gap > 2: use detected bands to refine effective
+                            # data region, then uniform-divide within that region
+                            avg_h = (clustered[-1][1] - clustered[0][0]) / max(n_bands - 1, 1)
+                            eff_top = max(clustered[0][0] - avg_h, top)
+                            eff_bot = min(clustered[-1][1] + avg_h, bottom)
+                            row_height = (eff_bot - eff_top) / num_rows
+                            for i in range(num_rows):
+                                row_positions.append([
+                                    page_1based,
+                                    int(left // zm),
+                                    int(right // zm),
+                                    int((eff_top + i * row_height) // zm),
+                                    int((eff_top + (i + 1) * row_height) // zm),
+                                ])
+                            mode = "refined-uniform"
+
+                # ── Uniform fallback ──
+                if not row_positions:
+                    table_height = bottom - top
+                    row_height = table_height / num_rows
+                    for row_idx in range(num_rows):
+                        row_top = top + row_idx * row_height
+                        row_bottom = top + (row_idx + 1) * row_height
+                        row_positions.append([
+                            page_1based,
+                            int(left // zm),
+                            int(right // zm),
+                            int(row_top // zm),
+                            int(row_bottom // zm),
+                        ])
+                    mode = "uniform"
+
                 tables.append({
                     "page": page_1based,
                     "bbox": [left, top, right, bottom],
                     "html": html_content,
                     "row_positions": row_positions,
-                    # Position tag matching the format used by _transfer_to_sections
                     "position_tag": f"@@{page_1based}\t{int(left // zm)}\t{int(right // zm)}\t{int(top // zm)}\t{int(bottom // zm)}##",
                 })
 
                 # ── DIAG-LOG-1: _transfer_to_tables 出口 ──
                 logging.info(
-                    f"[DIAG-TABLE] page={page_1based} bbox=[{left},{top},{right},{bottom}] "
-                    f"zm={zm} num_rows={num_rows} row_height={row_height:.2f} "
-                    f"row[0]=[{row_positions[0]}] row[-1]=[{row_positions[-1]}]"
+                    f"[DIAG-TABLE] page={page_1based} mode={mode} "
+                    f"bbox=[{left},{top},{right},{bottom}] zm={zm} num_rows={num_rows} "
+                    f"row[0]={row_positions[0]} row[-1]={row_positions[-1]}"
                 )
 
         return tables

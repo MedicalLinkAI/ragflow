@@ -576,22 +576,9 @@ class PaddleOCRParser(RAGFlowPdfParser):
             for rb in row_boxes:
                 row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows + 1:
-            # TSR 多一行 → 判断头部第一行是否为噪声（表头上边界薄条）
-            first_h = row_boxes[0]["bottom"] - row_boxes[0]["top"]
-            second_h = row_boxes[1]["bottom"] - row_boxes[1]["top"]
-            if second_h > 0 and first_h < second_h * 0.6:
-                # 头部第一行行高异常（不足第二行的 60%）→ 丢弃头部噪声行，保留后 num_rows 行
-                logging.info(
-                    "[TSR-ENHANCE] Head noise detected: row[0] height=%.1f < row[1] height=%.1f * 0.6, "
-                    "dropping first row",
-                    first_h, second_h,
-                )
-                for rb in row_boxes[1:]:
-                    row_positions.append(_map_rb(rb))
-            else:
-                # 头部正常 → 丢弃尾部（保持原有行为）
-                for rb in row_boxes[:num_rows]:
-                    row_positions.append(_map_rb(rb))
+            # TSR 多一行 → 取前 num_rows 个
+            for rb in row_boxes[:num_rows]:
+                row_positions.append(_map_rb(rb))
         else:
             return None
 

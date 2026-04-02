@@ -451,6 +451,158 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         return sections
 
+    # ── TSR Enhancement: 乐高式可插拔模块 ──────────────────────────
+    _tsr_instance = None  # 延迟初始化，不用不加载
+
+    def _tsr_enhance_row_positions(
+        self,
+        page_idx: int,
+        left, top, right, bottom,
+        num_rows: int,
+        zm,
+    ) -> list[list[int]] | None:
+        """用 TableStructureRecognizer 对表格区域做二次精确行识别。
+
+        仅在 PaddleOCR-VL 的精确模式失败时调用（乐高式增强，可熔断）。
+        从 self.page_images 中裁剪表格区域，调用 TSR 模型识别行坐标。
+
+        Returns:
+            行坐标列表 [[page, x0, x1, top, bottom], ...] 或 None（识别失败/不匹配时）
+        """
+        if not getattr(self, "page_images", None) or page_idx >= len(self.page_images):
+            return None
+
+        page_img = self.page_images[page_idx]
+        img_w, img_h = page_img.size
+
+        # page_images 分辨率是 72dpi，PaddleOCR API 坐标是 zm*72dpi
+        # bbox 坐标需要映射到 72dpi 图片坐标
+        scale = 1.0 / zm
+        crop_left = max(0, int(left * scale))
+        crop_top = max(0, int(top * scale))
+        crop_right = min(img_w, int(right * scale))
+        crop_bottom = min(img_h, int(bottom * scale))
+
+        if crop_right <= crop_left or crop_bottom <= crop_top:
+            return None
+
+        # 裁剪表格区域
+        import numpy as np
+        table_crop = page_img.crop((crop_left, crop_top, crop_right, crop_bottom))
+        table_np = np.array(table_crop)
+
+        # 延迟初始化 TSR（不用不加载模型）
+        if PaddleOCRParser._tsr_instance is None:
+            from deepdoc.vision import TableStructureRecognizer
+            PaddleOCRParser._tsr_instance = TableStructureRecognizer()
+            logging.info("[TSR-ENHANCE] TableStructureRecognizer initialized (lazy)")
+
+        tsr = PaddleOCRParser._tsr_instance
+        tsr_results = tsr([table_np], thr=0.2)
+        if not tsr_results or not tsr_results[0]:
+            logging.info("[TSR-ENHANCE] TSR returned no results for page=%d", page_idx + 1)
+            return None
+
+        # 提取 "table row" 和 "table column header" 的 bbox
+        row_boxes = [
+            b for b in tsr_results[0]
+            if b["label"] in ("table row", "table column header")
+        ]
+        if not row_boxes:
+            logging.info("[TSR-ENHANCE] No row boxes detected for page=%d", page_idx + 1)
+            return None
+
+        # 按 top 排序
+        row_boxes.sort(key=lambda b: b["top"])
+
+        # 去重：column header 和 table row 在同一位置重叠时只保留一个
+        # TSR 经常把表头同时检测为 column header + table row
+        if len(row_boxes) > 1:
+            deduped = [row_boxes[0]]
+            for rb in row_boxes[1:]:
+                prev = deduped[-1]
+                overlap = min(prev["bottom"], rb["bottom"]) - max(prev["top"], rb["top"])
+                min_height = min(prev["bottom"] - prev["top"], rb["bottom"] - rb["top"])
+                if min_height > 0 and overlap / min_height > 0.5:
+                    # 重叠超过 50% → 跳过（保留前一个）
+                    logging.info(
+                        "[TSR-ENHANCE] Dedup: skip overlapping box (prev_top=%.1f rb_top=%.1f overlap=%.1f)",
+                        prev["top"], rb["top"], overlap,
+                    )
+                    continue
+                deduped.append(rb)
+            row_boxes = deduped
+
+        # 匹配度检查：TSR 行数与 <tr> 行数差距 <= 2 才采用
+        gap = abs(len(row_boxes) - num_rows)
+        if gap > 2:
+            logging.info(
+                "[TSR-ENHANCE] Row count mismatch: TSR=%d vs TR=%d (gap=%d > 2), skip",
+                len(row_boxes), num_rows, gap,
+            )
+            return None
+
+        # 坐标映射说明：
+        # - TSR 输出坐标：相对于 72dpi 裁剪图的像素坐标
+        # - crop_left/crop_top：裁剪原点在 72dpi 全页图中的位置
+        # - 最终 row_positions 格式：[page, x0, x1, top, bottom] 单位是 72dpi 像素
+        #   （与 uniform fallback 一致：API坐标 / zm = 72dpi）
+        page_1based = page_idx + 1
+        row_positions = []
+
+        def _map_rb(rb):
+            """TSR bbox → row_positions 格式"""
+            return [
+                page_1based,
+                int(crop_left + rb["x0"]),
+                int(crop_left + rb["x1"]),
+                int(crop_top + rb["top"]),
+                int(crop_top + rb["bottom"]),
+            ]
+
+        if len(row_boxes) == num_rows:
+            # 完美匹配：1:1 映射
+            for rb in row_boxes:
+                row_positions.append(_map_rb(rb))
+        elif len(row_boxes) == num_rows - 1:
+            # TSR 少一行（通常是表头未检测为 row）→ 补一行表头
+            row_positions.append([
+                page_1based,
+                int(left // zm),
+                int(right // zm),
+                int(top // zm),
+                int(crop_top + row_boxes[0]["top"]),
+            ])
+            for rb in row_boxes:
+                row_positions.append(_map_rb(rb))
+        elif len(row_boxes) == num_rows + 1:
+            # TSR 多一行 → 判断头部第一行是否为噪声（表头上边界薄条）
+            first_h = row_boxes[0]["bottom"] - row_boxes[0]["top"]
+            second_h = row_boxes[1]["bottom"] - row_boxes[1]["top"]
+            if second_h > 0 and first_h < second_h * 0.6:
+                # 头部第一行行高异常（不足第二行的 60%）→ 丢弃头部噪声行，保留后 num_rows 行
+                logging.info(
+                    "[TSR-ENHANCE] Head noise detected: row[0] height=%.1f < row[1] height=%.1f * 0.6, "
+                    "dropping first row",
+                    first_h, second_h,
+                )
+                for rb in row_boxes[1:]:
+                    row_positions.append(_map_rb(rb))
+            else:
+                # 头部正常 → 丢弃尾部（保持原有行为）
+                for rb in row_boxes[:num_rows]:
+                    row_positions.append(_map_rb(rb))
+        else:
+            return None
+
+        logging.info(
+            "[TSR-ENHANCE] page=%d tsr_rows=%d tr_rows=%d → %d positions "
+            "row[0]=%s row[-1]=%s",
+            page_1based, len(row_boxes), num_rows, len(row_positions),
+            row_positions[0], row_positions[-1],
+        )
+        return row_positions
+
     @staticmethod
     def _cluster_row_boundaries(
         boxes: list[dict],
@@ -725,8 +877,61 @@ class PaddleOCRParser(RAGFlowPdfParser):
                                 ])
                             mode = "refined-uniform"
 
-                # ── Uniform fallback ──
+                # ── Level 1 结果日志 ──
+                if row_positions:
+                    logging.info(
+                        f"[ROW-POS] page={page_1based} Level-1(det_boxes) SUCCESS → mode={mode} "
+                        f"rows={len(row_positions)} row[0]={row_positions[0]} row[-1]={row_positions[-1]}"
+                    )
+                else:
+                    logging.info(
+                        f"[ROW-POS] page={page_1based} Level-1(det_boxes) MISS → "
+                        f"det_boxes={len(det_boxes) if det_boxes else 0} num_rows={num_rows} "
+                        f"reason: clustered行数不足50%或det_boxes为空"
+                    )
+
+                # ── TSR Enhancement（Level 2）: 用 TableStructureRecognizer 精确识别行坐标 ──
+                # 乐高式设计：可通过 PADDLEOCR_TSR_ENHANCE 环境变量开关（默认开启）
+                # 仅在 Level 1 失败时触发，不影响已有 precise/refined-uniform 路径
+                tsr_enabled = os.getenv("PADDLEOCR_TSR_ENHANCE", "true").lower() in ("true", "1", "yes")
+                if not row_positions and tsr_enabled:
+                    logging.info(
+                        f"[ROW-POS] page={page_1based} Level-2(TSR) ENTER → "
+                        f"bbox=[{left},{top},{right},{bottom}] zm={zm} num_rows={num_rows}"
+                    )
+                    try:
+                        tsr_positions = self._tsr_enhance_row_positions(
+                            page_idx, left, top, right, bottom, num_rows, zm,
+                        )
+                        if tsr_positions:
+                            row_positions = tsr_positions
+                            mode = "tsr-precise"
+                            logging.info(
+                                f"[ROW-POS] page={page_1based} Level-2(TSR) SUCCESS → "
+                                f"rows={len(row_positions)} row[0]={row_positions[0]} row[-1]={row_positions[-1]}"
+                            )
+                        else:
+                            logging.info(
+                                f"[ROW-POS] page={page_1based} Level-2(TSR) MISS → "
+                                f"返回 None（详细原因见上方 [TSR-ENHANCE] 日志）"
+                            )
+                    except Exception as e:
+                        logging.warning(
+                            f"[ROW-POS] page={page_1based} Level-2(TSR) ERROR → "
+                            f"异常捕获，降级到 Level-3: {e}"
+                        )
+                elif not row_positions and not tsr_enabled:
+                    logging.info(
+                        f"[ROW-POS] page={page_1based} Level-2(TSR) SKIP → "
+                        f"开关关闭(PADDLEOCR_TSR_ENHANCE={os.getenv('PADDLEOCR_TSR_ENHANCE', 'true')})"
+                    )
+
+                # ── Uniform fallback（Level 3）──
                 if not row_positions:
+                    logging.info(
+                        f"[ROW-POS] page={page_1based} Level-3(Uniform) ENTER → "
+                        f"bbox_height={bottom - top} / {num_rows} rows = {(bottom - top) / num_rows:.1f}px/row"
+                    )
                     table_height = bottom - top
                     row_height = table_height / num_rows
                     for row_idx in range(num_rows):

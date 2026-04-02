@@ -576,9 +576,30 @@ class PaddleOCRParser(RAGFlowPdfParser):
             for rb in row_boxes:
                 row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows + 1:
-            # TSR 多一行 → 取前 num_rows 个
-            for rb in row_boxes[:num_rows]:
-                row_positions.append(_map_rb(rb))
+            # TSR 多一行 → 用中位行高过滤噪声行
+            heights = [rb["bottom"] - rb["top"] for rb in row_boxes]
+            sorted_h = sorted(heights)
+            median_h = sorted_h[len(sorted_h) // 2]
+            if median_h > 0:
+                threshold = median_h * 0.7
+                filtered = [rb for rb, h in zip(row_boxes, heights) if h >= threshold]
+            else:
+                filtered = []
+            if len(filtered) == num_rows:
+                # 过滤后刚好匹配 TR 行数 → 采用
+                logging.info(
+                    "[TSR-ENHANCE] page=%d median_h=%.1f threshold=%.1f "
+                    "filtered %d→%d rows (removed %s)",
+                    page_1based, median_h, threshold,
+                    len(row_boxes), len(filtered),
+                    [(i, heights[i]) for i in range(len(heights)) if heights[i] < threshold],
+                )
+                for rb in filtered:
+                    row_positions.append(_map_rb(rb))
+            else:
+                # 过滤后数量不匹配 → 保守回退丢尾
+                for rb in row_boxes[:num_rows]:
+                    row_positions.append(_map_rb(rb))
         else:
             return None
 

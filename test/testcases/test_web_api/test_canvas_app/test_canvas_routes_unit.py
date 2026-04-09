@@ -408,6 +408,10 @@ def _load_canvas_module(monkeypatch):
     api_utils_mod.get_request_json = _get_request_json
     monkeypatch.setitem(sys.modules, "api.utils.api_utils", api_utils_mod)
 
+    langfuse_trace_mod = ModuleType("api.utils.langfuse_trace")
+    langfuse_trace_mod.build_queue_trace_payload = lambda: {}
+    monkeypatch.setitem(sys.modules, "api.utils.langfuse_trace", langfuse_trace_mod)
+
     rag_pkg = ModuleType("rag")
     rag_pkg.__path__ = []
     monkeypatch.setitem(sys.modules, "rag", rag_pkg)
@@ -634,6 +638,48 @@ def test_run_dataflow_and_canvas_sse_matrix_unit(monkeypatch):
     res = _run(inspect.unwrap(module.run)())
     assert res["code"] == module.RetCode.OPERATING_ERROR
 
+    queue_calls = []
+    trace_payload = {
+        "root_trace_id": "a" * 32,
+        "root_traceparent": f"00-{'a' * 32}-{'b' * 16}-01",
+        "trace_source": "threadpool",
+    }
+    _set_request_json(monkeypatch, module, {"id": "df-1", "files": [{"name": "demo.txt"}]})
+    monkeypatch.setattr(module.UserCanvasService, "accessible", lambda *_args, **_kwargs: True)
+    monkeypatch.setattr(module, "build_queue_trace_payload", lambda: trace_payload)
+    monkeypatch.setattr(
+        module.UserCanvasService,
+        "get_by_id",
+        lambda _canvas_id: (
+            True,
+            SimpleNamespace(canvas_category=module.CanvasCategory.DataFlow),
+        ),
+    )
+    monkeypatch.setattr(
+        module,
+        "queue_dataflow",
+        lambda *args, **kwargs: queue_calls.append((args, kwargs)) or (True, ""),
+    )
+    monkeypatch.setattr(module.CanvasReplicaService, "load_for_run", lambda *_args, **_kwargs: {"dsl": {"x": 1}, "title": "df", "canvas_category": module.CanvasCategory.DataFlow})
+    res = _run(inspect.unwrap(module.run)())
+    assert res["code"] == module.RetCode.SUCCESS
+    assert res["data"]["message_id"] == "uuid-1"
+    assert queue_calls[0][1]["trace_payload"] == trace_payload
+
+    monkeypatch.setattr(
+        module.UserCanvasService,
+        "get_by_id",
+        lambda _canvas_id: (
+            True,
+            SimpleNamespace(
+                id=_canvas_id,
+                user_id="user-1",
+                dsl="{}",
+                canvas_category=module.CanvasCategory.Agent,
+                to_dict=lambda: {"id": _canvas_id},
+            ),
+        ),
+    )
     _set_request_json(monkeypatch, module, {"id": "c1"})
     monkeypatch.setattr(module.UserCanvasService, "accessible", lambda *_args, **_kwargs: True)
     monkeypatch.setattr(module.CanvasReplicaService, "load_for_run", lambda *_args, **_kwargs: None)

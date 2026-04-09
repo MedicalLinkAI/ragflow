@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+import copy
 import logging
 import os
 import random
@@ -31,12 +32,20 @@ from common.misc_utils import get_uuid
 from common.time_utils import current_timestamp
 from common.constants import StatusEnum, TaskStatus
 from deepdoc.parser.excel_parser import RAGFlowExcelParser
+from api.utils.langfuse_trace import build_queue_trace_payload
 from rag.utils.redis_conn import REDIS_CONN
 from common import settings
 from rag.nlp import search
 
 CANVAS_DEBUG_DOC_ID = "dataflow_x"
 GRAPH_RAPTOR_FAKE_DOC_ID = "graph_raptor_x"
+
+
+def _copy_task_for_queue(task: dict, trace_payload: dict | None = None) -> dict:
+    queue_task = copy.deepcopy(task)
+    if trace_payload:
+        queue_task.update(trace_payload)
+    return queue_task
 
 def trim_header_by_lines(text: str, max_length) -> str:
     # Trim header text to maximum length while preserving line breaks
@@ -453,9 +462,11 @@ def queue_tasks(doc: dict, bucket: str, name: str, priority: int):
     DocumentService.begin2parse(doc["id"])
 
     unfinished_task_array = [task for task in parse_task_array if task["progress"] < 1.0]
+    trace_payload = build_queue_trace_payload()
     for unfinished_task in unfinished_task_array:
+        queue_task = _copy_task_for_queue(unfinished_task, trace_payload)
         assert REDIS_CONN.queue_product(
-            settings.get_svr_queue_name(priority), message=unfinished_task
+            settings.get_svr_queue_name(priority), message=queue_task
         ), "Can't access Redis. Please check the Redis' status."
 
 
@@ -524,8 +535,16 @@ def has_canceled(task_id):
     return False
 
 
-def queue_dataflow(tenant_id:str, flow_id:str, task_id:str, doc_id:str=CANVAS_DEBUG_DOC_ID, file:dict=None, priority: int=0, rerun:bool=False) -> tuple[bool, str]:
-
+def queue_dataflow(
+    tenant_id: str,
+    flow_id: str,
+    task_id: str,
+    doc_id: str = CANVAS_DEBUG_DOC_ID,
+    file: dict = None,
+    priority: int = 0,
+    rerun: bool = False,
+    trace_payload: dict | None = None,
+) -> tuple[bool, str]:
     task = dict(
         id=task_id,
         doc_id=doc_id,
@@ -540,13 +559,14 @@ def queue_dataflow(tenant_id:str, flow_id:str, task_id:str, doc_id:str=CANVAS_DE
         DocumentService.begin2parse(doc_id)
     bulk_insert_into_db(model=Task, data_source=[task], replace_on_conflict=True)
 
-    task["kb_id"] = DocumentService.get_knowledgebase_id(doc_id)
-    task["tenant_id"] = tenant_id
-    task["dataflow_id"] = flow_id
-    task["file"] = file
+    queue_task = _copy_task_for_queue(task, trace_payload or build_queue_trace_payload())
+    queue_task["kb_id"] = DocumentService.get_knowledgebase_id(doc_id)
+    queue_task["tenant_id"] = tenant_id
+    queue_task["dataflow_id"] = flow_id
+    queue_task["file"] = file
 
     if not REDIS_CONN.queue_product(
-            settings.get_svr_queue_name(priority), message=task
+            settings.get_svr_queue_name(priority), message=queue_task
     ):
         return False, "Can't access Redis. Please check the Redis' status."
 

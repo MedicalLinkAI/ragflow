@@ -75,10 +75,10 @@ def _trace_component_output(task_id: str, doc_name: str, component_id: str, cpn_
 
 
 class Pipeline(Graph):
-    def __init__(self, dsl: str|dict, tenant_id=None, doc_id=None, task_id=None, flow_id=None):
+    def __init__(self, dsl: str|dict, tenant_id=None, doc_id=None, task_id=None, flow_id=None, custom_header=None):
         if isinstance(dsl, dict):
             dsl = json.dumps(dsl, ensure_ascii=False)
-        super().__init__(dsl, tenant_id, task_id)
+        super().__init__(dsl, tenant_id, task_id, custom_header=custom_header)
         if doc_id == CANVAS_DEBUG_DOC_ID:
             doc_id = None
         self._doc_id = doc_id

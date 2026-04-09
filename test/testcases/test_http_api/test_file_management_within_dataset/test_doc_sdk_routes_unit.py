@@ -146,6 +146,12 @@ def _load_doc_module(monkeypatch):
     deepdoc_excel_module = ModuleType("deepdoc.parser.excel_parser")
     deepdoc_excel_module.RAGFlowExcelParser = _StubExcelParser
     monkeypatch.setitem(sys.modules, "deepdoc.parser.excel_parser", deepdoc_excel_module)
+    deepdoc_mineru_module = ModuleType("deepdoc.parser.mineru_parser")
+    deepdoc_mineru_module.MinerUParser = _StubPdfParser
+    monkeypatch.setitem(sys.modules, "deepdoc.parser.mineru_parser", deepdoc_mineru_module)
+    deepdoc_paddleocr_module = ModuleType("deepdoc.parser.paddleocr_parser")
+    deepdoc_paddleocr_module.PaddleOCRParser = _StubPdfParser
+    monkeypatch.setitem(sys.modules, "deepdoc.parser.paddleocr_parser", deepdoc_paddleocr_module)
     deepdoc_parser_utils = ModuleType("deepdoc.parser.utils")
     deepdoc_parser_utils.get_text = lambda *_args, **_kwargs: ""
     monkeypatch.setitem(sys.modules, "deepdoc.parser.utils", deepdoc_parser_utils)

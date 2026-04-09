@@ -11,9 +11,12 @@
 #    async def handler(tenant_id): ...
 #
 import atexit
+from contextvars import ContextVar
 import functools
 import inspect
 import logging
+import os
+import re
 import time
 
 try:
@@ -24,9 +27,180 @@ except ImportError:
     _LANGFUSE_AVAILABLE = False
 
 _logger = logging.getLogger(__name__)
+_TRACEPARENT_RE = re.compile(
+    r"^(?P<version>[0-9a-f]{2})-(?P<trace_id>[0-9a-f]{32})-(?P<parent_id>[0-9a-f]{16})-(?P<flags>[0-9a-f]{2})$"
+)
+_TRACE_ID_RE = re.compile(r"^[0-9a-f]{32}$")
 
 _CLIENT_TTL_SECONDS = 3600  # 1 hour — key changes are rare, use invalidate_cache() for immediate effect
 _client_cache: dict[str, tuple[object, float]] = {}  # tenant_id -> (client, created_at)
+_trace_context_var: ContextVar[dict | None] = ContextVar("ragflow_trace_context", default=None)
+
+
+def normalize_trace_id(trace_id: str | None) -> str | None:
+    candidate = (trace_id or "").strip().lower()
+    if not candidate:
+        return None
+    if not _TRACE_ID_RE.fullmatch(candidate):
+        return None
+    if set(candidate) == {"0"}:
+        return None
+    return candidate
+
+
+def normalize_traceparent(traceparent: str | None) -> str | None:
+    candidate = (traceparent or "").strip().lower()
+    if not candidate:
+        return None
+    match = _TRACEPARENT_RE.fullmatch(candidate)
+    if not match:
+        return None
+    if set(match.group("trace_id")) == {"0"} or set(match.group("parent_id")) == {"0"}:
+        return None
+    return candidate
+
+
+def extract_trace_id_from_traceparent(traceparent: str | None) -> str | None:
+    normalized = normalize_traceparent(traceparent)
+    if not normalized:
+        return None
+    return normalized.split("-")[1]
+
+
+def synthesize_traceparent(trace_id: str) -> str:
+    return f"00-{trace_id}-{os.urandom(8).hex()}-01"
+
+
+def resolve_trace_context(
+    *,
+    traceparent: str | None = None,
+    x_trace_id: str | None = None,
+    x_langfuse_trace_id: str | None = None,
+    client=None,
+) -> dict[str, str]:
+    normalized_traceparent = normalize_traceparent(traceparent)
+    if normalized_traceparent:
+        trace_id = extract_trace_id_from_traceparent(normalized_traceparent)
+        if trace_id:
+            return {
+                "trace_id": trace_id,
+                "traceparent": normalized_traceparent,
+                "source": "traceparent",
+            }
+
+    normalized_trace_id = normalize_trace_id(x_trace_id)
+    if normalized_trace_id:
+        return {
+            "trace_id": normalized_trace_id,
+            "traceparent": synthesize_traceparent(normalized_trace_id),
+            "source": "x-trace-id",
+        }
+
+    normalized_compat_trace_id = normalize_trace_id(x_langfuse_trace_id)
+    if normalized_compat_trace_id:
+        return {
+            "trace_id": normalized_compat_trace_id,
+            "traceparent": synthesize_traceparent(normalized_compat_trace_id),
+            "source": "x-langfuse-trace-id",
+        }
+
+    generated_trace_id = client.create_trace_id() if client else os.urandom(16).hex()
+    return {
+        "trace_id": generated_trace_id,
+        "traceparent": synthesize_traceparent(generated_trace_id),
+        "source": "generated",
+    }
+
+
+def bind_trace_context(context: dict | None) -> None:
+    normalized_traceparent = normalize_traceparent((context or {}).get("traceparent"))
+    normalized_trace_id = normalize_trace_id((context or {}).get("trace_id")) or extract_trace_id_from_traceparent(
+        normalized_traceparent
+    )
+    if not normalized_trace_id:
+        clear_trace_context()
+        return
+    payload = {
+        "trace_id": normalized_trace_id,
+        "traceparent": normalized_traceparent or synthesize_traceparent(normalized_trace_id),
+        "source": (context or {}).get("source", "context"),
+    }
+    _trace_context_var.set(payload)
+    try:
+        from quart import g as quart_g
+
+        quart_g._langfuse_trace_context = payload
+    except Exception:
+        pass
+
+
+def get_trace_context() -> dict | None:
+    try:
+        from quart import g as quart_g
+
+        shared_ctx = getattr(quart_g, "_langfuse_trace_context", None)
+    except Exception:
+        shared_ctx = None
+
+    payload = shared_ctx or _trace_context_var.get()
+    if not payload:
+        return None
+
+    normalized_trace_id = normalize_trace_id(payload.get("trace_id"))
+    if not normalized_trace_id:
+        return None
+    return {
+        "trace_id": normalized_trace_id,
+        "traceparent": normalize_traceparent(payload.get("traceparent")) or synthesize_traceparent(normalized_trace_id),
+        "source": payload.get("source", "context"),
+    }
+
+
+def clear_trace_context() -> None:
+    _trace_context_var.set(None)
+    try:
+        from quart import g as quart_g
+
+        if hasattr(quart_g, "_langfuse_trace_context"):
+            delattr(quart_g, "_langfuse_trace_context")
+    except Exception:
+        pass
+
+
+def build_outbound_trace_headers(
+    *,
+    context: dict | None = None,
+    include_compatibility_header: bool = False,
+) -> dict[str, str]:
+    active_context = context or get_trace_context()
+    if not active_context:
+        return {}
+    headers = {
+        "traceparent": active_context["traceparent"],
+        "X-Trace-Id": active_context["trace_id"],
+    }
+    if include_compatibility_header:
+        headers["X-Langfuse-Trace-Id"] = active_context["trace_id"]
+    return headers
+
+
+def build_queue_trace_payload(context: dict | None = None) -> dict[str, str]:
+    active_context = context or get_trace_context()
+    if not active_context:
+        return {}
+    return {
+        "root_trace_id": active_context["trace_id"],
+        "root_traceparent": active_context["traceparent"],
+        "trace_source": active_context.get("source", "context"),
+    }
+
+
+def merge_queue_trace_payload(task: dict | None, payload: dict | None) -> dict:
+    merged = dict(task or {})
+    for key in ("root_trace_id", "root_traceparent", "trace_source"):
+        if (payload or {}).get(key):
+            merged[key] = payload[key]
+    return merged
 
 
 def _get_langfuse_client(tenant_id: str):
@@ -106,16 +280,26 @@ def langfuse_span(
 
             span = None
             t0 = time.time()
+            trace_context = None
 
-            if client:
+            try:
+                from quart import request as quart_request
+
+                trace_context = resolve_trace_context(
+                    traceparent=quart_request.headers.get("traceparent"),
+                    x_trace_id=quart_request.headers.get("X-Trace-Id"),
+                    x_langfuse_trace_id=quart_request.headers.get("X-Langfuse-Trace-Id"),
+                    client=client,
+                )
+                bind_trace_context(trace_context)
+                trace_input = await quart_request.get_json(silent=True) or {}
+            except Exception:
+                trace_input = {}
+
+            if client and trace_context:
                 try:
-                    from quart import request as quart_request, g as quart_g
-                    trace_input = await quart_request.get_json(silent=True) or {}
-                    # cross-service: reuse upstream trace_id if passed via header
-                    trace_id = quart_request.headers.get("X-Langfuse-Trace-Id") or client.create_trace_id()
-                    quart_g._langfuse_trace_context = {"trace_id": trace_id}
                     span = client.start_span(
-                        trace_context={"trace_id": trace_id},
+                        trace_context={"trace_id": trace_context["trace_id"]},
                         name=trace_name,
                         input=trace_input,
                     )
@@ -124,6 +308,22 @@ def langfuse_span(
 
             try:
                 result = await fn(*args, **kwargs)
+                if span:
+                    try:
+                        elapsed_ms = round((time.time() - t0) * 1000, 2)
+                        trace_output = {"_elapsed_ms": elapsed_ms}
+                        if hasattr(result, 'get_json'):
+                            try:
+                                resp_json = await result.get_json(silent=True) or {}
+                                resp_json["_elapsed_ms"] = elapsed_ms
+                                trace_output = resp_json
+                            except Exception:
+                                pass
+                        span.update(output=trace_output)
+                        span.end()
+                    except Exception:
+                        _logger.warning("Langfuse trace end failed", exc_info=True)
+                return result
             except Exception as e:
                 if span:
                     try:
@@ -132,24 +332,8 @@ def langfuse_span(
                     except Exception:
                         pass
                 raise
-
-            if span:
-                try:
-                    elapsed_ms = round((time.time() - t0) * 1000, 2)
-                    trace_output = {"_elapsed_ms": elapsed_ms}
-                    if hasattr(result, 'get_json'):
-                        try:
-                            resp_json = await result.get_json(silent=True) or {}
-                            resp_json["_elapsed_ms"] = elapsed_ms
-                            trace_output = resp_json
-                        except Exception:
-                            pass
-                    span.update(output=trace_output)
-                    span.end()
-                except Exception:
-                    _logger.warning("Langfuse trace end failed", exc_info=True)
-
-            return result
+            finally:
+                clear_trace_context()
 
         @functools.wraps(fn)
         def sync_wrapper(*args, **kwargs):
@@ -157,20 +341,29 @@ def langfuse_span(
             client = _get_langfuse_client(tenant_id) if tenant_id else None
 
             span = None
-            trace_id = None
             t0 = time.time()
+            trace_context = None
+
+            try:
+                from quart import request as quart_request
+
+                trace_context = resolve_trace_context(
+                    traceparent=quart_request.headers.get("traceparent"),
+                    x_trace_id=quart_request.headers.get("X-Trace-Id"),
+                    x_langfuse_trace_id=quart_request.headers.get("X-Langfuse-Trace-Id"),
+                    client=client,
+                )
+                bind_trace_context(trace_context)
+            except Exception:
+                trace_context = None
 
             if client:
                 try:
-                    trace_id = client.create_trace_id()
-                    # share trace context for LLMBundle (same as async_wrapper)
-                    try:
-                        from quart import g as quart_g
-                        quart_g._langfuse_trace_context = {"trace_id": trace_id}
-                    except Exception:
-                        pass
+                    if not trace_context:
+                        trace_context = resolve_trace_context(client=client)
+                        bind_trace_context(trace_context)
                     span = client.start_span(
-                        trace_context={"trace_id": trace_id},
+                        trace_context={"trace_id": trace_context["trace_id"]},
                         name=trace_name,
                         input={"note": "sync endpoint"},
                     )
@@ -179,6 +372,14 @@ def langfuse_span(
 
             try:
                 result = fn(*args, **kwargs)
+                if span:
+                    try:
+                        elapsed_ms = round((time.time() - t0) * 1000, 2)
+                        span.update(output={"_elapsed_ms": elapsed_ms})
+                        span.end()
+                    except Exception:
+                        _logger.warning("Langfuse trace end failed", exc_info=True)
+                return result
             except Exception as e:
                 if span:
                     try:
@@ -187,16 +388,8 @@ def langfuse_span(
                     except Exception:
                         pass
                 raise
-
-            if span:
-                try:
-                    elapsed_ms = round((time.time() - t0) * 1000, 2)
-                    span.update(output={"_elapsed_ms": elapsed_ms})
-                    span.end()
-                except Exception:
-                    _logger.warning("Langfuse trace end failed", exc_info=True)
-
-            return result
+            finally:
+                clear_trace_context()
 
         return async_wrapper if is_async else sync_wrapper
     return decorator

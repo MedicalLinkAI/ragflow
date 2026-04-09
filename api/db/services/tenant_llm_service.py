@@ -24,6 +24,7 @@ from api.db.db_models import DB, LLMFactories, TenantLLM
 from api.db.services.common_service import CommonService
 from api.db.services.langfuse_service import TenantLangfuseService
 from api.db.services.user_service import TenantService
+from api.utils.langfuse_trace import get_trace_context
 from rag.llm import ChatModel, CvModel, EmbeddingModel, OcrModel, RerankModel, Seq2txtModel, TTSModel
 
 
@@ -362,12 +363,7 @@ class LLM4Tenant:
                     self.langfuse = langfuse
                     # reuse trace_id from request context (set by @langfuse_span decorator)
                     # so encode_queries/chat etc. join the same trace as the API span
-                    shared_ctx = None
-                    try:
-                        from quart import g as quart_g
-                        shared_ctx = getattr(quart_g, '_langfuse_trace_context', None)
-                    except Exception:
-                        pass
+                    shared_ctx = get_trace_context()
                     if shared_ctx:
                         self.trace_context = shared_ctx
                     else:

@@ -29,6 +29,7 @@ from api.db.services.pipeline_operation_log_service import PipelineOperationLogS
 from api.db.services.task_service import queue_dataflow, CANVAS_DEBUG_DOC_ID, TaskService
 from api.db.services.user_service import TenantService
 from api.db.services.user_canvas_version import UserCanvasVersionService
+from api.utils.langfuse_trace import build_queue_trace_payload
 from common.constants import RetCode
 from common.misc_utils import get_uuid, thread_pool_exec
 from api.utils.api_utils import (
@@ -217,8 +218,18 @@ async def run():
     _, cvs = await thread_pool_exec(UserCanvasService.get_by_id, req["id"])
     if cvs.canvas_category == CanvasCategory.DataFlow:
         task_id = get_uuid()
+        trace_payload = build_queue_trace_payload()
         Pipeline(dsl_str, tenant_id=tenant_id, doc_id=CANVAS_DEBUG_DOC_ID, task_id=task_id, flow_id=req["id"])
-        ok, error_message = await thread_pool_exec(queue_dataflow, user_id, req["id"], task_id, CANVAS_DEBUG_DOC_ID, files[0], 0)
+        ok, error_message = await thread_pool_exec(
+            queue_dataflow,
+            user_id,
+            req["id"],
+            task_id,
+            CANVAS_DEBUG_DOC_ID,
+            files[0],
+            0,
+            trace_payload=trace_payload,
+        )
         if not ok:
             return get_data_error_result(message=error_message)
         return get_json_result(data={"message_id": task_id})

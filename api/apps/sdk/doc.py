@@ -84,6 +84,7 @@ class Chunk(BaseModel):
 
 @manager.route("/datasets/<dataset_id>/documents", methods=["POST"])  # noqa: F821
 @token_required
+@langfuse_span("sdk_documents_upload")
 async def upload(dataset_id, tenant_id):
     """
     Upload documents to a dataset.
@@ -465,6 +466,7 @@ async def download_doc(document_id):
 
 @manager.route("/datasets/<dataset_id>/documents", methods=["GET"])  # noqa: F821
 @token_required
+@langfuse_span("sdk_documents_list")
 def list_docs(dataset_id, tenant_id):
     """
     List documents in a dataset.
@@ -828,6 +830,7 @@ DOC_STOP_PARSING_INVALID_STATE_ERROR_CODE = "DOC_STOP_PARSING_INVALID_STATE"
 
 @manager.route("/datasets/<dataset_id>/chunks", methods=["POST"])  # noqa: F821
 @token_required
+@langfuse_span("sdk_documents_parse")
 async def parse(tenant_id, dataset_id):
     """
     Start parsing documents into chunks.

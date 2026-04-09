@@ -71,8 +71,58 @@ from common.signal_utils import start_tracemalloc_and_snapshot, stop_tracemalloc
 from common.exceptions import TaskCanceledException
 from common import settings
 from common.constants import PAGERANK_FLD, TAG_FLD, SVR_CONSUMER_GROUP_NAME
+from api.utils.langfuse_trace import (
+    bind_trace_context,
+    build_outbound_trace_headers,
+    clear_trace_context,
+    merge_queue_trace_payload,
+)
 
 BATCH_SIZE = 64
+
+
+def _build_raptor_chunk(raw_chunk: dict, vector_field: str, doc_id: str):
+    content = raw_chunk.get("content_with_weight")
+    if not content:
+        logging.warning("Skip RAPTOR chunk without content, doc_id=%s", doc_id)
+        return None
+
+    vector = raw_chunk.get(vector_field)
+    if vector is None:
+        logging.warning("Skip RAPTOR chunk without vector, doc_id=%s field=%s", doc_id, vector_field)
+        return None
+
+    try:
+        vector_array = np.array(vector)
+    except Exception as exc:
+        logging.warning("Skip RAPTOR chunk with invalid vector, doc_id=%s field=%s err=%s", doc_id, vector_field, exc)
+        return None
+
+    if vector_array.size == 0:
+        logging.warning("Skip RAPTOR chunk with empty vector, doc_id=%s field=%s", doc_id, vector_field)
+        return None
+
+    return content, vector_array
+
+
+async def _cleanup_canceled_task_doc(task_id: str, tenant_id: str, dataset_id: str, doc_id: str) -> None:
+    try:
+        exists = await asyncio.to_thread(
+            settings.docStoreConn.index_exist,
+            search.index_name(tenant_id),
+            dataset_id,
+        )
+        if exists:
+            await asyncio.to_thread(
+                settings.docStoreConn.delete,
+                {"doc_id": doc_id},
+                search.index_name(tenant_id),
+                dataset_id,
+            )
+    except Exception as e:
+        logging.exception(
+            f"Remove doc({doc_id}) from docStore failed when task({task_id}) canceled, exception: {e}"
+        )
 
 FACTORY = {
     "general": naive,
@@ -225,6 +275,7 @@ async def collect():
 
     task_type = msg.get("task_type", "")
     task["task_type"] = task_type
+    task = merge_queue_trace_payload(task, msg)
     if task_type[:8] == "dataflow":
         task["tenant_id"] = msg["tenant_id"]
         task["dataflow_id"] = msg["dataflow_id"]
@@ -632,7 +683,14 @@ async def run_dataflow(task: dict):
         assert e, "Pipeline log not found."
         dsl = pipeline_log.dsl
         dataflow_id = pipeline_log.pipeline_id
-    pipeline = Pipeline(dsl, tenant_id=task["tenant_id"], doc_id=doc_id, task_id=task_id, flow_id=dataflow_id)
+    pipeline = Pipeline(
+        dsl,
+        tenant_id=task["tenant_id"],
+        doc_id=doc_id,
+        task_id=task_id,
+        flow_id=dataflow_id,
+        custom_header=build_outbound_trace_headers(include_compatibility_header=True),
+    )
     chunks = await pipeline.run(file=task["file"]) if task.get("file") else await pipeline.run()
     if doc_id == CANVAS_DEBUG_DOC_ID:
         return
@@ -837,7 +895,9 @@ async def run_raptor_for_kb(row, kb_parser_config, chat_mdl, embd_mdl, vector_si
             for d in settings.retriever.chunk_list(doc_id, row["tenant_id"], [str(row["kb_id"])],
                                                    fields=["content_with_weight", vctr_nm],
                                                    sort_by_position=True):
-                chunks.append((d["content_with_weight"], np.array(d[vctr_nm])))
+                chunk = _build_raptor_chunk(d, vctr_nm, doc_id)
+                if chunk is not None:
+                    chunks.append(chunk)
             await generate(chunks, doc_id)
             callback(prog=(x + 1.) / len(doc_ids))
     else:
@@ -846,7 +906,9 @@ async def run_raptor_for_kb(row, kb_parser_config, chat_mdl, embd_mdl, vector_si
             for d in settings.retriever.chunk_list(doc_id, row["tenant_id"], [str(row["kb_id"])],
                                                    fields=["content_with_weight", vctr_nm],
                                                    sort_by_position=True):
-                chunks.append((d["content_with_weight"], np.array(d[vctr_nm])))
+                chunk = _build_raptor_chunk(d, vctr_nm, doc_id)
+                if chunk is not None:
+                    chunks.append(chunk)
 
         await generate(chunks, fake_doc_id)
 
@@ -1176,22 +1238,7 @@ async def do_handle_task(task):
 
     finally:
         if has_canceled(task_id):
-            try:
-                exists = await asyncio.to_thread(
-                    settings.docStoreConn.indexExist,
-                    search.index_name(task_tenant_id),
-                    task_dataset_id,
-                )
-                if exists:
-                    await asyncio.to_thread(
-                        settings.docStoreConn.delete,
-                        {"doc_id": task_doc_id},
-                        search.index_name(task_tenant_id),
-                        task_dataset_id,
-                    )
-            except Exception as e:
-                logging.exception(
-                    f"Remove doc({task_doc_id}) from docStore failed when task({task_id}) canceled, exception: {e}")
+            await _cleanup_canceled_task_doc(task_id, task_tenant_id, task_dataset_id, task_doc_id)
 
 
 async def handle_task():
@@ -1205,6 +1252,16 @@ async def handle_task():
     pipeline_task_type = TASK_TYPE_TO_PIPELINE_TASK_TYPE.get(task_type,
                                                              PipelineTaskType.PARSE) or PipelineTaskType.PARSE
     task_id = task["id"]
+    if task.get("root_trace_id") or task.get("root_traceparent"):
+        bind_trace_context(
+            {
+                "trace_id": task.get("root_trace_id"),
+                "traceparent": task.get("root_traceparent"),
+                "source": task.get("trace_source", "queue"),
+            }
+        )
+    else:
+        clear_trace_context()
     try:
         logging.info(f"handle_task begin for task {json.dumps(task)}")
         CURRENT_TASKS[task["id"]] = copy.deepcopy(task)
@@ -1232,6 +1289,7 @@ async def handle_task():
             pass
         logging.exception(f"handle_task got exception for task {json.dumps(task)}")
     finally:
+        clear_trace_context()
         task_document_ids = []
         if task_type in ["graphrag", "raptor", "mindmap"]:
             task_document_ids = task["doc_ids"]

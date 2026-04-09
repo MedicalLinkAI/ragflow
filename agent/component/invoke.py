@@ -27,6 +27,15 @@ from common.connection_utils import timeout
 from deepdoc.parser import HtmlParser
 
 
+def _merge_headers(custom_headers, static_headers):
+    merged = {}
+    if isinstance(static_headers, dict):
+        merged.update(static_headers)
+    if isinstance(custom_headers, dict):
+        merged.update(custom_headers)
+    return merged
+
+
 class InvokeParam(ComponentParamBase):
     """
     Define the Crawler component parameters.
@@ -124,9 +133,10 @@ class Invoke(ComponentBase, ABC):
                 )
                 parsed_headers = {}
             headers = parsed_headers
-            for key, value in list(headers.items()):
-                if isinstance(value, str):
-                    headers[key] = re.sub(variable_pattern, replace_variable, value)
+        headers = _merge_headers(getattr(self._param, "custom_header", None), headers)
+        for key, value in list(headers.items()):
+            if isinstance(value, str):
+                headers[key] = re.sub(variable_pattern, replace_variable, value)
         proxies = None
         if re.sub(r"https?:?/?/?", "", self._param.proxy):
             proxies = {"http": self._param.proxy, "https": self._param.proxy}

@@ -503,6 +503,19 @@ class PaddleOCRParser(RAGFlowPdfParser):
             logging.info("[TSR-ENHANCE] TSR returned no results for page=%d", page_idx + 1)
             return None
 
+        # 诊断：输出 TSR 模型的完整原始输出（所有 label + score）
+        all_labels_summary = {}
+        for b in tsr_results[0]:
+            lbl = b["label"]
+            all_labels_summary.setdefault(lbl, []).append(
+                round(b.get("score", 0), 3)
+            )
+        logging.info(
+            "[TSR-RAW] page=%d TSR原始输出: 共%d个box, 标签分布: %s",
+            page_idx + 1, len(tsr_results[0]),
+            {k: f"count={len(v)} scores={sorted(v)}" for k, v in all_labels_summary.items()},
+        )
+
         # 提取 "table row" 和 "table column header" 的 bbox
         row_boxes = [
             b for b in tsr_results[0]
@@ -598,6 +611,14 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     row_positions.append(_map_rb(rb))
             else:
                 # 过滤后数量不匹配 → 保守回退丢尾
+                logging.info(
+                    "[TSR-ENHANCE] page=%d 丢尾分支: median_h=%.1f threshold=%.1f "
+                    "filtered=%d (expected %d). 全部行框: %s",
+                    page_1based, median_h, threshold,
+                    len(filtered), num_rows,
+                    [(i, rb.get("label", "?"), round(heights[i], 1))
+                     for i, rb in enumerate(row_boxes)],
+                )
                 for rb in row_boxes[:num_rows]:
                     row_positions.append(_map_rb(rb))
         else:

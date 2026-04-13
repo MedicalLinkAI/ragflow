@@ -1,0 +1,23 @@
+# PubTables-1M Table Structure Recognition dataset
+# https://github.com/microsoft/table-transformer
+# Converted from PASCAL VOC to YOLO format using convert_voc_to_yolo.py
+#
+# Dataset: ~947K table images with structure annotations
+# Paper:   "PubTables-1M: Towards comprehensive table extraction from
+#           unstructured documents" (Smock et al., 2022)
+
+path: /data/datasets/pubtables1m-tsr  # dataset root on 172.16.1.116
+train: images/train
+val: images/val
+test: images/test
+
+# Classes (6 classes — matches PubTables-1M annotation names)
+# Note: PubTables-1M also defines a 7th "no object" class (DETR artifact)
+# which carries no annotations and is not used in YOLO training.
+names:
+  0: table
+  1: table column
+  2: table row
+  3: table column header
+  4: table projected row header
+  5: table spanning cell

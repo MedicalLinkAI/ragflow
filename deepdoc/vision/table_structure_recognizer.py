@@ -37,13 +37,13 @@ class TableStructureRecognizer(Recognizer):
         "table spanning cell",
     ]
 
-    def __init__(self):
+    def __init__(self, model_name="tsr"):
         try:
-            super().__init__(self.labels, "tsr", os.path.join(get_project_base_directory(), "rag/res/deepdoc"))
+            super().__init__(self.labels, model_name, os.path.join(get_project_base_directory(), "rag/res/deepdoc"))
         except Exception:
             super().__init__(
                 self.labels,
-                "tsr",
+                model_name,
                 snapshot_download(
                     repo_id="InfiniFlow/deepdoc",
                     local_dir=os.path.join(get_project_base_directory(), "rag/res/deepdoc"),

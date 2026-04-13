@@ -24,6 +24,7 @@ from .recognizer import Recognizer
 from .layout_recognizer import AscendLayoutRecognizer
 from .layout_recognizer import LayoutRecognizer4YOLOv10 as LayoutRecognizer
 from .table_structure_recognizer import TableStructureRecognizer
+from .table_structure_recognizer_letterbox import TableStructureRecognizer4Letterbox
 
 LOCK_KEY_pdfplumber = "global_shared_lock_pdfplumber"
 if LOCK_KEY_pdfplumber not in sys.modules:
@@ -85,5 +86,6 @@ __all__ = [
     "LayoutRecognizer",
     "AscendLayoutRecognizer",
     "TableStructureRecognizer",
+    "TableStructureRecognizer4Letterbox",
     "init_in_out",
 ]

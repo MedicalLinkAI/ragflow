@@ -286,6 +286,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
         **kwargs: Any,
     ) -> ParseResult:
         """Parse PDF document using PaddleOCR API."""
+        # 保存文档名称供 fixture 采集使用
+        self._current_doc_name = os.path.splitext(os.path.basename(str(filepath)))[0] if filepath else "unknown"
         # Create configuration - pass all kwargs to capture VL config parameters
         config_dict = {
             "api_url": api_url if api_url is not None else self.api_url,
@@ -321,6 +323,33 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         # Build and send request
         result = self._send_request(data_bytes, cfg, callback)
+
+        # ── Fixture 采集: 用于 TSR 单元测试 ──
+        # 设置 TSR_FIXTURE_DIR 环境变量启用，例如: export TSR_FIXTURE_DIR=/tmp/tsr_fixtures
+        _fixture_dir = os.getenv("TSR_FIXTURE_DIR")
+        if _fixture_dir:
+            import json as _json
+            # 用文件名区分不同文档
+            _doc_name = getattr(self, "_current_doc_name", None) or "unknown"
+            _safe_name = "".join(c if c.isalnum() or c in "-_." else "_" for c in _doc_name).rstrip("_")[:60]
+            _fdir = os.path.join(_fixture_dir, "vl_response")
+            os.makedirs(_fdir, exist_ok=True)
+            _fpath = os.path.join(_fdir, f"{_safe_name}.json")
+            with open(_fpath, "w", encoding="utf-8") as _f:
+                _json.dump(result, _f, ensure_ascii=False, indent=2)
+            logging.info("[FIXTURE] VL result saved → %s", _fpath)
+
+            # 保存 page_images (72dpi PNG)
+            if getattr(self, "page_images", None):
+                _imgdir = os.path.join(_fixture_dir, "page_images")
+                os.makedirs(_imgdir, exist_ok=True)
+                for _pi, _img in enumerate(self.page_images):
+                    _img_path = os.path.join(_imgdir, f"page_{_pi}.png")
+                    _img.save(_img_path)
+                logging.info(
+                    "[FIXTURE] page_images saved → %s (%d pages)",
+                    _imgdir, len(self.page_images),
+                )
 
         # Process response
         sections = self._transfer_to_sections(result, algorithm=cfg.algorithm, parse_method=parse_method)
@@ -387,7 +416,17 @@ class PaddleOCRParser(RAGFlowPdfParser):
         if config.access_token:
             headers["Authorization"] = f"token {config.access_token}"
 
-        self.logger.info("[PaddleOCR] invoking API")
+        # ── 入参日志: 记录发送给 VL 服务的关键参数 ──
+        payload_params = {
+            k: v for k, v in payload.items() if k != "file"
+        }
+        file_size_kb = len(payload.get("file", "")) * 3 // 4 // 1024  # base64 → 原始大小估算
+        self.logger.info(
+            "[PaddleOCR] invoking API: url=%s algorithm=%s fileType=%d "
+            "file_size≈%dKB params=%s timeout=%ds",
+            config.api_url, config.algorithm, self.file_type,
+            file_size_kb, payload_params, config.request_timeout,
+        )
         if callback:
             callback(0.1, "[PaddleOCR] submitting request")
 
@@ -415,7 +454,30 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 callback(-1, "[PaddleOCR] invalid response format")
             raise RuntimeError("[PaddleOCR] invalid response format")
 
-        return response_data["result"]
+        result = response_data["result"]
+
+        # ── 出参日志: 记录 VL 响应的结构摘要 ──
+        layout_results = result.get("layoutParsingResults", [])
+        page_summaries = []
+        for pi, page_data in enumerate(layout_results):
+            pruned = page_data.get("prunedResult", {})
+            blocks = pruned.get("parsing_res_list", [])
+            det_boxes = pruned.get("layout_det_res", {}).get("boxes", [])
+            # 统计每种 block_label 的数量
+            from collections import Counter
+            label_counts = Counter(b.get("block_label", "?") for b in blocks)
+            table_count = label_counts.get("table", 0)
+            page_summaries.append(
+                f"p{pi+1}:blocks={len(blocks)}(tables={table_count}) "
+                f"det_boxes={len(det_boxes)} labels={dict(label_counts)}"
+            )
+        self.logger.info(
+            "[PaddleOCR] VL response: %d pages. %s",
+            len(layout_results),
+            " | ".join(page_summaries) if page_summaries else "empty",
+        )
+
+        return result
 
     def _transfer_to_sections(self, result: dict[str, Any], algorithm: AlgorithmType, parse_method: str) -> list[SectionTuple]:
         """Convert API response to section tuples."""
@@ -493,12 +555,50 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         # 延迟初始化 TSR（不用不加载模型）
         if PaddleOCRParser._tsr_instance is None:
-            from deepdoc.vision import TableStructureRecognizer
-            PaddleOCRParser._tsr_instance = TableStructureRecognizer()
-            logging.info("[TSR-ENHANCE] TableStructureRecognizer initialized (lazy)")
+            tsr_model = os.getenv("TSR_MODEL", "yolov8").lower()
+            if tsr_model in ("yolov8", "yolov11", "yolov26"):
+                from deepdoc.vision import TableStructureRecognizer4Letterbox
+                model_name_map = {
+                    "yolov8": "tsr",
+                    "yolov11": "tsr-yolo11",
+                    "yolov26": "tsr-yolo26",
+                }
+                model_name = model_name_map[tsr_model]
+                PaddleOCRParser._tsr_instance = TableStructureRecognizer4Letterbox(model_name=model_name)
+            elif tsr_model == "tatr":
+                from deepdoc.vision.tatr_recognizer import TATRRecognizer
+                PaddleOCRParser._tsr_instance = TATRRecognizer()
+            else:
+                raise ValueError(
+                    f"Unknown TSR_MODEL: {tsr_model}. "
+                    f"Valid: yolov8, yolov11, yolov26, tatr"
+                )
+            model_info = getattr(PaddleOCRParser._tsr_instance, 'ort_sess', None)
+            onnx_path = "unknown"
+            if model_info:
+                try:
+                    meta = model_info.get_modelmeta()
+                    onnx_path = meta.graph_name if meta else "unknown"
+                except Exception:
+                    pass
+            # 打印实际加载的模型路径
+            if tsr_model in ("yolov8", "yolov11", "yolov26"):
+                _model_dir = os.path.join(
+                    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                    "rag", "res", "deepdoc",
+                )
+                actual_onnx = os.path.join(_model_dir, model_name_map[tsr_model] + ".onnx")
+                onnx_exists = os.path.exists(actual_onnx)
+                onnx_size = os.path.getsize(actual_onnx) if onnx_exists else 0
+                logging.info(
+                    "[TSR] ✅ Model loaded: TSR_MODEL=%s → onnx=%s (exists=%s, size=%.1fMB)",
+                    tsr_model, actual_onnx, onnx_exists, onnx_size / 1024 / 1024
+                )
+            else:
+                logging.info("[TSR] ✅ Model loaded: TSR_MODEL=%s (non-ONNX)", tsr_model)
 
         tsr = PaddleOCRParser._tsr_instance
-        tsr_results = tsr([table_np], thr=0.2)
+        tsr_results = tsr([table_np], thr=0.15)
         if not tsr_results or not tsr_results[0]:
             logging.info("[TSR-ENHANCE] TSR returned no results for page=%d", page_idx + 1)
             return None
@@ -516,20 +616,88 @@ class PaddleOCRParser(RAGFlowPdfParser):
             {k: f"count={len(v)} scores={sorted(v)}" for k, v in all_labels_summary.items()},
         )
 
-        # 提取 "table row" 和 "table column header" 的 bbox
+        # ── Fixture dump: 用于采集单元测试数据 ──
+        # 设置环境变量 TSR_FIXTURE_DIR 启用，例如:
+        # export TSR_FIXTURE_DIR=/tmp/tsr_fixtures
+        fixture_dir = os.getenv("TSR_FIXTURE_DIR")
+        if fixture_dir:
+            import json
+            os.makedirs(fixture_dir, exist_ok=True)
+            fixture_data = {
+                "page_idx": page_idx,
+                "page_1based": page_idx + 1,
+                "table_bbox": {
+                    "left": left, "top": top, "right": right, "bottom": bottom,
+                },
+                "num_rows": num_rows,
+                "zm": zm,
+                "crop_params": {
+                    "crop_left": crop_left, "crop_top": crop_top,
+                    "crop_right": crop_right, "crop_bottom": crop_bottom,
+                },
+                "tsr_boxes": [
+                    {
+                        "label": b["label"],
+                        "score": round(b["score"], 4),
+                        "x0": round(b["x0"], 2),
+                        "x1": round(b["x1"], 2),
+                        "top": round(b["top"], 2),
+                        "bottom": round(b["bottom"], 2),
+                    }
+                    for b in tsr_results[0]
+                ],
+            }
+            fixture_path = os.path.join(
+                fixture_dir,
+                f"page{page_idx + 1}_table_{int(left)}_{int(top)}.json",
+            )
+            with open(fixture_path, "w", encoding="utf-8") as f:
+                json.dump(fixture_data, f, ensure_ascii=False, indent=2)
+            logging.info(
+                "[TSR-FIXTURE] page=%d fixture saved → %s (%d boxes)",
+                page_idx + 1, fixture_path, len(tsr_results[0]),
+            )
+
+        # M5: 分离收集 — data row 与 column header 各自独立
+        # 避免 column header 混入 row_boxes 导致行位置偏移（DSXI 回归根因）
         row_boxes = [
             b for b in tsr_results[0]
-            if b["label"] in ("table row", "table column header")
+            if b["label"] == "table row"
         ]
+        header_boxes = [
+            b for b in tsr_results[0]
+            if b["label"] == "table column header"
+        ]
+        # Fix 2: 标签特定阈值 — "table row" 保持原始 0.2 阈值
+        # 模型推理 thr=0.15 是为了捕获低分 header，但 "table row" 低分项多为
+        # 假阳性，会导致行数膨胀(如 DSXI p10: 0.187 分的假行使 gap 从 1 变 2)
+        ROW_SCORE_THR = 0.2
+        if row_boxes:
+            pre_filter_count = len(row_boxes)
+            row_boxes = [b for b in row_boxes if b.get("score", 1.0) >= ROW_SCORE_THR]
+            filtered_out = pre_filter_count - len(row_boxes)
+            if filtered_out > 0:
+                logging.info(
+                    "[TSR-ENHANCE] page=%d M5-row-threshold: 过滤 %d 个低置信 table row "
+                    "(score<%.2f), 剩余=%d",
+                    page_idx + 1, filtered_out, ROW_SCORE_THR, len(row_boxes),
+                )
+
+        logging.info(
+            "[TSR-ENHANCE] page=%d M5分离收集: row_boxes=%d, header_boxes=%d (scores=%s)",
+            page_idx + 1, len(row_boxes), len(header_boxes),
+            [round(h["score"], 3) for h in header_boxes] if header_boxes else "none",
+        )
         if not row_boxes:
             logging.info("[TSR-ENHANCE] No row boxes detected for page=%d", page_idx + 1)
             return None
 
         # 按 top 排序
         row_boxes.sort(key=lambda b: b["top"])
+        if header_boxes:
+            header_boxes.sort(key=lambda b: b["top"])
 
-        # 去重：column header 和 table row 在同一位置重叠时只保留一个
-        # TSR 经常把表头同时检测为 column header + table row
+        # 去重：TSR 可能在同一位置检测出多个重叠的 table row
         if len(row_boxes) > 1:
             deduped = [row_boxes[0]]
             for rb in row_boxes[1:]:
@@ -546,20 +714,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 deduped.append(rb)
             row_boxes = deduped
 
-        # 匹配度检查：TSR 行数与 <tr> 行数差距 <= 2 才采用
-        gap = abs(len(row_boxes) - num_rows)
-        if gap > 2:
-            logging.info(
-                "[TSR-ENHANCE] Row count mismatch: TSR=%d vs TR=%d (gap=%d > 2), skip",
-                len(row_boxes), num_rows, gap,
-            )
-            return None
-
-        # 坐标映射说明：
-        # - TSR 输出坐标：相对于 72dpi 裁剪图的像素坐标
-        # - crop_left/crop_top：裁剪原点在 72dpi 全页图中的位置
-        # - 最终 row_positions 格式：[page, x0, x1, top, bottom] 单位是 72dpi 像素
-        #   （与 uniform fallback 一致：API坐标 / zm = 72dpi）
+        # 坐标映射预备（需要在 gap 检查和救济路径之前定义）
         page_1based = page_idx + 1
         row_positions = []
 
@@ -573,7 +728,30 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 int(crop_top + rb["bottom"]),
             ]
 
-        if len(row_boxes) == num_rows:
+        # 匹配度检查：TSR 行数与 <tr> 行数差距 <= 2 才采用
+        gap = abs(len(row_boxes) - num_rows)
+        if gap > 2:
+            # ── Fix A: Layout-undercount-rescue ──
+            # Layout HTML 有时只输出 1-2 个 <tr>（VL 模型质量问题），
+            # 此时 Uniform 用 1-2 行等分是灾难性错误（整张表变 1 行）。
+            # 当 TSR 检测到 ≥5 行，信任 TSR 必然优于 Uniform 1-2 行。
+            if num_rows <= 2 and len(row_boxes) >= 5:
+                logging.info(
+                    "[TSR-ENHANCE] page=%d Layout-undercount-rescue: "
+                    "Layout num_rows=%d ≤ 2, TSR detected %d rows (gap=%d) "
+                    "→ 信任 TSR 行位置（Uniform %d行必然错误）",
+                    page_1based, num_rows, len(row_boxes), gap, num_rows,
+                )
+                for rb in row_boxes:
+                    row_positions.append(_map_rb(rb))
+            else:
+                logging.info(
+                    "[TSR-ENHANCE] Row count mismatch: TSR=%d vs TR=%d (gap=%d > 2), skip",
+                    len(row_boxes), num_rows, gap,
+                )
+                return None
+
+        elif len(row_boxes) == num_rows:
             # 完美匹配：1:1 映射
             for rb in row_boxes:
                 row_positions.append(_map_rb(rb))
@@ -589,39 +767,215 @@ class PaddleOCRParser(RAGFlowPdfParser):
             for rb in row_boxes:
                 row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows + 1:
-            # TSR 多一行 → 用中位行高过滤噪声行
-            heights = [rb["bottom"] - rb["top"] for rb in row_boxes]
-            sorted_h = sorted(heights)
-            median_h = sorted_h[len(sorted_h) // 2]
-            if median_h > 0:
-                threshold = median_h * 0.7
-                filtered = [rb for rb, h in zip(row_boxes, heights) if h >= threshold]
+            # TSR 多一行 → 三层降级: Level 1 语义 → Level 2 数值 → Level 3 兜底
+
+            # ── Level 1: 语义优先 — 利用 header_boxes 精确定位重叠行 ──
+            level1_used = False
+            if header_boxes:
+                # 找与 header_box 实际重叠最大的 row_box（精确丢弃，不盲目丢 [0]）
+                best_drop_idx = -1
+                best_overlap = 0.0
+                for i, rb in enumerate(row_boxes):
+                    for hb in header_boxes:
+                        ov = min(rb["bottom"], hb["bottom"]) - max(rb["top"], hb["top"])
+                        if ov > best_overlap:
+                            best_overlap = ov
+                            best_drop_idx = i
+
+                if best_drop_idx >= 0 and best_overlap > 0:
+                    level1_rows = [rb for j, rb in enumerate(row_boxes) if j != best_drop_idx]
+                    level1_used = True
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d Level-1 语义丢行: header_boxes=%d "
+                        "best_drop_idx=%d best_overlap=%.1f "
+                        "dropped_row_top=%.1f → %d == %d 匹配",
+                        page_1based, len(header_boxes),
+                        best_drop_idx, best_overlap,
+                        row_boxes[best_drop_idx]["top"],
+                        len(level1_rows), num_rows,
+                    )
+                    for rb in level1_rows:
+                        row_positions.append(_map_rb(rb))
+                else:
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d Level-1: header 与 row_boxes 无实际重叠 "
+                        "(best_overlap=%.1f) → 降级 Level-2",
+                        page_1based, best_overlap,
+                    )
             else:
-                filtered = []
-            if len(filtered) == num_rows:
-                # 过滤后刚好匹配 TR 行数 → 采用
                 logging.info(
-                    "[TSR-ENHANCE] page=%d median_h=%.1f threshold=%.1f "
-                    "filtered %d→%d rows (removed %s)",
-                    page_1based, median_h, threshold,
-                    len(row_boxes), len(filtered),
-                    [(i, heights[i]) for i in range(len(heights)) if heights[i] < threshold],
+                    "[TSR-ENHANCE] page=%d Level-1: 无 header_boxes → 降级 Level-2",
+                    page_1based,
                 )
-                for rb in filtered:
-                    row_positions.append(_map_rb(rb))
-            else:
-                # 过滤后数量不匹配 → 保守回退丢尾
-                logging.info(
-                    "[TSR-ENHANCE] page=%d 丢尾分支: median_h=%.1f threshold=%.1f "
-                    "filtered=%d (expected %d). 全部行框: %s",
-                    page_1based, median_h, threshold,
-                    len(filtered), num_rows,
-                    [(i, rb.get("label", "?"), round(heights[i], 1))
-                     for i, rb in enumerate(row_boxes)],
-                )
-                for rb in row_boxes[:num_rows]:
-                    row_positions.append(_map_rb(rb))
+
+            # ── Level 2: 数值双向过滤 (仅在 Level 1 未命中时执行) ──
+            if not level1_used:
+                heights = [rb["bottom"] - rb["top"] for rb in row_boxes]
+                sorted_h = sorted(heights)
+                median_h = sorted_h[len(sorted_h) // 2]
+
+                if median_h > 0:
+                    threshold_low = median_h * 0.7
+                    threshold_high = median_h * 1.8
+                    filtered = [
+                        rb for rb, h in zip(row_boxes, heights)
+                        if threshold_low <= h <= threshold_high
+                    ]
+                else:
+                    filtered = []
+
+                if len(filtered) == num_rows:
+                    removed_info = [
+                        (i, round(heights[i], 1), "too_small" if heights[i] < threshold_low else "too_large")
+                        for i in range(len(heights))
+                        if not (threshold_low <= heights[i] <= threshold_high)
+                    ]
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d Level-2 双向过滤: median_h=%.1f "
+                        "low=%.1f high=%.1f filtered %d→%d rows (removed %s)",
+                        page_1based, median_h, threshold_low, threshold_high,
+                        len(row_boxes), len(filtered), removed_info,
+                    )
+                    for rb in filtered:
+                        row_positions.append(_map_rb(rb))
+                else:
+                    # 双向过滤不匹配 → 智能丢行（比较首尾与中位数偏差，丢偏差大的）
+                    first_dev = abs(heights[0] - median_h)
+                    last_dev = abs(heights[-1] - median_h)
+                    if first_dev > last_dev:
+                        smart_rows = row_boxes[1:]
+                        drop_label = "first"
+                    else:
+                        smart_rows = row_boxes[:-1]
+                        drop_label = "last"
+
+                    # 注: len(smart_rows) 在 +1 分支中恒等于 num_rows
+                    # （从 num_rows+1 中移除 1 个 = num_rows），Level 3 结构性不可达。
+                    # 保留 Level 3 作为防御性兜底，以防未来逻辑变更。
+                    if len(smart_rows) == num_rows:
+                        logging.info(
+                            "[TSR-ENHANCE] page=%d Level-2 智能丢行: drop_%s "
+                            "(first_dev=%.1f last_dev=%.1f median_h=%.1f) "
+                            "%d→%d rows",
+                            page_1based, drop_label,
+                            first_dev, last_dev, median_h,
+                            len(row_boxes), len(smart_rows),
+                        )
+                        for rb in smart_rows:
+                            row_positions.append(_map_rb(rb))
+                    else:
+                        # Level 3 兜底: 返回 None → Uniform 等分
+                        logging.info(
+                            "[TSR-ENHANCE] page=%d Level-3 兜底: 双向+智能都不匹配, "
+                            "回退到 uniform. heights=%s median=%.1f",
+                            page_1based,
+                            [round(h, 1) for h in heights],
+                            median_h,
+                        )
+                        return None
         else:
+            # ── Fix B: M5 二次匹配 ──
+            # gap ≤ 2 但不满足 exact/±1（gap=2 的情况）。
+            # 当 M5 分离出 header_boxes 后，row_boxes 减少导致 gap 被人为放大。
+            # Layout 的 num_rows（<tr> 计数）包含表头行，所以尝试将 header_boxes
+            # 合回来重新检查匹配关系。
+            if header_boxes:
+                all_boxes = sorted(
+                    row_boxes + header_boxes, key=lambda b: b["top"]
+                )
+                # Fix 1: 合并后去重 — header 和 row 在同一位置重叠时只保留一个
+                # 不去重会产生重复 position 条目，导致 <tr> 到坐标的映射偏移
+                # (DSXI p8 根因: header+row 100%重叠 → off-by-1)
+                if len(all_boxes) > 1:
+                    deduped_all = [all_boxes[0]]
+                    for rb in all_boxes[1:]:
+                        prev = deduped_all[-1]
+                        overlap = min(prev["bottom"], rb["bottom"]) - max(prev["top"], rb["top"])
+                        min_height = min(
+                            prev["bottom"] - prev["top"],
+                            rb["bottom"] - rb["top"],
+                        )
+                        if min_height > 0 and overlap / min_height > 0.5:
+                            logging.info(
+                                "[TSR-ENHANCE] M5-secondary-dedup: skip overlapping box "
+                                "(prev_top=%.1f rb_top=%.1f overlap=%.1f ratio=%.0f%%)",
+                                prev["top"], rb["top"], overlap,
+                                overlap / min_height * 100,
+                            )
+                            continue
+                        deduped_all.append(rb)
+                    all_boxes = deduped_all
+
+                total = len(all_boxes)
+                secondary_gap = abs(total - num_rows)
+
+                if total == num_rows:
+                    # header 合回后精确匹配
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d M5-secondary-exact: "
+                        "row_boxes=%d + header_boxes=%d = %d == num_rows=%d "
+                        "→ 直接映射",
+                        page_1based, len(row_boxes), len(header_boxes),
+                        total, num_rows,
+                    )
+                    for rb in all_boxes:
+                        row_positions.append(_map_rb(rb))
+                elif total == num_rows - 1:
+                    # header 合回后少 1 行 → 补表头
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d M5-secondary-prepend: "
+                        "row_boxes=%d + header_boxes=%d = %d == num_rows=%d - 1 "
+                        "→ 补表头",
+                        page_1based, len(row_boxes), len(header_boxes),
+                        total, num_rows,
+                    )
+                    row_positions.append([
+                        page_1based,
+                        int(left // zm),
+                        int(right // zm),
+                        int(top // zm),
+                        int(crop_top + all_boxes[0]["top"]),
+                    ])
+                    for rb in all_boxes:
+                        row_positions.append(_map_rb(rb))
+                elif total == num_rows + 1:
+                    # header 合回后多 1 行 → 简化智能丢行
+                    heights = [b["bottom"] - b["top"] for b in all_boxes]
+                    sorted_h = sorted(heights)
+                    median_h = sorted_h[len(sorted_h) // 2]
+                    first_dev = abs(heights[0] - median_h)
+                    last_dev = abs(heights[-1] - median_h)
+                    if first_dev > last_dev:
+                        smart_rows = all_boxes[1:]
+                        drop_label = "first"
+                    else:
+                        smart_rows = all_boxes[:-1]
+                        drop_label = "last"
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d M5-secondary-plus1: "
+                        "total=%d == num_rows=%d + 1 → 智能丢行 drop_%s",
+                        page_1based, total, num_rows, drop_label,
+                    )
+                    for rb in smart_rows:
+                        row_positions.append(_map_rb(rb))
+                else:
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d M5-secondary-fail: "
+                        "row_boxes=%d + header_boxes=%d = %d vs num_rows=%d "
+                        "(secondary_gap=%d) → 回退",
+                        page_1based, len(row_boxes), len(header_boxes),
+                        total, num_rows, secondary_gap,
+                    )
+                    return None
+            else:
+                logging.info(
+                    "[TSR-ENHANCE] page=%d gap=%d 不满足 exact/±1, "
+                    "无 header_boxes 可回填 → 回退 uniform",
+                    page_1based, gap,
+                )
+                return None
+
+        if not row_positions:
             return None
 
         logging.info(

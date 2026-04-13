@@ -1148,7 +1148,7 @@ class PipelineOperationLog(DataBaseModel):
     tenant_id = CharField(max_length=32, null=False, index=True)
     kb_id = CharField(max_length=32, null=False, index=True)
     pipeline_id = CharField(max_length=32, null=True, help_text="Pipeline ID", index=True)
-    pipeline_title = CharField(max_length=32, null=True, help_text="Pipeline title", index=True)
+    pipeline_title = CharField(max_length=255, null=True, help_text="Pipeline title", index=True)
     parser_id = CharField(max_length=32, null=False, help_text="Parser ID", index=True)
     document_name = CharField(max_length=255, null=False, help_text="File name")
     document_suffix = CharField(max_length=255, null=False, help_text="File suffix")

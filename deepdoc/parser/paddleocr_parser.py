@@ -489,6 +489,98 @@ class PaddleOCRParser(RAGFlowPdfParser):
         # 裁剪表格区域
         import numpy as np
         table_crop = page_img.crop((crop_left, crop_top, crop_right, crop_bottom))
+        page_1based = page_idx + 1
+
+        # ── 前置旋转检测：PP-LCNet 方向分类 ──
+        # TSR 永远在正向（0°）图像上工作，旋转纠正在 TSR 之前完成
+        _rotation_angle = 0
+        _corrected_size = None  # 纠正后图像尺寸 (rot_w, rot_h)
+        try:
+            from deepdoc.vision.doc_orientation_classifier import (
+                DocOrientationClassifier,
+                ORIENTATION_MARGIN_THRESHOLD,
+            )
+            _clf = DocOrientationClassifier.get_instance()
+            _det_angle, _det_margin = _clf.detect(table_crop)
+            logging.info(
+                "[TSR-ENHANCE] page=%d 前置旋转检测: angle=%d° margin=%.4f "
+                "(threshold=%.2f)",
+                page_1based, _det_angle, _det_margin,
+                ORIENTATION_MARGIN_THRESHOLD,
+            )
+            if _det_angle != 0 and _det_margin >= ORIENTATION_MARGIN_THRESHOLD:
+                # PP-LCNet angle=N 表示图像被顺时针旋转了 N°，
+                # PIL rotate(+N) = 逆时针 N°，恰好纠正回正方向
+                table_crop = table_crop.rotate(_det_angle, expand=True)
+                _rotation_angle = _det_angle
+                _corrected_size = table_crop.size
+                logging.info(
+                    "[TSR-ENHANCE] page=%d 旋转纠正: %d° → 纠正后尺寸 %s",
+                    page_1based, _det_angle, _corrected_size,
+                )
+        except Exception:
+            logging.exception(
+                "[TSR-ENHANCE] page=%d 前置旋转检测异常 → 跳过",
+                page_1based,
+            )
+
+        def _reverse_map_rotation(row_positions_in):
+            """反向映射：纠正空间行坐标 → 原始裁剪空间。
+
+            经验证的边界坐标公式（boundary coords, 无 -1 偏移）：
+            - 90° CCW 纠正: inverse (x',y')→(rot_h-y', x')
+            - 180°: inverse (x',y')→(rot_w-x', rot_h-y')
+            - 270° CCW: inverse (x',y')→(y', rot_w-x')
+            """
+            if not row_positions_in or _rotation_angle == 0 or _corrected_size is None:
+                return row_positions_in
+            rot_w, rot_h = _corrected_size
+            mapped = []
+            for rp in row_positions_in:
+                pg, px0, px1, ptop, pbot = rp
+                # 剥离裁剪偏移 → 纠正空间内的相对坐标
+                cx0 = px0 - crop_left
+                cx1 = px1 - crop_left
+                ctop = ptop - crop_top
+                cbot = pbot - crop_top
+                if _rotation_angle == 90:
+                    ox0 = rot_h - cbot
+                    ox1 = rot_h - ctop
+                    otop = cx0
+                    obot = cx1
+                elif _rotation_angle == 180:
+                    ox0 = rot_w - cx1
+                    ox1 = rot_w - cx0
+                    otop = rot_h - cbot
+                    obot = rot_h - ctop
+                elif _rotation_angle == 270:
+                    ox0 = ctop
+                    ox1 = cbot
+                    otop = rot_w - cx1
+                    obot = rot_w - cx0
+                else:
+                    ox0, ox1, otop, obot = cx0, cx1, ctop, cbot
+                mapped.append([
+                    pg,
+                    int(crop_left + ox0), int(crop_left + ox1),
+                    int(crop_top + otop), int(crop_top + obot),
+                ])
+            logging.info(
+                "[TSR-ENHANCE] page=%d 反向映射: %d° rotation, %d rows mapped",
+                page_1based, _rotation_angle, len(mapped),
+            )
+            return mapped
+
+        def _make_header_row(first_row_top):
+            """构建表头补偿行（纠正空间或原始空间坐标）。"""
+            if _rotation_angle != 0 and _corrected_size:
+                # 旋转场景：使用纠正空间坐标，后续反向映射时还原
+                return [page_1based, crop_left,
+                        int(crop_left + _corrected_size[0]),
+                        crop_top, int(crop_top + first_row_top)]
+            return [page_1based, int(left // zm), int(right // zm),
+                    int(top // zm), int(crop_top + first_row_top)]
+
         table_np = np.array(table_crop)
 
         # 延迟初始化 TSR（不用不加载模型）— 多模型路由
@@ -598,8 +690,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
         gap = abs(len(row_boxes) - num_rows)
         if gap > 2:
             logging.info(
-                "[TSR-ENHANCE] page=%d gap=%d > 2 → 进入四层递进 (TSR=%d vs TR=%d)",
-                page_idx + 1, gap, len(row_boxes), num_rows,
+                "[TSR-ENHANCE] page=%d gap=%d > 2 → 进入三层递进 (TSR=%d vs TR=%d)",
+                page_1based, gap, len(row_boxes), num_rows,
             )
             # ── Layer 1: 高度过滤降 gap（复用 gap=2 已验证逻辑）──
             _l1_heights = [rb["bottom"] - rb["top"] for rb in row_boxes]
@@ -631,155 +723,48 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         page_idx + 1, gap,
                     )
 
-            # ── Layer 2: PP-LCNet 旋转检测门 ──
+            # (Layer 2 旋转检测已前移至 TSR 前置步骤)
             if not _l1_resolved:
-                _l2_resolved = False
-                try:
-                    from deepdoc.vision.doc_orientation_classifier import (
-                        DocOrientationClassifier,
-                        ORIENTATION_MARGIN_THRESHOLD,
-                    )
-                    _clf = DocOrientationClassifier.get_instance()
-                    _l2_angle, _l2_margin = _clf.detect(table_crop)
-                    logging.info(
-                        "[TSR-ENHANCE] page=%d Layer-2: PP-LCNet detect → "
-                        "angle=%d° margin=%.4f (threshold=%.2f)",
-                        page_idx + 1, _l2_angle, _l2_margin,
-                        ORIENTATION_MARGIN_THRESHOLD,
-                    )
-                    if _l2_angle != 0 and _l2_margin >= ORIENTATION_MARGIN_THRESHOLD:
-                        # 确认旋转 → 旋转裁剪图重跑 TSR
-                        from PIL import Image as _PILImage
-                        _rotated_crop = table_crop.rotate(
-                            -_l2_angle, expand=True
-                        )
-                        _rot_np = np.array(_rotated_crop)
-                        _rot_results = tsr([_rot_np], thr=0.2)
-                        if _rot_results and _rot_results[0]:
-                            _rot_row_boxes = sorted(
-                                [b for b in _rot_results[0]
-                                 if b["label"] == "table row"],
-                                key=lambda b: b["top"],
-                            )
-                            _rot_gap = abs(len(_rot_row_boxes) - num_rows)
-                            logging.info(
-                                "[TSR-ENHANCE] page=%d Layer-2: 旋转%d° 重跑TSR → "
-                                "new_rows=%d new_gap=%d",
-                                page_idx + 1, _l2_angle,
-                                len(_rot_row_boxes), _rot_gap,
-                            )
-                            if _rot_gap <= 2 and _rot_row_boxes:
-                                # 旋转后 gap 合理 → 坐标反向映射
-                                _rot_w, _rot_h = _rotated_crop.size
-                                _orig_w = crop_right - crop_left
-                                _orig_h = crop_bottom - crop_top
-
-                                def _reverse_map_rb(rb, angle, rot_w, rot_h,
-                                                     orig_w, orig_h):
-                                    """Map TSR coords from rotated space back to original."""
-                                    x0, top_r, x1, bot_r = (
-                                        rb["x0"], rb["top"],
-                                        rb["x1"], rb["bottom"],
-                                    )
-                                    if angle == 90:
-                                        # 90° CW: (x',y') → (rot_w-y', x')
-                                        # but we need bbox corners, not points
-                                        new_x0 = top_r
-                                        new_x1 = bot_r
-                                        new_top = rot_w - x1
-                                        new_bot = rot_w - x0
-                                    elif angle == 180:
-                                        new_x0 = rot_w - x1
-                                        new_x1 = rot_w - x0
-                                        new_top = rot_h - bot_r
-                                        new_bot = rot_h - top_r
-                                    elif angle == 270:
-                                        new_x0 = rot_h - bot_r
-                                        new_x1 = rot_h - top_r
-                                        new_top = x0
-                                        new_bot = x1
-                                    else:
-                                        new_x0, new_x1 = x0, x1
-                                        new_top, new_bot = top_r, bot_r
-                                    return {
-                                        "x0": new_x0, "x1": new_x1,
-                                        "top": new_top, "bottom": new_bot,
-                                    }
-
-                                _mapped_boxes = [
-                                    _reverse_map_rb(
-                                        rb, _l2_angle, _rot_w, _rot_h,
-                                        _orig_w, _orig_h,
-                                    )
-                                    for rb in _rot_row_boxes
-                                ]
-                                _mapped_boxes.sort(key=lambda b: b["top"])
-                                row_boxes = _mapped_boxes
-                                gap = _rot_gap
-                                _l2_resolved = True
-                                logging.info(
-                                    "[TSR-ENHANCE] page=%d Layer-2 成功: "
-                                    "旋转%d° + 坐标映射 → gap=%d → 走正常路径",
-                                    page_idx + 1, _l2_angle, gap,
-                                )
-                        else:
-                            logging.info(
-                                "[TSR-ENHANCE] page=%d Layer-2: "
-                                "旋转后 TSR 无结果 → 跳过",
-                                page_idx + 1,
-                            )
-                except Exception:
-                    logging.exception(
-                        "[TSR-ENHANCE] page=%d Layer-2 异常 → 跳过",
-                        page_idx + 1,
-                    )
-                    _l2_resolved = False
-
                 # ── Layer 3: VL 欠检救济 ──
-                if not _l2_resolved:
-                    if num_rows <= 2 and len(row_boxes) >= 5:
-                        logging.info(
-                            "[TSR-ENHANCE] page=%d Layer-3: VL 欠检救济 "
-                            "(num_rows=%d ≤ 2, TSR=%d ≥ 5) → 信任 TSR",
-                            page_idx + 1, num_rows, len(row_boxes),
-                        )
-                        # 信任 TSR 行位置，直接映射所有 row_boxes
-                        page_1based = page_idx + 1
-                        row_positions = []
-                        def _map_rb_l3(rb):
-                            return [
-                                page_1based,
-                                int(crop_left + rb["x0"]),
-                                int(crop_left + rb["x1"]),
-                                int(crop_top + rb["top"]),
-                                int(crop_top + rb["bottom"]),
-                            ]
-                        for rb in row_boxes:
-                            row_positions.append(_map_rb_l3(rb))
-                        logging.info(
-                            "[TSR-ENHANCE] page=%d tsr_rows=%d tr_rows=%d "
-                            "→ %d positions (Layer-3 VL欠检救济) "
-                            "row[0]=%s row[-1]=%s",
-                            page_idx + 1, len(row_boxes), num_rows,
-                            len(row_positions),
-                            row_positions[0], row_positions[-1],
-                        )
-                        return row_positions
-
-                    # ── Layer 4: 放弃 → Uniform fallback ──
+                if num_rows <= 2 and len(row_boxes) >= 5:
                     logging.info(
-                        "[TSR-ENHANCE] page=%d Layer-4: 四层均未命中 "
-                        "(TSR=%d TR=%d gap=%d) → 回退 uniform",
-                        page_idx + 1, len(row_boxes), num_rows, gap,
+                        "[TSR-ENHANCE] page=%d Layer-3: VL 欠检救济 "
+                        "(num_rows=%d ≤ 2, TSR=%d ≥ 5) → 信任 TSR",
+                        page_1based, num_rows, len(row_boxes),
                     )
-                    return None
+                    row_positions = []
+                    for rb in row_boxes:
+                        row_positions.append([
+                            page_1based,
+                            int(crop_left + rb["x0"]),
+                            int(crop_left + rb["x1"]),
+                            int(crop_top + rb["top"]),
+                            int(crop_top + rb["bottom"]),
+                        ])
+                    row_positions = _reverse_map_rotation(row_positions)
+                    logging.info(
+                        "[TSR-ENHANCE] page=%d tsr_rows=%d tr_rows=%d "
+                        "→ %d positions (Layer-3 VL欠检救济) "
+                        "row[0]=%s row[-1]=%s",
+                        page_1based, len(row_boxes), num_rows,
+                        len(row_positions),
+                        row_positions[0], row_positions[-1],
+                    )
+                    return row_positions
+
+                # ── Layer 4: 放弃 → Uniform fallback ──
+                logging.info(
+                    "[TSR-ENHANCE] page=%d Layer-4: 三层均未命中 "
+                    "(TSR=%d TR=%d gap=%d) → 回退 uniform",
+                    page_1based, len(row_boxes), num_rows, gap,
+                )
+                return None
 
         # 坐标映射说明：
         # - TSR 输出坐标：相对于 72dpi 裁剪图的像素坐标
         # - crop_left/crop_top：裁剪原点在 72dpi 全页图中的位置
         # - 最终 row_positions 格式：[page, x0, x1, top, bottom] 单位是 72dpi 像素
         #   （与 uniform fallback 一致：API坐标 / zm = 72dpi）
-        page_1based = page_idx + 1
         row_positions = []
 
         def _map_rb(rb):
@@ -798,13 +783,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows - 1:
             # TSR 少一行（通常是表头未检测为 row）→ 补一行表头
-            row_positions.append([
-                page_1based,
-                int(left // zm),
-                int(right // zm),
-                int(top // zm),
-                int(crop_top + row_boxes[0]["top"]),
-            ])
+            row_positions.append(_make_header_row(row_boxes[0]["top"]))
             for rb in row_boxes:
                 row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows + 1:
@@ -938,13 +917,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         len(row_boxes), len(_filtered), _removed_info,
                     )
                     _filtered.sort(key=lambda b: b["top"])
-                    row_positions.append([
-                        page_1based,
-                        int(left // zm),
-                        int(right // zm),
-                        int(top // zm),
-                        int(crop_top + _filtered[0]["top"]),
-                    ])
+                    row_positions.append(_make_header_row(_filtered[0]["top"]))
                     for rb in _filtered:
                         row_positions.append(_map_rb(rb))
                     _gap2_resolved = True
@@ -1015,13 +988,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         "total=%d == num_rows-1=%d → 补表头",
                         page_1based, total, num_rows - 1,
                     )
-                    row_positions.append([
-                        page_1based,
-                        int(left // zm),
-                        int(right // zm),
-                        int(top // zm),
-                        int(crop_top + all_boxes[0]["top"]),
-                    ])
+                    row_positions.append(_make_header_row(all_boxes[0]["top"]))
                     for rb in all_boxes:
                         row_positions.append(_map_rb(rb))
                 elif total == num_rows + 1:
@@ -1059,6 +1026,9 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         if not row_positions:
             return None
+
+        # 反向映射：纠正空间 → 原始坐标空间
+        row_positions = _reverse_map_rotation(row_positions)
 
         logging.info(
             "[TSR-ENHANCE] page=%d tsr_rows=%d tr_rows=%d → %d positions "

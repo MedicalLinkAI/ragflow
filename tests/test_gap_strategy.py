@@ -138,31 +138,19 @@ class TestLayer1HeightFiltering:
         assert result is None
 
 
-# ─── Layer 2 Tests ───────────────────────────────────────────────────
-class TestLayer2RotationGate:
-    """Layer 2: PP-LCNet rotation detection + TSR rerun."""
+# ─── Pre-TSR Rotation Detection Tests ────────────────────────────────
+class TestPreTSRRotationDetection:
+    """Pre-TSR rotation: PP-LCNet detects rotation → corrects before TSR."""
 
-    def test_l2_rotation_detected_and_rerun_succeeds(self):
-        """Rotation 90° detected, re-TSR gives gap≤2 → success."""
+    def test_rotation_detected_tsr_on_corrected_image(self):
+        """Rotation 90° detected → TSR runs on corrected image → gap=0."""
         parser = _make_parser_with_image(600, 800)
-        # Original TSR: 10 rows (uniform), num_rows=5 → gap=5, no outliers
-        original_boxes = _make_row_boxes(10)
-        # After rotation re-TSR: 5 rows → gap=0
-        rotated_boxes = _make_row_boxes(5, x0=10, x1=400)
+        # TSR on corrected image returns 5 rows matching num_rows
+        corrected_boxes = _make_row_boxes(5, x0=10, x1=400)
 
         tsr_mock = MagicMock()
-        # First call returns original, second call returns rotated
-        tsr_mock.side_effect = [
-            [original_boxes],  # initial TSR
-            [rotated_boxes],   # re-TSR after rotation
-        ]
+        tsr_mock.return_value = [corrected_boxes]
         PaddleOCRParser._tsr_instance = tsr_mock
-
-        with patch(
-            "deepdoc.parser.paddleocr_parser.DocOrientationClassifier",
-            create=True,
-        ) as mock_cls_ref:
-            pass
 
         with patch(
             "deepdoc.vision.doc_orientation_classifier.DocOrientationClassifier"
@@ -181,8 +169,8 @@ class TestLayer2RotationGate:
         assert result is not None
         assert len(result) == 5
 
-    def test_l2_no_rotation_goes_to_layer4(self):
-        """PP-LCNet says 0° → skip Layer 2 → Layer 4 returns None."""
+    def test_no_rotation_normal_path(self):
+        """PP-LCNet says 0° → no correction, TSR on original → gap>2 fallback."""
         parser = _make_parser_with_image()
         row_boxes = _make_row_boxes(10)
 
@@ -205,8 +193,8 @@ class TestLayer2RotationGate:
             )
         assert result is None
 
-    def test_l2_low_margin_skips_rotation(self):
-        """PP-LCNet says 90° but margin < threshold → skip."""
+    def test_low_margin_skips_rotation(self):
+        """PP-LCNet says 90° but margin < threshold → no correction."""
         parser = _make_parser_with_image()
         row_boxes = _make_row_boxes(10)
 
@@ -397,25 +385,20 @@ class TestGapLe2NotAffected:
 
 # ─── Coordinate reverse mapping ──────────────────────────────────────
 class TestCoordinateReverseMapping:
-    """Verify _reverse_map_rb produces correct coordinate transforms."""
+    """Verify pre-TSR rotation + reverse mapping produces correct coordinates."""
 
     def test_90_degree_mapping_symmetry(self):
-        """After 90° rotation and reverse map, positions stay coherent."""
+        """After 90° correction + TSR + reverse map, positions stay coherent."""
         parser = _make_parser_with_image(600, 800)
-        # 10 uniform rows → gap=5 with num_rows=5
-        original_boxes = _make_row_boxes(10)
-        # Simulated rotated TSR result: 5 rows in rotated space
-        rotated_boxes = [
+        # TSR on corrected image returns 5 rows (matching num_rows)
+        corrected_boxes = [
             {"label": "table row", "x0": 10, "x1": 750,
              "top": 50 + i * 100, "bottom": 50 + i * 100 + 80}
             for i in range(5)
         ]
 
         tsr_mock = MagicMock()
-        tsr_mock.side_effect = [
-            [original_boxes],   # initial
-            [rotated_boxes],    # after rotation
-        ]
+        tsr_mock.return_value = [corrected_boxes]
         PaddleOCRParser._tsr_instance = tsr_mock
 
         with patch(
@@ -434,7 +417,6 @@ class TestCoordinateReverseMapping:
 
         assert result is not None
         assert len(result) == 5
-        # All positions should have reasonable coordinates
         for pos in result:
             assert len(pos) == 5
             page, x0, x1, pos_top, pos_bottom = pos

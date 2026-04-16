@@ -283,10 +283,45 @@ class SmartSplitter(ProcessBase, LLM):
                         for pos in RAGFlowPdfParser.extract_positions(tagged_text)
                     ]
                     
-                    # ── 构建 position_line_map：每行 content 对应的 position 索引 ──
-                    # chunk_text_parts[k] 是第 k 个 block 的文本（可能含 \n），
-                    # positions[k] 是第 k 个 block 的坐标。
-                    # 用 "\n" join 后，需要知道每行属于哪个 block。
+                    # ── 增强：将多行 OCR block 拆分为子位置 ──
+                    # V4 PaddleOCR 可能将多个物理行合并为一个 block，
+                    # 导致多行 content 共享同一个粗粒度 position。
+                    # 此处按行数等分 block 的 bbox，使 positions 与 text_lines 1:1 对齐。
+                    expanded_positions = []
+                    expansion_applied = False
+                    for part_idx, part in enumerate(chunk_text_parts):
+                        n_lines = len(part.split("\n"))
+                        if part_idx >= len(positions):
+                            pos_to_use = positions[-1] if positions else [1, 0, 0, 0, 0]
+                            for _ in range(n_lines):
+                                expanded_positions.append(list(pos_to_use))
+                        elif n_lines <= 1:
+                            expanded_positions.append(positions[part_idx])
+                        else:
+                            orig = positions[part_idx]
+                            page, x0, x1, top, bottom = orig[0], orig[1], orig[2], orig[3], orig[4]
+                            total_h = bottom - top
+                            if total_h <= 0:
+                                for _ in range(n_lines):
+                                    expanded_positions.append(list(orig))
+                            else:
+                                line_h = total_h / n_lines
+                                for li in range(n_lines):
+                                    sub_top = round(top + li * line_h)
+                                    sub_bottom = round(top + (li + 1) * line_h)
+                                    expanded_positions.append([page, x0, x1, sub_top, sub_bottom])
+                            expansion_applied = True
+                    if expansion_applied:
+                        logging.info(
+                            f"[SmartSplitter] position expansion: {len(positions)} blocks → "
+                            f"{len(expanded_positions)} sub-positions"
+                        )
+                    positions = expanded_positions
+                    
+                    # ── 构建 position_line_map（兼容保留） ──
+                    # 展开后 positions 与 text_lines 通常已 1:1 对齐，
+                    # position_line_map 不会被存储（条件 len(text_lines)!=len(positions) 为 false）。
+                    # 保留此逻辑作为边界情况的安全网。
                     position_line_map = []
                     for part_idx, part in enumerate(chunk_text_parts):
                         part_lines = part.split("\n")

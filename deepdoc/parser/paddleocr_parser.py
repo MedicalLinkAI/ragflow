@@ -428,25 +428,6 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 pruned_result = layout_result.get("prunedResult", {})
                 parsing_res_list = pruned_result.get("parsing_res_list", [])
 
-                # ── TEMP DEBUG: dump per-page VL block stats ──
-                _labels = [b.get("block_label", "?") for b in parsing_res_list]
-                _contents = [b.get("block_content", "") for b in parsing_res_list]
-                _empty_ct = sum(1 for c in _contents if not c.strip())
-                logging.info(
-                    "[DIAG-VL-PAGE] page=%d total_blocks=%d empty=%d labels=%s",
-                    page_idx + 1, len(parsing_res_list), _empty_ct, _labels,
-                )
-                for _bi, _b in enumerate(parsing_res_list):
-                    _bc = _b.get("block_content", "")
-                    _bl = _b.get("block_label", "?")
-                    _bb = _b.get("block_bbox", [])
-                    _snippet = _bc.strip()[:120].replace("\n", " ")
-                    logging.info(
-                        "[DIAG-VL-BLOCK] page=%d block=%d label=%s bbox=%s len=%d snippet='%s'",
-                        page_idx + 1, _bi, _bl, _bb, len(_bc), _snippet,
-                    )
-                # ── END TEMP DEBUG ──
-
                 for block in parsing_res_list:
                     block_content = block.get("block_content", "").strip()
                     if not block_content:

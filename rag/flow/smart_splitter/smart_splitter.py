@@ -286,11 +286,14 @@ class SmartSplitter(ProcessBase, LLM):
                     # ── 增强：将多行 OCR block 拆分为子位置 ──
                     # V4 PaddleOCR 可能将多个物理行合并为一个 block，
                     # 导致多行 content 共享同一个粗粒度 position。
-                    # 此处按行数等分 block 的 bbox，使 positions 与 text_lines 1:1 对齐。
+                    # 按文本长度比例分配 block 的 bbox 高度，使 positions 与 text_lines 1:1 对齐。
+                    # 原理：字符数越多的行在 PDF 中占据越多的物理垂直空间（自动换行），
+                    # 因此用字符数作为权重来分配高度，比等分更准确。
                     expanded_positions = []
                     expansion_applied = False
                     for part_idx, part in enumerate(chunk_text_parts):
-                        n_lines = len(part.split("\n"))
+                        sub_lines = part.split("\n")
+                        n_lines = len(sub_lines)
                         if part_idx >= len(positions):
                             pos_to_use = positions[-1] if positions else [1, 0, 0, 0, 0]
                             for _ in range(n_lines):
@@ -305,11 +308,17 @@ class SmartSplitter(ProcessBase, LLM):
                                 for _ in range(n_lines):
                                     expanded_positions.append(list(orig))
                             else:
-                                line_h = total_h / n_lines
+                                # 按字符数比例分配高度（空行最小权重 1）
+                                char_weights = [max(len(sl.strip()), 1) for sl in sub_lines]
+                                total_weight = sum(char_weights)
+                                current_top = float(top)
                                 for li in range(n_lines):
-                                    sub_top = round(top + li * line_h)
-                                    sub_bottom = round(top + (li + 1) * line_h)
+                                    proportion = char_weights[li] / total_weight
+                                    sub_h = total_h * proportion
+                                    sub_top = round(current_top)
+                                    sub_bottom = round(current_top + sub_h)
                                     expanded_positions.append([page, x0, x1, sub_top, sub_bottom])
+                                    current_top += sub_h
                             expansion_applied = True
                     if expansion_applied:
                         logging.info(

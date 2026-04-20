@@ -1,0 +1,11 @@
+# Local override (not tracked — use .env.dev / .env.staging / .env.prod as templates)
+.env
+
+# Generated files
+service_conf.yaml
+
+# Vendor
+vendor/
+
+# Data directories
+data/

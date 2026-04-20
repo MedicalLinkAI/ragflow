@@ -4,6 +4,9 @@
 
 set -euo pipefail
 
+# Raise the descriptor ceiling for GraphRAG-style concurrent workloads on Linux hosts.
+ulimit -n 1048575
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
@@ -234,11 +237,21 @@ fi
 # 5. 启动任务执行器
 echo "[5/6] 启动任务执行器 (task_executor.py x${TASK_EXECUTOR_COUNT})..."
 
+TASK_CUDA_VISIBLE_DEVICES_LIST="${TASK_CUDA_VISIBLE_DEVICES_LIST:-}"
+TASK_CUDA_DEVICES=()
+if [ -n "$TASK_CUDA_VISIBLE_DEVICES_LIST" ]; then
+    IFS="," read -r -a TASK_CUDA_DEVICES <<< "$TASK_CUDA_VISIBLE_DEVICES_LIST"
+fi
+
 RUNNING_EXECUTORS=0
 for ((i=0; i<TASK_EXECUTOR_COUNT; i++)); do
     EXECUTOR_LOG="${TASK_LOG_PREFIX}_${i}.log"
     EXECUTOR_PID_FILE="$PID_DIR/task_executor_${i}.pid"
-    nohup python rag/svr/task_executor.py "$i" > "$EXECUTOR_LOG" 2>&1 &
+    if [ ${#TASK_CUDA_DEVICES[@]} -gt 0 ] && [ -n "${TASK_CUDA_DEVICES[$i]:-}" ]; then
+        CUDA_VISIBLE_DEVICES="${TASK_CUDA_DEVICES[$i]}" nohup python rag/svr/task_executor.py "$i" > "$EXECUTOR_LOG" 2>&1 &
+    else
+        nohup python rag/svr/task_executor.py "$i" > "$EXECUTOR_LOG" 2>&1 &
+    fi
     EXECUTOR_PID=$!
     echo "$EXECUTOR_PID" > "$EXECUTOR_PID_FILE"
     echo "  启动任务执行器 $i (PID: $EXECUTOR_PID)"

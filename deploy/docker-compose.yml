@@ -186,7 +186,12 @@ services:
   # ---------------------------------------------------------------------------
   ragflow-web:
     profiles: ["api"]
-    image: nginx:1.27-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        RAGFLOW_IMAGE: ${RAGFLOW_IMAGE:-registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0}
+    image: ragflow-web:${RAGFLOW_WEB_IMAGE_TAG:-latest}
     container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-web
     ports:
       - "${RAGFLOW_WEB_HOST_PORT:-18080}:80"

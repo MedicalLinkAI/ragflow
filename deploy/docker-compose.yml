@@ -70,7 +70,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 40s
+      start_period: 90s
     networks:
       - medlinkai-shared
     restart: unless-stopped
@@ -113,7 +113,7 @@ services:
     volumes:
       - ${DATA_ROOT:-./data}/redisdata:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-infini_rag_flow}", "ping"]
+      test: ["CMD", "valkey-cli", "-a", "${REDIS_PASSWORD:-infini_rag_flow}", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5

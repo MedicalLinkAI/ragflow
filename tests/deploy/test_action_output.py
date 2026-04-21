@@ -50,6 +50,22 @@ class TestBuildShJsonOutput:
                 f"build.sh does not handle app-id '{app_id}'"
             )
 
+    def test_build_uses_direct_docker_build(self, deploy_dir):
+        script = _read_script(deploy_dir, "build.sh")
+        assert 'docker build' in script
+        assert 'NEED_MIRROR' in script
+        assert 'Dockerfile.web' in script
+
+
+class TestDockerfileRuntimeContract:
+    """Runtime image must include sources needed by the worker entrypoint."""
+
+    def test_runtime_image_copies_graphrag_sources(self, deploy_dir):
+        dockerfile = (deploy_dir.parent / "Dockerfile").read_text()
+        assert 'COPY graphrag graphrag' in dockerfile, (
+            'Docker runtime image must copy graphrag sources for task_executor'
+        )
+
 
 class TestDeployShJsonOutput:
     """deploy.sh must output machine-readable JSON."""
@@ -71,6 +87,15 @@ class TestDeployShJsonOutput:
             r'containers.*\[',
             script,
         ), "deploy.sh --status should output JSON with containers array"
+
+    def test_deploy_runs_base_sql_once(self, deploy_dir):
+        script = _read_script(deploy_dir, "deploy.sh")
+        assert 'run_base_sql_if_needed' in script
+        assert 'base_sql_pending' in script
+        assert 'base_sql_applied' in script
+        assert 'database_has_base_sql_data' in script
+        assert 'base_sql_state_missing' in script
+        assert 'deploy/sql/base.sql' in script
 
 
 class TestScriptSafetyContract:
@@ -121,3 +146,8 @@ class TestBuildAndDeployShContract:
             assert app_id in script, (
                 f"build-and-deploy.sh does not reference '{app_id}'"
             )
+
+    def test_worker_wrapper_rebuilds_shared_api_image(self, deploy_dir):
+        script = _read_script(deploy_dir, "build-and-deploy.sh")
+        assert 'ragflow-worker)' in script
+        assert 'run_build "ragflow-api"' in script

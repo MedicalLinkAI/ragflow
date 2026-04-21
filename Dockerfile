@@ -194,6 +194,7 @@ COPY api api
 COPY conf conf
 COPY deepdoc deepdoc
 COPY rag rag
+COPY graphrag graphrag
 COPY agent agent
 COPY pyproject.toml uv.lock ./
 COPY mcp mcp

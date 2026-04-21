@@ -146,6 +146,36 @@ COMPOSE_PROJECT_NAME=""
 RAGFLOW_IMAGE=""
 RAGFLOW_API_HOST_PORT=""
 RAGFLOW_WEB_HOST_PORT=""
+POSTGRES_USER=""
+POSTGRES_DBNAME=""
+STATE_FILE=""
+BASE_SQL_FILE=""
+
+read_env_value() {
+  local env_file="$1"
+  local key="$2"
+
+  python3 - "$env_file" "$key" <<'PY2'
+import sys
+from pathlib import Path
+
+env_path = Path(sys.argv[1])
+key = sys.argv[2]
+for raw_line in env_path.read_text().splitlines():
+    line = raw_line.strip()
+    if not line or line.startswith('#') or '=' not in line:
+        continue
+    name, value = line.split('=', 1)
+    if name != key:
+        continue
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+        value = value[1:-1]
+    print(value)
+    raise SystemExit(0)
+raise SystemExit(1)
+PY2
+}
 
 load_env() {
   local env_file="$SCRIPT_DIR/.env.${ENV}"
@@ -174,6 +204,19 @@ load_env() {
   RAGFLOW_WEB_HOST_PORT=$(grep -E '^RAGFLOW_WEB_HOST_PORT=' "$env_file" | head -1 | cut -d'=' -f2- || echo "18080")
   RAGFLOW_API_HOST_PORT="${RAGFLOW_API_HOST_PORT:-19380}"
   RAGFLOW_WEB_HOST_PORT="${RAGFLOW_WEB_HOST_PORT:-18080}"
+  if ! POSTGRES_USER="$(read_env_value "$env_file" POSTGRES_USER)"; then
+    POSTGRES_USER=""
+  fi
+  if ! POSTGRES_DBNAME="$(read_env_value "$env_file" POSTGRES_DBNAME)"; then
+    POSTGRES_DBNAME=""
+  fi
+  STATE_FILE="$SCRIPT_DIR/.state/infra.${ENV}.json"
+  BASE_SQL_FILE="$SCRIPT_DIR/sql/base.sql"
+
+  if [[ -z "$POSTGRES_USER" || -z "$POSTGRES_DBNAME" ]]; then
+    log_error "环境文件中未定义 POSTGRES_USER 或 POSTGRES_DBNAME"
+    exit 1
+  fi
 
   log_ok "已加载环境: ${ENV} (COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME})"
 }
@@ -183,6 +226,122 @@ COMPOSE_CMD=""
 
 setup_compose_cmd() {
   COMPOSE_CMD="docker compose -f $SCRIPT_DIR/docker-compose.yml --env-file $SCRIPT_DIR/.env.${ENV}"
+}
+
+read_state_field() {
+  local field="$1"
+
+  python3 - "$STATE_FILE" "$field" <<'PY2'
+import json
+import sys
+from pathlib import Path
+
+state_path = Path(sys.argv[1])
+field = sys.argv[2]
+if not state_path.exists():
+    raise SystemExit(0)
+with state_path.open() as fh:
+    data = json.load(fh)
+value = data.get(field, "")
+if isinstance(value, bool):
+    print(str(value).lower())
+    raise SystemExit(0)
+if value is None:
+    value = ""
+print(value)
+PY2
+}
+
+update_base_sql_state() {
+  local applied="$1"
+  local pending="$2"
+
+  python3 - "$STATE_FILE" "$applied" "$pending" <<'PY2'
+import json
+import sys
+from pathlib import Path
+
+state_path = Path(sys.argv[1])
+data = json.loads(state_path.read_text()) if state_path.exists() and state_path.stat().st_size > 0 else {}
+data["base_sql_file"] = "deploy/sql/base.sql"
+data["base_sql_applied"] = sys.argv[2] == "true"
+data["base_sql_pending"] = sys.argv[3] == "true"
+state_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+PY2
+}
+
+database_has_base_sql_data() {
+  local container_name="$1"
+
+  docker exec "$container_name"     psql -U "$POSTGRES_USER" -d "$POSTGRES_DBNAME" -tAc     'SELECT EXISTS (SELECT 1 FROM "knowledgebase" LIMIT 1);'     2>/dev/null | tr -d '[:space:]'
+}
+
+run_base_sql_if_needed() {
+  local base_sql_pending base_sql_applied container_name data_exists
+
+  container_name="$COMPOSE_PROJECT_NAME-postgres"
+  data_exists="$(database_has_base_sql_data "$container_name" || true)"
+
+  if [[ ! -e "$STATE_FILE" || ! -s "$STATE_FILE" ]]; then
+    if [[ "$data_exists" == "t" || "$data_exists" == "true" ]]; then
+      update_base_sql_state true false
+      log_ok "检测到基础 SQL 哨兵数据已存在，已回写状态文件"
+      return 0
+    fi
+    log_error "未检测到基础 SQL 状态文件，且数据库中不存在基础 SQL 哨兵数据: $STATE_FILE"
+    echo ""
+    echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_state_missing"}'
+    exit 1
+  fi
+
+  if ! base_sql_pending="$(read_state_field base_sql_pending)"; then
+    log_error "基础 SQL 状态读取失败: $STATE_FILE"
+    echo ""
+    echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_state_invalid"}'
+    exit 1
+  fi
+
+  if ! base_sql_applied="$(read_state_field base_sql_applied)"; then
+    log_error "基础 SQL 状态读取失败: $STATE_FILE"
+    echo ""
+    echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_state_invalid"}'
+    exit 1
+  fi
+
+  if [[ "$base_sql_applied" == "true" ]]; then
+    log_ok "基础 SQL 已初始化，跳过再次执行"
+    return 0
+  fi
+
+  if [[ "$data_exists" == "t" || "$data_exists" == "true" ]]; then
+    update_base_sql_state true false
+    log_ok "检测到基础 SQL 哨兵数据已存在，按已初始化处理"
+    return 0
+  fi
+
+  if [[ "$base_sql_pending" != "true" && "$base_sql_applied" != "false" ]]; then
+    log_error "未检测到待执行基础 SQL 标记，且数据库中不存在基础 SQL 哨兵数据"
+    echo ""
+    echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_state_missing"}'
+    exit 1
+  fi
+
+  if [[ ! -f "$BASE_SQL_FILE" ]]; then
+    log_error "基础 SQL 文件不存在: $BASE_SQL_FILE"
+    echo ""
+    echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_missing"}'
+    exit 1
+  fi
+
+  log_info "导入基础 SQL: $BASE_SQL_FILE"
+  if ! docker exec -i "$container_name" psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DBNAME" < "$BASE_SQL_FILE"; then
+    echo ""
+    echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_import_failed"}'
+    exit 1
+  fi
+
+  update_base_sql_state true false
+  log_ok "已记录基础 SQL 初始化完成: $STATE_FILE"
 }
 
 # ---- infra_preflight --------------------------------------------------------
@@ -445,6 +604,7 @@ main() {
     ragflow-api)
       retag_image
       deploy_and_verify "ragflow-api"
+      run_base_sql_if_needed
       ;;
     ragflow-web)
       retag_image
@@ -456,6 +616,7 @@ main() {
       ;;
     ragflow-all)
       deploy_and_verify "ragflow-api"
+      run_base_sql_if_needed
       deploy_and_verify "ragflow-worker"
       deploy_and_verify "ragflow-web"
       ;;

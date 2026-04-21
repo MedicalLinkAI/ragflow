@@ -139,6 +139,7 @@ check_prerequisites() {
 # ---- load_env ---------------------------------------------------------------
 COMPOSE_PROJECT_NAME=""
 RAGFLOW_IMAGE=""
+NEED_MIRROR="0"
 
 load_env() {
   local env_file="$SCRIPT_DIR/.env.${ENV}"
@@ -162,6 +163,9 @@ load_env() {
     exit 1
   fi
   export RAGFLOW_IMAGE
+
+  NEED_MIRROR=$(grep -E '^NEED_MIRROR=' "$env_file" | head -1 | cut -d'=' -f2- || echo "0")
+  NEED_MIRROR="${NEED_MIRROR:-0}"
 
   log_ok "已加载环境: ${ENV} (COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME})"
 }
@@ -205,10 +209,8 @@ build_api() {
   log_info "从源码构建 RAGflow 主镜像（首次构建需下载依赖，可能较慢）..."
   log_info "镜像标签: ${RAGFLOW_IMAGE}"
 
-  local compose_cmd="docker compose -f $SCRIPT_DIR/docker-compose.yml --env-file $SCRIPT_DIR/.env.${ENV}"
-
   log_info "开始构建镜像: ragflow-api..."
-  $compose_cmd build ragflow-api
+  docker build     -f "$REPO_ROOT/Dockerfile"     -t "$RAGFLOW_IMAGE"     --build-arg NEED_MIRROR="$NEED_MIRROR"     "$REPO_ROOT"
   log_ok "镜像构建完成: ${RAGFLOW_IMAGE}"
 }
 
@@ -222,10 +224,8 @@ build_web() {
   fi
   log_ok "基础镜像就绪: ${RAGFLOW_IMAGE}"
 
-  local compose_cmd="docker compose -f $SCRIPT_DIR/docker-compose.yml --env-file $SCRIPT_DIR/.env.${ENV}"
-
   log_info "构建镜像: ragflow-web（从主镜像提取前端产物 + nginx）..."
-  $compose_cmd build ragflow-web
+  docker build     -f "$SCRIPT_DIR/Dockerfile.web"     -t "ragflow-web:latest"     --build-arg RAGFLOW_IMAGE="$RAGFLOW_IMAGE"     "$SCRIPT_DIR"
   log_ok "镜像构建完成"
 }
 

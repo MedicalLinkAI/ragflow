@@ -108,4 +108,10 @@ class TestStorageBindingGuard:
         assert 'storage_binding_id' in script
         assert 'validate_host_instance_conflicts' in script
         assert '首次部署不会拦截' in script
+        assert 'base_sql_pending' in script
+        assert 'base_sql_applied' in script
+        assert 'deploy/sql/base.sql' in script
+
+    def test_base_sql_file_exists(self, deploy_dir):
+        assert (deploy_dir / 'sql' / 'base.sql').exists()
 

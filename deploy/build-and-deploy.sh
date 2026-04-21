@@ -40,7 +40,7 @@ RAGflow 构建并部署脚本
 应用 ID：
   ragflow-api       构建 API 主镜像后部署 API
   ragflow-web       构建 Web 镜像后部署 Web
-  ragflow-worker    复用 API 主镜像（build 阶段为 skipped）后部署 Worker
+  ragflow-worker    先重建共享 API 主镜像，再部署 Worker
   ragflow-all       依次构建 ragflow-api / ragflow-web，然后部署全部应用
 
 选项：
@@ -124,6 +124,9 @@ run_build_phase() {
     ragflow-all)
       run_build "ragflow-api"
       run_build "ragflow-web"
+      ;;
+    ragflow-worker)
+      run_build "ragflow-api"
       ;;
     *)
       run_build "$APP_ID"

@@ -22,7 +22,7 @@ cp deploy/.env.example deploy/.env.dev
 # 步骤 2：初始化基础设施（ES + PG + Redis + MinIO）
 deploy/setup.sh --env dev
 
-# 步骤 3：构建并部署应用
+# 步骤 3：构建并部署应用（首次 `ragflow-api` 成功启动后会自动导入 `deploy/sql/base.sql` 一次）
 deploy/build-and-deploy.sh ragflow-all --env dev
 
 # 如果只想基于当前镜像拉起 / 对账服务
@@ -30,6 +30,8 @@ deploy/deploy.sh ragflow-all --env dev
 ```
 
 所有命令均从**仓库根目录**执行。
+
+首次 `ragflow-api` 健康启动后会自动执行 `deploy/sql/base.sql`，并在 `deploy/.state/infra.<env>.json` 中记录；后续重启 / 发版不会再次执行。
 
 ---
 

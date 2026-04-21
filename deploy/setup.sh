@@ -475,24 +475,20 @@ wait_healthy() {
 }
 
 persist_storage_binding_if_safe() {
-  local healthy_count unhealthy_count
-
-  set +u
-  healthy_count=${#HEALTHY_COMPONENTS[@]}
-  unhealthy_count=${#UNHEALTHY_COMPONENTS[@]}
-  set -u
-
-  if [[ $healthy_count -eq 0 || $unhealthy_count -gt 0 ]]; then
+  if [[ ${#HEALTHY_COMPONENTS[@]} -eq 0 || ${#UNHEALTHY_COMPONENTS[@]} -gt 0 ]]; then
     return 0
   fi
 
-  python3 - "$STATE_FILE" "$ENV" "$COMPOSE_PROJECT_NAME" "$DATA_ROOT" "$STORAGE_BINDING_ID" <<'PY2'
+  python3 - "$STATE_FILE" "$ENV" "$COMPOSE_PROJECT_NAME" "$DATA_ROOT" "$STORAGE_BINDING_ID" "$FIRST_INIT" <<'PY2'
 import json
 import sys
 from pathlib import Path
 
 state_path = Path(sys.argv[1])
 state_path.parent.mkdir(parents=True, exist_ok=True)
+existing = {}
+if state_path.exists() and state_path.stat().st_size > 0:
+    existing = json.loads(state_path.read_text())
 payload = {
     "env": sys.argv[2],
     "compose_project_name": sys.argv[3],
@@ -500,11 +496,21 @@ payload = {
     "storage_binding_id": sys.argv[5],
     "storage_kind": "bind",
     "managed_components": ["elasticsearch", "postgres", "redis", "minio"],
+    "base_sql_file": "deploy/sql/base.sql",
 }
+if "base_sql_pending" in existing:
+    payload["base_sql_pending"] = existing["base_sql_pending"]
+elif sys.argv[6] == "true":
+    payload["base_sql_pending"] = True
+if "base_sql_applied" in existing:
+    payload["base_sql_applied"] = existing["base_sql_applied"]
+elif sys.argv[6] == "true":
+    payload["base_sql_applied"] = False
+payload = {**existing, **payload}
 state_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 PY2
 
-  log_ok "已记录存储绑定: ${STATE_FILE}"
+  log_ok "已记录存储绑定: $STATE_FILE"
 }
 
 # ---- output_status ----------------------------------------------------------

@@ -23,8 +23,10 @@ cp deploy/.env.example deploy/.env.dev
 deploy/setup.sh --env dev
 
 # 步骤 3：构建并部署应用
-deploy/build.sh ragflow-web --env dev       # 构建 web 前端镜像
-deploy/deploy.sh ragflow-all --env dev      # 部署全部应用
+deploy/build-and-deploy.sh ragflow-all --env dev
+
+# 如果只想基于当前镜像拉起 / 对账服务
+deploy/deploy.sh ragflow-all --env dev
 ```
 
 所有命令均从**仓库根目录**执行。
@@ -215,11 +217,11 @@ deploy/build.sh <app-id> [--env <name>] [--branch <name>]
 
 | 选项 | 说明 |
 |------|------|
-| `<app-id>` | `ragflow-web`（当前仅 web 需要构建） |
+| `<app-id>` | `ragflow-api` / `ragflow-web` / `ragflow-worker` |
 | `--env <name>` | 加载 `deploy/.env.<name>`（默认 `dev`） |
 | `--branch <name>` | 构建前切换并更新分支（要求工作区干净） |
 
-> `ragflow-api` 和 `ragflow-worker` 直接使用 `RAGFLOW_IMAGE` 预构建镜像，无需 build。
+> `ragflow-api` 从源码构建 `RAGFLOW_IMAGE`；`ragflow-worker` 与 `ragflow-api` 共享镜像，build 阶段会输出 `skipped`；`ragflow-web` 单独构建轻量 Web 镜像。
 
 ### deploy.sh — 应用部署
 
@@ -235,6 +237,16 @@ deploy/deploy.sh <app-id> [--env <name>] [--image <tag>]
 | `--env <name>` | 加载 `deploy/.env.<name>`（默认 `dev`） |
 | `--image <tag>` | 指定镜像标签（默认 `latest`） |
 
+**行为说明：**
+
+- 不指定 `--image`：使用当前默认镜像（`ragflow-api` / `ragflow-worker` 使用 `.env.<env>` 中的 `RAGFLOW_IMAGE`；`ragflow-web` 使用 `ragflow-web:latest`）
+- 指定 `--image`：切换到明确指定的镜像后再执行部署
+- `deploy.sh` 底层执行 `docker compose up -d`，它是**幂等对账**而不是“强制重启”：
+  - 容器不存在 → 创建并启动
+  - 容器已存在但停止 → 启动
+  - 容器运行中且镜像 / 配置未变化 → 保持运行，不强制重启
+  - 容器运行中且镜像 / 配置已变化 → Compose 负责重建 / 更新
+
 **示例：**
 
 ```bash
@@ -242,6 +254,29 @@ deploy/deploy.sh ragflow-api --env dev       # 仅部署 API
 deploy/deploy.sh ragflow-worker --env dev    # 仅部署 Worker
 deploy/deploy.sh ragflow-all --env dev       # 部署全部
 ```
+
+### build-and-deploy.sh — 构建后立即部署
+
+聚合执行 `build.sh` + `deploy.sh`，适合“代码已修改，需要重新构建镜像并发布”的常见路径。
+
+```bash
+deploy/build-and-deploy.sh <app-id> [--env <name>] [--branch <name>]
+```
+
+| 选项 | 说明 |
+|------|------|
+| `<app-id>` | `ragflow-api` / `ragflow-web` / `ragflow-worker` / `ragflow-all` |
+| `--env <name>` | 加载 `deploy/.env.<name>`（默认 `dev`） |
+| `--branch <name>` | 构建前切换并更新分支（要求工作区干净） |
+
+**行为说明：**
+
+- `ragflow-api` → build `ragflow-api`，再 deploy `ragflow-api`
+- `ragflow-web` → build `ragflow-web`，再 deploy `ragflow-web`
+- `ragflow-worker` → build `ragflow-worker`（共享主镜像，输出 `skipped`），再 deploy `ragflow-worker`
+- `ragflow-all` → 依次 build `ragflow-api` / `ragflow-web`，再 deploy `ragflow-all`
+
+> 如果你**没有改代码**，只是想拉起 / 对账当前服务，请直接使用 `deploy.sh`；无需重新 build。
 
 ---
 

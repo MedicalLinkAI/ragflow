@@ -93,3 +93,31 @@ class TestScriptSafetyContract:
         assert "set -euo pipefail" in script, (
             "setup.sh must use 'set -euo pipefail'"
         )
+
+
+class TestBuildAndDeployShContract:
+    """build-and-deploy.sh should orchestrate build + deploy safely."""
+
+    def test_script_exists(self, deploy_dir):
+        assert (deploy_dir / "build-and-deploy.sh").exists(), (
+            "build-and-deploy.sh should exist in deploy/"
+        )
+
+    def test_strict_mode_enabled(self, deploy_dir):
+        script = _read_script(deploy_dir, "build-and-deploy.sh")
+        assert "set -euo pipefail" in script, (
+            "build-and-deploy.sh must use 'set -euo pipefail'"
+        )
+
+    def test_references_build_and_deploy_scripts(self, deploy_dir):
+        script = _read_script(deploy_dir, "build-and-deploy.sh")
+        assert "build.sh" in script
+        assert "deploy.sh" in script
+        assert 'action":"build-and-deploy"' in script
+
+    def test_supports_wrapper_targets(self, deploy_dir):
+        script = _read_script(deploy_dir, "build-and-deploy.sh")
+        for app_id in ["ragflow-api", "ragflow-web", "ragflow-worker", "ragflow-all"]:
+            assert app_id in script, (
+                f"build-and-deploy.sh does not reference '{app_id}'"
+            )

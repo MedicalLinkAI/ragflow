@@ -1,0 +1,58 @@
+# =============================================================================
+# RAGflow service_conf.yaml.template — PostgreSQL 模式
+# =============================================================================
+# 基于上游 docker/service_conf.yaml.template 修改:
+#   - postgres 段已激活 (上游默认注释)
+#   - mysql 段已注释 (上游默认激活)
+#   - 容器名默认值使用 ragflow-dev-* 前缀
+#
+# 变量替换: RAGflow entrypoint.sh 使用自定义 bash 解析器处理
+#   ${VAR:-default} 语法，非标准 envsubst。
+# =============================================================================
+
+ragflow:
+  host: '${RAGFLOW_HOST:-0.0.0.0}'
+  http_port: 9380
+admin:
+  host: '${RAGFLOW_HOST:-0.0.0.0}'
+  http_port: 9381
+
+# --- PostgreSQL (ACTIVE — 我们的部署使用 PG) ---
+postgres:
+  name: '${POSTGRES_DBNAME:-rag_flow}'
+  user: '${POSTGRES_USER:-rag_flow}'
+  password: '${POSTGRES_PASSWORD:-infini_rag_flow}'
+  host: '${POSTGRES_HOST:-ragflow-dev-postgres}'
+  port: ${POSTGRES_PORT:-5432}
+  max_connections: 100
+  stale_timeout: 30
+
+# --- MySQL (COMMENTED OUT — 上游默认, 我们不使用) ---
+# mysql:
+#   name: '${MYSQL_DBNAME:-rag_flow}'
+#   user: '${MYSQL_USER:-root}'
+#   password: '${MYSQL_PASSWORD:-infini_rag_flow}'
+#   host: '${MYSQL_HOST:-mysql}'
+#   port: ${MYSQL_PORT:-3306}
+#   max_connections: 900
+#   stale_timeout: 300
+#   max_allowed_packet: ${MYSQL_MAX_PACKET:-1073741824}
+
+# --- MinIO ---
+minio:
+  user: '${MINIO_USER:-rag_flow}'
+  password: '${MINIO_PASSWORD:-infini_rag_flow}'
+  host: '${MINIO_HOST:-ragflow-dev-minio}:${MINIO_PORT:-9000}'
+
+# --- Elasticsearch ---
+es:
+  hosts: 'http://${ES_HOST:-ragflow-dev-elasticsearch}:${ES_PORT:-9200}'
+  username: '${ES_USER:-elastic}'
+  password: '${ELASTIC_PASSWORD:-infini_rag_flow}'
+
+# --- Redis (Valkey) ---
+redis:
+  db: 1
+  username: '${REDIS_USERNAME:-}'
+  password: '${REDIS_PASSWORD:-infini_rag_flow}'
+  host: '${REDIS_HOST:-ragflow-dev-redis}:${REDIS_PORT:-6379}'

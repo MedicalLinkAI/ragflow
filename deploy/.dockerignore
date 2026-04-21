@@ -1,0 +1,16 @@
+# RAGflow deploy build context — exclude sensitive and unnecessary files
+.env
+.env.*
+*.sh
+*.md
+*.yml
+*.yaml
+apps.yml
+data/
+tests/
+__pycache__/
+.git/
+
+# Keep only files needed by Dockerfile.web
+!nginx/
+!Dockerfile.web

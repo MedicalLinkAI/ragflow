@@ -1,0 +1,25 @@
+# =============================================================================
+# RAGflow Web — 从主镜像提取前端产物的轻量 nginx 镜像
+# =============================================================================
+ARG RAGFLOW_IMAGE=ragflow:dev
+
+FROM ${RAGFLOW_IMAGE} AS source
+
+FROM nginx:1.25.4-alpine
+
+# 从 RAGflow 主镜像中复制前端构建产物
+COPY --from=source /ragflow/web/dist /usr/share/nginx/html
+
+# 非 root 运行 — nginx alpine 支持
+RUN chown -R 1000:1000 /usr/share/nginx/html && \
+    chown -R 1000:1000 /var/cache/nginx && \
+    chown -R 1000:1000 /var/log/nginx && \
+    touch /var/run/nginx.pid && \
+    chown 1000:1000 /var/run/nginx.pid
+
+# nginx config 由 docker-compose.yml 挂载
+EXPOSE 80
+
+USER 1000
+
+CMD ["nginx", "-g", "daemon off;"]

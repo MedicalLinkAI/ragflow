@@ -1,0 +1,37 @@
+# =============================================================================
+# RAGflow 应用清单 — 9-field schema
+# =============================================================================
+# 每个 app 对应 docker-compose.yml 中的一个 service。
+# 供部署脚本 / CI / 运维面板读取。
+# =============================================================================
+
+apps:
+  - app_id: ragflow-api
+    compose_service: ragflow-api
+    default_host_ports: [19380]
+    health_target: "http://localhost:${RAGFLOW_API_HOST_PORT:-19380}/v1/system/healthz"
+    depends_on_app_ids: []
+    exposure_class: internal
+    required_env_groups: [elasticsearch, postgres, redis, minio]
+    secret_inputs: [ELASTIC_PASSWORD, POSTGRES_PASSWORD, REDIS_PASSWORD, MINIO_PASSWORD]
+    supported_actions: [build, deploy, logs, status]
+
+  - app_id: ragflow-web
+    compose_service: ragflow-web
+    default_host_ports: [18080]
+    health_target: "http://localhost:${RAGFLOW_WEB_HOST_PORT:-18080}/"
+    depends_on_app_ids: [ragflow-api]
+    exposure_class: public
+    required_env_groups: []
+    secret_inputs: []
+    supported_actions: [build, deploy, logs, status]
+
+  - app_id: ragflow-worker
+    compose_service: ragflow-worker
+    default_host_ports: []
+    health_target: ""
+    depends_on_app_ids: [ragflow-api]
+    exposure_class: none
+    required_env_groups: [elasticsearch, postgres, redis, minio, worker]
+    secret_inputs: [ELASTIC_PASSWORD, POSTGRES_PASSWORD, REDIS_PASSWORD, MINIO_PASSWORD]
+    supported_actions: [deploy, logs, status]

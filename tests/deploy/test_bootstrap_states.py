@@ -95,3 +95,17 @@ class TestInfraComponentChecks:
             assert f'"{comp}"' in array_content, (
                 f"'{comp}' not in INFRA_COMPONENTS array"
             )
+
+
+class TestStorageBindingGuard:
+    """setup.sh should persist and validate local storage binding state."""
+
+    def test_state_file_contract_present(self, deploy_dir):
+        script = _read_setup_sh(deploy_dir)
+        assert 'STATE_FILE="$STATE_DIR/infra.${ENV}.json"' in script
+        assert 'validate_storage_binding' in script
+        assert 'persist_storage_binding_if_safe' in script
+        assert 'storage_binding_id' in script
+        assert 'validate_host_instance_conflicts' in script
+        assert '首次部署不会拦截' in script
+

@@ -116,6 +116,9 @@ check_prerequisites() {
 # ---- load_env ---------------------------------------------------------------
 COMPOSE_PROJECT_NAME=""
 DATA_ROOT=""
+STORAGE_BINDING_ID=""
+STATE_DIR=""
+STATE_FILE=""
 
 load_env() {
   local env_file="$SCRIPT_DIR/.env.${ENV}"
@@ -141,6 +144,11 @@ load_env() {
   if [[ "$DATA_ROOT" != /* ]]; then
     DATA_ROOT="$SCRIPT_DIR/$DATA_ROOT"
   fi
+  DATA_ROOT="$(normalize_path "$DATA_ROOT")"
+  STORAGE_BINDING_ID="$(build_bind_storage_binding_id "$DATA_ROOT")"
+
+  STATE_DIR="$SCRIPT_DIR/.state"
+  STATE_FILE="$STATE_DIR/infra.${ENV}.json"
 
   log_ok "已加载环境: ${ENV} (COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}, DATA_ROOT=${DATA_ROOT})"
 }
@@ -152,17 +160,201 @@ create_network() {
   log_ok "网络 medlinkai-shared 就绪"
 }
 
+normalize_path() {
+  python3 - "$1" <<'PY2'
+from pathlib import Path
+import sys
+
+print(Path(sys.argv[1]).resolve(strict=False))
+PY2
+}
+
+build_bind_storage_binding_id() {
+  local path="$1"
+  echo "bind:$(normalize_path "$path")"
+}
+
+read_container_storage_binding_id() {
+  local container_name="$1"
+  local destination="$2"
+  local mounts_json
+
+  mounts_json=$(docker inspect --format='{{json .Mounts}}' "$container_name" 2>/dev/null || true)
+  [[ -n "$mounts_json" ]] || return 1
+
+  python3 - "$destination" "$mounts_json" <<'PY2'
+import json
+import sys
+from pathlib import Path
+
+try:
+    mounts = json.loads(sys.argv[2])
+except json.JSONDecodeError:
+    raise SystemExit(1)
+
+destination = sys.argv[1]
+for mount in mounts:
+    if mount.get("Destination") != destination:
+        continue
+    mount_type = mount.get("Type", "")
+    if mount_type == "bind":
+        source = mount.get("Source", "")
+        print(f"bind:{Path(source).resolve(strict=False)}")
+        raise SystemExit(0)
+    if mount_type == "volume":
+        name = mount.get("Name", "")
+        print(f"volume:{name}")
+        raise SystemExit(0)
+    source = mount.get("Source") or mount.get("Name") or ""
+    print(f"{mount_type}:{source}")
+    raise SystemExit(0)
+
+raise SystemExit(1)
+PY2
+}
+
+managed_container_specs() {
+  cat <<EOF
+elasticsearch|${COMPOSE_PROJECT_NAME}-elasticsearch|/usr/share/elasticsearch/data|$(build_bind_storage_binding_id "$DATA_ROOT/esdata")
+postgres|${COMPOSE_PROJECT_NAME}-postgres|/var/lib/postgresql/data|$(build_bind_storage_binding_id "$DATA_ROOT/pgdata")
+redis|${COMPOSE_PROJECT_NAME}-redis|/data|$(build_bind_storage_binding_id "$DATA_ROOT/redisdata")
+minio|${COMPOSE_PROJECT_NAME}-minio|/data|$(build_bind_storage_binding_id "$DATA_ROOT/miniodata")
+EOF
+}
+
+validate_host_instance_conflicts() {
+  local component container_name destination expected_binding actual_binding
+
+  while IFS='|' read -r component container_name destination expected_binding; do
+    [[ -n "$container_name" ]] || continue
+
+    if ! docker inspect "$container_name" >/dev/null 2>&1; then
+      continue
+    fi
+
+    if ! actual_binding="$(read_container_storage_binding_id "$container_name" "$destination")"; then
+      log_error "检测到宿主机上已有容器 ${container_name}，但无法识别其挂载到 ${destination} 的存储绑定"
+      log_error "为避免把同一套实例切到另一套存储，已终止部署；请先检查该容器的挂载配置"
+      exit 1
+    fi
+
+    if [[ "$actual_binding" != "$expected_binding" ]]; then
+      log_error "检测到宿主机级实例冲突：容器 ${container_name} 已存在，但存储绑定不一致"
+      log_error "当前配置期望 ${component} 使用 ${expected_binding}，运行中容器实际使用 ${actual_binding}"
+      log_error "风险：同名容器和同宿主机端口会继续复用当前实例，却切到另一套存储，导致读写目标混乱"
+      log_error "处理建议：若要接管当前实例，请先停止已有实例并确认迁移；若要并行多套部署，请同时修改 COMPOSE_PROJECT_NAME、宿主机端口和内部服务引用后再重试"
+      exit 1
+    fi
+  done < <(managed_container_specs)
+
+  log_ok "宿主机级实例冲突校验通过"
+}
+
+ensure_state_dir() {
+  mkdir -p "$STATE_DIR"
+}
+
+read_state_field() {
+  local field="$1"
+
+  python3 - "$STATE_FILE" "$field" <<'PY2'
+import json
+import sys
+from pathlib import Path
+
+state_path = Path(sys.argv[1])
+field = sys.argv[2]
+if not state_path.exists():
+    raise SystemExit(0)
+with state_path.open() as fh:
+    data = json.load(fh)
+value = data.get(field, "")
+if value is None:
+    value = ""
+print(value)
+PY2
+}
+
+validate_storage_binding() {
+  if [[ ! -e "$STATE_FILE" ]]; then
+    log_info "未检测到存储绑定记录: ${STATE_FILE}（首次部署不会拦截，待健康检查通过后写入绑定）"
+    return 0
+  fi
+
+  if [[ ! -s "$STATE_FILE" ]]; then
+    log_warn "检测到空的存储绑定记录: ${STATE_FILE}（按首次部署处理，不执行防重拦截）"
+    return 0
+  fi
+
+  local stored_project stored_binding stored_data_root
+  if ! stored_project="$(read_state_field compose_project_name)"; then
+    log_error "存储绑定记录损坏，无法解析: ${STATE_FILE}"
+    log_error "为避免误绑定到另一套存储，已终止部署；请检查或删除该状态文件后重试"
+    exit 1
+  fi
+
+  stored_binding="$(read_state_field storage_binding_id || true)"
+  if [[ -z "$stored_binding" ]]; then
+    if ! stored_data_root="$(read_state_field data_root)"; then
+      log_error "存储绑定记录损坏，无法解析: ${STATE_FILE}"
+      log_error "为避免误绑定到另一套存储，已终止部署；请检查或删除该状态文件后重试"
+      exit 1
+    fi
+    if [[ -n "$stored_data_root" ]]; then
+      stored_binding="$(build_bind_storage_binding_id "$stored_data_root")"
+    fi
+  fi
+
+  if [[ "$stored_project" != "$COMPOSE_PROJECT_NAME" ]]; then
+    log_error "检测到存储绑定冲突：当前 COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}，历史绑定为 ${stored_project}"
+    log_error "风险：继续执行可能会悄悄起出第二套空白 PostgreSQL/Elasticsearch/Redis/MinIO，导致误以为历史数据丢失"
+    log_error "处理建议：确认是否切错了 .env / 项目名；若确实要迁移存储，请先人工确认并清理 ${STATE_FILE}"
+    exit 1
+  fi
+
+  if [[ -z "$stored_binding" ]]; then
+    log_error "存储绑定记录缺少 storage_binding_id/data_root: ${STATE_FILE}"
+    log_error "为避免误绑定到另一套存储，已终止部署；请检查或删除该状态文件后重试"
+    exit 1
+  fi
+
+  if [[ "$stored_binding" != "$STORAGE_BINDING_ID" ]]; then
+    log_error "检测到存储绑定冲突：当前 storage_binding_id=${STORAGE_BINDING_ID}，历史绑定为 ${stored_binding}"
+    log_error "风险：继续执行可能会绑定到另一套空目录并重新初始化存储引擎，造成历史数据被绕开"
+    log_error "处理建议：确认是否切错了数据目录；若确实要迁移存储，请先人工确认并清理 ${STATE_FILE}"
+    exit 1
+  fi
+
+  log_ok "存储绑定校验通过 (${COMPOSE_PROJECT_NAME} -> ${STORAGE_BINDING_ID})"
+}
+
 # ---- detect_existing --------------------------------------------------------
 FIRST_INIT=true
 
 detect_existing() {
-  if [[ -d "$DATA_ROOT/esdata" ]] && [[ -d "$DATA_ROOT/pgdata" ]]; then
+  local dirs=("esdata" "pgdata" "redisdata" "miniodata")
+  local existing=0
+  local dir
+
+  for dir in "${dirs[@]}"; do
+    [[ -d "$DATA_ROOT/$dir" ]] && existing=$((existing + 1))
+  done
+
+  if [[ $existing -eq 0 ]]; then
+    FIRST_INIT=true
+    log_info "未检测到数据目录（首次初始化）"
+    return 0
+  fi
+
+  if [[ $existing -eq ${#dirs[@]} ]]; then
     FIRST_INIT=false
     log_info "检测到已有数据目录: ${DATA_ROOT}（非首次初始化）"
-  else
-    FIRST_INIT=true
-    log_info "未检测到完整数据目录（首次初始化）"
+    return 0
   fi
+
+  log_error "检测到部分已存在的数据目录 (${existing}/${#dirs[@]})，拒绝继续初始化以避免覆盖历史数据"
+  log_error "请先检查 ${DATA_ROOT} 下的 esdata/pgdata/redisdata/miniodata 是否完整"
+  exit 1
 }
 
 # ---- prepare_data_dirs ------------------------------------------------------
@@ -209,6 +401,17 @@ UNHEALTHY_COMPONENTS=()
 # 4 infra containers to check
 INFRA_COMPONENTS=("elasticsearch" "postgres" "redis" "minio")
 
+array_contains() {
+  local needle="$1"
+  shift || true
+
+  local item
+  for item in "$@"; do
+    [[ "$item" == "$needle" ]] && return 0
+  done
+  return 1
+}
+
 wait_healthy() {
   local timeout=180
   local interval=5
@@ -217,18 +420,12 @@ wait_healthy() {
 
   log_info "等待基础设施容器健康（超时 ${timeout}s, 共 ${#INFRA_COMPONENTS[@]} 个组件）..."
 
-  # Track per-component health
-  declare -A comp_status
-  for comp in "${INFRA_COMPONENTS[@]}"; do
-    comp_status[$comp]="waiting"
-  done
-
   while [[ $elapsed -lt $timeout ]]; do
     all_healthy=true
+    local pending=()
 
     for comp in "${INFRA_COMPONENTS[@]}"; do
-      # Skip already healthy
-      if [[ "${comp_status[$comp]}" == "healthy" ]]; then
+      if array_contains "$comp" ${HEALTHY_COMPONENTS[@]+"${HEALTHY_COMPONENTS[@]}"}; then
         continue
       fi
 
@@ -237,10 +434,11 @@ wait_healthy() {
       status=$(docker inspect --format='{{.State.Health.Status}}' "$container_name" 2>/dev/null || echo "not_found")
 
       if [[ "$status" == "healthy" ]]; then
-        comp_status[$comp]="healthy"
         log_ok "${comp} 健康 (${elapsed}s)"
+        HEALTHY_COMPONENTS+=("$comp")
       else
         all_healthy=false
+        pending+=("$comp")
         if [[ "$status" == "not_found" ]]; then
           log_warn "容器 ${container_name} 不存在（${elapsed}s）"
         fi
@@ -252,12 +450,7 @@ wait_healthy() {
       break
     fi
 
-    # Progress summary (not every tick — every 30s)
-    if (( elapsed > 0 && elapsed % 30 == 0 )); then
-      local pending=()
-      for comp in "${INFRA_COMPONENTS[@]}"; do
-        [[ "${comp_status[$comp]}" != "healthy" ]] && pending+=("$comp")
-      done
+    if (( elapsed > 0 && elapsed % 30 == 0 )) && [[ ${#pending[@]} -gt 0 ]]; then
       log_info "等待中 (${elapsed}s/${timeout}s)... 未就绪: ${pending[*]}"
     fi
 
@@ -265,12 +458,8 @@ wait_healthy() {
     elapsed=$((elapsed + interval))
   done
 
-  # Classify final state
   for comp in "${INFRA_COMPONENTS[@]}"; do
-    if [[ "${comp_status[$comp]}" == "healthy" ]]; then
-      HEALTHY_COMPONENTS+=("$comp")
-    else
-      # Final check after timeout
+    if ! array_contains "$comp" ${HEALTHY_COMPONENTS[@]+"${HEALTHY_COMPONENTS[@]}"}; then
       local container_name="${COMPOSE_PROJECT_NAME}-${comp}"
       local final_status
       final_status=$(docker inspect --format='{{.State.Health.Status}}' "$container_name" 2>/dev/null || echo "not_found")
@@ -285,6 +474,39 @@ wait_healthy() {
   done
 }
 
+persist_storage_binding_if_safe() {
+  local healthy_count unhealthy_count
+
+  set +u
+  healthy_count=${#HEALTHY_COMPONENTS[@]}
+  unhealthy_count=${#UNHEALTHY_COMPONENTS[@]}
+  set -u
+
+  if [[ $healthy_count -eq 0 || $unhealthy_count -gt 0 ]]; then
+    return 0
+  fi
+
+  python3 - "$STATE_FILE" "$ENV" "$COMPOSE_PROJECT_NAME" "$DATA_ROOT" "$STORAGE_BINDING_ID" <<'PY2'
+import json
+import sys
+from pathlib import Path
+
+state_path = Path(sys.argv[1])
+state_path.parent.mkdir(parents=True, exist_ok=True)
+payload = {
+    "env": sys.argv[2],
+    "compose_project_name": sys.argv[3],
+    "data_root": sys.argv[4],
+    "storage_binding_id": sys.argv[5],
+    "storage_kind": "bind",
+    "managed_components": ["elasticsearch", "postgres", "redis", "minio"],
+}
+state_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+PY2
+
+  log_ok "已记录存储绑定: ${STATE_FILE}"
+}
+
 # ---- output_status ----------------------------------------------------------
 output_status() {
   local timestamp
@@ -295,11 +517,17 @@ output_status() {
   fi
 
   local status exit_code
+  local healthy_count unhealthy_count
 
-  if [[ ${#UNHEALTHY_COMPONENTS[@]} -gt 0 && ${#HEALTHY_COMPONENTS[@]} -gt 0 ]]; then
+  set +u
+  healthy_count=${#HEALTHY_COMPONENTS[@]}
+  unhealthy_count=${#UNHEALTHY_COMPONENTS[@]}
+  set -u
+
+  if [[ $unhealthy_count -gt 0 && $healthy_count -gt 0 ]]; then
     status="repair-required"
     exit_code=2
-  elif [[ ${#UNHEALTHY_COMPONENTS[@]} -gt 0 ]]; then
+  elif [[ $unhealthy_count -gt 0 ]]; then
     status="failed"
     exit_code=1
   elif [[ "$FIRST_INIT" == true ]]; then
@@ -313,12 +541,12 @@ output_status() {
   # 构建 components JSON
   local components="{"
   local first=true
-  for comp in "${HEALTHY_COMPONENTS[@]}"; do
+  for comp in ${HEALTHY_COMPONENTS[@]+"${HEALTHY_COMPONENTS[@]}"}; do
     [[ "$first" == true ]] || components+=","
     components+="\"${comp}\":\"healthy\""
     first=false
   done
-  for comp in "${UNHEALTHY_COMPONENTS[@]}"; do
+  for comp in ${UNHEALTHY_COMPONENTS[@]+"${UNHEALTHY_COMPONENTS[@]}"}; do
     [[ "$first" == true ]] || components+=","
     components+="\"${comp}\":\"unhealthy\""
     first=false
@@ -361,11 +589,15 @@ main() {
   parse_args "$@"
   check_prerequisites
   load_env
+  ensure_state_dir
+  validate_storage_binding
+  validate_host_instance_conflicts
   create_network
   detect_existing
   prepare_data_dirs
   start_infra
   wait_healthy
+  persist_storage_binding_if_safe
   output_status
 }
 

@@ -14,6 +14,7 @@
 
 x-ragflow-env: &ragflow-env
   RAGFLOW_ENV: "${DEPLOY_ENV:-dev}"
+  RAGFLOW_CONF: "service_conf.yaml"
   DB_TYPE: "${DB_TYPE:-postgres}"
   WS: "1"
   API_PROXY_SCHEME: "${API_PROXY_SCHEME:-python}"
@@ -152,16 +153,20 @@ services:
   # ---------------------------------------------------------------------------
   ragflow-api:
     profiles: ["api"]
-    image: ${RAGFLOW_IMAGE:-registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0}
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEED_MIRROR: "${NEED_MIRROR:-0}"
+    image: ${RAGFLOW_IMAGE:-ragflow:dev}
     container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-api
-    command: ["/ragflow/docker/entrypoint.sh", "--disable-taskexecutor"]
+    command: ["--disable-taskexecutor"]
     environment:
       <<: *ragflow-env
     ports:
       - "${RAGFLOW_API_HOST_PORT:-19380}:9380"
     volumes:
       - ./service_conf.yaml.template:/ragflow/conf/service_conf.yaml.template
-      - ./nginx/ragflow.conf:/etc/nginx/conf.d/ragflow.conf:ro
     depends_on:
       ragflow-elasticsearch:
         condition: service_healthy
@@ -190,7 +195,7 @@ services:
       context: .
       dockerfile: Dockerfile.web
       args:
-        RAGFLOW_IMAGE: ${RAGFLOW_IMAGE:-registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0}
+        RAGFLOW_IMAGE: ${RAGFLOW_IMAGE:-ragflow:dev}
     image: ragflow-web:${RAGFLOW_WEB_IMAGE_TAG:-latest}
     container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-web
     ports:
@@ -216,9 +221,14 @@ services:
   # ---------------------------------------------------------------------------
   ragflow-worker:
     profiles: ["worker"]
-    image: ${RAGFLOW_IMAGE:-registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0}
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEED_MIRROR: "${NEED_MIRROR:-0}"
+    image: ${RAGFLOW_IMAGE:-ragflow:dev}
     container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-worker
-    command: ["/ragflow/docker/entrypoint.sh", "--disable-webserver"]
+    command: ["--disable-webserver"]
     environment:
       <<: [*ragflow-env, *worker-env]
     volumes:

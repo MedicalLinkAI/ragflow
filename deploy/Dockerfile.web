@@ -1,7 +1,7 @@
 # =============================================================================
 # RAGflow Web — 从主镜像提取前端产物的轻量 nginx 镜像
 # =============================================================================
-ARG RAGFLOW_IMAGE=registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0
+ARG RAGFLOW_IMAGE=ragflow:dev
 
 FROM ${RAGFLOW_IMAGE} AS source
 

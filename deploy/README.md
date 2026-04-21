@@ -109,7 +109,7 @@ deploy/
 
 | 配置项 | 说明 | 示例值 |
 |--------|------|--------|
-| `RAGFLOW_IMAGE` | RAGflow 主镜像（API 和 Worker 共享） | `registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0` |
+| `RAGFLOW_IMAGE` | RAGflow 主镜像标签（源码构建，API 和 Worker 共享） | `ragflow:dev` |
 | `DB_TYPE` | 数据库类型 | `postgres`（⚠️ **必须显式设置**，RAGflow 默认 MySQL） |
 | `HF_ENDPOINT` | HuggingFace 镜像源（国内加速） | `https://hf-mirror.com` |
 | `DATA_ROOT` | 基础设施数据 bind mount 根目录 | `./data` |
@@ -354,15 +354,16 @@ deploy/deploy.sh --status --env prod
 
 ## 常见问题
 
-### Q: 首次拉取镜像非常慢
+### Q: 首次构建镜像非常慢
 
-RAGflow 主镜像（`RAGFLOW_IMAGE`）约 5 GB，首次拉取可能需要 10-30 分钟。建议：
+RAGflow 从源码构建，首次构建需下载 `infiniflow/ragflow_deps:latest` 依赖镜像（ML 模型、工具包等），以及安装 Python 和 npm 依赖。建议：
 
-1. 使用阿里云镜像源（`.env.example` 中已配置）：
+1. 确保网络畅通（构建过程需从 Docker Hub、PyPI、npm registry 下载依赖）
+2. 国内环境可设置 `NEED_MIRROR=1`（启用清华/阿里镜像源加速）：
    ```
-   RAGFLOW_IMAGE=registry.cn-hangzhou.aliyuncs.com/infiniflow/ragflow:v0.24.0
+   NEED_MIRROR=1
    ```
-2. 确保网络稳定，避免拉取中断
+3. 后续增量构建会利用 Docker 层缓存，速度显著加快
 
 ### Q: Elasticsearch 启动失败 / 权限问题
 

@@ -8,7 +8,7 @@
 #   --branch <name> 构建前切换并更新分支（要求工作区干净）
 #   --help          显示帮助信息
 #
-# ragflow-api 使用预构建的 RAGFLOW_IMAGE（~5GB），脚本负责拉取验证。
+# ragflow-api 从仓库根 Dockerfile 源码构建（首次需下载 ragflow_deps 依赖镜像）。
 # ragflow-web 从主镜像提取前端产物构建轻量 nginx 镜像。
 # ragflow-worker 与 ragflow-api 共享镜像，无需单独构建。
 #
@@ -40,8 +40,8 @@ RAGflow 应用构建脚本
   deploy/build.sh <app-id> [--env <name>] [--branch <name>] [--help]
 
 应用 ID：
-  ragflow-api       API 服务（拉取预构建的 RAGFLOW_IMAGE，~5GB）
-  ragflow-web       前端应用（从主镜像提取的轻量 nginx 镜像）
+  ragflow-api       API 服务（从仓库根 Dockerfile 源码构建）
+  ragflow-web       前端应用（从主镜像提取前端产物的轻量 nginx 镜像）
   ragflow-worker    Worker 服务（与 ragflow-api 共享镜像，无需单独构建）
 
 选项：
@@ -50,9 +50,9 @@ RAGflow 应用构建脚本
   --help, -h         显示此帮助信息
 
 示例：
-  deploy/build.sh ragflow-api                            # 拉取主镜像（dev 环境）
+  deploy/build.sh ragflow-api                            # 源码构建主镜像（dev 环境）
   deploy/build.sh ragflow-web --env prod                 # 构建 web（prod 环境）
-  deploy/build.sh ragflow-api --branch medlink-dev       # 切到分支后拉取
+  deploy/build.sh ragflow-api --branch medlink-dev       # 切到分支后源码构建
 
 输出：
   最后一行为机器可读 JSON：
@@ -200,18 +200,16 @@ verify_template() {
   log_ok "service_conf.yaml.template 已验证"
 }
 
-# ---- build_api (pull pre-built image) ----------------------------------------
+# ---- build_api (source build from Dockerfile) --------------------------------
 build_api() {
-  log_warn "RAGflow 主镜像较大（~5GB），拉取可能需要较长时间..."
-  log_info "镜像: ${RAGFLOW_IMAGE}"
+  log_info "从源码构建 RAGflow 主镜像（首次构建需下载依赖，可能较慢）..."
+  log_info "镜像标签: ${RAGFLOW_IMAGE}"
 
-  if docker image inspect "${RAGFLOW_IMAGE}" &>/dev/null; then
-    log_ok "镜像已存在本地: ${RAGFLOW_IMAGE}"
-  else
-    log_info "开始拉取镜像: ${RAGFLOW_IMAGE}"
-    docker pull "${RAGFLOW_IMAGE}"
-    log_ok "镜像拉取完成: ${RAGFLOW_IMAGE}"
-  fi
+  local compose_cmd="docker compose -f $SCRIPT_DIR/docker-compose.yml --env-file $SCRIPT_DIR/.env.${ENV}"
+
+  log_info "开始构建镜像: ragflow-api..."
+  $compose_cmd build ragflow-api
+  log_ok "镜像构建完成: ${RAGFLOW_IMAGE}"
 }
 
 # ---- build_web (docker compose build) ----------------------------------------
@@ -226,7 +224,7 @@ build_web() {
 
   local compose_cmd="docker compose -f $SCRIPT_DIR/docker-compose.yml --env-file $SCRIPT_DIR/.env.${ENV}"
 
-  log_info "构建镜像: ragflow-web..."
+  log_info "构建镜像: ragflow-web（从主镜像提取前端产物 + nginx）..."
   $compose_cmd build ragflow-web
   log_ok "镜像构建完成"
 }
@@ -240,9 +238,9 @@ tag_image() {
 
   case "$APP_ID" in
     ragflow-api)
-      # Upstream pre-built image — do not retag; report directly
-      IMAGE_NAME="${RAGFLOW_IMAGE}"
-      log_ok "镜像就绪: ${IMAGE_NAME}"
+      IMAGE_NAME="${RAGFLOW_IMAGE%%:*}"
+      docker tag "${RAGFLOW_IMAGE}" "${IMAGE_NAME}:${IMAGE_TAG}"
+      log_ok "镜像已标记: ${IMAGE_NAME}:${IMAGE_TAG}"
       ;;
     ragflow-web)
       IMAGE_NAME="ragflow-web"
@@ -260,8 +258,9 @@ output_result() {
   case "$APP_ID" in
     ragflow-api)
       log_info "镜像: ${RAGFLOW_IMAGE}"
+      log_info "标签: ${IMAGE_NAME}:${IMAGE_TAG}"
       echo ""
-      echo "{\"app_id\":\"${APP_ID}\",\"image\":\"${RAGFLOW_IMAGE}\",\"status\":\"success\"}"
+      echo "{\"app_id\":\"${APP_ID}\",\"image\":\"${IMAGE_NAME}:${IMAGE_TAG}\",\"status\":\"success\"}"
       ;;
     ragflow-web)
       log_info "镜像: ${IMAGE_NAME}:latest"

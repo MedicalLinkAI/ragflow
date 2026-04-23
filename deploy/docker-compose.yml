@@ -196,7 +196,7 @@ services:
       dockerfile: Dockerfile.web
       args:
         RAGFLOW_IMAGE: ${RAGFLOW_IMAGE:-ragflow:dev}
-    image: ragflow-web:${RAGFLOW_WEB_IMAGE_TAG:-latest}
+    image: ${RAGFLOW_WEB_IMAGE:-ragflow-web:latest}
     container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-web
     ports:
       - "${RAGFLOW_WEB_HOST_PORT:-18080}:80"

@@ -139,6 +139,7 @@ check_prerequisites() {
 # ---- load_env ---------------------------------------------------------------
 COMPOSE_PROJECT_NAME=""
 RAGFLOW_IMAGE=""
+RAGFLOW_WEB_IMAGE=""
 NEED_MIRROR="0"
 
 load_env() {
@@ -163,6 +164,10 @@ load_env() {
     exit 1
   fi
   export RAGFLOW_IMAGE
+
+  RAGFLOW_WEB_IMAGE=$(grep -E '^RAGFLOW_WEB_IMAGE=' "$env_file" | head -1 | cut -d'=' -f2- || true)
+  RAGFLOW_WEB_IMAGE="${RAGFLOW_WEB_IMAGE:-ragflow-web:latest}"
+  export RAGFLOW_WEB_IMAGE
 
   NEED_MIRROR=$(grep -E '^NEED_MIRROR=' "$env_file" | head -1 | cut -d'=' -f2- || echo "0")
   NEED_MIRROR="${NEED_MIRROR:-0}"
@@ -225,7 +230,7 @@ build_web() {
   log_ok "基础镜像就绪: ${RAGFLOW_IMAGE}"
 
   log_info "构建镜像: ragflow-web（从主镜像提取前端产物 + nginx）..."
-  docker build     -f "$SCRIPT_DIR/Dockerfile.web"     -t "ragflow-web:latest"     --build-arg RAGFLOW_IMAGE="$RAGFLOW_IMAGE"     "$SCRIPT_DIR"
+  docker build     -f "$SCRIPT_DIR/Dockerfile.web"     -t "$RAGFLOW_WEB_IMAGE"     --build-arg RAGFLOW_IMAGE="$RAGFLOW_IMAGE"     "$SCRIPT_DIR"
   log_ok "镜像构建完成"
 }
 
@@ -243,8 +248,8 @@ tag_image() {
       log_ok "镜像已标记: ${IMAGE_NAME}:${IMAGE_TAG}"
       ;;
     ragflow-web)
-      IMAGE_NAME="ragflow-web"
-      docker tag "${IMAGE_NAME}:latest" "${IMAGE_NAME}:${IMAGE_TAG}"
+      IMAGE_NAME="${RAGFLOW_WEB_IMAGE%%:*}"
+      docker tag "${RAGFLOW_WEB_IMAGE}" "${IMAGE_NAME}:${IMAGE_TAG}"
       log_ok "镜像已标记: ${IMAGE_NAME}:${IMAGE_TAG}"
       ;;
   esac

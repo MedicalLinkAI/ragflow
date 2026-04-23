@@ -144,6 +144,7 @@ parse_args() {
 # ---- load_env ---------------------------------------------------------------
 COMPOSE_PROJECT_NAME=""
 RAGFLOW_IMAGE=""
+RAGFLOW_WEB_IMAGE=""
 RAGFLOW_API_HOST_PORT=""
 RAGFLOW_WEB_HOST_PORT=""
 POSTGRES_USER=""
@@ -200,6 +201,10 @@ load_env() {
     exit 1
   fi
   export RAGFLOW_IMAGE
+
+  RAGFLOW_WEB_IMAGE=$(grep -E '^RAGFLOW_WEB_IMAGE=' "$env_file" | head -1 | cut -d'=' -f2- || true)
+  RAGFLOW_WEB_IMAGE="${RAGFLOW_WEB_IMAGE:-ragflow-web:latest}"
+  export RAGFLOW_WEB_IMAGE
 
   RAGFLOW_API_HOST_PORT=$(grep -E '^RAGFLOW_API_HOST_PORT=' "$env_file" | head -1 | cut -d'=' -f2- || echo "19380")
   RAGFLOW_WEB_HOST_PORT=$(grep -E '^RAGFLOW_WEB_HOST_PORT=' "$env_file" | head -1 | cut -d'=' -f2- || echo "18080")
@@ -424,14 +429,14 @@ retag_image() {
       log_ok "RAGFLOW_IMAGE 已设置为: ${IMAGE_TAG}"
       ;;
     ragflow-web)
-      # Standard retag: <tag> → :latest
-      if ! docker image inspect "ragflow-web:${IMAGE_TAG}" &>/dev/null; then
-        log_error "镜像不存在: ragflow-web:${IMAGE_TAG}"
+      local web_repo="${RAGFLOW_WEB_IMAGE%%:*}"
+      if ! docker image inspect "${web_repo}:${IMAGE_TAG}" &>/dev/null; then
+        log_error "镜像不存在: ${web_repo}:${IMAGE_TAG}"
         log_error "请先运行 deploy/build.sh ragflow-web 构建镜像"
         exit 1
       fi
-      log_info "切换镜像: ragflow-web:${IMAGE_TAG} → ragflow-web:latest"
-      docker tag "ragflow-web:${IMAGE_TAG}" "ragflow-web:latest"
+      log_info "切换镜像: ${web_repo}:${IMAGE_TAG} → ${RAGFLOW_WEB_IMAGE}"
+      docker tag "${web_repo}:${IMAGE_TAG}" "${RAGFLOW_WEB_IMAGE}"
       log_ok "镜像标签已更新"
       ;;
   esac

@@ -116,6 +116,7 @@ deploy/
 | 配置项 | 说明 | 示例值 |
 |--------|------|--------|
 | `RAGFLOW_IMAGE` | RAGflow 主镜像标签（源码构建，API 和 Worker 共享） | `ragflow:dev` |
+| `RAGFLOW_WEB_IMAGE` | RAGflow Web 镜像标签（建议按环境隔离） | `ragflow-web:latest` |
 | `DB_TYPE` | 数据库类型 | `postgres`（⚠️ **必须显式设置**，RAGflow 默认 MySQL） |
 | `HF_ENDPOINT` | HuggingFace 镜像源（国内加速） | `https://hf-mirror.com` |
 | `SYNC_CALLBACK_URL` | 首次导入基础 SQL 时写入的 MedLinkAI 回调地址 | `http://medlinkai-dev-callback:8000/api/v1/sync/chunks` |
@@ -173,7 +174,7 @@ RAGflow 拆分为三个应用服务，分别独立部署：
 |------|------|---------|------|
 | **ragflow-api** | `RAGFLOW_IMAGE` | `entrypoint.sh --disable-taskexecutor` | 运行 ragflow_server + 内置 nginx，不启动 task_executor |
 | **ragflow-worker** | `RAGFLOW_IMAGE` | `entrypoint.sh --disable-webserver` | 仅运行 task_executor，不启动 web 服务 |
-| **ragflow-web** | `ragflow-web:latest`（自行构建） | `nginx -g 'daemon off;'` | 从 `RAGFLOW_IMAGE` 提取前端产物，轻量 nginx 提供静态文件并反向代理到 ragflow-api |
+| **ragflow-web** | `RAGFLOW_WEB_IMAGE`（自行构建） | `nginx -g 'daemon off;'` | 从 `RAGFLOW_IMAGE` 提取前端产物，轻量 nginx 提供静态文件并反向代理到 ragflow-api |
 
 > **Worker 与 API 共享同一主镜像（`RAGFLOW_IMAGE`）**，通过启动参数区分角色。
 
@@ -245,7 +246,7 @@ deploy/deploy.sh <app-id> [--env <name>] [--image <tag>]
 
 **行为说明：**
 
-- 不指定 `--image`：使用当前默认镜像（`ragflow-api` / `ragflow-worker` 使用 `.env.<env>` 中的 `RAGFLOW_IMAGE`；`ragflow-web` 使用 `ragflow-web:latest`）
+- 不指定 `--image`：使用当前默认镜像（`ragflow-api` / `ragflow-worker` 使用 `.env.<env>` 中的 `RAGFLOW_IMAGE`；`ragflow-web` 使用 `.env.<env>` 中的 `RAGFLOW_WEB_IMAGE`，默认 `ragflow-web:latest`）
 - 指定 `--image`：切换到明确指定的镜像后再执行部署
 - `deploy.sh` 底层执行 `docker compose up -d`，它是**幂等对账**而不是“强制重启”：
   - 容器不存在 → 创建并启动

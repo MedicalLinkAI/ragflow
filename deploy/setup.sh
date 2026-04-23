@@ -115,7 +115,10 @@ check_prerequisites() {
 
 # ---- load_env ---------------------------------------------------------------
 COMPOSE_PROJECT_NAME=""
-DATA_ROOT=""
+ES_VOLUME_NAME=""
+POSTGRES_VOLUME_NAME=""
+REDIS_VOLUME_NAME=""
+MINIO_VOLUME_NAME=""
 STORAGE_BINDING_ID=""
 STATE_DIR=""
 STATE_FILE=""
@@ -137,20 +140,16 @@ load_env() {
   fi
   export COMPOSE_PROJECT_NAME
 
-  # 提取 DATA_ROOT（默认 ./data）
-  DATA_ROOT=$(grep -E '^DATA_ROOT=' "$env_file" | head -1 | cut -d'=' -f2-)
-  DATA_ROOT="${DATA_ROOT:-./data}"
-  # 相对路径基于 SCRIPT_DIR 解析
-  if [[ "$DATA_ROOT" != /* ]]; then
-    DATA_ROOT="$SCRIPT_DIR/$DATA_ROOT"
-  fi
-  DATA_ROOT="$(normalize_path "$DATA_ROOT")"
-  STORAGE_BINDING_ID="$(build_bind_storage_binding_id "$DATA_ROOT")"
+  ES_VOLUME_NAME="${COMPOSE_PROJECT_NAME}_esdata"
+  POSTGRES_VOLUME_NAME="${COMPOSE_PROJECT_NAME}_pgdata"
+  REDIS_VOLUME_NAME="${COMPOSE_PROJECT_NAME}_redisdata"
+  MINIO_VOLUME_NAME="${COMPOSE_PROJECT_NAME}_miniodata"
+  STORAGE_BINDING_ID="$(build_volume_storage_binding_id "$ES_VOLUME_NAME" "$POSTGRES_VOLUME_NAME" "$REDIS_VOLUME_NAME" "$MINIO_VOLUME_NAME")"
 
   STATE_DIR="$SCRIPT_DIR/.state"
   STATE_FILE="$STATE_DIR/infra.${ENV}.json"
 
-  log_ok "已加载环境: ${ENV} (COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}, DATA_ROOT=${DATA_ROOT})"
+  log_ok "已加载环境: ${ENV} (COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}, volumes=${ES_VOLUME_NAME},${POSTGRES_VOLUME_NAME},${REDIS_VOLUME_NAME},${MINIO_VOLUME_NAME})"
 }
 
 # ---- create_network ---------------------------------------------------------
@@ -172,6 +171,14 @@ PY2
 build_bind_storage_binding_id() {
   local path="$1"
   echo "bind:$(normalize_path "$path")"
+}
+
+build_volume_storage_binding_id() {
+  local es_volume="$1"
+  local pg_volume="$2"
+  local redis_volume="$3"
+  local minio_volume="$4"
+  echo "volumes:${es_volume},${pg_volume},${redis_volume},${minio_volume}"
 }
 
 read_container_storage_binding_id() {
@@ -215,10 +222,10 @@ PY2
 
 managed_container_specs() {
   cat <<EOF
-elasticsearch|${COMPOSE_PROJECT_NAME}-elasticsearch|/usr/share/elasticsearch/data|$(build_bind_storage_binding_id "$DATA_ROOT/esdata")
-postgres|${COMPOSE_PROJECT_NAME}-postgres|/var/lib/postgresql/data|$(build_bind_storage_binding_id "$DATA_ROOT/pgdata")
-redis|${COMPOSE_PROJECT_NAME}-redis|/data|$(build_bind_storage_binding_id "$DATA_ROOT/redisdata")
-minio|${COMPOSE_PROJECT_NAME}-minio|/data|$(build_bind_storage_binding_id "$DATA_ROOT/miniodata")
+elasticsearch|${COMPOSE_PROJECT_NAME}-elasticsearch|/usr/share/elasticsearch/data|volume:${ES_VOLUME_NAME}
+postgres|${COMPOSE_PROJECT_NAME}-postgres|/var/lib/postgresql/data|volume:${POSTGRES_VOLUME_NAME}
+redis|${COMPOSE_PROJECT_NAME}-redis|/data|volume:${REDIS_VOLUME_NAME}
+minio|${COMPOSE_PROJECT_NAME}-minio|/data|volume:${MINIO_VOLUME_NAME}
 EOF
 }
 
@@ -331,55 +338,43 @@ validate_storage_binding() {
 # ---- detect_existing --------------------------------------------------------
 FIRST_INIT=true
 
-detect_existing() {
-  local dirs=("esdata" "pgdata" "redisdata" "miniodata")
-  local existing=0
-  local dir
+volume_exists() {
+  local volume_name="$1"
+  docker volume inspect "$volume_name" >/dev/null 2>&1
+}
 
-  for dir in "${dirs[@]}"; do
-    [[ -d "$DATA_ROOT/$dir" ]] && existing=$((existing + 1))
+detect_existing() {
+  local volumes=("$ES_VOLUME_NAME" "$POSTGRES_VOLUME_NAME" "$REDIS_VOLUME_NAME" "$MINIO_VOLUME_NAME")
+  local existing=0
+  local volume_name
+
+  for volume_name in "${volumes[@]}"; do
+    if volume_exists "$volume_name"; then
+      existing=$((existing + 1))
+    fi
   done
 
   if [[ $existing -eq 0 ]]; then
     FIRST_INIT=true
-    log_info "未检测到数据目录（首次初始化）"
+    log_info "未检测到状态卷（首次初始化）"
     return 0
   fi
 
-  if [[ $existing -eq ${#dirs[@]} ]]; then
+  if [[ $existing -eq ${#volumes[@]} ]]; then
     FIRST_INIT=false
-    log_info "检测到已有数据目录: ${DATA_ROOT}（非首次初始化）"
+    log_info "检测到已有状态卷（非首次初始化）: ${volumes[*]}"
     return 0
   fi
 
-  log_error "检测到部分已存在的数据目录 (${existing}/${#dirs[@]})，拒绝继续初始化以避免覆盖历史数据"
-  log_error "请先检查 ${DATA_ROOT} 下的 esdata/pgdata/redisdata/miniodata 是否完整"
+  log_error "检测到部分已存在的状态卷 (${existing}/${#volumes[@]})，拒绝继续初始化以避免混入新旧数据"
+  log_error "请先检查以下卷是否完整: ${volumes[*]}"
   exit 1
 }
 
-# ---- prepare_data_dirs ------------------------------------------------------
-prepare_data_dirs() {
-  log_info "创建数据目录..."
-
-  local dirs=("esdata" "pgdata" "redisdata" "miniodata")
-  for d in "${dirs[@]}"; do
-    mkdir -p "$DATA_ROOT/$d"
-  done
-  log_ok "数据目录就绪: ${dirs[*]}"
-
-  # ES 数据目录需要 UID 1000 所有权（容器内 elasticsearch 用户）
-  log_info "设置 Elasticsearch 数据目录权限 (UID 1000)..."
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    # macOS: Docker Desktop 自动处理文件权限映射，无需 chown
-    log_ok "macOS 检测到，Docker Desktop 处理文件权限，跳过 chown"
-  else
-    if chown -R 1000:1000 "$DATA_ROOT/esdata" 2>/dev/null; then
-      log_ok "esdata 权限设置完成 (1000:1000)"
-    else
-      log_warn "无法设置 esdata 权限（需要 root 权限）"
-      log_warn "请手动执行: sudo chown -R 1000:1000 ${DATA_ROOT}/esdata"
-    fi
-  fi
+# ---- prepare_managed_volumes -------------------------------------------------
+prepare_managed_volumes() {
+  log_info "使用 Docker volumes 管理状态数据..."
+  log_ok "期望状态卷: ${ES_VOLUME_NAME} ${POSTGRES_VOLUME_NAME} ${REDIS_VOLUME_NAME} ${MINIO_VOLUME_NAME}"
 }
 
 # ---- start_infra ------------------------------------------------------------
@@ -479,7 +474,7 @@ persist_storage_binding_if_safe() {
     return 0
   fi
 
-  python3 - "$STATE_FILE" "$ENV" "$COMPOSE_PROJECT_NAME" "$DATA_ROOT" "$STORAGE_BINDING_ID" "$FIRST_INIT" <<'PY2'
+  python3 - "$STATE_FILE" "$ENV" "$COMPOSE_PROJECT_NAME" "$STORAGE_BINDING_ID" "$FIRST_INIT" "$ES_VOLUME_NAME" "$POSTGRES_VOLUME_NAME" "$REDIS_VOLUME_NAME" "$MINIO_VOLUME_NAME" <<'PY2'
 import json
 import sys
 from pathlib import Path
@@ -492,19 +487,24 @@ if state_path.exists() and state_path.stat().st_size > 0:
 payload = {
     "env": sys.argv[2],
     "compose_project_name": sys.argv[3],
-    "data_root": sys.argv[4],
-    "storage_binding_id": sys.argv[5],
-    "storage_kind": "bind",
+    "storage_binding_id": sys.argv[4],
+    "storage_kind": "volume",
+    "volume_names": {
+        "elasticsearch": sys.argv[6],
+        "postgres": sys.argv[7],
+        "redis": sys.argv[8],
+        "minio": sys.argv[9],
+    },
     "managed_components": ["elasticsearch", "postgres", "redis", "minio"],
     "base_sql_file": "deploy/sql/base.sql",
 }
 if "base_sql_pending" in existing:
     payload["base_sql_pending"] = existing["base_sql_pending"]
-elif sys.argv[6] == "true":
+elif sys.argv[5] == "true":
     payload["base_sql_pending"] = True
 if "base_sql_applied" in existing:
     payload["base_sql_applied"] = existing["base_sql_applied"]
-elif sys.argv[6] == "true":
+elif sys.argv[5] == "true":
     payload["base_sql_applied"] = False
 payload = {**existing, **payload}
 state_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
@@ -600,7 +600,7 @@ main() {
   validate_host_instance_conflicts
   create_network
   detect_existing
-  prepare_data_dirs
+  prepare_managed_volumes
   start_infra
   wait_healthy
   persist_storage_binding_if_safe

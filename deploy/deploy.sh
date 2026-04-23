@@ -148,6 +148,7 @@ RAGFLOW_API_HOST_PORT=""
 RAGFLOW_WEB_HOST_PORT=""
 POSTGRES_USER=""
 POSTGRES_DBNAME=""
+SYNC_CALLBACK_URL=""
 STATE_FILE=""
 BASE_SQL_FILE=""
 
@@ -210,11 +211,14 @@ load_env() {
   if ! POSTGRES_DBNAME="$(read_env_value "$env_file" POSTGRES_DBNAME)"; then
     POSTGRES_DBNAME=""
   fi
+  if ! SYNC_CALLBACK_URL="$(read_env_value "$env_file" SYNC_CALLBACK_URL)"; then
+    SYNC_CALLBACK_URL=""
+  fi
   STATE_FILE="$SCRIPT_DIR/.state/infra.${ENV}.json"
   BASE_SQL_FILE="$SCRIPT_DIR/sql/base.sql"
 
-  if [[ -z "$POSTGRES_USER" || -z "$POSTGRES_DBNAME" ]]; then
-    log_error "环境文件中未定义 POSTGRES_USER 或 POSTGRES_DBNAME"
+  if [[ -z "$POSTGRES_USER" || -z "$POSTGRES_DBNAME" || -z "$SYNC_CALLBACK_URL" ]]; then
+    log_error "环境文件中未定义 POSTGRES_USER、POSTGRES_DBNAME 或 SYNC_CALLBACK_URL"
     exit 1
   fi
 
@@ -276,17 +280,40 @@ database_has_base_sql_data() {
   docker exec "$container_name"     psql -U "$POSTGRES_USER" -d "$POSTGRES_DBNAME" -tAc     'SELECT EXISTS (SELECT 1 FROM "knowledgebase" LIMIT 1);'     2>/dev/null | tr -d '[:space:]'
 }
 
+render_base_sql_file() {
+  local rendered_file
+
+  mkdir -p "$SCRIPT_DIR/.state"
+  rendered_file="$(mktemp "$SCRIPT_DIR/.state/base.sql.${ENV}.XXXXXX.sql")"
+  python3 - "$BASE_SQL_FILE" "$rendered_file" "$SYNC_CALLBACK_URL" <<'PY2'
+from pathlib import Path
+import sys
+
+base_sql = Path(sys.argv[1]).read_text()
+rendered_path = Path(sys.argv[2])
+callback_url = sys.argv[3]
+placeholder = "${SYNC_CALLBACK_URL}"
+if placeholder not in base_sql:
+    raise SystemExit("base.sql missing ${SYNC_CALLBACK_URL} placeholder")
+rendered_path.write_text(base_sql.replace(placeholder, callback_url))
+PY2
+  printf '%s
+' "$rendered_file"
+}
+
 run_base_sql_if_needed() {
-  local base_sql_pending base_sql_applied container_name data_exists
+  local base_sql_pending base_sql_applied container_name data_exists rendered_base_sql
 
   container_name="$COMPOSE_PROJECT_NAME-postgres"
   data_exists="$(database_has_base_sql_data "$container_name" || true)"
 
   if [[ ! -e "$STATE_FILE" || ! -s "$STATE_FILE" ]]; then
     if [[ "$data_exists" == "t" || "$data_exists" == "true" ]]; then
-      update_base_sql_state true false
-      log_ok "检测到基础 SQL 哨兵数据已存在，已回写状态文件"
-      return 0
+      log_error "检测到数据库中已存在基础 SQL 哨兵数据，但状态文件缺失或为空: $STATE_FILE"
+      log_error "为避免回写不完整的 infra 状态，已停止应用部署；请先执行 deploy/setup.sh --env ${ENV} 恢复完整状态，再重新执行当前 deploy.sh 命令"
+      echo ""
+      echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_state_recovery_required"}'
+      exit 1
     fi
     log_error "未检测到基础 SQL 状态文件，且数据库中不存在基础 SQL 哨兵数据: $STATE_FILE"
     echo ""
@@ -333,12 +360,16 @@ run_base_sql_if_needed() {
     exit 1
   fi
 
+  rendered_base_sql="$(render_base_sql_file)"
+
   log_info "导入基础 SQL: $BASE_SQL_FILE"
-  if ! docker exec -i "$container_name" psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DBNAME" < "$BASE_SQL_FILE"; then
+  if ! docker exec -i "$container_name" psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DBNAME" < "$rendered_base_sql"; then
+    rm -f "$rendered_base_sql"
     echo ""
     echo '{"app_id":"ragflow-api","status":"failed","reason":"base_sql_import_failed"}'
     exit 1
   fi
+  rm -f "$rendered_base_sql"
 
   update_base_sql_state true false
   log_ok "已记录基础 SQL 初始化完成: $STATE_FILE"

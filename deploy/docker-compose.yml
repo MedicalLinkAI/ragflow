@@ -65,7 +65,7 @@ services:
     ports:
       - "${ES_HOST_PORT:-11200}:9200"
     volumes:
-      - ${DATA_ROOT:-./data}/esdata:/usr/share/elasticsearch/data
+      - ragflow_esdata:/usr/share/elasticsearch/data
     healthcheck:
       test: ["CMD-SHELL", "curl -sf -u elastic:${ELASTIC_PASSWORD:-infini_rag_flow} http://localhost:9200/_cluster/health || exit 1"]
       interval: 30s
@@ -90,7 +90,7 @@ services:
     ports:
       - "${POSTGRES_HOST_PORT:-15455}:5432"
     volumes:
-      - ${DATA_ROOT:-./data}/pgdata:/var/lib/postgresql/data
+      - ragflow_pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rag_flow}"]
       interval: 10s
@@ -112,7 +112,7 @@ services:
     ports:
       - "${REDIS_HOST_PORT:-16379}:6379"
     volumes:
-      - ${DATA_ROOT:-./data}/redisdata:/data
+      - ragflow_redisdata:/data
     healthcheck:
       test: ["CMD", "valkey-cli", "-a", "${REDIS_PASSWORD:-infini_rag_flow}", "ping"]
       interval: 10s
@@ -137,7 +137,7 @@ services:
       - "${MINIO_HOST_PORT:-19000}:9000"
       - "${MINIO_CONSOLE_HOST_PORT:-19001}:${MINIO_CONSOLE_PORT:-9001}"
     volumes:
-      - ${DATA_ROOT:-./data}/miniodata:/data
+      - ragflow_miniodata:/data
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:9000/minio/health/live || exit 1"]
       interval: 15s
@@ -249,3 +249,13 @@ services:
 networks:
   medlinkai-shared:
     external: true
+
+volumes:
+  ragflow_esdata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_esdata
+  ragflow_pgdata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_pgdata
+  ragflow_redisdata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_redisdata
+  ragflow_miniodata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_miniodata

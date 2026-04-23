@@ -33,6 +33,8 @@ deploy/deploy.sh ragflow-all --env dev
 
 首次 `ragflow-api` 健康启动后会自动执行 `deploy/sql/base.sql`，并在 `deploy/.state/infra.<env>.json` 中记录；后续重启 / 发版不会再次执行。
 
+> 迁移提示：如果你本地还保留旧版 bind-mount 部署写下的 `deploy/.state/infra.<env>.json`，切到 named volume 方案前需要先确认旧数据目录是否仍要保留；确认不用后，可备份或移走该 state 文件，再重新执行 `deploy/setup.sh --env <env>`。
+
 ---
 
 ## apps.yml 应用清单
@@ -116,7 +118,7 @@ deploy/
 | `RAGFLOW_IMAGE` | RAGflow 主镜像标签（源码构建，API 和 Worker 共享） | `ragflow:dev` |
 | `DB_TYPE` | 数据库类型 | `postgres`（⚠️ **必须显式设置**，RAGflow 默认 MySQL） |
 | `HF_ENDPOINT` | HuggingFace 镜像源（国内加速） | `https://hf-mirror.com` |
-| `DATA_ROOT` | 基础设施数据 bind mount 根目录 | `./data` |
+| `SYNC_CALLBACK_URL` | 首次导入基础 SQL 时写入的 MedLinkAI 回调地址 | `http://medlinkai-dev-callback:8000/api/v1/sync/chunks` |
 | `STACK_VERSION` | Elasticsearch 版本 | `8.11.3` |
 | `GPU_ENABLED` | 是否启用 GPU（Worker） | `false` |
 
@@ -124,6 +126,8 @@ deploy/
 
 - **`DB_TYPE=postgres`** — RAGflow 上游默认使用 MySQL，我们显式切换为 PostgreSQL。此项务必保持为 `postgres`。
 - **`service_conf.yaml.template`** — RAGflow 的 `entrypoint.sh` 会在启动时用环境变量渲染此模板。模板中的 postgres 段已激活、mysql 段已注释。
+- **命名卷初始化** — Elasticsearch / PostgreSQL / Redis / MinIO 使用 Docker named volumes；首次健康初始化成功后才会记录状态并执行一次基础 SQL。
+- **`SYNC_CALLBACK_URL`** — 仅在首次导入 `deploy/sql/base.sql` 时渲染进种子数据；同机容器化默认应指向共享 Docker 网络中的稳定服务名。
 - **密码安全** — 生产环境必须替换所有默认密码（`infini_rag_flow`）。生成方式：`openssl rand -hex 32`
 
 ---
@@ -248,6 +252,7 @@ deploy/deploy.sh <app-id> [--env <name>] [--image <tag>]
   - 容器已存在但停止 → 启动
   - 容器运行中且镜像 / 配置未变化 → 保持运行，不强制重启
   - 容器运行中且镜像 / 配置已变化 → Compose 负责重建 / 更新
+- 如果检测到数据库里已经有基础 seed 数据、但 `deploy/.state/infra.<env>.json` 丢失或为空，`deploy.sh` 会**显式失败**并要求先执行 `deploy/setup.sh --env <env>` 恢复完整 infra 状态；这一步是对现有 named volumes 做校验和状态回写，不会清空历史数据
 
 **示例：**
 

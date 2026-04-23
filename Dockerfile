@@ -19,16 +19,20 @@ RUN --mount=type=bind,from=infiniflow/ragflow_deps:latest,source=/huggingface.co
 # This is the only way to run python-tika without internet access. Without this set, the default is to check the tika version and pull latest every time from Apache.
 RUN --mount=type=bind,from=infiniflow/ragflow_deps:latest,source=/,target=/deps \
     cp -r /deps/nltk_data /root/ && \
-    cp /deps/tika-server-standard-3.3.0.jar /deps/tika-server-standard-3.3.0.jar.md5 /ragflow/ && \
+    TIKA_JAR="$(find /deps -maxdepth 1 -name 'tika-server-standard-*.jar' | sort | tail -n 1)" && \
+    TIKA_MD5="${TIKA_JAR}.md5" && \
+    test -n "$TIKA_JAR" && test -f "$TIKA_MD5" && \
+    cp "$TIKA_JAR" /ragflow/tika-server-standard.jar && \
+    cp "$TIKA_MD5" /ragflow/tika-server-standard.jar.md5 && \
     cp /deps/cl100k_base.tiktoken /ragflow/9b5ad71b2ce5302211f9c61530b329a4922fc6a4
 
-ENV TIKA_SERVER_JAR="file:///ragflow/tika-server-standard-3.3.0.jar"
+ENV TIKA_SERVER_JAR="file:///ragflow/tika-server-standard.jar"
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Setup apt
 # Python package and implicit dependencies:
 # opencv-python: libglib2.0-0 libglx-mesa0 libgl1
-# python-pptx:   default-jdk                              tika-server-standard-3.3.0.jar
+# python-pptx:   default-jdk                              tika-server-standard.jar
 # selenium:      libatk-bridge2.0-0                       chrome-linux64-121-0-6167-85
 # Building C extensions: libpython3-dev libgtk-4-1 libnss3 xdg-utils libgbm-dev
 RUN --mount=type=cache,id=ragflow_apt,target=/var/cache/apt,sharing=locked \

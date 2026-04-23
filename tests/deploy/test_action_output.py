@@ -66,6 +66,12 @@ class TestDockerfileRuntimeContract:
             'Docker runtime image must copy graphrag sources for task_executor'
         )
 
+    def test_runtime_image_uses_version_agnostic_tika_copy(self, deploy_dir):
+        dockerfile = (deploy_dir.parent / "Dockerfile").read_text()
+        assert "find /deps -maxdepth 1 -name 'tika-server-standard-*.jar'" in dockerfile
+        assert 'cp "$TIKA_JAR" /ragflow/tika-server-standard.jar' in dockerfile
+        assert 'ENV TIKA_SERVER_JAR="file:///ragflow/tika-server-standard.jar"' in dockerfile
+
 
 class TestDeployShJsonOutput:
     """deploy.sh must output machine-readable JSON."""

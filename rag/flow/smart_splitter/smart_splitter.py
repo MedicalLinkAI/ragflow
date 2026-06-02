@@ -193,7 +193,9 @@ class SmartSplitter(ProcessBase, LLM):
         ]
 
         self.callback(0.2, "Calling LLM for semantic splitting...")
-        llm_response = await self._generate_async(msg)
+        llm_response = await self._generate_async(
+            msg, response_format={"type": "json_object"}
+        )
         llm_response = strip_markdown_json_fence(llm_response)
 
         self.callback(0.5, "LLM responded. Parsing segments...")

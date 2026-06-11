@@ -226,8 +226,13 @@ export default defineConfig(({ mode }) => {
       assetsDir: 'assets',
       assetsInlineLimit: 4096,
       experimentalMinChunkSize: 30 * 1024,
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 2000,
+      // 优化构建性能
+      minify: 'esbuild', // 使用更快的 esbuild 压缩
+      reportCompressedSize: false, // 禁用压缩大小报告以加快构建
+      sourcemap: false, // 生产环境禁用 sourcemap
       rollupOptions: {
+        maxParallelFileOps: 2, // 限制并行文件操作，减少内存使用
         onwarn(warning, warn) {
           if (warning.code === 'EMPTY_BUNDLE') {
             return;

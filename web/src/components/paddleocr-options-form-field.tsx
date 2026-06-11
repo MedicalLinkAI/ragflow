@@ -6,7 +6,7 @@ import { buildOptions } from '@/utils/form';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-const algorithmOptions = buildOptions(['PaddleOCR-VL', 'PaddleOCR-VL-1.5']);
+const algorithmOptions = buildOptions(['PaddleOCR-VL', 'PaddleOCR-VL-1.5', 'PaddleOCR-VL-1.6']);
 
 export function PaddleOCROptionsFormField({
   namePrefix = 'parser_config',

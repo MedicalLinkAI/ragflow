@@ -712,6 +712,11 @@ async def run_dataflow(task: dict):
     elif chunks.get("html"):
         chunks = [{"text": [chunks["html"]]}]
 
+    # Validate chunks is a list of dicts, not strings
+    if chunks and isinstance(chunks, list) and len(chunks) > 0 and isinstance(chunks[0], str):
+        # Convert string list to dict list
+        chunks = [{"text": [chunk]} if isinstance(chunk, str) else chunk for chunk in chunks]
+
     keys = [k for o in chunks for k in list(o.keys())]
     if not any([re.match(r"q_[0-9]+_vec", k) for k in keys]):
         try:
@@ -802,6 +807,11 @@ async def run_dataflow(task: dict):
             )
             del ck["row_positions"]
 
+        # ── 新增：row_offset 直接透传到 ES（表头偏移） ──
+        if "row_offset" in ck:
+            ck["row_offset"] = int(ck["row_offset"])
+            logging.info(f"[DIAG-EXECUTOR] row_offset={ck['row_offset']}")
+        
         # ── 增强：position_line_map 直接透传到 ES（PaddleOCR 行映射） ──
         # 当 content 行数 != position 数时，前端用此字段精确映射 lineIdx → posIdx
         if "position_line_map" in ck:

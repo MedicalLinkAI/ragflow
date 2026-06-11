@@ -80,6 +80,36 @@ def _trim_table_rows(html_text: str, row_start: int, row_end: int) -> str:
 # ─── Default prompt ──────────────────────────────────────────────
 DEFAULT_SMART_SPLIT_PROMPT = ""  # Will be set via DSL sys_prompt
 
+# ─── bbox inference helpers ──────────────────────────────────────
+def _infer_bbox_end(b_start: int, seg_idx: int, segments: list, total: int) -> int:
+    """Dynamically infer bbox_end from the next segment's bbox_start."""
+    if seg_idx + 1 < len(segments):
+        next_seg = segments[seg_idx + 1]
+        ns = next_seg.get("bbox_start")
+        if isinstance(ns, str):
+            try:
+                ns = int(ns)
+            except (ValueError, TypeError):
+                ns = -1
+        if isinstance(ns, int) and ns > b_start:
+            return min(ns - 1, total - 1)
+    return total - 1
+
+
+def _infer_bbox_start(b_end: int, seg_idx: int, segments: list) -> int:
+    """Dynamically infer bbox_start from the previous segment's bbox_end."""
+    if seg_idx > 0:
+        prev_seg = segments[seg_idx - 1]
+        pe = prev_seg.get("bbox_end")
+        if isinstance(pe, str):
+            try:
+                pe = int(pe)
+            except (ValueError, TypeError):
+                pe = -1
+        if isinstance(pe, int) and 0 <= pe < b_end:
+            return pe + 1
+    return 0
+
 
 class SmartSplitterParam(ProcessParamBase, LLMParam):
     """SmartSplitter parameters — combines Splitter + LLM (Classify)."""
@@ -135,6 +165,7 @@ class SmartSplitter(ProcessBase, LLM):
         section_images = []
         # ── 增强：收集每个 bbox 的 row_positions（仅表格 bbox 有） ──
         section_row_positions = []
+        section_row_offsets = []  # ← 新增：收集 row_offset
         for o in json_result:
             pos_tag = o.get("position_tag", "")
             # Fallback: table/figure bboxes from Parser have positions but no position_tag.
@@ -148,6 +179,7 @@ class SmartSplitter(ProcessBase, LLM):
                          partial(settings.STORAGE_IMPL.get, tenant_id=self._canvas._tenant_id))
             )
             section_row_positions.append(o.get("row_positions"))  # ← 增强：透传 row_positions
+            section_row_offsets.append(o.get("row_offset", 0))  # ← 新增：透传 row_offset
 
         self.callback(0.1, f"Loaded {len(sections)} OCR bboxes.")
 
@@ -193,7 +225,8 @@ class SmartSplitter(ProcessBase, LLM):
         ]
 
         self.callback(0.2, "Calling LLM for semantic splitting...")
-        llm_response = await self._generate_async(msg)
+        # Enable JSON mode to force LLM to return valid JSON without reasoning text
+        llm_response = await self._generate_async(msg, response_format={"type": "json_object"})
         llm_response = strip_markdown_json_fence(llm_response)
 
         self.callback(0.5, "LLM responded. Parsing segments...")
@@ -227,170 +260,239 @@ class SmartSplitter(ProcessBase, LLM):
             if "bbox_start" in seg and "bbox_end" in seg:
                 b_start = seg.get("bbox_start")
                 b_end = seg.get("bbox_end")
-                
+
+                # 类型转换：如果是字符串，尝试转换为整数
+                if isinstance(b_start, str):
+                    try:
+                        b_start = int(b_start)
+                    except (ValueError, TypeError):
+                        b_start = -1
+                if isinstance(b_end, str):
+                    try:
+                        b_end = int(b_end)
+                    except (ValueError, TypeError):
+                        b_end = -1
+
                 # Validate bbox_id range
                 if not isinstance(b_start, int) or not isinstance(b_end, int):
                     logging.warning(f"[SmartSplitter] Segment {seg_idx} has non-integer bbox_id: start={b_start}, end={b_end}, fallback to first_line")
-                elif b_start < 0 or b_end >= len(sections) or b_start > b_end:
-                    logging.warning(f"[SmartSplitter] Segment {seg_idx} has invalid bbox_id range [{b_start}, {b_end}] (total {len(sections)} bboxes), fallback to first_line")
-                else:
-                    # ✅ Valid bbox_id range — direct slicing
-                    chunk_text_parts = []
-                    chunk_position_tags = []
-                    chunk_images = []
-                    
-                    # ── 增强：读取 LLM 返回的行范围（二级索引，可选） ──
-                    row_start = seg.get("row_start")
-                    row_end = seg.get("row_end")
-                    has_valid_row_range = (
-                        row_start is not None and row_end is not None
-                        and isinstance(row_start, int) and isinstance(row_end, int)
-                    )
-                    
-                    for i in range(b_start, b_end + 1):
-                        text, pos_tag = sections[i]
-                        clean = text.strip()
-                        if not clean:
-                            if pos_tag:
-                                chunk_position_tags.append(pos_tag)
-                            continue
-                        
-                        # ── 增强：表格 bbox + 有效行范围 → 按行裁剪 content ──
-                        if has_valid_row_range and "<tr>" in clean.lower() and section_row_positions[i]:
-                            trimmed = _trim_table_rows(clean, row_start, row_end)
-                            chunk_text_parts.append(trimmed)
-                        else:
-                            chunk_text_parts.append(clean)
-                        
+                elif b_start < 0 or b_end < 0 or b_end >= len(sections) or b_start > b_end:
+                    # ✨ 增强：bbox_id 无效时，尝试智能推断 bbox 范围
+                    first_line = seg.get("first_line", "").strip()
+                    doc_type = seg.get("type", "").strip()
+
+                    # 策略1：如果有 first_line，优先使用精确匹配
+                    if first_line:
+                        for i, (text, _) in enumerate(sections):
+                            if first_line in text or text.startswith(first_line[:20]):
+                                if b_start < 0:
+                                    b_start = i
+                                if b_end < 0:
+                                    b_end = _infer_bbox_end(i, seg_idx, segments, len(sections))
+                                logging.warning(
+                                    f"[SmartSplitter] Segment {seg_idx} type={doc_type} bbox_id invalid, "
+                                    f"matched first_line at bbox {i}, inferred range: [{b_start}, {b_end}]"
+                                )
+                                break
+
+                    # 策略2：如果b_start有效但b_end无效，或反之，尝试推断
+                    if b_start >= 0 and b_end < 0:
+                        # b_start有效，从下一个segment推断b_end
+                        b_end = _infer_bbox_end(b_start, seg_idx, segments, len(sections))
+                        logging.warning(
+                            f"[SmartSplitter] Segment {seg_idx} type={doc_type}, "
+                            f"bbox_start={b_start} valid but bbox_end=-1, inferred bbox_end={b_end}"
+                        )
+                    elif b_end >= 0 and b_start < 0:
+                        # b_end有效，从上一个segment反向推断b_start
+                        b_start = _infer_bbox_start(b_end, seg_idx, segments)
+                        logging.warning(
+                            f"[SmartSplitter] Segment {seg_idx} type={doc_type}, "
+                            f"bbox_end={b_end} valid but bbox_start=-1, inferred bbox_start={b_start}"
+                        )
+
+                    # 如果仍然无法修正，记录警告
+                    if b_start < 0 or b_end < 0:
+                        logging.warning(
+                            f"[SmartSplitter] Segment {seg_idx} type={doc_type} bbox_id invalid [{b_start}, {b_end}], "
+                            f"no match found, fallback to first_line path"
+                        )
+
+                # 再次验证修正后的范围
+                if not (0 <= b_start <= b_end < len(sections)):
+                    # 仍然无效，走 fallback
+                    continue
+
+                # ✅ Valid bbox_id range — direct slicing
+                chunk_text_parts = []
+                chunk_position_tags = []
+                chunk_images = []
+
+                # ── 增强：读取 LLM 返回的行范围（二级索引，可选） ──
+                row_start = seg.get("row_start")
+                row_end = seg.get("row_end")
+                has_valid_row_range = (
+                    row_start is not None and row_end is not None
+                    and isinstance(row_start, int) and isinstance(row_end, int)
+                )
+
+                for i in range(b_start, b_end + 1):
+                    text, pos_tag = sections[i]
+                    clean = text.strip()
+                    if not clean:
                         if pos_tag:
                             chunk_position_tags.append(pos_tag)
-                        if section_images[i] is not None:
-                            chunk_images.append(section_images[i].copy())
-                    
-                    chunk_text = "\n".join(chunk_text_parts)
-                    
-                    # Build position-tagged text
-                    tagged_parts = []
-                    for i in range(b_start, b_end + 1):
-                        text, pos_tag = sections[i]
-                        if text.strip():
-                            tagged_parts.append(f"{pos_tag}{text.strip()}")
-                    tagged_text = "\n".join(tagged_parts)
-                    
-                    # Extract positions
-                    positions = [
-                        [pos[0][-1], *pos[1:]]
-                        for pos in RAGFlowPdfParser.extract_positions(tagged_text)
-                    ]
-                    
-                    # ── 增强：将多行 OCR block 拆分为子位置 ──
-                    # V4 PaddleOCR 可能将多个物理行合并为一个 block，
-                    # 导致多行 content 共享同一个粗粒度 position。
-                    # 按文本长度比例分配 block 的 bbox 高度，使 positions 与 text_lines 1:1 对齐。
-                    # 原理：字符数越多的行在 PDF 中占据越多的物理垂直空间（自动换行），
-                    # 因此用字符数作为权重来分配高度，比等分更准确。
-                    expanded_positions = []
-                    expansion_applied = False
-                    for part_idx, part in enumerate(chunk_text_parts):
-                        sub_lines = part.split("\n")
-                        n_lines = len(sub_lines)
-                        if part_idx >= len(positions):
-                            pos_to_use = positions[-1] if positions else [1, 0, 0, 0, 0]
+                        continue
+
+                    # ── 增强：表格 bbox + 有效行范围 → 按行裁剪 content ──
+                    if has_valid_row_range and "<tr>" in clean.lower() and section_row_positions[i]:
+                        trimmed = _trim_table_rows(clean, row_start, row_end)
+                        chunk_text_parts.append(trimmed)
+                    else:
+                        chunk_text_parts.append(clean)
+
+                    if pos_tag:
+                        chunk_position_tags.append(pos_tag)
+                    if section_images[i] is not None:
+                        chunk_images.append(section_images[i].copy())
+
+                chunk_text = "\n".join(chunk_text_parts)
+
+                # Build position-tagged text
+                tagged_parts = []
+                for i in range(b_start, b_end + 1):
+                    text, pos_tag = sections[i]
+                    if text.strip():
+                        tagged_parts.append(f"{pos_tag}{text.strip()}")
+                tagged_text = "\n".join(tagged_parts)
+
+                # Extract positions
+                positions = [
+                    [pos[0][-1], *pos[1:]]
+                    for pos in RAGFlowPdfParser.extract_positions(tagged_text)
+                ]
+
+                # ── 增强：将多行 OCR block 拆分为子位置 ──
+                # V4 PaddleOCR 可能将多个物理行合并为一个 block，
+                # 导致多行 content 共享同一个粗粒度 position。
+                # 按文本长度比例分配 block 的 bbox 高度，使 positions 与 text_lines 1:1 对齐。
+                # 原理：字符数越多的行在 PDF 中占据越多的物理垂直空间（自动换行），
+                # 因此用字符数作为权重来分配高度，比等分更准确。
+                expanded_positions = []
+                expansion_applied = False
+                for part_idx, part in enumerate(chunk_text_parts):
+                    sub_lines = part.split("\n")
+                    n_lines = len(sub_lines)
+                    if part_idx >= len(positions):
+                        pos_to_use = positions[-1] if positions else [1, 0, 0, 0, 0]
+                        for _ in range(n_lines):
+                            expanded_positions.append(list(pos_to_use))
+                    elif n_lines <= 1:
+                        expanded_positions.append(positions[part_idx])
+                    else:
+                        orig = positions[part_idx]
+                        page, x0, x1, top, bottom = orig[0], orig[1], orig[2], orig[3], orig[4]
+                        total_h = bottom - top
+                        if total_h <= 0:
                             for _ in range(n_lines):
-                                expanded_positions.append(list(pos_to_use))
-                        elif n_lines <= 1:
-                            expanded_positions.append(positions[part_idx])
+                                expanded_positions.append(list(orig))
                         else:
-                            orig = positions[part_idx]
-                            page, x0, x1, top, bottom = orig[0], orig[1], orig[2], orig[3], orig[4]
-                            total_h = bottom - top
-                            if total_h <= 0:
-                                for _ in range(n_lines):
-                                    expanded_positions.append(list(orig))
-                            else:
-                                # 按字符数比例分配高度（空行最小权重 1）
-                                char_weights = [max(len(sl.strip()), 1) for sl in sub_lines]
-                                total_weight = sum(char_weights)
-                                current_top = float(top)
-                                for li in range(n_lines):
-                                    proportion = char_weights[li] / total_weight
-                                    sub_h = total_h * proportion
-                                    sub_top = round(current_top)
-                                    sub_bottom = round(current_top + sub_h)
-                                    expanded_positions.append([page, x0, x1, sub_top, sub_bottom])
-                                    current_top += sub_h
+                            # 按字符数比例分配高度（空行最小权重 1）
+                            char_weights = [max(len(sl.strip()), 1) for sl in sub_lines]
+                            total_weight = sum(char_weights)
+                            current_top = float(top)
+                            for li in range(n_lines):
+                                proportion = char_weights[li] / total_weight
+                                sub_h = total_h * proportion
+                                sub_top = round(current_top)
+                                sub_bottom = round(current_top + sub_h)
+                                expanded_positions.append([page, x0, x1, sub_top, sub_bottom])
+                                current_top += sub_h
                             expansion_applied = True
-                    if expansion_applied:
-                        logging.info(
-                            f"[SmartSplitter] position expansion: {len(positions)} blocks → "
-                            f"{len(expanded_positions)} sub-positions"
-                        )
-                    positions = expanded_positions
-                    
-                    # ── 构建 position_line_map（兼容保留） ──
-                    # 展开后 positions 与 text_lines 通常已 1:1 对齐，
-                    # position_line_map 不会被存储（条件 len(text_lines)!=len(positions) 为 false）。
-                    # 保留此逻辑作为边界情况的安全网。
-                    position_line_map = []
-                    for part_idx, part in enumerate(chunk_text_parts):
-                        part_lines = part.split("\n")
-                        for _ in part_lines:
-                            position_line_map.append(part_idx)
-                    # 裁剪到 positions 长度范围内（防止越界）
-                    if positions:
-                        position_line_map = [
-                            min(v, len(positions) - 1) for v in position_line_map
-                        ]
-                    
-                    # Merge images
-                    merged_image = None
-                    for img in chunk_images:
-                        merged_image = concat_img(merged_image, img)
-                    
-                    # ── 增强：按 row_start/row_end 裁剪 row_positions（二级索引） ──
-                    chunk_row_positions = []
-                    for i in range(b_start, b_end + 1):
-                        rp = section_row_positions[i]
-                        if not rp:
-                            continue
-                        
-                        if has_valid_row_range:
-                            # 二级索引模式：只取 [row_start, row_end] 范围内的行
-                            if 0 <= row_start <= row_end < len(rp):
-                                chunk_row_positions.extend(rp[row_start:row_end + 1])
-                            else:
-                                # row 索引越界 → 降级：给全部
-                                logging.warning(
-                                    f"[SmartSplitter] Segment {seg_idx} row range [{row_start},{row_end}] "
-                                    f"out of bounds (total {len(rp)} rows), fallback to full row_positions"
-                                )
-                                chunk_row_positions.extend(rp)
+                if expansion_applied:
+                    logging.info(
+                        f"[SmartSplitter] position expansion: {len(positions)} blocks → "
+                        f"{len(expanded_positions)} sub-positions"
+                    )
+                positions = expanded_positions
+
+                # ── 构建 position_line_map（兼容保留） ──
+                # 展开后 positions 与 text_lines 通常已 1:1 对齐，
+                # position_line_map 不会被存储（条件 len(text_lines)!=len(positions) 为 false）。
+                # 保留此逻辑作为边界情况的安全网。
+                position_line_map = []
+                for part_idx, part in enumerate(chunk_text_parts):
+                    part_lines = part.split("\n")
+                    for _ in part_lines:
+                        position_line_map.append(part_idx)
+                # 裁剪到 positions 长度范围内（防止越界）
+                if positions:
+                    position_line_map = [
+                        min(v, len(positions) - 1) for v in position_line_map
+                    ]
+
+                # Merge images
+                merged_image = None
+                for img in chunk_images:
+                    merged_image = concat_img(merged_image, img)
+
+                # ── 增强：按 row_start/row_end 裁剪 row_positions（二级索引） ──
+                # ← 修改：使用列表存储 (row_positions, row_offset) 配对，避免合并时丢失
+                chunk_row_positions_with_offsets = []  # [(row_positions_list, row_offset), ...]
+                for i in range(b_start, b_end + 1):
+                    rp = section_row_positions[i]
+                    if not rp:
+                        continue
+
+                    if has_valid_row_range:
+                        # 二级索引模式：只取 [row_start, row_end] 范围内的行
+                        if 0 <= row_start <= row_end < len(rp):
+                            chunk_row_positions_with_offsets.append((rp[row_start:row_end + 1], section_row_offsets[i]))
                         else:
-                            # 无二级索引 → 现有行为：全部给
-                            chunk_row_positions.extend(rp)
-                    
-                    # Build chunk (same format as first_line path)
-                    chunk = {
-                        "text": chunk_text,
-                        "image": merged_image,
-                        "positions": positions,
-                        self._param.classify_field: json.dumps(seg, ensure_ascii=False),
-                    }
-                    if chunk_row_positions:
-                        chunk["row_positions"] = chunk_row_positions
-                        # ── DIAG-LOG-3: SmartSplitter chunk 输出 ──
-                        logging.info(
-                            f"[DIAG-SPLITTER] chunk row_positions len={len(chunk_row_positions)} "
-                            f"row[0]={chunk_row_positions[0]} row[-1]={chunk_row_positions[-1]}"
-                        )
-                    # 当 lines 和 positions 不对齐时，加入映射字段
-                    text_lines = chunk_text.split("\n")
-                    if len(text_lines) != len(positions) and position_line_map:
-                        chunk["position_line_map"] = position_line_map
-                    
-                    chunks.append(chunk)
-                    segments_using_bbox += 1
-                    continue  # Skip fallback
+                            # row 索引越界 → 降级：给全部
+                            logging.warning(
+                                f"[SmartSplitter] Segment {seg_idx} row range [{row_start},{row_end}] "
+                                f"out of bounds (total {len(rp)} rows), fallback to full row_positions"
+                            )
+                            chunk_row_positions_with_offsets.append((rp, section_row_offsets[i]))
+                    else:
+                        # 无二级索引 → 现有行为：全部给
+                        chunk_row_positions_with_offsets.append((rp, section_row_offsets[i]))
+
+                # Build chunk (same format as first_line path)
+                chunk = {
+                    "text": chunk_text,
+                    "image": merged_image,
+                    "positions": positions,
+                    self._param.classify_field: json.dumps(seg, ensure_ascii=False),
+                }
+                if chunk_row_positions_with_offsets:
+                    # ← 修改：将 (row_positions, row_offset) 配对列表展开为 chunk
+                    # 展平 row_positions，同时保存每个 bbox 的 offset
+                    all_row_positions = []
+                    first_offset = 0  # 使用第一个表格的 offset
+                    for idx, (rp_list, offset) in enumerate(chunk_row_positions_with_offsets):
+                        if idx == 0:
+                            first_offset = offset
+                        all_row_positions.extend(rp_list)
+
+                    chunk["row_positions"] = all_row_positions
+                    chunk["row_offset"] = first_offset
+
+                    # ── DIAG-LOG-3: SmartSplitter chunk 输出 ──
+                    logging.info(
+                        f"[DIAG-SPLITTER] chunk row_positions len={len(all_row_positions)} "
+                        f"row_offset={first_offset} "
+                        f"row[0]={all_row_positions[0]} row[-1]={all_row_positions[-1]}"
+                    )
+                # 当 lines 和 positions 不对齐时，加入映射字段
+                text_lines = chunk_text.split("\n")
+                if len(text_lines) != len(positions) and position_line_map:
+                    chunk["position_line_map"] = position_line_map
+
+                chunks.append(chunk)
+                segments_using_bbox += 1
+                continue  # Skip fallback
             
             # ── Fallback path: first_line matching (existing logic) ──
             segments_using_firstline += 1
@@ -605,13 +707,14 @@ class SmartSplitter(ProcessBase, LLM):
             # ── 增强：透传 row_positions（仅含表格 section 的 chunk 才有） ──
             # row_positions[i] 坐标对应 content 中第 i 个 <tr>
             # 精确裁剪：部分重叠时只取 chunk 文本范围内的 <tr> 对应坐标
-            chunk_row_positions = []
+            # ← 修改：使用列表存储 (row_positions, row_offset) 配对
+            chunk_row_positions_with_offsets = []
             for bi, (b_start, b_end) in enumerate(bbox_ranges):
                 if b_end > start_char and b_start < end_char:
                     if section_row_positions[bi]:
                         # Fast path: bbox 完全在 chunk 内 → 全部保留
                         if b_start >= start_char and b_end <= end_char:
-                            chunk_row_positions.extend(section_row_positions[bi])
+                            chunk_row_positions_with_offsets.append((section_row_positions[bi], section_row_offsets[bi]))
                         else:
                             # Partial overlap: 只取重叠区间内的 <tr> 坐标
                             bbox_text = full_text[b_start:b_end]
@@ -621,15 +724,26 @@ class SmartSplitter(ProcessBase, LLM):
                             tr_in_ov = ov_text.lower().count("<tr")
                             if tr_in_ov > 0:
                                 tr_before = bbox_text[:ov_start].lower().count("<tr")
-                                chunk_row_positions.extend(
-                                    section_row_positions[bi][tr_before:tr_before + tr_in_ov]
-                                )
-            if chunk_row_positions:
-                ck["row_positions"] = chunk_row_positions
+                                chunk_row_positions_with_offsets.append((
+                                    section_row_positions[bi][tr_before:tr_before + tr_in_ov],
+                                    section_row_offsets[bi]
+                                ))
+            if chunk_row_positions_with_offsets:
+                # ← 修改：展开配对列表，使用第一个表格的 offset
+                all_row_positions = []
+                first_offset = 0
+                for idx, (rp_list, offset) in enumerate(chunk_row_positions_with_offsets):
+                    if idx == 0:
+                        first_offset = offset
+                    all_row_positions.extend(rp_list)
+
+                ck["row_positions"] = all_row_positions
+                ck["row_offset"] = first_offset
                 # ── DIAG-LOG-3b: SmartSplitter first_line path 输出 ──
                 logging.info(
-                    f"[DIAG-SPLITTER-FL] chunk row_positions len={len(chunk_row_positions)} "
-                    f"row[0]={chunk_row_positions[0]} row[-1]={chunk_row_positions[-1]}"
+                    f"[DIAG-SPLITTER-FL] chunk row_positions len={len(all_row_positions)} "
+                    f"row_offset={first_offset} "
+                    f"row[0]={all_row_positions[0]} row[-1]={all_row_positions[-1]}"
                 )
 
             cks.append(ck)

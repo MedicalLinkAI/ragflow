@@ -31,6 +31,8 @@ docker/ragflow-logs/
 /logs
 rag/res/deepdoc
 
+/deploy
+
 # Exclude sdk generated files
 sdk/python/ragflow.egg-info/
 sdk/python/build/
@@ -239,3 +241,5 @@ test_ocr_complete.py
 test_ocr_minimal.py
 test_ocr_standalone.py
 test_ocr_versions.py
+uv.lock
+Dockerfile

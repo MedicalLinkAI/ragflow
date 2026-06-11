@@ -46,6 +46,7 @@ export interface IModalProps<T> {
 const algorithmOptions: RAGFlowSelectOptionType[] = [
   { label: 'PaddleOCR-VL', value: 'PaddleOCR-VL' },
   { label: 'PaddleOCR-VL-1.5', value: 'PaddleOCR-VL-1.5' },
+  { label: 'PaddleOCR-VL-1.6', value: 'PaddleOCR-VL-1.6' },
 ];
 
 const PaddleOCRModal = ({

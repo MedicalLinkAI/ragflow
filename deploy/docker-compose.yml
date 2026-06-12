@@ -1,0 +1,261 @@
+# =============================================================================
+# RAGflow 容器化部署 — Docker Compose
+# =============================================================================
+# 三个 profile: infra / api / worker
+#
+# 用法:
+#   docker compose --env-file .env.dev --profile infra up -d
+#   docker compose --env-file .env.dev --profile api   up -d
+#   docker compose --env-file .env.dev --profile worker up -d
+#
+# 全部启动:
+#   docker compose --env-file .env.dev --profile infra --profile api --profile worker up -d
+# =============================================================================
+
+x-ragflow-env: &ragflow-env
+  RAGFLOW_ENV: "${DEPLOY_ENV:-dev}"
+  RAGFLOW_CONF: "service_conf.yaml"
+  DB_TYPE: "${DB_TYPE:-postgres}"
+  WS: "1"
+  API_PROXY_SCHEME: "${API_PROXY_SCHEME:-python}"
+  ES_HOST: "${ES_HOST:-ragflow-dev-elasticsearch}"
+  ES_PORT: "${ES_PORT:-9200}"
+  ELASTIC_PASSWORD: "${ELASTIC_PASSWORD:-infini_rag_flow}"
+  POSTGRES_HOST: "${POSTGRES_HOST:-ragflow-dev-postgres}"
+  POSTGRES_PORT: "${POSTGRES_PORT:-5432}"
+  POSTGRES_USER: "${POSTGRES_USER:-rag_flow}"
+  POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-infini_rag_flow}"
+  POSTGRES_DBNAME: "${POSTGRES_DBNAME:-rag_flow}"
+  REDIS_HOST: "${REDIS_HOST:-ragflow-dev-redis}"
+  REDIS_PORT: "${REDIS_PORT:-6379}"
+  REDIS_PASSWORD: "${REDIS_PASSWORD:-infini_rag_flow}"
+  MINIO_HOST: "${MINIO_HOST:-ragflow-dev-minio}"
+  MINIO_PORT: "${MINIO_PORT:-9000}"
+  MINIO_USER: "${MINIO_USER:-rag_flow}"
+  MINIO_PASSWORD: "${MINIO_PASSWORD:-infini_rag_flow}"
+
+x-worker-env: &worker-env
+  HF_ENDPOINT: "${HF_ENDPOINT:-https://hf-mirror.com}"
+  KMP_DUPLICATE_LIB_OK: "${KMP_DUPLICATE_LIB_OK:-True}"
+  KMP_INIT_AT_FORK: "${KMP_INIT_AT_FORK:-FALSE}"
+  TOKENIZERS_PARALLELISM: "${TOKENIZERS_PARALLELISM:-false}"
+  PYTHONPATH: "${PYTHONPATH:-/ragflow}"
+
+services:
+  # ---------------------------------------------------------------------------
+  # infra profile — Elasticsearch
+  # ---------------------------------------------------------------------------
+  ragflow-elasticsearch:
+    profiles: ["infra"]
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION:-8.11.3}
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD:-infini_rag_flow}
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: ${ES_MEM_LIMIT:-4294967296}
+    ports:
+      - "${ES_HOST_PORT:-11200}:9200"
+    volumes:
+      - ragflow_esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf -u elastic:${ELASTIC_PASSWORD:-infini_rag_flow} http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # infra profile — PostgreSQL (pgvector)
+  # ---------------------------------------------------------------------------
+  ragflow-postgres:
+    profiles: ["infra"]
+    image: pgvector/pgvector:pg15
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-rag_flow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-infini_rag_flow}
+      POSTGRES_DB: ${POSTGRES_DBNAME:-rag_flow}
+    ports:
+      - "${POSTGRES_HOST_PORT:-15455}:5432"
+    volumes:
+      - ragflow_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rag_flow}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # infra profile — Redis (Valkey)
+  # ---------------------------------------------------------------------------
+  ragflow-redis:
+    profiles: ["infra"]
+    image: valkey/valkey:8
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-redis
+    command: valkey-server --requirepass ${REDIS_PASSWORD:-infini_rag_flow} --save 60 1 --loglevel warning
+    ports:
+      - "${REDIS_HOST_PORT:-16379}:6379"
+    volumes:
+      - ragflow_redisdata:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "-a", "${REDIS_PASSWORD:-infini_rag_flow}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # infra profile — MinIO
+  # ---------------------------------------------------------------------------
+  ragflow-minio:
+    profiles: ["infra"]
+    image: quay.io/minio/minio:RELEASE.2025-06-13T11-33-47Z
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-minio
+    command: server /data --console-address ":${MINIO_CONSOLE_PORT:-9001}"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER:-rag_flow}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD:-infini_rag_flow}
+    ports:
+      - "${MINIO_HOST_PORT:-19000}:9000"
+      - "${MINIO_CONSOLE_HOST_PORT:-19001}:${MINIO_CONSOLE_PORT:-9001}"
+    volumes:
+      - ragflow_miniodata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9000/minio/health/live || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # api profile — RAGflow API (ragflow_server + nginx, 无 task_executor)
+  # ---------------------------------------------------------------------------
+  ragflow-api:
+    profiles: ["api"]
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEED_MIRROR: "${NEED_MIRROR:-0}"
+    image: ${RAGFLOW_IMAGE:-ragflow:dev}
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-api
+    command: ["--disable-taskexecutor"]
+    environment:
+      <<: *ragflow-env
+    ports:
+      - "${RAGFLOW_API_HOST_PORT:-19380}:9380"
+    volumes:
+      - ./service_conf.yaml.template:/ragflow/conf/service_conf.yaml.template
+    depends_on:
+      ragflow-elasticsearch:
+        condition: service_healthy
+      ragflow-postgres:
+        condition: service_healthy
+      ragflow-redis:
+        condition: service_healthy
+      ragflow-minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9380/v1/system/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # api profile — RAGflow Web (轻量 nginx: 静态文件 + 反向代理到 ragflow-api)
+  # ---------------------------------------------------------------------------
+  ragflow-web:
+    profiles: ["api"]
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        RAGFLOW_IMAGE: ${RAGFLOW_IMAGE:-ragflow:dev}
+    image: ${RAGFLOW_WEB_IMAGE:-ragflow-web:latest}
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-web
+    ports:
+      - "${RAGFLOW_WEB_HOST_PORT:-18080}:80"
+    volumes:
+      - ./nginx/ragflow.conf:/etc/nginx/conf.d/ragflow.conf:ro
+      - ./nginx/default-override.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      ragflow-api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:80/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # worker profile — RAGflow Worker (task_executor, 无 webserver/nginx)
+  # ---------------------------------------------------------------------------
+  ragflow-worker:
+    profiles: ["worker"]
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEED_MIRROR: "${NEED_MIRROR:-0}"
+    image: ${RAGFLOW_IMAGE:-ragflow:dev}
+    container_name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}-worker
+    command: ["--disable-webserver"]
+    environment:
+      <<: [*ragflow-env, *worker-env]
+    volumes:
+      - ./service_conf.yaml.template:/ragflow/conf/service_conf.yaml.template
+    depends_on:
+      ragflow-elasticsearch:
+        condition: service_healthy
+      ragflow-postgres:
+        condition: service_healthy
+      ragflow-redis:
+        condition: service_healthy
+      ragflow-minio:
+        condition: service_healthy
+    networks:
+      - medlinkai-shared
+    restart: unless-stopped
+
+networks:
+  medlinkai-shared:
+    external: true
+
+volumes:
+  ragflow_esdata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_esdata
+  ragflow_pgdata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_pgdata
+  ragflow_redisdata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_redisdata
+  ragflow_miniodata:
+    name: ${COMPOSE_PROJECT_NAME:-ragflow-dev}_miniodata

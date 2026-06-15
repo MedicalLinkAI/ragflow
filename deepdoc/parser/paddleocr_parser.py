@@ -37,7 +37,7 @@ except Exception:
         pass
 
 
-AlgorithmType = Literal["PaddleOCR-VL", "PaddleOCR-VL-1.5"]
+AlgorithmType = Literal["PaddleOCR-VL", "PaddleOCR-VL-1.5", "PaddleOCR-VL-1.6"]
 SectionTuple = tuple[str, ...]
 TableTuple = tuple[str, ...]
 # ParseResult: sections are always list[SectionTuple]; tables can be list[TableTuple]

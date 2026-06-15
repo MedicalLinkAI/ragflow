@@ -240,3 +240,7 @@ test_ocr_complete.py
 test_ocr_minimal.py
 test_ocr_standalone.py
 test_ocr_versions.py
+deploy/build.bat
+deploy/build-and-deploy.bat
+deploy/deploy.bat
+deploy/setup.bat

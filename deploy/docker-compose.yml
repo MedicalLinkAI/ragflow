@@ -40,6 +40,8 @@ x-worker-env: &worker-env
   KMP_INIT_AT_FORK: "${KMP_INIT_AT_FORK:-FALSE}"
   TOKENIZERS_PARALLELISM: "${TOKENIZERS_PARALLELISM:-false}"
   PYTHONPATH: "${PYTHONPATH:-/ragflow}"
+  ENABLE_OCR_VL_TEXT: "${ENABLE_OCR_VL_TEXT:-false}"
+  ENABLE_OCR_VL_TABLE: "${ENABLE_OCR_VL_TABLE:-true}"
 
 services:
   # ---------------------------------------------------------------------------
@@ -167,6 +169,17 @@ services:
       - "${RAGFLOW_API_HOST_PORT:-19380}:9380"
     volumes:
       - ./service_conf.yaml.template:/ragflow/conf/service_conf.yaml.template
+      # 开发模式：挂载源码目录，修改代码后 docker restart 即可生效
+      - ../api:/ragflow/api
+      - ../rag:/ragflow/rag
+      - ../agent:/ragflow/agent
+      - ../deepdoc:/ragflow/deepdoc
+      - ../common:/ragflow/common
+      - ../graphrag:/ragflow/graphrag
+      - ../agentic_reasoning:/ragflow/agentic_reasoning
+      - ../conf:/ragflow/conf
+      - ../plugin:/ragflow/plugin
+      - ../memory:/ragflow/memory
     depends_on:
       ragflow-elasticsearch:
         condition: service_healthy
@@ -233,6 +246,17 @@ services:
       <<: [*ragflow-env, *worker-env]
     volumes:
       - ./service_conf.yaml.template:/ragflow/conf/service_conf.yaml.template
+      # 开发模式：挂载源码目录，修改代码后 docker restart 即可生效
+      - ../api:/ragflow/api
+      - ../rag:/ragflow/rag
+      - ../agent:/ragflow/agent
+      - ../deepdoc:/ragflow/deepdoc
+      - ../common:/ragflow/common
+      - ../graphrag:/ragflow/graphrag
+      - ../agentic_reasoning:/ragflow/agentic_reasoning
+      - ../conf:/ragflow/conf
+      - ../plugin:/ragflow/plugin
+      - ../memory:/ragflow/memory
     depends_on:
       ragflow-elasticsearch:
         condition: service_healthy

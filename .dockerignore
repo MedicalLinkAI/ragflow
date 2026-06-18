@@ -1,0 +1,27 @@
+# Exclude unnecessary files from Docker build context
+node_modules/
+web/node_modules/
+web/dist/
+web/.next/
+vendor/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+test/
+tests/
+test-results/
+*.log
+.idea/
+.vscode/
+.claude/
+.codex/
+.agents/
+helm/
+example/
+chat_demo/
+sandbox/
+dsl_versions/
+seeds/
+scripts/

@@ -136,9 +136,8 @@ class Extractor(ProcessBase, LLM):
                 if os.environ.get("ENABLE_OCR_VL_TABLE", "true").lower() == "true":
                     await self._process_qwen_ocr_vl_table(ck)
 
-                # For OutpatientRecord chunks with table content:
-                # OCR → markdown → LLM JSON → coordinate extraction
-                # 通过环境变量 ENABLE_OCR_VL_TEXT 控制，默认为 true
+                # 除了LabReport以外 OCR 坐标提取，文本提取
+                # 通过环境变量 ENABLE_OCR_VL_TEXT 控制，默认为 false
                 if os.environ.get("ENABLE_OCR_VL_TEXT", "false").lower() == "true":
                     await self._process_qwen_ocr_vl_text(ck)
 

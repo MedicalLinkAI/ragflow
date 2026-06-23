@@ -165,7 +165,6 @@ class SmartSplitter(ProcessBase, LLM):
         section_images = []
         # ── 增强：收集每个 bbox 的 row_positions（仅表格 bbox 有） ──
         section_row_positions = []
-        section_row_offsets = []  # ← 新增：收集 row_offset
         for o in json_result:
             pos_tag = o.get("position_tag", "")
             # Fallback: table/figure bboxes from Parser have positions but no position_tag.
@@ -179,7 +178,6 @@ class SmartSplitter(ProcessBase, LLM):
                          partial(settings.STORAGE_IMPL.get, tenant_id=self._canvas._tenant_id))
             )
             section_row_positions.append(o.get("row_positions"))  # ← 增强：透传 row_positions
-            section_row_offsets.append(o.get("row_offset", 0))  # ← 新增：透传 row_offset
 
         self.callback(0.1, f"Loaded {len(sections)} OCR bboxes.")
 
@@ -408,14 +406,14 @@ class SmartSplitter(ProcessBase, LLM):
                                 sub_bottom = round(current_top + sub_h)
                                 expanded_positions.append([page, x0, x1, sub_top, sub_bottom])
                                 current_top += sub_h
-                            expansion_applied = True
+                        expansion_applied = True
                 if expansion_applied:
                     logging.info(
                         f"[SmartSplitter] position expansion: {len(positions)} blocks → "
                         f"{len(expanded_positions)} sub-positions"
                     )
                 positions = expanded_positions
-
+                    
                 # ── 构建 position_line_map（兼容保留） ──
                 # 展开后 positions 与 text_lines 通常已 1:1 对齐，
                 # position_line_map 不会被存储（条件 len(text_lines)!=len(positions) 为 false）。
@@ -430,35 +428,34 @@ class SmartSplitter(ProcessBase, LLM):
                     position_line_map = [
                         min(v, len(positions) - 1) for v in position_line_map
                     ]
-
+                
                 # Merge images
                 merged_image = None
                 for img in chunk_images:
                     merged_image = concat_img(merged_image, img)
-
+                
                 # ── 增强：按 row_start/row_end 裁剪 row_positions（二级索引） ──
-                # ← 修改：使用列表存储 (row_positions, row_offset) 配对，避免合并时丢失
-                chunk_row_positions_with_offsets = []  # [(row_positions_list, row_offset), ...]
+                chunk_row_positions = []
                 for i in range(b_start, b_end + 1):
                     rp = section_row_positions[i]
                     if not rp:
                         continue
-
+                    
                     if has_valid_row_range:
                         # 二级索引模式：只取 [row_start, row_end] 范围内的行
                         if 0 <= row_start <= row_end < len(rp):
-                            chunk_row_positions_with_offsets.append((rp[row_start:row_end + 1], section_row_offsets[i]))
+                            chunk_row_positions.extend(rp[row_start:row_end + 1])
                         else:
                             # row 索引越界 → 降级：给全部
                             logging.warning(
                                 f"[SmartSplitter] Segment {seg_idx} row range [{row_start},{row_end}] "
                                 f"out of bounds (total {len(rp)} rows), fallback to full row_positions"
                             )
-                            chunk_row_positions_with_offsets.append((rp, section_row_offsets[i]))
+                            chunk_row_positions.extend(rp)
                     else:
                         # 无二级索引 → 现有行为：全部给
-                        chunk_row_positions_with_offsets.append((rp, section_row_offsets[i]))
-
+                        chunk_row_positions.extend(rp)
+                    
                 # Build chunk (same format as first_line path)
                 chunk = {
                     "text": chunk_text,
@@ -466,30 +463,18 @@ class SmartSplitter(ProcessBase, LLM):
                     "positions": positions,
                     self._param.classify_field: json.dumps(seg, ensure_ascii=False),
                 }
-                if chunk_row_positions_with_offsets:
-                    # ← 修改：将 (row_positions, row_offset) 配对列表展开为 chunk
-                    # 展平 row_positions，同时保存每个 bbox 的 offset
-                    all_row_positions = []
-                    first_offset = 0  # 使用第一个表格的 offset
-                    for idx, (rp_list, offset) in enumerate(chunk_row_positions_with_offsets):
-                        if idx == 0:
-                            first_offset = offset
-                        all_row_positions.extend(rp_list)
-
-                    chunk["row_positions"] = all_row_positions
-                    chunk["row_offset"] = first_offset
-
+                if chunk_row_positions:
+                    chunk["row_positions"] = chunk_row_positions
                     # ── DIAG-LOG-3: SmartSplitter chunk 输出 ──
                     logging.info(
-                        f"[DIAG-SPLITTER] chunk row_positions len={len(all_row_positions)} "
-                        f"row_offset={first_offset} "
-                        f"row[0]={all_row_positions[0]} row[-1]={all_row_positions[-1]}"
+                        f"[DIAG-SPLITTER] chunk row_positions len={len(chunk_row_positions)} "
+                        f"row[0]={chunk_row_positions[0]} row[-1]={chunk_row_positions[-1]}"
                     )
                 # 当 lines 和 positions 不对齐时，加入映射字段
                 text_lines = chunk_text.split("\n")
                 if len(text_lines) != len(positions) and position_line_map:
                     chunk["position_line_map"] = position_line_map
-
+                
                 chunks.append(chunk)
                 segments_using_bbox += 1
                 continue  # Skip fallback
@@ -707,14 +692,13 @@ class SmartSplitter(ProcessBase, LLM):
             # ── 增强：透传 row_positions（仅含表格 section 的 chunk 才有） ──
             # row_positions[i] 坐标对应 content 中第 i 个 <tr>
             # 精确裁剪：部分重叠时只取 chunk 文本范围内的 <tr> 对应坐标
-            # ← 修改：使用列表存储 (row_positions, row_offset) 配对
-            chunk_row_positions_with_offsets = []
+            chunk_row_positions = []
             for bi, (b_start, b_end) in enumerate(bbox_ranges):
                 if b_end > start_char and b_start < end_char:
                     if section_row_positions[bi]:
                         # Fast path: bbox 完全在 chunk 内 → 全部保留
                         if b_start >= start_char and b_end <= end_char:
-                            chunk_row_positions_with_offsets.append((section_row_positions[bi], section_row_offsets[bi]))
+                            chunk_row_positions.extend(section_row_positions[bi])
                         else:
                             # Partial overlap: 只取重叠区间内的 <tr> 坐标
                             bbox_text = full_text[b_start:b_end]
@@ -724,26 +708,15 @@ class SmartSplitter(ProcessBase, LLM):
                             tr_in_ov = ov_text.lower().count("<tr")
                             if tr_in_ov > 0:
                                 tr_before = bbox_text[:ov_start].lower().count("<tr")
-                                chunk_row_positions_with_offsets.append((
-                                    section_row_positions[bi][tr_before:tr_before + tr_in_ov],
-                                    section_row_offsets[bi]
-                                ))
-            if chunk_row_positions_with_offsets:
-                # ← 修改：展开配对列表，使用第一个表格的 offset
-                all_row_positions = []
-                first_offset = 0
-                for idx, (rp_list, offset) in enumerate(chunk_row_positions_with_offsets):
-                    if idx == 0:
-                        first_offset = offset
-                    all_row_positions.extend(rp_list)
-
-                ck["row_positions"] = all_row_positions
-                ck["row_offset"] = first_offset
+                                chunk_row_positions.extend(
+                                    section_row_positions[bi][tr_before:tr_before + tr_in_ov]
+                                )
+            if chunk_row_positions:
+                ck["row_positions"] = chunk_row_positions
                 # ── DIAG-LOG-3b: SmartSplitter first_line path 输出 ──
                 logging.info(
-                    f"[DIAG-SPLITTER-FL] chunk row_positions len={len(all_row_positions)} "
-                    f"row_offset={first_offset} "
-                    f"row[0]={all_row_positions[0]} row[-1]={all_row_positions[-1]}"
+                    f"[DIAG-SPLITTER-FL] chunk row_positions len={len(chunk_row_positions)} "
+                    f"row[0]={chunk_row_positions[0]} row[-1]={chunk_row_positions[-1]}"
                 )
 
             cks.append(ck)
@@ -782,3 +755,5 @@ class SmartSplitter(ProcessBase, LLM):
         summary = f"SmartSplitter done: {len(all_chunks)} chunks from {len(segments)} LLM segments ({len(chunks)} bbox_id, {len(cks)} first_line). Types: {type_counts}"
         logging.info(f"[SmartSplitter] {summary}")
         self.callback(1, summary)
+
+    

@@ -526,7 +526,6 @@ class Parser(ProcessBase):
                         )
                         if candidate_tag in table_lookup:
                             box["row_positions"] = table_lookup[candidate_tag]["row_positions"]
-                            box["row_offset"] = table_lookup[candidate_tag].get("row_offset", 0)  # ← 新增：透传 row_offset
                             box["layout_type"] = "table"
                             # ── DIAG-LOG-2: parser.py table_lookup 匹配后 ──
                             rp = box["row_positions"]

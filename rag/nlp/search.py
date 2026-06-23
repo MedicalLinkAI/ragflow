@@ -90,7 +90,7 @@ class Dealer:
 
         src = req.get("fields",
                       ["docnm_kwd", "content_ltks", "kb_id", "img_id", "title_tks", "important_kwd", "position_int",
-                       "row_position_int", "row_offset", "position_line_map",
+                       "row_position_int", "position_line_map",
                        "doc_id", "page_num_int", "top_int", "create_timestamp_flt", "knowledge_graph_kwd",
                        "question_kwd", "question_tks", "doc_type_kwd",
                        "available_int", "content_with_weight", "mom_id", PAGERANK_FLD, TAG_FLD])
@@ -484,7 +484,6 @@ class Dealer:
                 "vector": chunk.get(vector_column, zero_vector),
                 "positions": position_int,
                 "row_position_int": chunk.get("row_position_int", []),
-                "row_offset": chunk.get("row_offset", 0),
                 "position_line_map": chunk.get("position_line_map", []),
                 "doc_type_kwd": chunk.get("doc_type_kwd", ""),
                 "mom_id": chunk.get("mom_id", ""),

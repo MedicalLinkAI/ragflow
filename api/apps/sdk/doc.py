@@ -1140,8 +1140,6 @@ async def list_chunks(tenant_id, dataset_id, document_id):
             "tag_kwd": chunk.get("tag_kwd", []),
             "tag_feas": chunk.get("tag_feas", {}),
             "row_position_int": chunk.get("row_position_int", []),
-            "row_offset": chunk.get("row_offset", 0),  # ← 新增：表头偏移
-            "position_line_map": chunk.get("position_line_map", []),  # ← 新增：PaddleOCR 行映射
         }
         res["chunks"].append(final_chunk)
         _ = Chunk(**final_chunk)
@@ -1162,8 +1160,6 @@ async def list_chunks(tenant_id, dataset_id, document_id):
                 "available": bool(int(sres.field[id].get("available_int", "1"))),
                 "positions": sres.field[id].get("position_int", []),
                 "row_position_int": sres.field[id].get("row_position_int", []),
-                "row_offset": sres.field[id].get("row_offset", 0),  # ← 新增：表头偏移
-                "position_line_map": sres.field[id].get("position_line_map", []),  # ← 新增：PaddleOCR 行映射
             }
             res["chunks"].append(d)
             _ = Chunk(**d)  # validate the chunk

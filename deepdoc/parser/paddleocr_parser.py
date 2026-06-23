@@ -90,7 +90,7 @@ class PaddleOCRVLConfig:
     layout_shape_mode: Optional[str] = None
     prompt_label: Optional[str] = None
     format_block_content: Optional[bool] = True
-    repetition_penalty: Optional[float] = 1.15
+    repetition_penalty: Optional[float] = None
     temperature: Optional[float] = None
     top_p: Optional[float] = None
     min_pixels: Optional[int] = None
@@ -484,7 +484,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         return sections
 
-    # ── TSR Enhancement: 乐高式可插拔模块 ──────────────────────────
+   # ── TSR Enhancement: 乐高式可插拔模块 ──────────────────────────
     _tsr_instance = None  # 延迟初始化，不用不加载
 
     def _tsr_enhance_row_positions(
@@ -493,22 +493,17 @@ class PaddleOCRParser(RAGFlowPdfParser):
         left, top, right, bottom,
         num_rows: int,
         zm,
-    ) -> tuple[list[list[int]] | None, int, bool, float, float]:
+    ) -> list[list[int]] | None:
         """用 TableStructureRecognizer 对表格区域做二次精确行识别。
 
         仅在 PaddleOCR-VL 的精确模式失败时调用（乐高式增强，可熔断）。
         从 self.page_images 中裁剪表格区域，调用 TSR 模型识别行坐标。
 
         Returns:
-            (row_positions, tsr_raw_rows, dropped_header, median_row_height, first_row_top) 五元组：
-            - row_positions: 行坐标列表 [[page, x0, x1, top, bottom], ...] 或 None
-            - tsr_raw_rows: TSR 模型检测到的原始数据行数（用于调用侧计算 row_offset）
-            - dropped_header: 是否丢掉了第一行（可能是表头），用于修正 row_offset
-            - median_row_height: TSR 检测到的中位行高（72dpi px），用于 uniform fallback
-            - first_row_top: TSR 检测到的第一行起始位置（72dpi px），用于 uniform fallback 的起点
+            行坐标列表 [[page, x0, x1, top, bottom], ...] 或 None（识别失败/不匹配时）
         """
         if not getattr(self, "page_images", None) or page_idx >= len(self.page_images):
-            return None, 0, False, 0, 0  # ← 五元组
+            return None
 
         page_img = self.page_images[page_idx]
         img_w, img_h = page_img.size
@@ -522,7 +517,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
         crop_bottom = min(img_h, int(bottom * scale))
 
         if crop_right <= crop_left or crop_bottom <= crop_top:
-            return None, 0, False, 0, 0  # ← 五元组
+            return None
 
         # 裁剪表格区域
         import numpy as np
@@ -665,14 +660,9 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
         tsr = PaddleOCRParser._tsr_instance
         tsr_results = tsr([table_np], thr=0.2)
-        logging.info(
-            f"[TSR-INPUT] page={page_1based} page_img.size={page_img.size} "
-            f"crop=({crop_left},{crop_top},{crop_right},{crop_bottom}) "
-            f"table_crop.size={table_crop.size} zm={zm:.3f}"
-        )
         if not tsr_results or not tsr_results[0]:
             logging.info("[TSR-ENHANCE] TSR returned no results for page=%d", page_idx + 1)
-            return None, 0, False, 0, 0  # ← 五元组
+            return None
 
         # 诊断：输出 TSR 模型的完整原始输出（所有 label + score）
         all_labels_summary = {}
@@ -705,81 +695,12 @@ class PaddleOCRParser(RAGFlowPdfParser):
         )
         if not row_boxes:
             logging.info("[TSR-ENHANCE] No row boxes detected for page=%d", page_idx + 1)
-            return None, 0, False, 0, 0  # ← 五元组
+            return None
 
         # 按 top 排序
         row_boxes.sort(key=lambda b: b["top"])
         if header_boxes:
             header_boxes.sort(key=lambda b: b["top"])
-
-        # 计算 TSR 中位行高（72dpi px），用于 uniform fallback
-        _rb_heights = sorted([rb["bottom"] - rb["top"] for rb in row_boxes])
-        _tsr_median_h = _rb_heights[len(_rb_heights) // 2] if _rb_heights else 0
-
-        # 记录第一行的起始位置（72dpi px），用于 uniform fallback 的起点
-        # 跳过 top 接近 0 的行（可能是表格边框或背景）
-        _first_valid_row_idx = 0
-        if row_boxes and row_boxes[0]["top"] < 5.0:  # top < 5px 可能是边框
-            # 查找第一个 top >= 5.0 的行
-            for i, rb in enumerate(row_boxes):
-                if rb["top"] >= 5.0:
-                    _first_valid_row_idx = i
-                    break
-        _first_row_top = crop_top + row_boxes[_first_valid_row_idx]["top"] if row_boxes else crop_top
-
-        # ── 诊断日志：输出前3行的位置，用于调试 uniform 偏移问题 ──
-        if row_boxes:
-            row1_top = f"{row_boxes[1]['top']:.1f}" if len(row_boxes) > 1 else "N/A"
-            row2_top = f"{row_boxes[2]['top']:.1f}" if len(row_boxes) > 2 else "N/A"
-            logging.info(
-                f"[TSR-FIRST-ROWS] page={page_1based} crop_top={crop_top} "
-                f"row[0].top={row_boxes[0]['top']:.1f} "
-                f"row[1].top={row1_top} "
-                f"row[2].top={row2_top} "
-                f"→ _first_row_top={_first_row_top:.1f}"
-            )
-
-        # ── 增强：当 TSR 检测行数多于 HTML 行数时，检测并跳过误检测的前置行 ──
-        # 问题：TSR 可能把表头拆分成多行，或检测到表格上方的文本/边框
-        # 解决：找到第一个间距正常的行作为真正的起始位置
-        if row_boxes and len(row_boxes) > num_rows:
-            # 计算所有行间距
-            gaps = []
-            for i in range(len(row_boxes) - 1):
-                gap = row_boxes[i + 1]["top"] - row_boxes[i]["bottom"]
-                gaps.append(gap)
-
-            if gaps:
-                # 计算中位间距
-                sorted_gaps = sorted(gaps)
-                median_gap = sorted_gaps[len(sorted_gaps) // 2]
-
-                # 诊断日志：输出前几个间距
-                logging.info(
-                    f"[TSR-GAP-DEBUG] page={page_1based} "
-                    f"gaps[:5]={[f'{g:.1f}' for g in gaps[:5]]} "
-                    f"median_gap={median_gap:.1f}"
-                )
-
-                # 跳过前面间距异常大的行（可能是表头或误检测）
-                # 策略：找到第一个间距 <= median_gap * 2.0 的位置
-                skip_count = 0
-                threshold = max(median_gap * 2.0, 5.0)  # 至少 5.0 的阈值
-                for i, gap in enumerate(gaps):
-                    if gap > threshold:
-                        skip_count = i + 1
-                    else:
-                        # 遇到第一个正常间距，停止
-                        break
-
-                if skip_count > 0 and skip_count < len(row_boxes):
-                    adjusted_first_row_top = crop_top + row_boxes[skip_count]["top"]
-                    logging.info(
-                        f"[TSR-FIRST-ROWS] page={page_1based} 检测到前{skip_count}行间距异常大 "
-                        f"(threshold={threshold:.1f} median_gap={median_gap:.1f}) "
-                        f"调整起始位置: {_first_row_top:.1f} → {adjusted_first_row_top:.1f}"
-                    )
-                    _first_row_top = adjusted_first_row_top
 
         # 去重：TSR 可能在同一位置检测出多个重叠的 table row
         if len(row_boxes) > 1:
@@ -819,36 +740,20 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 ]
                 _l1_new_gap = abs(len(_l1_filtered) - num_rows)
                 _l1_removed = len(row_boxes) - len(_l1_filtered)
-
-                # 调试：找出被移除的行
-                _removed_indices = [i for i, rb in enumerate(row_boxes) if rb not in _l1_filtered]
-                _removed_tops = [row_boxes[i]["top"] for i in _removed_indices]
-
                 logging.info(
                     "[TSR-ENHANCE] page=%d Layer-1: 高度过滤 %d→%d (removed=%d "
-                    "median=%.1f low=%.1f high=%.1f) → new_gap=%d removed_indices=%s removed_tops=%s",
+                    "median=%.1f low=%.1f high=%.1f) → new_gap=%d",
                     page_idx + 1, len(row_boxes), len(_l1_filtered),
                     _l1_removed, _l1_median, _l1_low, _l1_high, _l1_new_gap,
-                    _removed_indices, [f"{t:.1f}" for t in _removed_tops],
                 )
                 if _l1_new_gap <= 2:
                     # 过滤后 gap 降到 ≤2，用过滤后的 row_boxes 继续走正常路径
                     row_boxes = sorted(_l1_filtered, key=lambda b: b["top"])
                     gap = _l1_new_gap
                     _l1_resolved = True
-                    # 更新 _first_row_top，因为第一行可能被过滤掉了
-                    # 同样需要跳过 top < 5.0 的边框行
-                    _first_valid_row_idx = 0
-                    if row_boxes and row_boxes[0]["top"] < 5.0:
-                        for i, rb in enumerate(row_boxes):
-                            if rb["top"] >= 5.0:
-                                _first_valid_row_idx = i
-                                break
-                    _first_row_top = crop_top + row_boxes[_first_valid_row_idx]["top"] if row_boxes else crop_top
                     logging.info(
-                        "[TSR-ENHANCE] page=%d Layer-1 成功: gap降至%d → 走正常路径 "
-                        "_first_row_top更新为%.1f",
-                        page_idx + 1, gap, _first_row_top,
+                        "[TSR-ENHANCE] page=%d Layer-1 成功: gap降至%d → 走正常路径",
+                        page_idx + 1, gap,
                     )
 
             # (Layer 2 旋转检测已前移至 TSR 前置步骤)
@@ -878,7 +783,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         len(row_positions),
                         row_positions[0], row_positions[-1],
                     )
-                    return row_positions, len(row_boxes), False, _tsr_median_h, _first_row_top
+                    return row_positions
 
                 # ── Layer 4: 放弃 → Uniform fallback ──
                 logging.info(
@@ -886,7 +791,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     "(TSR=%d TR=%d gap=%d) → 回退 uniform",
                     page_1based, len(row_boxes), num_rows, gap,
                 )
-                return None, 0, False, _tsr_median_h, _first_row_top  # Layer-4 uniform fallback
+                return None
 
         # 坐标映射说明：
         # - TSR 输出坐标：相对于 72dpi 裁剪图的像素坐标
@@ -894,7 +799,6 @@ class PaddleOCRParser(RAGFlowPdfParser):
         # - 最终 row_positions 格式：[page, x0, x1, top, bottom] 单位是 72dpi 像素
         #   （与 uniform fallback 一致：API坐标 / zm = 72dpi）
         row_positions = []
-        dropped_header = False  # ← 新增：追踪是否丢掉了第一行（可能是表头）
 
         def _map_rb(rb):
             """TSR bbox → row_positions 格式"""
@@ -907,52 +811,14 @@ class PaddleOCRParser(RAGFlowPdfParser):
             ]
 
         if len(row_boxes) == num_rows:
-            # 完美匹配：1:1 映射，调整边界确保紧密连接
-            # ── 关键修复：检查 row[0] 和 row[1] 之间的间隙 ──
-            # 如果间隙异常大（> 行高的 1.5 倍），说明中间缺失了表头行
-            if header_boxes and len(row_boxes) >= 2:
-                first_row = row_boxes[0]
-                second_row = row_boxes[1]
-
-                # 计算 row[0] 和 row[1] 之间的间隙
-                gap = second_row["top"] - first_row["bottom"]
-
-                # 计算行高（使用 row[1] 的高度作为参考）
-                row_height = second_row["bottom"] - second_row["top"]
-
-                # 如果间隙 > 行高的 1.5 倍，说明中间缺失了表头行
-                if row_height > 0 and gap > row_height * 1.5:
-                    dropped_header = True
-                    logging.info(
-                        "[TSR-ENHANCE] page=%d 检测到 row[0]-row[1] 间隙异常 (gap=%.1f > row_height=%.1f * 1.5) → dropped_header=True",
-                        page_1based, gap, row_height,
-                    )
-                else:
-                    logging.info(
-                        "[TSR-ENHANCE] page=%d row[0]-row[1] 间隙正常 (gap=%.1f, row_height=%.1f) → dropped_header=False",
-                        page_1based, gap, row_height,
-                    )
-
-            for i, rb in enumerate(row_boxes):
-                mapped = _map_rb(rb)
-                # 如果不是第一行，调整 top 为前一行的 bottom
-                if i > 0:
-                    mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                logging.info(
-                    f"[TSR-MAP] page={page_1based} row[{i}] "
-                    f"raw=({rb['x0']:.1f},{rb['top']:.1f},{rb['x1']:.1f},{rb['bottom']:.1f}) "
-                    f"crop=({crop_left},{crop_top}) scale={scale:.3f} "
-                    f"→ mapped={mapped}"
-                )
-                row_positions.append(mapped)
+            # 完美匹配：1:1 映射
+            for rb in row_boxes:
+                row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows - 1:
             # TSR 少一行（通常是表头未检测为 row）→ 补一行表头
             row_positions.append(_make_header_row(row_boxes[0]["top"]))
-            for i, rb in enumerate(row_boxes):
-                mapped = _map_rb(rb)
-                # 调整 top 为前一行的 bottom
-                mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                row_positions.append(mapped)
+            for rb in row_boxes:
+                row_positions.append(_map_rb(rb))
         elif len(row_boxes) == num_rows + 1:
             # TSR 多一行 → M3 三层降级: Level 1 语义 → Level 2 数值 → Level 3 智能丢行
 
@@ -977,13 +843,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         page_1based, best_drop_idx, best_overlap,
                         len(level1_rows), num_rows,
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(level1_rows):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in level1_rows:
+                        row_positions.append(_map_rb(rb))
                 else:
                     logging.info(
                         "[TSR-ENHANCE] page=%d Level-1: header 与 row_boxes 无重叠 → 降级 Level-2",
@@ -1024,13 +885,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         page_1based, median_h, threshold_low, threshold_high,
                         len(row_boxes), len(filtered), removed_info,
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(filtered):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in filtered:
+                        row_positions.append(_map_rb(rb))
                 else:
                     # Level 3: 智能丢行 — 比较首尾与中位数偏差，丢偏差大的
                     first_dev = abs(heights[0] - median_h)
@@ -1038,11 +894,9 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     if first_dev > last_dev:
                         smart_rows = row_boxes[1:]
                         drop_label = "first"
-                        dropped_header = True  # ← 恢复：标记丢掉了第一行，需要 row_offset
                     else:
                         smart_rows = row_boxes[:-1]
                         drop_label = "last"
-                        dropped_header = False
 
                     logging.info(
                         "[TSR-ENHANCE] page=%d Level-3 智能丢行: drop_%s "
@@ -1051,13 +905,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         first_dev, last_dev, median_h,
                         len(row_boxes), len(smart_rows),
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(smart_rows):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in smart_rows:
+                        row_positions.append(_map_rb(rb))
         else:
             # ── gap ≤ 2 但不满足 exact/±1 (即 gap=2) ──
             # Step 0: 先尝试对 row_boxes 做双向高度过滤（复用 M3 Level-2 逻辑）
@@ -1089,13 +938,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         page_1based, gap, _median_h, _thr_low, _thr_high,
                         len(row_boxes), len(_filtered), _removed_info,
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(_filtered):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in _filtered:
+                        row_positions.append(_map_rb(rb))
                     _gap2_resolved = True
                 elif len(_filtered) == num_rows - 1:
                     # 过滤后少 1 行 → 补表头
@@ -1108,10 +952,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     _filtered.sort(key=lambda b: b["top"])
                     row_positions.append(_make_header_row(_filtered[0]["top"]))
                     for rb in _filtered:
-                        mapped = _map_rb(rb)
-                        # 调整 top 为前一行的 bottom
-                        mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                        row_positions.append(_map_rb(rb))
                     _gap2_resolved = True
                 elif len(_filtered) == num_rows + 1:
                     # 过滤后多 1 行 → 复用 M3 Level-3 智能丢行
@@ -1123,11 +964,9 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     if _fd_first > _fd_last:
                         _smart = _filtered[1:]
                         _dl = "first"
-                        dropped_header = True  # ← 恢复：标记丢掉了第一行，需要 row_offset
                     else:
                         _smart = _filtered[:-1]
                         _dl = "last"
-                        dropped_header = False
                     logging.info(
                         "[TSR-ENHANCE] page=%d gap=%d 双向高度过滤: "
                         "filtered %d→%d then 智能丢行 drop_%s → %d == num_rows=%d",
@@ -1135,13 +974,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         len(row_boxes), len(_filtered), _dl,
                         len(_smart), num_rows,
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(_smart):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in _smart:
+                        row_positions.append(_map_rb(rb))
                     _gap2_resolved = True
                 else:
                     logging.info(
@@ -1179,13 +1013,8 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         page_1based, len(row_boxes), len(header_boxes),
                         total, num_rows,
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(all_boxes):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in all_boxes:
+                        row_positions.append(_map_rb(rb))
                 elif total == num_rows - 1:
                     logging.info(
                         "[TSR-ENHANCE] page=%d M5-secondary-prepend: "
@@ -1194,10 +1023,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     )
                     row_positions.append(_make_header_row(all_boxes[0]["top"]))
                     for rb in all_boxes:
-                        mapped = _map_rb(rb)
-                        # 调整 top 为前一行的 bottom
-                        mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                        row_positions.append(_map_rb(rb))
                 elif total == num_rows + 1:
                     heights = [b["bottom"] - b["top"] for b in all_boxes]
                     sorted_h = sorted(heights)
@@ -1215,40 +1041,35 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         "total=%d → drop_%s",
                         page_1based, total, drop_label,
                     )
-                    # 调整行边界，确保相邻行紧密连接
-                    for i, rb in enumerate(smart_rows):
-                        mapped = _map_rb(rb)
-                        # 如果不是第一行，调整 top 为前一行的 bottom
-                        if i > 0 and row_positions:
-                            mapped[3] = row_positions[-1][4]  # top = prev.bottom
-                        row_positions.append(mapped)
+                    for rb in smart_rows:
+                        row_positions.append(_map_rb(rb))
                 else:
                     logging.info(
                         "[TSR-ENHANCE] page=%d M5-secondary-fail: "
                         "total=%d vs num_rows=%d → 回退 uniform",
                         page_1based, total, num_rows,
                     )
-                    return None, 0, False, _tsr_median_h, _first_row_top
+                    return None
             elif not _gap2_resolved:
                 logging.info(
                     "[TSR-ENHANCE] page=%d gap=%d 无 header_boxes 且高度过滤未命中 → 回退 uniform",
                     page_1based, gap,
                 )
-                return None, 0, False, _tsr_median_h, _first_row_top
+                return None
 
         if not row_positions:
-            return None, 0, False, _tsr_median_h, _first_row_top
+            return None
 
         # 反向映射：纠正空间 → 原始坐标空间
         row_positions = _reverse_map_rotation(row_positions)
 
         logging.info(
             "[TSR-ENHANCE] page=%d tsr_rows=%d tr_rows=%d → %d positions "
-            "row[0]=%s row[-1]=%s dropped_header=%s",
+            "row[0]=%s row[-1]=%s",
             page_1based, len(row_boxes), num_rows, len(row_positions),
-            row_positions[0], row_positions[-1], dropped_header,
+            row_positions[0], row_positions[-1],
         )
-        return row_positions, len(row_boxes), dropped_header, _tsr_median_h, _first_row_top
+        return row_positions
 
     @staticmethod
     def _cluster_row_boundaries(
@@ -1368,7 +1189,6 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 page_1based = page_idx + 1
                 zm = self._ZOOMIN
                 mode = "uniform"  # track which mode was used (for logging)
-                tsr_original_row_count = num_rows  # ← 新增：默认值为 HTML 行数
 
                 # ── Try precise row positioning from layout_det_res ──
                 row_positions = []
@@ -1542,16 +1362,13 @@ class PaddleOCRParser(RAGFlowPdfParser):
                 # 乐高式设计：可通过 PADDLEOCR_TSR_ENHANCE 环境变量开关（默认开启）
                 # 仅在 Level 1 失败时触发，不影响已有 precise/refined-uniform 路径
                 tsr_enabled = os.getenv("PADDLEOCR_TSR_ENHANCE", "true").lower() in ("true", "1", "yes")
-                tsr_dropped_header = False  # ← 追踪 TSR 是否丢掉了表头
-                tsr_median_h = 0  # ← TSR 中位行高（72dpi px）
-                tsr_first_row_top = 0  # ← TSR 检测到的第一行起始位置（72dpi px）
                 if not row_positions and tsr_enabled:
                     logging.info(
                         f"[ROW-POS] page={page_1based} Level-2(TSR) ENTER → "
                         f"bbox=[{left},{top},{right},{bottom}] zm={zm} num_rows={num_rows}"
                     )
                     try:
-                        tsr_positions, tsr_raw_rows, tsr_dropped_header, tsr_median_h, tsr_first_row_top = self._tsr_enhance_row_positions(
+                        tsr_positions = self._tsr_enhance_row_positions(
                             page_idx, left, top, right, bottom, num_rows, zm,
                         )
                         if tsr_positions:
@@ -1561,8 +1378,6 @@ class PaddleOCRParser(RAGFlowPdfParser):
                                 f"[ROW-POS] page={page_1based} Level-2(TSR) SUCCESS → "
                                 f"rows={len(row_positions)} row[0]={row_positions[0]} row[-1]={row_positions[-1]}"
                             )
-                            # ← 新增：保存 TSR 原始行数，用于计算 row_offset
-                            tsr_original_row_count = tsr_raw_rows
                         else:
                             logging.info(
                                 f"[ROW-POS] page={page_1based} Level-2(TSR) MISS → "
@@ -1581,30 +1396,15 @@ class PaddleOCRParser(RAGFlowPdfParser):
 
                 # ── Uniform fallback（Level 3）──
                 if not row_positions:
-                    # 如果 TSR 提供了中位行高，用它来计算实际表格高度
-                    # 而不是用整个 bbox 高度（bbox 可能包含表格下方的空白区域）
-                    if tsr_median_h > 0:
-                        # tsr_median_h 是 72dpi 坐标，需要乘以 zm 转换到 API 坐标系（zm*72dpi）
-                        effective_table_height = tsr_median_h * zm * num_rows
-                        # 使用 TSR 检测到的第一行位置作为起点（转换到 API 坐标系）
-                        effective_top = tsr_first_row_top * zm if tsr_first_row_top > 0 else top
-                        logging.info(
-                            f"[ROW-POS] page={page_1based} Level-3(Uniform+TSR) ENTER → "
-                            f"tsr_median_h={tsr_median_h:.1f}(72dpi) zm={zm} num_rows={num_rows} "
-                            f"effective_height={effective_table_height:.1f} vs bbox_height={bottom - top} "
-                            f"effective_top={effective_top:.1f} vs bbox_top={top}"
-                        )
-                        row_height = effective_table_height / num_rows
-                    else:
-                        effective_top = top
-                        logging.info(
-                            f"[ROW-POS] page={page_1based} Level-3(Uniform) ENTER → "
-                            f"bbox_height={bottom - top} / {num_rows} rows = {(bottom - top) / num_rows:.1f}px/row"
-                        )
-                        row_height = (bottom - top) / num_rows
+                    logging.info(
+                        f"[ROW-POS] page={page_1based} Level-3(Uniform) ENTER → "
+                        f"bbox_height={bottom - top} / {num_rows} rows = {(bottom - top) / num_rows:.1f}px/row"
+                    )
+                    table_height = bottom - top
+                    row_height = table_height / num_rows
                     for row_idx in range(num_rows):
-                        row_top = effective_top + row_idx * row_height
-                        row_bottom = effective_top + (row_idx + 1) * row_height
+                        row_top = top + row_idx * row_height
+                        row_bottom = top + (row_idx + 1) * row_height
                         row_positions.append([
                             page_1based,
                             int(left // zm),
@@ -1614,110 +1414,11 @@ class PaddleOCRParser(RAGFlowPdfParser):
                         ])
                     mode = "uniform"
 
-                # ── 增强：精确计算 row_offset ──
-                # row_offset 含义：HTML <tr> 中有多少行（从头部算起）在 row_positions 中没有独立坐标
-
-                row_offset_value = 0
-
-                # 调试日志：输出 tsr_dropped_header 的值和类型
-                logging.info(
-                    f"[ROW-OFFSET-DEBUG] page={page_1based} mode={mode} tsr_dropped_header={tsr_dropped_header} "
-                    f"type={type(tsr_dropped_header)} bool={bool(tsr_dropped_header)}"
-                )
-
-                # 策略 1：如果 TSR 智能丢行丢了第一行（通常是表头），row_offset=1
-                if tsr_dropped_header:
-                    row_offset_value = 1
-                    logging.info(
-                        f"[ROW-OFFSET] page={page_1based} tsr_dropped_header=True → row_offset=1"
-                    )
-                # 策略 2：2026-6-9 refined-uniform-cov 模式下，VL 可能在 HTML 中保留了 header，需要 row_offset=1
-                elif mode == "refined-uniform-cov":
-                    row_offset_value = 1
-                    logging.info(
-                        f"[ROW-OFFSET] page={page_1based} mode=refined-uniform-cov → row_offset=1 "
-                        f"(VL parser 在 HTML 保留了 header，但 row_positions 起点偏下)"
-                    )
-                # 策略 2.1：2026-6-9  refined-uniform 模式下，VL 可能在 HTML 中保留了 header，需要 row_offset=1
-                elif mode == "refined-uniform":
-                    row_offset_value = 1
-                    logging.info(
-                        f"[ROW-OFFSET] page={page_1based} mode=refined-uniform → row_offset=1 "
-                        f"(VL parser 在 HTML 保留了 header，但 row_positions 起点偏下)"
-                    )
-                # 策略 3：2026-6-9  检查最后一行是否是前一行的延续（如参考范围被拆分）
-                elif len(row_positions) >= 2 and num_rows >= 2:
-                    # 获取 HTML 行内容
-                    html_rows = re.findall(r'<tr[^>]*>(.*?)</tr>', html_content, re.IGNORECASE | re.DOTALL)
-                    if len(html_rows) == num_rows and num_rows >= 2:
-                        # 检查最后一行的文本内容
-                        last_row_text = re.sub(r'<[^>]*>', '', html_rows[-1]).strip()
-                        second_last_row_text = re.sub(r'<[^>]*>', '', html_rows[-2]).strip()
-
-                        # 启发式规则：最后一行很短（<20字符）且主要是数字/符号，可能是拆分行
-                        # 常见模式：参考范围 "3.80~5.80"、单位 "mmol/L"
-                        is_short = len(last_row_text) < 20
-                        is_numeric_range = bool(re.match(r'^[\d\.\~\-\+\s<>≤≥%]+$', last_row_text))
-                        is_unit = len(last_row_text) < 10 and bool(re.match(r'^[a-zA-Z/\s%]+$', last_row_text))
-                        is_likely_continuation = is_short and (is_numeric_range or is_unit)
-
-                        if is_likely_continuation:
-                            # 最后一行是拆分行，需要 row_offset=-1 来跳过它
-                            row_offset_value = -1
-                            logging.info(
-                                f"[ROW-OFFSET] page={page_1based} 检测到拆分行: "
-                                f"last_row='{last_row_text[:30]}' len={len(last_row_text)} "
-                                f"is_numeric_range={is_numeric_range} is_unit={is_unit} "
-                                f"→ row_offset=-1 (跳过最后一行，合并到倒数第二行)"
-                            )
-                # 策略 5：检查 row_positions 行数与 HTML 行数的差异
-                elif len(row_positions) > num_rows:
-                    # row_positions 多于 HTML 行数 → 前面有多余的行（误检测或表格边框）
-                    # row_offset 为负数表示 HTML 行索引需要往后移才能对齐到 row_positions
-                    # 例如：6 个 row_positions，5 行 HTML → row_offset = -1
-                    # 意味着 HTML row[i] 对应 row_positions[i-(-1)] = row_positions[i+1]
-                    row_offset_value = num_rows - len(row_positions)
-                    logging.info(
-                        f"[ROW-OFFSET] page={page_1based} row_positions过多: "
-                        f"len(row_positions)={len(row_positions)} > num_rows={num_rows} "
-                        f"→ row_offset={row_offset_value} (HTML row[i] → row_positions[i+{-row_offset_value}])"
-                    )
-                # 策略 6：检查 row_positions 的行间空白（TSR 合并行或缺失行）
-                elif len(row_positions) >= 2:
-                    # 计算行高中位数
-                    rp_heights = [rp[4] - rp[3] for rp in row_positions]
-                    sorted_h = sorted(rp_heights)
-                    median_h = sorted_h[len(sorted_h) // 2]
-
-                    # 检查第一个 gap（row[0] 和 row[1] 之间）
-                    first_gap = row_positions[1][3] - row_positions[0][4]
-
-                    if median_h > 0 and first_gap > median_h * 1.5:
-                        # row[0] 和 row[1] 之间有大空白
-                        covered_by_height = max(1, round(rp_heights[0] / median_h))
-                        missing_in_gap = max(0, round(first_gap / median_h) - 1)
-                        row_offset_value = (covered_by_height - 1) + missing_in_gap
-                        logging.info(
-                            f"[ROW-OFFSET] page={page_1based} 检测合并/缺失行: "
-                            f"row[0] h={rp_heights[0]} median_h={median_h} "
-                            f"first_gap={first_gap} "
-                            f"covered={covered_by_height} missing={missing_in_gap} "
-                            f"→ row_offset={row_offset_value}"
-                        )
-
-                logging.info(
-                    f"[ROW-OFFSET] page={page_1based} "
-                    f"num_rows={num_rows} len(row_positions)={len(row_positions)} mode={mode} "
-                    f"→ row_offset={row_offset_value} "
-                    f"(tsr_dropped={tsr_dropped_header})"
-                )
-
                 tables.append({
                     "page": page_1based,
                     "bbox": [left, top, right, bottom],
                     "html": html_content,
                     "row_positions": row_positions,
-                    "row_offset": row_offset_value,  # ← 增强：基于表头检测精确计算
                     "position_tag": f"@@{page_1based}\t{int(left // zm)}\t{int(right // zm)}\t{int(top // zm)}\t{int(bottom // zm)}##",
                 })
 
@@ -1727,14 +1428,6 @@ class PaddleOCRParser(RAGFlowPdfParser):
                     f"bbox=[{left},{top},{right},{bottom}] zm={zm} num_rows={num_rows} "
                     f"row[0]={row_positions[0]} row[-1]={row_positions[-1]}"
                 )
-
-                # ── DIAG-LOG-2: HTML <tr> 与 row_positions 对应关系 ──
-                html_rows = re.findall(r'<tr[^>]*>(.*?)</tr>', html_content, re.IGNORECASE | re.DOTALL)
-                logging.info(f"[__HTML_TABLE DIAG] html_rows={len(html_rows)} row_positions={len(row_positions)}")
-                for idx in range(min(len(html_rows), len(row_positions))):
-                    row_text = re.sub(r'<[^>]*>', '', html_rows[idx])[:60]
-                    rp = row_positions[idx]
-                    logging.info(f"  i={idx}: y={rp[3]}-{rp[4]} text='{row_text}'")
 
         return tables
 

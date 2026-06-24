@@ -796,10 +796,13 @@ async def run_dataflow(task: dict):
             ]
             # ── DIAG-LOG-4: task_executor 写入 ES 前 ──
             rpi = ck["row_position_int"]
-            logging.info(
-                f"[DIAG-EXECUTOR] row_position_int len={len(rpi)} "
-                f"row[0]={rpi[0]} row[-1]={rpi[-1]}"
-            )
+            if rpi:
+                logging.info(
+                    f"[DIAG-EXECUTOR] row_position_int len={len(rpi)} "
+                    f"row[0]={rpi[0]} row[-1]={rpi[-1]}"
+                )
+            else:
+                logging.info("[DIAG-EXECUTOR] row_position_int is empty")
             del ck["row_positions"]
 
         # ── 增强：position_line_map 直接透传到 ES（PaddleOCR 行映射） ──

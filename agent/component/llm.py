@@ -69,7 +69,7 @@ class LLMParam(ComponentParamBase):
 
         if int(self.max_tokens) > 0 and get_attr("maxTokensEnabled"):
             conf["max_tokens"] = int(self.max_tokens)
-        if float(self.temperature) > 0 and get_attr("temperatureEnabled"):
+        if get_attr("temperatureEnabled") and float(self.temperature) >= 0:
             conf["temperature"] = float(self.temperature)
         if float(self.top_p) > 0 and get_attr("topPEnabled"):
             conf["top_p"] = float(self.top_p)

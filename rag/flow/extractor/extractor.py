@@ -130,8 +130,7 @@ class Extractor(ProcessBase, LLM):
                 msg.insert(0, {"role": "system", "content": sys_prompt})
                 ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
 
-                # For LabReport chunks with exactly 1 item, use advanced_recognition
-                # to locate the item name in the image and store coordinates in item.location
+                # For LabReport chunks, use OCR to locate items and store coordinates
                 # 通过环境变量 ENABLE_OCR_VL_TABLE 控制，默认为 true
                 if os.environ.get("ENABLE_OCR_VL_TABLE", "true").lower() == "true":
                     await self._process_qwen_ocr_vl_table(ck)
@@ -167,12 +166,17 @@ class Extractor(ProcessBase, LLM):
             if classify_data.get("type") != "LabReport":
                 return
 
-            # ── Step 2: Check extracted_data has exactly 1 item ──
+            # ── Step 2: Check extracted_data items count ──
             extracted_raw = ck.get(self._param.field_name, "")
             if not extracted_raw:
                 return
             extracted_data = json.loads(extracted_raw) if isinstance(extracted_raw, str) else extracted_raw
             items = extracted_data.get("items", [])
+
+            # Route to multi-table handler if >1 items
+            if len(items) > 1:
+                #await self._process_qwen_ocr_vl_multi_table(ck)
+                return
             if len(items) != 1:
                 return
 
@@ -224,7 +228,234 @@ class Extractor(ProcessBase, LLM):
             b64_str = base64.b64encode(img_bytes).decode("utf-8")
             data_url = f"data:image/png;base64,{b64_str}"
 
-            # ── Step 5: DashScope advanced_recognition ──
+            # ── Step 5: Call advanced_recognition OCR ──
+            api_key = os.environ.get("DASHSCOPE_API_KEY", "sk-fad19b13dde544f6a5ca9e9725b133a3")
+            if not api_key:
+                logging.warning(f"{TAG} DASHSCOPE_API_KEY not set, skipping")
+                return
+
+            ocr_lines = self._call_advanced_recognition_ocr(data_url, api_key, TAG)
+            if not ocr_lines:
+                return
+
+            # ── Step 6: Build row_positions and HTML table ──
+            row_positions, html_table = self._build_row_positions_and_html(
+                items, ocr_lines, page_num, page_w, page_h, TAG
+            )
+
+            if row_positions:
+                ck["row_positions"] = row_positions
+                ck["positions"] = []
+                ck["content_with_weight"] = html_table
+                logging.info(f"{TAG} row_positions={len(row_positions)} rows")
+                logging.info(f"{TAG} content_with_weight={html_table[:100]}...")
+
+                # Update extracted_data
+                ck[self._param.field_name] = json.dumps(extracted_data, ensure_ascii=False)
+
+                elapsed = time.time() - t_start
+                logging.info(f"{TAG} ═══ DONE ═══ total_time={elapsed:.1f}s")
+            else:
+                all_ocr_texts = [line.get("text", "")[:80] for line in ocr_lines if line.get("text")]
+                logging.warning(
+                    f"{TAG} Could not locate '{item_name}' in OCR results\n"
+                    f"{TAG} OCR texts ({len(all_ocr_texts)}):\n" +
+                    "\n".join(f"{TAG}   [{i}] {t}" for i, t in enumerate(all_ocr_texts[:15]))
+                )
+
+        except json.JSONDecodeError as e:
+            logging.warning(f"{TAG} JSON parse error: {e}")
+        except Exception:
+            logging.exception(f"{TAG} Unexpected error")
+
+    def _call_advanced_recognition_ocr(self, data_url: str, api_key: str, TAG: str) -> list:
+        """Call advanced_recognition OCR and return parsed ocr_lines.
+
+        Returns:
+            list: OCR lines with text and coordinates, or empty list on failure.
+        """
+        import dashscope
+        import time
+
+        dashscope.base_http_api_url = "https://dashscope.aliyuncs.com/api/v1"
+
+        img_content = {
+            "image": data_url,
+            "min_pixels": 32 * 32 * 64,
+            "max_pixels": 32 * 32 * 8192,
+            "enable_rotate": False,
+        }
+        messages = [{"role": "user", "content": [img_content]}]
+        logging.info(f"{TAG} advanced_recognition OCR call start")
+
+        t_ocr = time.time()
+        resp = dashscope.MultiModalConversation.call(
+            api_key=api_key,
+            model="qwen-vl-ocr-2025-11-20",
+            messages=messages,
+            ocr_options={"task": "advanced_recognition"},
+        )
+        ocr_elapsed = time.time() - t_ocr
+        logging.info(f"{TAG} advanced_recognition status={resp.status_code}, elapsed={ocr_elapsed:.1f}s")
+
+        if resp.status_code != 200:
+            logging.warning(f"{TAG} advanced_recognition failed: {resp.code} - {resp.message}")
+            return []
+
+        content = resp["output"]["choices"][0]["message"]["content"]
+        raw_text = content[0].get("text", "") if content else ""
+        if not isinstance(raw_text, str):
+            logging.warning(f"{TAG} invalid response type={type(raw_text)}")
+            return []
+
+        # Strip markdown fences
+        raw_text = raw_text.strip()
+        if raw_text.startswith("```"):
+            raw_text = re.sub(r"^```(?:json|JSON)?\s*\n?", "", raw_text)
+            raw_text = re.sub(r"\n?```\s*$", "", raw_text)
+            raw_text = raw_text.strip()
+
+        # Parse JSON
+        try:
+            ocr_lines = json.loads(raw_text)
+        except json.JSONDecodeError as e:
+            logging.warning(f"{TAG} OCR JSON parse error: {e}")
+            return []
+
+        if not isinstance(ocr_lines, list):
+            logging.warning(f"{TAG} result is not a list, type={type(ocr_lines)}")
+            return []
+
+        logging.info(f"{TAG} parsed {len(ocr_lines)} OCR lines")
+        return ocr_lines
+
+    def _build_row_positions_and_html(
+        self,
+        items: list,
+        ocr_lines: list,
+        page_num: int,
+        page_w: float,
+        page_h: float,
+        TAG: str,
+    ) -> tuple:
+        """Match items to OCR coordinates and build HTML table.
+
+        Returns:
+            tuple: (row_positions, html_table)
+        """
+        scale_x = page_w / 1000.0
+        scale_y = page_h / 1000.0
+        row_positions = []
+
+        for item in items:
+            item_name = item.get("name", "") or item.get("item_code", "")
+            if not item_name:
+                continue
+            location = self._find_name_location(item_name, ocr_lines)
+            if location:
+                if len(location) == 5:
+                    location = Extractor._rotate_rect_to_4corners(location)
+                if len(location) >= 8:
+                    xs = [location[0], location[2], location[4], location[6]]
+                    ys = [location[1], location[3], location[5], location[7]]
+                    left = min(xs) * scale_x
+                    right = max(xs) * scale_x
+                    top = min(ys) * scale_y
+                    bottom = max(ys) * scale_y
+                    row_positions.append([page_num + 1, left, right, top, bottom])
+                    logging.info(f"{TAG} '{item_name}' -> [{page_num + 1}, {left:.1f}, {right:.1f}, {top:.1f}, {bottom:.1f}]")
+            else:
+                logging.warning(f"{TAG} could not locate '{item_name}'")
+
+        # Build HTML table
+        html_rows = []
+        for it in items:
+            cells = [
+                it.get("name", ""),
+                it.get("item_code", ""),
+                it.get("value", ""),
+                it.get("unit", ""),
+                it.get("reference_range", ""),
+                it.get("abnormal", ""),
+            ]
+            html_rows.append("<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
+        html_table = "<table>" + "".join(html_rows) + "</table>"
+
+        return row_positions, html_table
+
+    async def _process_qwen_ocr_vl_multi_table(self, ck: dict):
+        """For LabReport chunks with multiple items (>1), use DashScope
+        document_parsing to extract LaTeX content, then use LLM to parse JSON.
+
+        Flow:
+        1. document_parsing OCR → LaTeX content
+        2. Save LaTeX to content_with_weight
+        3. Reuse existing prompt to parse LaTeX → JSON → extracted_data
+        """
+        TAG = "[Extractor._qwen-vl-ocr-multi-table]"
+        try:
+            import time
+            t_start = time.time()
+
+            # ── Step 1: Check type == LabReport with >1 items ──
+            classify_raw = ck.get("classify_result_tks", "")
+            if not classify_raw:
+                return
+            classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) else classify_raw
+            if classify_data.get("type") != "LabReport":
+                return
+
+            extracted_raw = ck.get(self._param.field_name, "")
+            if not extracted_raw:
+                return
+            extracted_data = json.loads(extracted_raw) if isinstance(extracted_raw, str) else extracted_raw
+            items = extracted_data.get("items", [])
+            if len(items) <= 1:
+                # Single item handled by _process_qwen_ocr_vl_table
+                return
+
+            logging.info(
+                f"{TAG} ═══ START ═══ type=LabReport, items={len(items)}, "
+                f"doc_id={ck.get('doc_id')}, "
+                f"img_id={ck.get('img_id', '')[:40]}"
+            )
+
+            # ── Step 2: Render page image at 200 DPI ──
+            import fitz
+            from api.db.services.file2document_service import File2DocumentService
+
+            doc_id = self._canvas._doc_id
+            positions = ck.get("positions", [])
+            page_num = positions[0][0] if positions and isinstance(positions[0], (list, tuple)) and positions[0] else 1
+
+            b, n = File2DocumentService.get_storage_address(doc_id=doc_id)
+            pdf_bytes = settings.STORAGE_IMPL.get(b, n)
+            if not pdf_bytes:
+                logging.warning(f"{TAG} Step2: Failed to get PDF for doc_id={doc_id}")
+                return
+
+            pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+            if page_num < 0 or page_num >= len(pdf_doc):
+                logging.warning(f"{TAG} Step2: page_num={page_num} out of range (total={len(pdf_doc)})")
+                pdf_doc.close()
+                return
+
+            page = pdf_doc[page_num]
+            page_w = page.rect.width
+            page_h = page.rect.height
+            dpi = 200
+            zoom = dpi / 72.0
+            mat = fitz.Matrix(zoom, zoom)
+            pix = page.get_pixmap(matrix=mat)
+            img_bytes = pix.tobytes("png")
+            pdf_doc.close()
+            logging.info(f"{TAG} Step2: page_num={page_num}, page_rect={page_w:.0f}x{page_h:.0f}, dpi={dpi}, img_size=({pix.width}x{pix.height})")
+
+            # ── Step 3: Convert to base64 data URL ──
+            b64_str = base64.b64encode(img_bytes).decode("utf-8")
+            data_url = f"data:image/png;base64,{b64_str}"
+
+            # ── Step 4: DashScope document_parsing OCR ──
             import dashscope
             dashscope.base_http_api_url = "https://dashscope.aliyuncs.com/api/v1"
             api_key = os.environ.get("DASHSCOPE_API_KEY", "sk-fad19b13dde544f6a5ca9e9725b133a3")
@@ -235,98 +466,111 @@ class Extractor(ProcessBase, LLM):
             img_content = {
                 "image": data_url,
                 "min_pixels": 32 * 32 * 64,
-                "max_pixels": 32 * 32 * 8192,
-                "enable_rotate": False,
+                "max_pixels": 30720000,
             }
             messages = [{"role": "user", "content": [img_content]}]
             logging.info(
-                f"{TAG} Step5: ═══ OCR INPUT ═══\n"
-                f"{TAG} Step5:   model=qwen-vl-ocr-2025-11-20\n"
-                f"{TAG} Step5:   ocr_options={{task: advanced_recognition}}\n"
-                f"{TAG} Step5:   image_size=({pix.width}x{pix.height}), png_bytes={len(img_bytes)}\n"
-                f"{TAG} Step5:   item_name='{item_name}'"
+                f"{TAG} Step4: ═══ OCR INPUT ═══\n"
+                f"{TAG} Step4:   model=qwen-vl-ocr-2025-11-20\n"
+                f"{TAG} Step4:   ocr_options={{task: document_parsing}}\n"
+                f"{TAG} Step4:   image_size=({pix.width}x{pix.height}), png_bytes={len(img_bytes)}"
             )
             t_ocr = time.time()
             resp = dashscope.MultiModalConversation.call(
                 api_key=api_key,
                 model="qwen-vl-ocr-2025-11-20",
                 messages=messages,
-                ocr_options={"task": "advanced_recognition"},
+                ocr_options={"task": "document_parsing"},
             )
             ocr_elapsed = time.time() - t_ocr
-            logging.info(f"{TAG} Step5: ═══ OCR OUTPUT ═══ status={resp.status_code}, elapsed={ocr_elapsed:.1f}s")
+            logging.info(f"{TAG} Step4: ═══ OCR OUTPUT ═══ status={resp.status_code}, elapsed={ocr_elapsed:.1f}s")
+
             if resp.status_code != 200:
-                logging.warning(f"{TAG} Step5: failed: {resp.code} - {resp.message}")
+                logging.warning(f"{TAG} Step4: failed: {resp.code} - {resp.message}")
                 return
 
             content = resp["output"]["choices"][0]["message"]["content"]
-            raw_text = content[0].get("text", "") if content else ""
-            if not isinstance(raw_text, str):
-                logging.warning(f"{TAG} Step5: invalid response type={type(raw_text)}")
+            latex_content = content[0].get("text", "") if content else ""
+            latex_content = latex_content.strip()
+            logging.info(f"{TAG} Step4: latex_content_len={len(latex_content)}")
+            logging.info(f"{TAG} Step4: latex_preview:\n{latex_content[:1000]}")
+
+            if not latex_content:
+                logging.warning(f"{TAG} Step4: empty LaTeX content")
                 return
 
-            # Strip markdown fences
-            raw_text = raw_text.strip()
-            if raw_text.startswith("```"):
-                raw_text = re.sub(r"^```(?:json|JSON)?\s*\n?", "", raw_text)
-                raw_text = re.sub(r"\n?```\s*$", "", raw_text)
-                raw_text = raw_text.strip()
+            # ── Step 5: Save LaTeX to content_with_weight ──
+            ck["content_with_weight"] = latex_content
+            logging.info(f"{TAG} Step5: content_with_weight saved (len={len(latex_content)})")
 
-            # ── Step 6: Parse OCR lines ──
-            ocr_lines = json.loads(raw_text)
-            if not isinstance(ocr_lines, list):
-                logging.warning(f"{TAG} Step6: result is not a list, type={type(ocr_lines)}")
+            # ── Step 6: Reuse existing prompt to parse LaTeX → JSON ──
+            # Build the message with LaTeX content for LLM extraction
+            # Use the same input-key discovery as _process_qwen_ocr_vl_text
+            # so that the prompt template placeholder (e.g. {text}) is
+            # correctly replaced with the LaTeX content.
+            inputs = self.get_input_elements()
+            chunks_key = next((k for k, v in inputs.items() if isinstance(v.get("value"), list)), "text")
+            ck["text"] = latex_content
+            args = {chunks_key: latex_content}
+            for _fn, _fv in ck.items():
+                if _fn not in ("text", "image", "positions", "img_id", "id", "doc_id", "mom"):
+                    args[_fn] = _fv
+            msg, sys_prompt = self._sys_prompt_and_msg([], args)
+            msg.insert(0, {"role": "system", "content": sys_prompt})
+
+            # Debug: log LLM input
+            logging.info(f"{TAG} Step6: ═══ LLM INPUT ═══")
+            logging.info(f"{TAG} Step6:   chunks_key='{chunks_key}', latex_len={len(latex_content)}")
+            logging.info(f"{TAG} Step6:   sys_prompt (len={len(sys_prompt)}):\n{sys_prompt[:500]}")
+            for _mi, _m in enumerate(msg):
+                _role = _m.get("role", "")
+                _content = _m.get("content", "")
+                if isinstance(_content, str):
+                    logging.info(f"{TAG} Step6:   msg[{_mi}] role={_role} content_len={len(_content)}:\n{_content[:800]}")
+                else:
+                    logging.info(f"{TAG} Step6:   msg[{_mi}] role={_role} content={type(_content)}")
+
+            t_llm = time.time()
+            parsed_json = strip_markdown_json_fence(await self._generate_async(msg))
+            llm_elapsed = time.time() - t_llm
+            logging.info(f"{TAG} Step6: ═══ LLM OUTPUT ═══ elapsed={llm_elapsed:.1f}s, len={len(parsed_json)}")
+            logging.info(f"{TAG} Step6: raw_output:\n{parsed_json[:1000]}")
+
+            # Update extracted_data
+            ck[self._param.field_name] = parsed_json
+
+            # Verify the parsed result
+            try:
+                new_extracted = json.loads(parsed_json)
+                new_items = new_extracted.get("items", [])
+                logging.info(f"{TAG} Step6: parsed {len(new_items)} items")
+            except json.JSONDecodeError as e:
+                logging.warning(f"{TAG} Step6: JSON parse error: {e}")
+                new_items = []
+
+            if not new_items:
+                logging.warning(f"{TAG} Step6: no items to process")
                 return
 
-            logging.info(f"{TAG} Step6: {len(ocr_lines)} OCR lines")
-            for _li, _line in enumerate(ocr_lines):
-                _text = _line.get("text", "")
-                _coord = _line.get("rotate_rect") or _line.get("bbox")
-                logging.info(f"{TAG} Step6:   [{_li:02d}] text='{_text[:60]}' coord={_coord}")
+            # ── Step 7: Call advanced_recognition OCR to get coordinates ──
+            ocr_lines = self._call_advanced_recognition_ocr(data_url, api_key, TAG)
+            if not ocr_lines:
+                return
 
-            # ── Step 7: Find matching line for item_name ──
-            location = self._find_name_location(item_name, ocr_lines)
-            if location:
-                logging.info(f"{TAG} Step7: Found '{item_name}' location={location}")
+            # ── Step 8: Build row_positions and HTML table ──
+            row_positions, html_table = self._build_row_positions_and_html(
+                new_items, ocr_lines, page_num, page_w, page_h, TAG
+            )
 
-                # ── Step 8: Convert location → bbox → PDF points → row_positions ──
-                scale_x = page_w / 1000.0
-                scale_y = page_h / 1000.0
-                if len(location) == 5:
-                    location = Extractor._rotate_rect_to_4corners(location)
-                if len(location) >= 8:
-                    xs = [location[0], location[2], location[4], location[6]]
-                    ys = [location[1], location[3], location[5], location[7]]
-                    left = min(xs) * scale_x
-                    right = max(xs) * scale_x
-                    top = min(ys) * scale_y
-                    bottom = max(ys) * scale_y
-                    ck["row_positions"] = [[page_num+1, left, right, top, bottom]]
-                    ck["positions"] = []
-                    logging.info(f"{TAG} Step8: row_positions={ck['row_positions']}, positions=[]")
-
-                # ── Step 9: Build HTML table from items → content_with_weight ──
-                html_rows = []
-                for it in items:
-                    cells = [it.get("name", ""),it.get("item_code", ""), it.get("value", ""), it.get("unit", ""),
-                             it.get("reference_range", ""), it.get("abnormal", "")]
-                    html_rows.append("<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
-                html_table = "<table>" + "".join(html_rows) + "</table>"
+            if row_positions:
+                ck["row_positions"] = row_positions
+                ck["positions"] = []
                 ck["content_with_weight"] = html_table
-                logging.info(f"{TAG} Step9: content_with_weight={html_table[:100]}...")
+                logging.info(f"{TAG} row_positions={len(row_positions)} rows")
+                logging.info(f"{TAG} content_with_weight={html_table[:100]}...")
 
-                # Update extracted_data
-                ck[self._param.field_name] = json.dumps(extracted_data, ensure_ascii=False)
-
-                elapsed = time.time() - t_start
-                logging.info(f"{TAG} ═══ DONE ═══ total_time={elapsed:.1f}s")
-            else:
-                all_ocr_texts = [line.get("text", "")[:80] for line in ocr_lines if line.get("text")]
-                logging.warning(
-                    f"{TAG} Step7: Could not locate '{item_name}' in OCR results\n"
-                    f"{TAG} Step7: OCR texts ({len(all_ocr_texts)}):\n" +
-                    "\n".join(f"{TAG} Step7:   [{i}] {t}" for i, t in enumerate(all_ocr_texts[:15]))
-                )
+            elapsed = time.time() - t_start
+            logging.info(f"{TAG} ═══ DONE ═══ total_time={elapsed:.1f}s, items={len(new_items)}, coords={len(row_positions)}")
 
         except json.JSONDecodeError as e:
             logging.warning(f"{TAG} JSON parse error: {e}")
@@ -460,15 +704,13 @@ class Extractor(ProcessBase, LLM):
                 _coord = _line.get("rotate_rect") or _line.get("bbox")
                 logging.info(f"{TAG} Step3:   [{_li:02d}] text='{_text[:60]}' coord={_coord}")
 
-            # ── Step 4: Assemble OCR text lines → update content_with_weight ──
+            # ── Step 4: Assemble OCR text lines ──
             ocr_assembled_text = "\n".join(
                 line.get("text", "") for line in ocr_lines if line.get("text")
             )
             old_content_len = len(ck.get("content_with_weight", ""))
-            ck["content_with_weight"] = ocr_assembled_text
-            ck["text"] = ocr_assembled_text
             logging.info(
-                f"{TAG} Step4: Updated content ({old_content_len}→{len(ocr_assembled_text)} chars)\n"
+                f"{TAG} Step4: Assembled content ({old_content_len}→{len(ocr_assembled_text)} chars)\n"
                 f"{TAG} Step4: preview:\n{ocr_assembled_text[:500]}"
             )
 
@@ -501,7 +743,6 @@ class Extractor(ProcessBase, LLM):
                 f"result_len={len(extracted_json_str)}"
             )
             logging.info(f"{TAG} Step5: raw_output:\n{extracted_json_str[:1000]}")
-            ck[self._param.field_name] = extracted_json_str
 
             # ── Step 6: Parse extracted JSON ──
             try:
@@ -509,6 +750,16 @@ class Extractor(ProcessBase, LLM):
             except json.JSONDecodeError as e:
                 logging.warning(f"{TAG} JSON parse error: {e}, raw={extracted_json_str[:200]}")
                 return
+
+            # 防御：LLM 有时返回 JSON 数组而非对象
+            if isinstance(extracted_data, list):
+                logging.warning(f"{TAG} extracted_data is list (len={len(extracted_data)}), skip saves")
+                return
+
+            # ── 保存操作（仅在 extracted_data 为有效 dict 时生效） ──
+            ck["content_with_weight"] = ocr_assembled_text
+            ck["text"] = ocr_assembled_text
+            ck[self._param.field_name] = extracted_json_str
 
             # ── Step 6a: Update encounter_date → classify_result_tks ──
             encounter_date = extracted_data.get("encounter_date")

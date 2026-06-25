@@ -172,23 +172,25 @@ class Extractor(ProcessBase, LLM):
                 return
             extracted_data = json.loads(extracted_raw) if isinstance(extracted_raw, str) else extracted_raw
             items = extracted_data.get("items", [])
-
-            # Route to multi-table handler if >1 items
-            if len(items) > 1:
-                #await self._process_qwen_ocr_vl_multi_table(ck)
+            if not items:
                 return
-            if len(items) != 1:
-                return
-
-            item = items[0]
-            item_name = item.get("name", "") or item.get("item_code", "")
-            if not item_name:
+            # if len(items) > 1:
+            #     #await self._process_qwen_ocr_vl_multi_table(ck)
+            #     return
+            
+            # 收集所有 item 的 name（支持多 item 定位）
+            item_names = [
+                it.get("name", "") or it.get("item_code", "")
+                for it in items
+            ]
+            item_names = [n for n in item_names if n]
+            if not item_names:
                 return
 
             logging.info(
                 f"{TAG} ═══ START ═══ type=LabReport, "
                 f"doc_id={ck.get('doc_id')}, "
-                f"item_name='{item_name}', "
+                f"items={len(items)}, names={item_names[:5]}, "
                 f"img_id={ck.get('img_id', '')[:40]}"
             )
 
@@ -197,8 +199,14 @@ class Extractor(ProcessBase, LLM):
             from api.db.services.file2document_service import File2DocumentService
 
             doc_id = self._canvas._doc_id
-            positions = ck.get("positions", [])
+            positions = ck.get("row_positions", [])
             page_num = positions[0][0] if positions and isinstance(positions[0], (list, tuple)) and positions[0] else 1
+            # 多页 chunk 不支持单页 OCR 定位，直接跳过
+            if positions:
+                page_nums = {int(p[0]) for p in positions if isinstance(p, (list, tuple)) and p}
+                if len(page_nums) > 1:
+                    logging.info(f"{TAG} Step3: multi-page chunk (pages={page_nums}), skipping")
+                    return
 
             b, n = File2DocumentService.get_storage_address(doc_id=doc_id)
             pdf_bytes = settings.STORAGE_IMPL.get(b, n)
@@ -613,6 +621,12 @@ class Extractor(ProcessBase, LLM):
             doc_id = self._canvas._doc_id
             positions = ck.get("positions", [])
             page_num = int(positions[0][0]) if positions and isinstance(positions[0], (list, tuple)) and positions[0] else 0
+            # 多页 chunk 不支持单页 OCR 定位，直接跳过
+            if positions:
+                page_nums = {int(p[0]) for p in positions if isinstance(p, (list, tuple)) and p}
+                if len(page_nums) > 1:
+                    logging.info(f"{TAG} Step2: multi-page chunk (pages={page_nums}), skipping")
+                    return
             logging.info(f"{TAG} Step2: page_num={page_num}, doc_id={doc_id}")
 
             b, n = File2DocumentService.get_storage_address(doc_id=doc_id)

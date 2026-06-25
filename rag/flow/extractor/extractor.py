@@ -201,6 +201,7 @@ class Extractor(ProcessBase, LLM):
             doc_id = self._canvas._doc_id
             positions = ck.get("row_positions", [])
             page_num = positions[0][0] if positions and isinstance(positions[0], (list, tuple)) and positions[0] else 1
+            page_num = page_num - 1
             # 多页 chunk 不支持单页 OCR 定位，直接跳过
             if positions:
                 page_nums = {int(p[0]) for p in positions if isinstance(p, (list, tuple)) and p}

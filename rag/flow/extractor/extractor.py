@@ -635,9 +635,49 @@ class Extractor(ProcessBase, LLM):
             zoom = dpi / 72.0
             mat = fitz.Matrix(zoom, zoom)
             pix = page.get_pixmap(matrix=mat)
-            img_bytes = pix.tobytes("png")
-            pdf_doc.close()
             logging.info(f"{TAG} Step2: page_rect={page_rect}, dpi={dpi}, img_size=({pix.width}x{pix.height})")
+
+            # ── Step 2a: PrescriptionRecord/MedicationRecord 裁剪 chunk 区域 ──
+            crop_offset_x = 0.0  # PDF points
+            crop_offset_y = 0.0
+            crop_w = page_w
+            crop_h = page_h
+            if rec_type in ("PrescriptionRecord", "MedicationRecord") and positions:
+                crop_left = min(float(p[-4]) for p in positions if len(p) >= 5)
+                crop_right = max(float(p[-3]) for p in positions if len(p) >= 5)
+                crop_top = min(float(p[-2]) for p in positions if len(p) >= 5)
+                crop_bottom = max(float(p[-1]) for p in positions if len(p) >= 5)
+                crop_offset_x = crop_left
+                crop_offset_y = crop_top
+                crop_w = crop_right - crop_left
+                crop_h = crop_bottom - crop_top
+                # PDF points → pixels
+                px_l = int(crop_left * zoom)
+                px_t = int(crop_top * zoom)
+                px_r = int(crop_right * zoom)
+                px_b = int(crop_bottom * zoom)
+                px_l = max(0, px_l)
+                px_t = max(0, px_t)
+                px_r = min(pix.width, px_r)
+                px_b = min(pix.height, px_b)
+                if px_r > px_l and px_b > px_t:
+                    from PIL import Image
+                    import io
+                    img = Image.open(io.BytesIO(pix.tobytes("png")))
+                    img = img.crop((px_l, px_t, px_r, px_b))
+                    buf = io.BytesIO()
+                    img.save(buf, format="PNG")
+                    img_bytes = buf.getvalue()
+                    logging.info(
+                        f"{TAG} Step2a: Cropped to [{crop_left:.0f},{crop_top:.0f},{crop_right:.0f},{crop_bottom:.0f}] pts "
+                        f"\u2192 px({px_l},{px_t},{px_r},{px_b}), img=({img.width}x{img.height})"
+                    )
+                else:
+                    logging.warning(f"{TAG} Step2a: Invalid crop bbox, using full page")
+                    img_bytes = pix.tobytes("png")
+            else:
+                img_bytes = pix.tobytes("png")
+            pdf_doc.close()
 
             b64_str = base64.b64encode(img_bytes).decode("utf-8")
             data_url = f"data:image/png;base64,{b64_str}"
@@ -777,8 +817,8 @@ class Extractor(ProcessBase, LLM):
             # OCR 坐标是 1000-unit 归一化，需转换为 PDF 点坐标 bbox
             # 每个 position 格式: [page_num, left, right, top, bottom] (5元素)
             new_positions = []
-            scale_x = page_w / 1000.0  # 1000-unit → PDF points X
-            scale_y = page_h / 1000.0  # 1000-unit → PDF points Y
+            scale_x = crop_w / 1000.0  # 1000-unit → PDF points X (relative to crop region)
+            scale_y = crop_h / 1000.0  # 1000-unit → PDF points Y (relative to crop region)
             for _li, _line in enumerate(ocr_lines):
                 _text = _line.get("text", "")
                 _coord = _line.get("rotate_rect") or _line.get("bbox")
@@ -788,13 +828,13 @@ class Extractor(ProcessBase, LLM):
                 if len(_coord) == 5:
                     _coord = Extractor._rotate_rect_to_4corners(_coord)
                 if len(_coord) >= 8:
-                    # 4角坐标 → bbox (left, right, top, bottom)
+                    # 4角坐标 → bbox (left, right, top, bottom) + crop offset
                     xs = [_coord[0], _coord[2], _coord[4], _coord[6]]
                     ys = [_coord[1], _coord[3], _coord[5], _coord[7]]
-                    left = min(xs) * scale_x
-                    right = max(xs) * scale_x
-                    top = min(ys) * scale_y
-                    bottom = max(ys) * scale_y
+                    left = min(xs) * scale_x + crop_offset_x
+                    right = max(xs) * scale_x + crop_offset_x
+                    top = min(ys) * scale_y + crop_offset_y
+                    bottom = max(ys) * scale_y + crop_offset_y
                     pos_entry = [page_num, left, right, top, bottom]
                     new_positions.append(pos_entry)
 

@@ -586,10 +586,15 @@ class Extractor(ProcessBase, LLM):
             logging.exception(f"{TAG} Unexpected error")
 
     async def _process_qwen_ocr_vl_text(self, ck: dict):
-        """For OutpatientRecord chunks:
-        Step 1: qwen-vl-ocr (advanced_recognition) → text + coordinates (一次调用)
-        Step 2: Assemble OCR text → LLM → extracted_data JSON
-        Step 3: Match extracted JSON values to OCR coordinates
+        """For OutpatientRecord chunks (supports multi-page):
+        Step 1: Check type (skip LabReport)
+        Step 2: Group positions by page → render + crop each page image
+        Step 3: qwen-vl-ocr per page → accumulate text + coordinates
+        Step 4: Log assembled OCR text
+        Step 5: LLM extraction on combined text → extracted_data JSON
+        Step 6: Parse extracted JSON + update encounter_date
+        Step 7: Convert OCR coordinates to PDF bbox per page
+        Step 8: Save results
         """
         TAG = "[Extractor._qwen-vl-ocr-text]"
         try:
@@ -614,20 +619,22 @@ class Extractor(ProcessBase, LLM):
                 f"content_len={len(content)}"
             )
 
-            # ── Step 2: Render page image at 200 DPI ──
+            # ── Step 2: Render each page at 200 DPI + crop ──
             import fitz
             from api.db.services.file2document_service import File2DocumentService
 
             doc_id = self._canvas._doc_id
             positions = ck.get("positions", [])
-            page_num = int(positions[0][0]) if positions and isinstance(positions[0], (list, tuple)) and positions[0] else 0
-            # 多页 chunk 不支持单页 OCR 定位，直接跳过
-            if positions:
-                page_nums = {int(p[0]) for p in positions if isinstance(p, (list, tuple)) and p}
-                if len(page_nums) > 1:
-                    logging.info(f"{TAG} Step2: multi-page chunk (pages={page_nums}), skipping")
-                    return
-            logging.info(f"{TAG} Step2: page_num={page_num}, doc_id={doc_id}")
+            # 按页码分组 positions，支持多页 chunk 逐页 OCR
+            page_positions = {}
+            for p in positions:
+                if isinstance(p, (list, tuple)) and p:
+                    pn = int(p[0])
+                    page_positions.setdefault(pn, []).append(p)
+            sorted_pages = sorted(page_positions.keys())
+            logging.info(
+                f"{TAG} Step2: {len(sorted_pages)} page(s) {sorted_pages}, doc_id={doc_id}"
+            )
 
             b, n = File2DocumentService.get_storage_address(doc_id=doc_id)
             pdf_bytes = settings.STORAGE_IMPL.get(b, n)
@@ -636,67 +643,76 @@ class Extractor(ProcessBase, LLM):
                 return
 
             pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-            if page_num < 0 or page_num >= len(pdf_doc):
-                logging.warning(f"{TAG} Step2: page_num={page_num} out of range (total={len(pdf_doc)})")
-                pdf_doc.close()
-                return
-
-            page = pdf_doc[page_num]
-            page_w = page.rect.width  # PDF 宽度 (points)
-            page_h = page.rect.height  # PDF 高度 (points)
-            page_rect = f"{page_w:.0f}x{page_h:.0f}"
             dpi = 200
             zoom = dpi / 72.0
             mat = fitz.Matrix(zoom, zoom)
-            pix = page.get_pixmap(matrix=mat)
-            logging.info(f"{TAG} Step2: page_rect={page_rect}, dpi={dpi}, img_size=({pix.width}x{pix.height})")
 
-            # ── Step 2a: PrescriptionRecord/MedicationRecord 裁剪 chunk 区域 ──
-            crop_offset_x = 0.0  # PDF points
-            crop_offset_y = 0.0
-            crop_w = page_w
-            crop_h = page_h
-            if rec_type in ("PrescriptionRecord", "MedicationRecord") and positions:
-                crop_left = min(float(p[-4]) for p in positions if len(p) >= 5)
-                crop_right = max(float(p[-3]) for p in positions if len(p) >= 5)
-                crop_top = min(float(p[-2]) for p in positions if len(p) >= 5)
-                crop_bottom = max(float(p[-1]) for p in positions if len(p) >= 5)
-                crop_offset_x = crop_left
-                crop_offset_y = crop_top
-                crop_w = crop_right - crop_left
-                crop_h = crop_bottom - crop_top
-                # PDF points → pixels
-                px_l = int(crop_left * zoom)
-                px_t = int(crop_top * zoom)
-                px_r = int(crop_right * zoom)
-                px_b = int(crop_bottom * zoom)
-                px_l = max(0, px_l)
-                px_t = max(0, px_t)
-                px_r = min(pix.width, px_r)
-                px_b = min(pix.height, px_b)
-                if px_r > px_l and px_b > px_t:
-                    from PIL import Image
-                    import io
-                    img = Image.open(io.BytesIO(pix.tobytes("png")))
-                    img = img.crop((px_l, px_t, px_r, px_b))
-                    buf = io.BytesIO()
-                    img.save(buf, format="PNG")
-                    img_bytes = buf.getvalue()
-                    logging.info(
-                        f"{TAG} Step2a: Cropped to [{crop_left:.0f},{crop_top:.0f},{crop_right:.0f},{crop_bottom:.0f}] pts "
-                        f"\u2192 px({px_l},{px_t},{px_r},{px_b}), img=({img.width}x{img.height})"
-                    )
+            # 逐页渲染 + 裁剪 → 收集待 OCR 图片
+            all_page_ocr_lines = []  # [(page_num, ocr_lines), ...]
+            all_page_texts = []
+            page_img_data = []  # [(page_num, img_bytes, page_w, page_h, crop_offset_x, crop_offset_y, crop_w, crop_h), ...]
+
+            for pn in sorted_pages:
+                page_pos = page_positions[pn]
+                if pn < 0 or pn >= len(pdf_doc):
+                    logging.warning(f"{TAG} Step2: page_num={pn} out of range (total={len(pdf_doc)}), skipping")
+                    continue
+
+                page = pdf_doc[pn]
+                page_w = page.rect.width
+                page_h = page.rect.height
+                pix = page.get_pixmap(matrix=mat)
+                logging.info(
+                    f"{TAG} Step2: page={pn}, rect={page_w:.0f}x{page_h:.0f}, "
+                    f"img=({pix.width}x{pix.height}), positions={len(page_pos)}"
+                )
+
+                # 多页 chunk 或处方/药品记录 按该页 positions 最大框裁剪；其他单页不裁剪
+                crop_offset_x = 0.0
+                crop_offset_y = 0.0
+                crop_w = page_w
+                crop_h = page_h
+                if (len(sorted_pages) > 1 or rec_type in ("PrescriptionRecord", "MedicationRecord")) and page_pos:
+                    crop_left = min(float(pp[-4]) for pp in page_pos if len(pp) >= 5)
+                    crop_right = max(float(pp[-3]) for pp in page_pos if len(pp) >= 5)
+                    crop_top = min(float(pp[-2]) for pp in page_pos if len(pp) >= 5)
+                    crop_bottom = max(float(pp[-1]) for pp in page_pos if len(pp) >= 5)
+                    crop_offset_x = crop_left
+                    crop_offset_y = crop_top
+                    crop_w = crop_right - crop_left
+                    crop_h = crop_bottom - crop_top
+                    px_l = max(0, int(crop_left * zoom))
+                    px_t = max(0, int(crop_top * zoom))
+                    px_r = min(pix.width, int(crop_right * zoom))
+                    px_b = min(pix.height, int(crop_bottom * zoom))
+                    if px_r > px_l and px_b > px_t:
+                        from PIL import Image
+                        import io
+                        img = Image.open(io.BytesIO(pix.tobytes("png")))
+                        img = img.crop((px_l, px_t, px_r, px_b))
+                        buf = io.BytesIO()
+                        img.save(buf, format="PNG")
+                        img_bytes = buf.getvalue()
+                        logging.info(
+                            f"{TAG} Step2a: page={pn} cropped to "
+                            f"[{crop_left:.0f},{crop_top:.0f},{crop_right:.0f},{crop_bottom:.0f}] pts "
+                            f"\u2192 px({px_l},{px_t},{px_r},{px_b}), img=({img.width}x{img.height})"
+                        )
+                    else:
+                        logging.warning(f"{TAG} Step2a: page={pn} invalid crop bbox, using full page")
+                        img_bytes = pix.tobytes("png")
                 else:
-                    logging.warning(f"{TAG} Step2a: Invalid crop bbox, using full page")
                     img_bytes = pix.tobytes("png")
-            else:
-                img_bytes = pix.tobytes("png")
+
+                page_img_data.append((pn, img_bytes, page_w, page_h, crop_offset_x, crop_offset_y, crop_w, crop_h))
+
             pdf_doc.close()
 
-            b64_str = base64.b64encode(img_bytes).decode("utf-8")
-            data_url = f"data:image/png;base64,{b64_str}"
+            if not page_img_data:
+                logging.warning(f"{TAG} Step2: No valid pages to process")
+                return
 
-            # ── Step 3: DashScope advanced_recognition → text + coordinates (一次调用) ──
+            # ── Step 3: DashScope advanced_recognition → text + coordinates (逐页调用) ──
             import dashscope
             dashscope.base_http_api_url = "https://dashscope.aliyuncs.com/api/v1"
             api_key = os.environ.get("DASHSCOPE_API_KEY", "sk-fad19b13dde544f6a5ca9e9725b133a3")
@@ -704,67 +720,84 @@ class Extractor(ProcessBase, LLM):
                 logging.warning(f"{TAG} DASHSCOPE_API_KEY not set, skipping")
                 return
 
-            img_content = {
-                "image": data_url,
-                "min_pixels": 32 * 32 * 64,
-                "max_pixels": 30720000,
-                "enable_rotate": False,
-            }
-            messages = [{"role": "user", "content": [img_content]}]
-            logging.info(
-                f"{TAG} Step3: ═══ OCR INPUT ═══\n"
-                f"{TAG} Step3:   model=qwen-vl-ocr-2025-11-20\n"
-                f"{TAG} Step3:   ocr_options={{task: advanced_recognition}}\n"
-                f"{TAG} Step3:   image_size=({pix.width}x{pix.height}), png_bytes={len(img_bytes)}\n"
-                f"{TAG} Step3:   min_pixels={img_content['min_pixels']}, max_pixels={img_content['max_pixels']}\n"
-                f"{TAG} Step3:   enable_rotate={img_content['enable_rotate']}"
-            )
-            t_ocr = time.time()
-            resp = dashscope.MultiModalConversation.call(
-                api_key=api_key,
-                model="qwen-vl-ocr-2025-11-20",
-                messages=messages,
-                ocr_options={"task": "advanced_recognition"},
-            )
-            ocr_elapsed = time.time() - t_ocr
-            logging.info(f"{TAG} Step3: ═══ OCR OUTPUT ═══ status={resp.status_code}, elapsed={ocr_elapsed:.1f}s")
-            if resp.status_code != 200:
-                logging.warning(f"{TAG} Step3: failed: {resp.code} - {resp.message}")
+            # 逐页 OCR，累积文本和坐标
+            for pn, img_bytes, page_w, page_h, crop_offset_x, crop_offset_y, crop_w, crop_h in page_img_data:
+                b64_str = base64.b64encode(img_bytes).decode("utf-8")
+                data_url = f"data:image/png;base64,{b64_str}"
+
+                img_content = {
+                    "image": data_url,
+                    "min_pixels": 32 * 32 * 64,
+                    "max_pixels": 30720000,
+                    "enable_rotate": False,
+                }
+                messages = [{"role": "user", "content": [img_content]}]
+                logging.info(
+                    f"{TAG} Step3: ═══ OCR INPUT page={pn} ═══\n"
+                    f"{TAG} Step3:   model=qwen-vl-ocr-2025-11-20\n"
+                    f"{TAG} Step3:   png_bytes={len(img_bytes)}\n"
+                    f"{TAG} Step3:   min_pixels={img_content['min_pixels']}, max_pixels={img_content['max_pixels']}"
+                )
+                t_ocr = time.time()
+                resp = dashscope.MultiModalConversation.call(
+                    api_key=api_key,
+                    model="qwen-vl-ocr-2025-11-20",
+                    messages=messages,
+                    ocr_options={"task": "advanced_recognition"},
+                )
+                ocr_elapsed = time.time() - t_ocr
+                logging.info(
+                    f"{TAG} Step3: ═══ OCR OUTPUT page={pn} ═══ status={resp.status_code}, elapsed={ocr_elapsed:.1f}s"
+                )
+                if resp.status_code != 200:
+                    logging.warning(f"{TAG} Step3: page={pn} failed: {resp.code} - {resp.message}")
+                    continue
+
+                ocr_content = resp["output"]["choices"][0]["message"]["content"]
+                raw_ocr_text = ocr_content[0].get("text", "") if ocr_content else ""
+                if not isinstance(raw_ocr_text, str):
+                    logging.warning(f"{TAG} Step3: page={pn} invalid response type={type(raw_ocr_text)}")
+                    continue
+
+                raw_ocr_text_stripped = raw_ocr_text.strip()
+                if raw_ocr_text_stripped.startswith("```"):
+                    raw_ocr_text_stripped = re.sub(r"^```(?:json|JSON)?\s*\n?", "", raw_ocr_text_stripped)
+                    raw_ocr_text_stripped = re.sub(r"\n?```\s*$", "", raw_ocr_text_stripped)
+                    raw_ocr_text_stripped = raw_ocr_text_stripped.strip()
+                logging.info(
+                    f"{TAG} Step3: page={pn} raw_text_len={len(raw_ocr_text)}, "
+                    f"cleaned_len={len(raw_ocr_text_stripped)}"
+                )
+
+                page_ocr_lines = json.loads(raw_ocr_text_stripped)
+                if not isinstance(page_ocr_lines, list):
+                    logging.warning(f"{TAG} Step3: page={pn} result is not a list, type={type(page_ocr_lines)}")
+                    continue
+
+                logging.info(f"{TAG} Step3: page={pn} — {len(page_ocr_lines)} OCR lines")
+                for _li, _line in enumerate(page_ocr_lines):
+                    _text = _line.get("text", "")
+                    _coord = _line.get("rotate_rect") or _line.get("bbox")
+                    logging.info(f"{TAG} Step3:   page={pn} [{_li:02d}] text='{_text[:60]}' coord={_coord}")
+
+                all_page_ocr_lines.append((pn, page_ocr_lines, crop_offset_x, crop_offset_y, crop_w, crop_h))
+                page_text = "\n".join(line.get("text", "") for line in page_ocr_lines if line.get("text"))
+                all_page_texts.append(page_text)
+
+            if not all_page_texts:
+                logging.warning(f"{TAG} Step3: No OCR text from any page")
                 return
 
-            ocr_content = resp["output"]["choices"][0]["message"]["content"]
-            raw_ocr_text = ocr_content[0].get("text", "") if ocr_content else ""
-            if not isinstance(raw_ocr_text, str):
-                logging.warning(f"{TAG} Step3: invalid response type={type(raw_ocr_text)}")
-                return
+            ocr_lines = []  # accumulated raw lines (for coord conversion later)
+            for _, pl, *_ in all_page_ocr_lines:
+                ocr_lines.extend(pl)
+            ocr_assembled_text = "\n".join(all_page_texts)
 
-            raw_ocr_text_stripped = raw_ocr_text.strip()
-            if raw_ocr_text_stripped.startswith("```"):
-                raw_ocr_text_stripped = re.sub(r"^```(?:json|JSON)?\s*\n?", "", raw_ocr_text_stripped)
-                raw_ocr_text_stripped = re.sub(r"\n?```\s*$", "", raw_ocr_text_stripped)
-                raw_ocr_text_stripped = raw_ocr_text_stripped.strip()
-            logging.info(f"{TAG} Step3: raw_text_len={len(raw_ocr_text)}, cleaned_len={len(raw_ocr_text_stripped)}")
-            logging.info(f"{TAG} Step3: raw_text_preview:\n{raw_ocr_text_stripped[:1000]}")
-            raw_ocr_text = raw_ocr_text_stripped
-
-            ocr_lines = json.loads(raw_ocr_text)
-            if not isinstance(ocr_lines, list):
-                logging.warning(f"{TAG} Step3: result is not a list, type={type(ocr_lines)}")
-                return
-
-            logging.info(f"{TAG} Step3: OK — {len(ocr_lines)} OCR lines")
-            for _li, _line in enumerate(ocr_lines):
-                _text = _line.get("text", "")
-                _coord = _line.get("rotate_rect") or _line.get("bbox")
-                logging.info(f"{TAG} Step3:   [{_li:02d}] text='{_text[:60]}' coord={_coord}")
-
-            # ── Step 4: Assemble OCR text lines ──
-            ocr_assembled_text = "\n".join(
-                line.get("text", "") for line in ocr_lines if line.get("text")
-            )
+            # ── Step 4: Log assembled OCR text (already accumulated in Step 3) ──
             old_content_len = len(ck.get("content_with_weight", ""))
             logging.info(
-                f"{TAG} Step4: Assembled content ({old_content_len}→{len(ocr_assembled_text)} chars)\n"
+                f"{TAG} Step4: Assembled content ({old_content_len}→{len(ocr_assembled_text)} chars, "
+                f"{len(sorted_pages)} pages, {len(ocr_lines)} total OCR lines)\n"
                 f"{TAG} Step4: preview:\n{ocr_assembled_text[:500]}"
             )
 
@@ -828,29 +861,27 @@ class Extractor(ProcessBase, LLM):
                     logging.warning(f"{TAG} Step6a: Failed to update encounter_dates: {e}")
 
             # ── Step 7: 将 ocr_lines 坐标转为 bbox → PDF点坐标 → 存入 positions ──
-            # OCR 坐标是 1000-unit 归一化，需转换为 PDF 点坐标 bbox
+            # 逐页使用各自的 page_num 和 crop 参数进行坐标转换
             # 每个 position 格式: [page_num, left, right, top, bottom] (5元素)
             new_positions = []
-            scale_x = crop_w / 1000.0  # 1000-unit → PDF points X (relative to crop region)
-            scale_y = crop_h / 1000.0  # 1000-unit → PDF points Y (relative to crop region)
-            for _li, _line in enumerate(ocr_lines):
-                _text = _line.get("text", "")
-                _coord = _line.get("rotate_rect") or _line.get("bbox")
-                if not _text or not _coord:
-                    continue
-                # rotate_rect (5元素) → 4角坐标 (8元素)
-                if len(_coord) == 5:
-                    _coord = Extractor._rotate_rect_to_4corners(_coord)
-                if len(_coord) >= 8:
-                    # 4角坐标 → bbox (left, right, top, bottom) + crop offset
-                    xs = [_coord[0], _coord[2], _coord[4], _coord[6]]
-                    ys = [_coord[1], _coord[3], _coord[5], _coord[7]]
-                    left = min(xs) * scale_x + crop_offset_x
-                    right = max(xs) * scale_x + crop_offset_x
-                    top = min(ys) * scale_y + crop_offset_y
-                    bottom = max(ys) * scale_y + crop_offset_y
-                    pos_entry = [page_num, left, right, top, bottom]
-                    new_positions.append(pos_entry)
+            for pn, pl, cox, coy, cw, ch in all_page_ocr_lines:
+                scale_x = cw / 1000.0
+                scale_y = ch / 1000.0
+                for _li, _line in enumerate(pl):
+                    _text = _line.get("text", "")
+                    _coord = _line.get("rotate_rect") or _line.get("bbox")
+                    if not _text or not _coord:
+                        continue
+                    if len(_coord) == 5:
+                        _coord = Extractor._rotate_rect_to_4corners(_coord)
+                    if len(_coord) >= 8:
+                        xs = [_coord[0], _coord[2], _coord[4], _coord[6]]
+                        ys = [_coord[1], _coord[3], _coord[5], _coord[7]]
+                        left = min(xs) * scale_x + cox
+                        right = max(xs) * scale_x + cox
+                        top = min(ys) * scale_y + coy
+                        bottom = max(ys) * scale_y + coy
+                        new_positions.append([pn, left, right, top, bottom])
 
             # 更新 positions（ES: position_int）和清空 row_position_int
             ck["positions"] = new_positions
@@ -865,7 +896,7 @@ class Extractor(ProcessBase, LLM):
             logging.info(
                 f"{TAG} Step8:  ═══ DONE ═══ "
                 f"{len(new_positions)} positions stored, "
-                f"total_time={elapsed:.1f}s (OCR+LLM 2 calls)"
+                f"total_time={elapsed:.1f}s (OCR {len(sorted_pages)} page(s) + LLM)"
             )
 
         except json.JSONDecodeError as e:

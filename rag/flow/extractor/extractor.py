@@ -48,6 +48,7 @@ from rag.flow.base import ProcessBase, ProcessParamBase
 from rag.prompts.generator import run_toc_from_text
 from rag.utils.base64_image import id2image
 from common import settings
+from rag.flow.extractor import qwen30b_ocr
 
 
 class ExtractorParam(ProcessParamBase, LLMParam):
@@ -132,13 +133,19 @@ class Extractor(ProcessBase, LLM):
 
                 # For LabReport chunks, use OCR to locate items and store coordinates
                 # 通过环境变量 ENABLE_OCR_VL_TABLE 控制，默认为 true
-                if os.environ.get("ENABLE_OCR_VL_TABLE", "true").lower() == "true":
-                    await self._process_qwen_ocr_vl_table(ck)
+                #if os.environ.get("ENABLE_OCR_VL_TABLE", "true").lower() == "true":
+                #    await self._process_qwen_ocr_vl_table(ck)
 
                 # 除了LabReport以外 OCR 坐标提取，文本提取
                 # 通过环境变量 ENABLE_OCR_VL_TEXT 控制，默认为 false
-                if os.environ.get("ENABLE_OCR_VL_TEXT", "false").lower() == "true":
-                    await self._process_qwen_ocr_vl_text(ck)
+                #if os.environ.get("ENABLE_OCR_VL_TEXT", "false").lower() == "true":
+                #    await self._process_qwen_ocr_vl_text(ck)
+
+                # qwen3-vl-30b-instruct OCR: LabReport → 表格处理, 其他 → 文本处理
+                # 通过环境变量 ENABLE_QWEN30B_OCR 控制，默认为 true
+                if os.environ.get("ENABLE_QWEN30B_OCR", "true").lower() == "true":
+                    await qwen30b_ocr.process_table(self, ck)
+                    await qwen30b_ocr.process_text(self, ck)
 
                 prog += 1./len(chunks)
                 if i % (len(chunks)//100+1) == 1:

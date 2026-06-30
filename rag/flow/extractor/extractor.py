@@ -127,25 +127,42 @@ class Extractor(ProcessBase, LLM):
                 for _fn, _fv in ck.items():
                     if _fn not in ("text", "image", "positions", "img_id", "id", "doc_id", "mom"):
                         args[_fn] = _fv
-                msg, sys_prompt = self._sys_prompt_and_msg([], args)
-                msg.insert(0, {"role": "system", "content": sys_prompt})
-                ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
 
-                # For LabReport chunks, use OCR to locate items and store coordinates
-                # 通过环境变量 ENABLE_OCR_VL_TABLE 控制，默认为 true
-                #if os.environ.get("ENABLE_OCR_VL_TABLE", "true").lower() == "true":
-                #    await self._process_qwen_ocr_vl_table(ck)
+                # OCR 处理模式选择（通过 EXTRACTOR_TYPE 环境变量控制）
+                # - ENABLE_QWEN30B_OCR（默认）: qwen3-vl-30b-instruct，LabReport → 表格处理，其他 → 文本处理
+                # - ENABLE_OCR_VL: qwen-vl-ocr 原方案（LabReport 表格 + 非 LabReport 文本）
+                # - ENABLE_NONE: 不做 OCR 处理，走上游 LLM 提取
+                extractor_type = os.environ.get("EXTRACTOR_TYPE", "ENABLE_QWEN30B_OCR").upper()
 
-                # 除了LabReport以外 OCR 坐标提取，文本提取
-                # 通过环境变量 ENABLE_OCR_VL_TEXT 控制，默认为 false
-                #if os.environ.get("ENABLE_OCR_VL_TEXT", "false").lower() == "true":
-                #    await self._process_qwen_ocr_vl_text(ck)
+                if extractor_type == "ENABLE_NONE":
+                    # 无 OCR：直接用上游 LLM 提取结构化数据
+                    msg, sys_prompt = self._sys_prompt_and_msg([], args)
+                    msg.insert(0, {"role": "system", "content": sys_prompt})
+                    ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
 
-                # qwen3-vl-30b-instruct OCR: LabReport → 表格处理, 其他 → 文本处理
-                # 通过环境变量 ENABLE_QWEN30B_OCR 控制，默认为 true
-                if os.environ.get("ENABLE_QWEN30B_OCR", "true").lower() == "true":
-                    await qwen30b_ocr.process_table(self, ck)
-                    await qwen30b_ocr.process_text(self, ck)
+                elif extractor_type in ("ENABLE_QWEN30B_OCR", "ENABLE_OCR_VL"):
+                    # 判断类型：LabReport 走 table，其他走 text
+                    classify_raw = ck.get("classify_result_tks", "")
+                    classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
+                    rec_type = classify_data.get("type", "")
+                    is_lab_report = rec_type == "LabReport"
+
+                    if is_lab_report:
+                        # table 需要先有上游 LLM 提取结果（items → item_names）
+                        msg, sys_prompt = self._sys_prompt_and_msg([], args)
+                        msg.insert(0, {"role": "system", "content": sys_prompt})
+                        ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
+                        
+                        if extractor_type == "ENABLE_QWEN30B_OCR":
+                            await qwen30b_ocr.process_table(self, ck)
+                        else:
+                            await self._process_qwen_ocr_vl_table(ck)
+                    else:
+                        # text 处理：OCR 模块内部自带 LLM 提取
+                        if extractor_type == "ENABLE_QWEN30B_OCR":
+                            await qwen30b_ocr.process_text(self, ck)
+                        else:
+                            await self._process_qwen_ocr_vl_text(ck)
 
                 prog += 1./len(chunks)
                 if i % (len(chunks)//100+1) == 1:
@@ -165,15 +182,7 @@ class Extractor(ProcessBase, LLM):
             import time
             t_start = time.time()
 
-            # ── Step 1: Check type == LabReport ──
-            classify_raw = ck.get("classify_result_tks", "")
-            if not classify_raw:
-                return
-            classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) else classify_raw
-            if classify_data.get("type") != "LabReport":
-                return
-
-            # ── Step 2: Check extracted_data items count ──
+            # ── Step 1: Check extracted_data items count ──
             extracted_raw = ck.get(self._param.field_name, "")
             if not extracted_raw:
                 return
@@ -595,39 +604,25 @@ class Extractor(ProcessBase, LLM):
 
     async def _process_qwen_ocr_vl_text(self, ck: dict):
         """For OutpatientRecord chunks (supports multi-page):
-        Step 1: Check type (skip LabReport)
-        Step 2: Group positions by page → render + crop each page image
-        Step 3: qwen-vl-ocr per page → accumulate text + coordinates
-        Step 4: Log assembled OCR text
-        Step 5: LLM extraction on combined text → extracted_data JSON
-        Step 6: Parse extracted JSON + update encounter_date
-        Step 7: Convert OCR coordinates to PDF bbox per page
-        Step 8: Save results
+        Step 1: Group positions by page → render + crop each page image
+        Step 2: qwen-vl-ocr per page → accumulate text + coordinates
+        Step 3: Log assembled OCR text
+        Step 4: LLM extraction on combined text → extracted_data JSON
+        Step 5: Parse extracted JSON + update encounter_date
+        Step 6: Convert OCR coordinates to PDF bbox per page
+        Step 7: Save results
         """
         TAG = "[Extractor._qwen-vl-ocr-text]"
         try:
             import time
             t_start = time.time()
 
-            # ── Step 1: Check type == OutpatientRecord ──
+            # 获取记录类型（用于裁剪逻辑）
             classify_raw = ck.get("classify_result_tks", "")
-            if not classify_raw:
-                return
-            classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) else classify_raw
+            classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
             rec_type = classify_data.get("type", "")
-            # 如果是检验报告就不处理
-            if rec_type == "LabReport":
-                return
 
-            content = ck.get("content_with_weight", "")
-            logging.info(
-                f"{TAG} ═══ START ═══ type={rec_type}, "
-                f"doc_id={ck.get('doc_id')}, "
-                f"img_id={ck.get('img_id', '')[:40]}, "
-                f"content_len={len(content)}"
-            )
-
-            # ── Step 2: Render each page at 200 DPI + crop ──
+            # ── Step 1: Render each page at 200 DPI + crop ──
             import fitz
             from api.db.services.file2document_service import File2DocumentService
 

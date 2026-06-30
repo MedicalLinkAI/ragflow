@@ -26,18 +26,18 @@ TEXT_PROMPT = (
     "5. bbox为该行文字的最小包围框，坐标归一化到0-1000，格式[x1,y1,x2,y2]\n"
     "\n"
     "## 严格JSON格式要求\n"
-    "每个item必须是完整的JSON对象，包含text和bbox两个字段，缺一不可。\n"
+    "直接输出JSON数组，每个元素包含text和bbox两个字段。\n"
     "正确示例：\n"
-    '{"items": [\n'
+    '[\n'
     '  {"text": "性别：女", "bbox": [100, 200, 250, 230]},\n'
     '  {"text": "年龄：68岁", "bbox": [100, 250, 270, 280]},\n'
     '  {"text": "职业：农民", "bbox": [500, 210, 620, 231]}\n'
-    ']}\n'
+    ']\n'
     "错误示例（禁止省略字段名）：\n"
-    '{"items": [\n'
+    '[\n'
     '  {"text": "性别：女", "bbox": [100, 200, 250, 230]}, "职业：农民", "bbox": [500, 210, 620, 231]}\n'
-    ']}\n'
-    "请直接输出纯JSON，不要用markdown代码块包裹。"
+    ']\n'
+    "请直接输出纯JSON数组，不要用markdown代码块包裹。"
 )
 
 # ── 表格 Prompt（LabReport） ──
@@ -58,26 +58,27 @@ def _build_table_prompt(item_names: list) -> str:
         "4. text字段必须与给定的名称完全一致，不要修改或缩写\n"
         "\n"
         "## 严格JSON格式要求\n"
-        "每个item必须是完整的JSON对象，包含text和bbox两个字段，缺一不可。\n"
+        "直接输出JSON数组，每个元素包含text和bbox两个字段。\n"
         "正确示例：\n"
-        '{"items": [\n'
+        '[\n'
         '  {"text": "C反应蛋白", "bbox": [100, 200, 400, 230]},\n'
         '  {"text": "白细胞计数", "bbox": [100, 250, 400, 280]}\n'
-        ']}\n'
+        ']\n'
         "错误示例（禁止省略字段名）：\n"
-        '{"items": [\n'
+        '[\n'
         '  {"text": "C反应蛋白", "bbox": [100, 200, 400, 230]}, "白细胞计数", "bbox": [100, 250, 400, 280]}\n'
-        ']}\n'
-        "请直接输出纯JSON，不要用markdown代码块包裹。"
+        ']\n'
+        "请直接输出纯JSON数组，不要用markdown代码块包裹。"
     )
 
-API_ENDPOINT = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+API_ENDPOINT = os.environ.get("QWEN30B_OCR_API_ENDPOINT", "http://10.16.3.16:8090/v1/chat/completions")
+MODEL_NAME = os.environ.get("QWEN30B_OCR_MODEL", "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8")
 
 
 # ── API 调用 ──
 
 def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
-    """Call qwen3-vl-30b-a3b-instruct via DashScope OpenAI-compatible API.
+    """Call qwen3-vl-30b via OpenAI-compatible API (local vLLM or DashScope).
 
     Args:
         img_bytes: PNG image bytes.
@@ -90,20 +91,23 @@ def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
             elapsed: API call duration in seconds.
             status: "ok" or error description.
     """
-    api_key = os.environ.get("DASHSCOPE_API_KEY", "sk-fad19b13dde544f6a5ca9e9725b133a3")
+    api_key = os.environ.get("DASHSCOPE_API_KEY", "")
     b64 = base64.b64encode(img_bytes).decode()
     payload = {
-        "model": "qwen3-vl-30b-a3b-instruct",
+        "model": MODEL_NAME,
         "messages": [{"role": "user", "content": [
             {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
             {"type": "text", "text": prompt},
         ]}],
         "max_tokens": 8192,
-        "temperature": 0,
+        "temperature": 0.1,
     }
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
 
-    logging.info(f"{tag} API call start, img_bytes={len(img_bytes)}")
+    logging.info(f"{tag} API call start, endpoint={API_ENDPOINT}, model={MODEL_NAME}, img_bytes={len(img_bytes)}")
+    
     t0 = time.time()
     try:
         r = requests.post(API_ENDPOINT, json=payload, headers=headers, timeout=120)
@@ -114,7 +118,7 @@ def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     elapsed = time.time() - t0
 
     if r.status_code != 200:
-        logging.warning(f"{tag} API failed: HTTP {r.status_code}, body={r.text[:200]}")
+        logging.warning(f"{tag} API failed: HTTP {r.status_code}, body={r.text}")
         return None, elapsed, f"HTTP {r.status_code}"
 
     content = r.json()["choices"][0]["message"]["content"]
@@ -133,12 +137,20 @@ def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
         try:
             data = json_repair.loads(content)
         except Exception as e2:
-            logging.warning(f"{tag} json_repair also failed: {e2}, content[:200]={content[:200]}")
+            logging.warning(f"{tag} json_repair also failed: {e2}, content={content}")
             return None, elapsed, "JSON parse error"
 
-    raw_items = data.get("items", []) if isinstance(data, dict) else []
+    # 支持两种输出格式：{"items": [...]} 或直接 JSON 数组 [...]
+    if isinstance(data, dict):
+        raw_items = data.get("items", [])
+    elif isinstance(data, list):
+        raw_items = data
+    else:
+        raw_items = []
     valid_items = []
     for it in raw_items:
+        if not isinstance(it, dict):
+            continue  # 跳过非 dict 元素（如字符串数组）
         # 支持两种字段名：text（通用文本）或 name（表格结构化）
         text = it.get("name") or it.get("text", "")
         bbox = it.get("bbox") or it.get("bbox_2d")
@@ -173,12 +185,21 @@ def _render_page_image(ext, ck, tag, multi_page_skip=True):
     from common import settings
 
     doc_id = ext._canvas._doc_id
-    positions = ck.get("row_positions", []) or ck.get("positions", [])
-    if not positions:
+    # row_positions: 1-indexed page_num, positions: 0-indexed page_num
+    row_positions = ck.get("row_positions", [])
+    positions_list = ck.get("positions", [])
+    if row_positions:
+        positions = row_positions
+        is_row_positions = True
+    elif positions_list:
+        positions = positions_list
+        is_row_positions = False
+    else:
         return None
 
-    page_num = positions[0][0] if isinstance(positions[0], (list, tuple)) and positions[0] else 1
-    page_num = page_num - 1  # 0-based
+    page_num = positions[0][0] if isinstance(positions[0], (list, tuple)) and positions[0] else 0
+    if is_row_positions:
+        page_num = page_num - 1  # row_positions 是 1-indexed，转为 0-indexed
 
     if multi_page_skip and positions:
         page_nums = {int(p[0]) for p in positions if isinstance(p, (list, tuple)) and p}
@@ -235,15 +256,7 @@ async def process_table(ext, ck: dict):
     try:
         t_start = time.time()
 
-        # ── Step 1: Check type == LabReport ──
-        classify_raw = ck.get("classify_result_tks", "")
-        if not classify_raw:
-            return
-        classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) else classify_raw
-        if classify_data.get("type") != "LabReport":
-            return
-
-        # ── Step 2: Check extracted_data items ──
+        # ── Step 1: Check extracted_data items ──
         extracted_raw = ck.get(ext._param.field_name, "")
         if not extracted_raw:
             return
@@ -263,8 +276,8 @@ async def process_table(ext, ck: dict):
         logging.info(
             f"{TAG} ═══ START ═══ type=LabReport, "
             f"doc_id={ck.get('doc_id')}, "
-            f"items={len(items)}, names={item_names[:5]}, "
-            f"img_id={ck.get('img_id', '')[:40]}"
+            f"items={len(items)}, names={item_names}, "
+            f"img_id={ck.get('img_id', '')}"
         )
 
         # ── Step 3: Render page image at 200 DPI ──
@@ -356,12 +369,13 @@ async def process_table(ext, ck: dict):
 async def process_text(ext, ck: dict):
     """Process non-LabReport chunks using qwen3-vl-30b-instruct.
 
-    Replaces _process_qwen_ocr_vl_text. Uses qwen3-vl-30b-instruct for OCR text
-    extraction, then feeds assembled text through LLM prompt for structured extraction.
+    Called from extractor.py when type != LabReport.
+    Uses qwen3-vl-30b-instruct for OCR text extraction, then feeds assembled
+    text through LLM prompt for structured extraction.
 
     Flow:
-    1. Check type (skip LabReport)
-    2. Render pages at 200 DPI + crop (same logic as _process_qwen_ocr_vl_text)
+    1. Get record type (for crop logic)
+    2. Render pages at 200 DPI + crop
     3. Call qwen3-vl-30b with TEXT_PROMPT per page
     4. Assemble text from JSON items[].text → ocr_assembled_text
     5. LLM extraction via _sys_prompt_and_msg + _generate_async
@@ -373,20 +387,16 @@ async def process_text(ext, ck: dict):
     try:
         t_start = time.time()
 
-        # ── Step 1: Check type (skip LabReport) ──
+        # ── Step 1: Get record type (for crop logic) ──
         classify_raw = ck.get("classify_result_tks", "")
-        if not classify_raw:
-            return
-        classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) else classify_raw
+        classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
         rec_type = classify_data.get("type", "")
-        if rec_type == "LabReport":
-            return
 
         content = ck.get("content_with_weight", "")
         logging.info(
             f"{TAG} ═══ START ═══ type={rec_type}, "
             f"doc_id={ck.get('doc_id')}, "
-            f"img_id={ck.get('img_id', '')[:40]}, "
+            f"img_id={ck.get('img_id', '')}, "
             f"content_len={len(content)}"
         )
 

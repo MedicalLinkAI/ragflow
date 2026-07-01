@@ -374,10 +374,10 @@ async def process_table(ext, ck: dict):
             logging.warning(f"{TAG} Step2: No valid pages to process")
             return
 
-        # ── Step 3: Call qwen3-vl-30b per page + match items ──
+        # ── Step 3: Call qwen3-vl-30b per page, collect all results ──
         table_prompt = _build_table_prompt(item_names)
-        all_row_positions = []
-        total_matched = 0
+        # global_lookup: name -> (pn, bbox), first match wins across pages
+        global_lookup = {}
 
         for pn, img_bytes, page_w, page_h in page_img_data:
             ocr_items, api_elapsed, status = _call_qwen30b(img_bytes, table_prompt, TAG)
@@ -392,36 +392,41 @@ async def process_table(ext, ck: dict):
             scale_x = page_w / 1000.0
             scale_y = page_h / 1000.0
 
-            ocr_lookup = {}
             for ocr_item in ocr_items:
                 text = ocr_item.get("text", "")
                 bbox = ocr_item.get("bbox")
-                if text and bbox and len(bbox) == 4:
-                    ocr_lookup[text] = bbox
-
-            matched = 0
-            for name in item_names:
-                bbox = ocr_lookup.get(name)
-                if bbox:
+                if text and bbox and len(bbox) == 4 and text not in global_lookup:
+                    # 转换为 PDF 坐标并存储（首次匹配优先）
                     left = bbox[0] * scale_x
                     right = bbox[2] * scale_x
                     top = bbox[1] * scale_y
                     bottom = bbox[3] * scale_y
-                    all_row_positions.append([pn + 1, left, right, top, bottom])
-                    matched += 1
-                    logging.info(
-                        f"{TAG} page={pn} '{name}' -> "
-                        f"[{pn + 1}, {left:.1f}, {right:.1f}, {top:.1f}, {bottom:.1f}]"
-                    )
-                # 未匹配的 item 不写入 row_positions，避免多页时产生 [0,0,0,0] 条目
+                    global_lookup[text] = (pn, [left, right, top, bottom])
 
-            total_matched += matched
             logging.info(
-                f"{TAG} Step3: page={pn} matched {matched}/{len(item_names)} items"
+                f"{TAG} Step3: page={pn} collected, global_lookup size={len(global_lookup)}"
             )
 
+        # ── Step 4: Match items in order, build row_positions (1:1 with items/html_rows) ──
+        all_row_positions = []
+        total_matched = 0
+
+        for name in item_names:
+            entry = global_lookup.get(name)
+            if entry:
+                pn, (left, right, top, bottom) = entry
+                all_row_positions.append([pn + 1, left, right, top, bottom])
+                total_matched += 1
+                logging.info(
+                    f"{TAG} '{name}' -> "
+                    f"[{pn + 1}, {left:.1f}, {right:.1f}, {top:.1f}, {bottom:.1f}]"
+                )
+            else:
+                # 未匹配的 item 写入 [0,0,0,0,0] 保持与 items 1:1 对应
+                all_row_positions.append([0, 0, 0, 0, 0])
+
         logging.info(
-            f"{TAG} Step3: total matched {total_matched}/{len(item_names) * len(page_img_data)} "
+            f"{TAG} Step4: matched {total_matched}/{len(item_names)} items "
             f"across {len(page_img_data)} page(s)"
         )
 

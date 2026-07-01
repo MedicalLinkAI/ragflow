@@ -40,7 +40,24 @@ TEXT_PROMPT = (
     "请直接输出纯JSON数组，不要用markdown代码块包裹。"
 )
 
-# ── 表格 Prompt（LabReport） ──
+# ── 纯文本 Prompt（Step3a: 只识别文本，不返回坐标）──
+TEXT_ONLY_PROMPT = (
+    "你是一个专业的医疗文档OCR识别引擎。请逐行识别图片中的所有可见文字内容。\n"
+    "\n"
+    "## 规则\n"
+    "1. 每一行文字作为一个独立条目\n"
+    "2. 长段落按实际换行拆分为多行，每行单独一条\n"
+    "3. 同一行的标签+值（如'性别：女'）合并为一条，不要拆分\n"
+    "4. 不得跳过任何可见文字，包括签名、日期、声明、页码等\n"
+    "\n"
+    "## 输出格式\n"
+    "直接输出JSON字符串数组，每个元素是该行的文本内容。\n"
+    "正确示例：\n"
+    '["性别：女", "年龄：68岁", "职业：农民"]\n'
+    "请直接输出纯JSON数组，不要用markdown代码块包裹。"
+)
+
+# ── 坐标定位 Prompt（Step7: 根据已知文本定位坐标）──
 def _build_table_prompt(item_names: list) -> str:
     """根据已知检验项名称列表，生成定位坐标的 prompt。"""
     names_str = "、".join(item_names)
@@ -58,15 +75,45 @@ def _build_table_prompt(item_names: list) -> str:
         "4. text字段必须与给定的名称完全一致，不要修改或缩写\n"
         "\n"
         "## 严格JSON格式要求\n"
-        "直接输出JSON数组，每个元素包含text和bbox两个字段。\n"
+        "直接输出JSON数组，每个元素只包含text和bbox两个字段，不要添加任何其他字段。\n"
         "正确示例：\n"
         '[\n'
         '  {"text": "C反应蛋白", "bbox": [100, 200, 400, 230]},\n'
         '  {"text": "白细胞计数", "bbox": [100, 250, 400, 280]}\n'
         ']\n'
-        "错误示例（禁止省略字段名）：\n"
+        "错误示例（禁止额外字段）：\n"
         '[\n'
-        '  {"text": "C反应蛋白", "bbox": [100, 200, 400, 230]}, "白细胞计数", "bbox": [100, 250, 400, 280]}\n'
+        '  {"text": "C反应蛋白", "bbox": [100, 200, 400, 230], "label": "检验项"}\n'
+        ']\n'
+        "请直接输出纯JSON数组，不要用markdown代码块包裹。"
+    )
+
+
+def _build_coord_prompt(text_lines: list) -> str:
+    """根据已知文本行数组，生成定位坐标的 prompt。"""
+    texts_json = json.dumps(text_lines, ensure_ascii=False)
+    return (
+        "你是一个专业的文档坐标定位引擎。以下是OCR已识别的文本行列表，请在图片中找到每行文本的位置，返回其bbox坐标。\n"
+        "\n"
+        f"## 需要定位的文本行（共{len(text_lines)}行）\n"
+        f"{texts_json}\n"
+        "\n"
+        "## 规则\n"
+        "1. 对于列表中的每行文本，找到它在图片中出现的位置\n"
+        "2. bbox为该行文字的最小包围框，坐标归一化到0-1000，格式[x1,y1,x2,y2]\n"
+        "3. 如果某行文本在图片中未找到，可以跳过不输出\n"
+        "4. text字段必须与给定的文本完全一致\n"
+        "\n"
+        "## 严格JSON格式要求\n"
+        "直接输出JSON数组，每个元素只包含text和bbox两个字段，不要添加任何其他字段。\n"
+        "正确示例：\n"
+        '[\n'
+        '  {"text": "性别：女", "bbox": [100, 200, 250, 230]},\n'
+        '  {"text": "年龄：68岁", "bbox": [100, 250, 270, 280]}\n'
+        ']\n'
+        "错误示例（禁止额外字段）：\n"
+        '[\n'
+        '  {"text": "性别：女", "bbox": [100, 200, 250, 230], "label": "个人信息"}\n'
         ']\n'
         "请直接输出纯JSON数组，不要用markdown代码块包裹。"
     )
@@ -164,77 +211,63 @@ def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     return valid_items, elapsed, "ok"
 
 
-# ── 图片渲染工具 ──
+def _call_qwen30b_json(img_bytes: bytes, prompt: str, tag: str) -> tuple:
+    """Call qwen3-vl-30b and return raw parsed JSON (no item validation).
 
-def _render_page_image(ext, ck, tag, multi_page_skip=True):
-    """Render a chunk's page as PNG image at 200 DPI.
-
-    Uses the same logic as Extractor._process_qwen_ocr_vl_table.
-
-    Args:
-        ext: Extractor instance.
-        ck: Chunk dict.
-        tag: Logging tag.
-        multi_page_skip: If True, skip multi-page chunks (for table mode).
+    Used for text-only extraction (Step3a) and coordinate localization (Step7).
 
     Returns:
-        tuple: (img_bytes, page_num_0based, page_w, page_h) or None
+        tuple: (data, elapsed, status)
+            data: parsed JSON (list or dict), or None on failure.
     """
-    import fitz
-    from api.db.services.file2document_service import File2DocumentService
-    from common import settings
+    api_key = os.environ.get("DASHSCOPE_API_KEY", "")
+    b64 = base64.b64encode(img_bytes).decode()
+    payload = {
+        "model": MODEL_NAME,
+        "messages": [{"role": "user", "content": [
+            {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+            {"type": "text", "text": prompt},
+        ]}],
+        "max_tokens": 16384,
+        "temperature": 0.1,
+    }
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
 
-    doc_id = ext._canvas._doc_id
-    # row_positions: 1-indexed page_num, positions: 0-indexed page_num
-    row_positions = ck.get("row_positions", [])
-    positions_list = ck.get("positions", [])
-    if row_positions:
-        positions = row_positions
-        is_row_positions = True
-    elif positions_list:
-        positions = positions_list
-        is_row_positions = False
-    else:
-        return None
+    logging.info(f"{tag} API call start, endpoint={API_ENDPOINT}, model={MODEL_NAME}, img_bytes={len(img_bytes)}")
+    t0 = time.time()
+    try:
+        r = requests.post(API_ENDPOINT, json=payload, headers=headers, timeout=120)
+    except requests.RequestException as e:
+        elapsed = time.time() - t0
+        logging.warning(f"{tag} API request failed: {e}")
+        return None, elapsed, f"request error: {e}"
+    elapsed = time.time() - t0
 
-    page_num = positions[0][0] if isinstance(positions[0], (list, tuple)) and positions[0] else 0
-    if is_row_positions:
-        page_num = page_num - 1  # row_positions 是 1-indexed，转为 0-indexed
+    if r.status_code != 200:
+        logging.warning(f"{tag} API failed: HTTP {r.status_code}, body={r.text}")
+        return None, elapsed, f"HTTP {r.status_code}"
 
-    if multi_page_skip and positions:
-        page_nums = {int(p[0]) for p in positions if isinstance(p, (list, tuple)) and p}
-        if len(page_nums) > 1:
-            logging.info(f"{tag} multi-page chunk (pages={page_nums}), skipping")
-            return None
+    content = r.json()["choices"][0]["message"]["content"]
+    logging.info(f"{tag} API raw response (len={len(content)}):\n{content}")
 
-    b, n = File2DocumentService.get_storage_address(doc_id=doc_id)
-    pdf_bytes = settings.STORAGE_IMPL.get(b, n)
-    if not pdf_bytes:
-        logging.warning(f"{tag} Failed to get PDF for doc_id={doc_id}")
-        return None
+    content = content.strip()
+    if content.startswith("```"):
+        content = re.sub(r"^```(?:json|JSON)?\s*\n?", "", content)
+        content = re.sub(r"\n?```\s*$", "", content)
+        content = content.strip()
 
-    pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-    if page_num < 0 or page_num >= len(pdf_doc):
-        logging.warning(f"{tag} page_num={page_num} out of range (total={len(pdf_doc)})")
-        pdf_doc.close()
-        return None
+    try:
+        data = json.loads(content)
+    except json.JSONDecodeError:
+        try:
+            data = json_repair.loads(content)
+        except Exception as e2:
+            logging.warning(f"{tag} JSON parse failed: {e2}, content={content[:200]}")
+            return None, elapsed, "JSON parse error"
 
-    page = pdf_doc[page_num]
-    page_w = page.rect.width
-    page_h = page.rect.height
-    dpi = 200
-    zoom = dpi / 72.0
-    mat = fitz.Matrix(zoom, zoom)
-    pix = page.get_pixmap(matrix=mat)
-    img_bytes = pix.tobytes("png")
-    pdf_doc.close()
-
-    logging.info(
-        f"{tag} rendered page={page_num}, page_rect={page_w:.0f}x{page_h:.0f}, "
-        f"dpi={dpi}, img_size=({pix.width}x{pix.height})"
-    )
-    return img_bytes, page_num, page_w, page_h
-
+    return data, elapsed, "ok"
 
 # ── 表格处理（LabReport） ──
 
@@ -280,54 +313,117 @@ async def process_table(ext, ck: dict):
             f"img_id={ck.get('img_id', '')}"
         )
 
-        # ── Step 3: Render page image at 200 DPI ──
-        result = _render_page_image(ext, ck, TAG, multi_page_skip=True)
-        if not result:
-            return
-        img_bytes, page_num, page_w, page_h = result
+        # ── Step 2: Render pages at 200 DPI (multi-page support) ──
+        import fitz
+        from api.db.services.file2document_service import File2DocumentService
+        from common import settings
 
-        # ── Step 4: Call qwen3-vl-30b with dynamic TABLE_PROMPT ──
+        doc_id = ext._canvas._doc_id
+        row_positions_raw = ck.get("row_positions", [])
+        positions_list = ck.get("positions", [])
+        if row_positions_raw:
+            src_positions = row_positions_raw
+            is_row_positions = True
+        elif positions_list:
+            src_positions = positions_list
+            is_row_positions = False
+        else:
+            logging.warning(f"{TAG} No positions found in chunk")
+            return
+
+        # Group positions by page number
+        page_positions = {}
+        for p in src_positions:
+            if isinstance(p, (list, tuple)) and p:
+                pn = int(p[0])
+                if is_row_positions:
+                    pn = pn - 1  # row_positions 是 1-indexed，转为 0-indexed
+                page_positions.setdefault(pn, []).append(p)
+        sorted_pages = sorted(page_positions.keys())
+        logging.info(f"{TAG} Step2: {len(sorted_pages)} page(s) {sorted_pages}")
+
+        b, n = File2DocumentService.get_storage_address(doc_id=doc_id)
+        pdf_bytes = settings.STORAGE_IMPL.get(b, n)
+        if not pdf_bytes:
+            logging.warning(f"{TAG} Step2: Failed to get PDF for doc_id={doc_id}")
+            return
+
+        pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+        dpi = 200
+        zoom = dpi / 72.0
+        mat = fitz.Matrix(zoom, zoom)
+
+        page_img_data = []  # [(pn, img_bytes, page_w, page_h), ...]
+        for pn in sorted_pages:
+            if pn < 0 or pn >= len(pdf_doc):
+                logging.warning(f"{TAG} Step2: page={pn} out of range (total={len(pdf_doc)}), skipping")
+                continue
+            page = pdf_doc[pn]
+            page_w = page.rect.width
+            page_h = page.rect.height
+            pix = page.get_pixmap(matrix=mat)
+            img_bytes = pix.tobytes("png")
+            page_img_data.append((pn, img_bytes, page_w, page_h))
+            logging.info(
+                f"{TAG} Step2: page={pn}, rect={page_w:.0f}x{page_h:.0f}, "
+                f"img=({pix.width}x{pix.height})"
+            )
+        pdf_doc.close()
+
+        if not page_img_data:
+            logging.warning(f"{TAG} Step2: No valid pages to process")
+            return
+
+        # ── Step 3: Call qwen3-vl-30b per page + match items ──
         table_prompt = _build_table_prompt(item_names)
-        ocr_items, api_elapsed, status = _call_qwen30b(img_bytes, table_prompt, TAG)
-        if status != "ok" or not ocr_items:
-            logging.warning(f"{TAG} OCR failed: {status}")
-            return
+        all_row_positions = []
+        total_matched = 0
 
-        logging.info(f"{TAG} Step4: {len(ocr_items)} items from qwen3-vl-30b, api_time={api_elapsed:.1f}s")
+        for pn, img_bytes, page_w, page_h in page_img_data:
+            ocr_items, api_elapsed, status = _call_qwen30b(img_bytes, table_prompt, TAG)
+            if status != "ok" or not ocr_items:
+                logging.warning(f"{TAG} Step3: page={pn} OCR failed: {status}")
+                continue
 
-        # ── Step 5: Match OCR results with known item_names + build row_positions ──
-        # qwen3-vl-30b bbox is normalized 0-1000 [x1,y1,x2,y2]
-        scale_x = page_w / 1000.0
-        scale_y = page_h / 1000.0
+            logging.info(
+                f"{TAG} Step3: page={pn} — {len(ocr_items)} items, api_time={api_elapsed:.1f}s"
+            )
 
-        # Build lookup: text -> bbox from OCR results
-        ocr_lookup = {}
-        for ocr_item in ocr_items:
-            text = ocr_item.get("text", "")
-            bbox = ocr_item.get("bbox")
-            if text and bbox and len(bbox) == 4:
-                ocr_lookup[text] = bbox
+            scale_x = page_w / 1000.0
+            scale_y = page_h / 1000.0
 
-        row_positions = []
-        matched = 0
-        for name in item_names:
-            bbox = ocr_lookup.get(name)
-            if bbox:
-                left = bbox[0] * scale_x
-                right = bbox[2] * scale_x
-                top = bbox[1] * scale_y
-                bottom = bbox[3] * scale_y
-                row_positions.append([page_num + 1, left, right, top, bottom])
-                matched += 1
-                logging.info(
-                    f"{TAG} '{name}' -> "
-                    f"[{page_num + 1}, {left:.1f}, {right:.1f}, {top:.1f}, {bottom:.1f}]"
-                )
-            else:
-                logging.info(f"{TAG} '{name}' not found in OCR results")
-                row_positions.append([page_num + 1, 0, 0, 0, 0])
+            ocr_lookup = {}
+            for ocr_item in ocr_items:
+                text = ocr_item.get("text", "")
+                bbox = ocr_item.get("bbox")
+                if text and bbox and len(bbox) == 4:
+                    ocr_lookup[text] = bbox
 
-        logging.info(f"{TAG} Step5: matched {matched}/{len(item_names)} items")
+            matched = 0
+            for name in item_names:
+                bbox = ocr_lookup.get(name)
+                if bbox:
+                    left = bbox[0] * scale_x
+                    right = bbox[2] * scale_x
+                    top = bbox[1] * scale_y
+                    bottom = bbox[3] * scale_y
+                    all_row_positions.append([pn + 1, left, right, top, bottom])
+                    matched += 1
+                    logging.info(
+                        f"{TAG} page={pn} '{name}' -> "
+                        f"[{pn + 1}, {left:.1f}, {right:.1f}, {top:.1f}, {bottom:.1f}]"
+                    )
+                # 未匹配的 item 不写入 row_positions，避免多页时产生 [0,0,0,0] 条目
+
+            total_matched += matched
+            logging.info(
+                f"{TAG} Step3: page={pn} matched {matched}/{len(item_names)} items"
+            )
+
+        logging.info(
+            f"{TAG} Step3: total matched {total_matched}/{len(item_names) * len(page_img_data)} "
+            f"across {len(page_img_data)} page(s)"
+        )
 
         # Build HTML table from upstream extracted items
         html_rows = []
@@ -343,8 +439,8 @@ async def process_table(ext, ck: dict):
             html_rows.append("<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
         html_table = "<table>" + "".join(html_rows) + "</table>"
 
-        if matched > 0:
-            ck["row_positions"] = row_positions
+        if total_matched > 0:
+            ck["row_positions"] = all_row_positions
             ck["positions"] = []
             ck["content_with_weight"] = html_table
             ck[ext._param.field_name] = json.dumps(extracted_data, ensure_ascii=False)
@@ -352,7 +448,7 @@ async def process_table(ext, ck: dict):
             elapsed = time.time() - t_start
             logging.info(
                 f"{TAG} ═══ DONE ═══ "
-                f"matched={matched}/{len(item_names)}, "
+                f"matched={total_matched}, pages={len(page_img_data)}, "
                 f"total_time={elapsed:.1f}s"
             )
         else:
@@ -370,17 +466,16 @@ async def process_text(ext, ck: dict):
     """Process non-LabReport chunks using qwen3-vl-30b-instruct.
 
     Called from extractor.py when type != LabReport.
-    Uses qwen3-vl-30b-instruct for OCR text extraction, then feeds assembled
-    text through LLM prompt for structured extraction.
+    Two-phase OCR: text extraction then coordinate localization.
 
     Flow:
     1. Get record type (for crop logic)
     2. Render pages at 200 DPI + crop
-    3. Call qwen3-vl-30b with TEXT_PROMPT per page
-    4. Assemble text from JSON items[].text → ocr_assembled_text
+    3. Call qwen3-vl-30b with TEXT_ONLY_PROMPT per page → text array
+    4. Assemble text from JSONArray → ocr_assembled_text
     5. LLM extraction via _sys_prompt_and_msg + _generate_async
     6. Parse extracted JSON + update encounter_date
-    7. Convert bbox to PDF coordinates
+    7. Call qwen3-vl-30b with coord prompt → bbox arrays, assign to positions
     8. Save results
     """
     TAG = "[qwen30b-text]"
@@ -488,21 +583,27 @@ async def process_text(ext, ck: dict):
             logging.warning(f"{TAG} Step2: No valid pages to process")
             return
 
-        # ── Step 3: Call qwen3-vl-30b with TEXT_PROMPT per page ──
-        all_page_items = []   # [(pn, items, cox, coy, cw, ch), ...]
+        # ── Step 3: OCR text extraction (text only, no coordinates) ──
+        page_text_data = []  # [(pn, text_lines, cox, coy, cw, ch), ...]
         all_page_texts = []
 
         for pn, img_bytes, page_w, page_h, cox, coy, cw, ch in page_img_data:
-            items, api_elapsed, status = _call_qwen30b(img_bytes, TEXT_PROMPT, TAG)
-            if status != "ok" or not items:
+            data, api_elapsed, status = _call_qwen30b_json(img_bytes, TEXT_ONLY_PROMPT, TAG)
+            if status != "ok" or not isinstance(data, list):
                 logging.warning(f"{TAG} Step3: page={pn} OCR failed: {status}")
                 continue
 
-            page_text = "\n".join(it.get("text", "") for it in items if it.get("text"))
-            all_page_items.append((pn, items, cox, coy, cw, ch))
+            # Filter: keep only string elements
+            text_lines = [t for t in data if isinstance(t, str)]
+            if not text_lines:
+                logging.warning(f"{TAG} Step3: page={pn} returned empty text array")
+                continue
+
+            page_text = "\n".join(text_lines)
+            page_text_data.append((pn, text_lines, cox, coy, cw, ch))
             all_page_texts.append(page_text)
             logging.info(
-                f"{TAG} Step3: page={pn} — {len(items)} items, "
+                f"{TAG} Step3: page={pn} — {len(text_lines)} lines, "
                 f"{len(page_text)} chars, api_time={api_elapsed:.1f}s"
             )
 
@@ -581,24 +682,77 @@ async def process_text(ext, ck: dict):
             except Exception as e:
                 logging.warning(f"{TAG} Step6a: Failed to update encounter_dates: {e}")
 
-        # ── Step 7: Convert bbox (0-1000) → PDF coordinates ──
+        # ── Step 7: Coordinate localization — find bbox for each text line ──
         new_positions = []
-        for pn, page_items, cox, coy, cw, ch in all_page_items:
+        for pn, text_lines, cox, coy, cw, ch in page_text_data:
+            coord_prompt = _build_coord_prompt(text_lines)
+            img_bytes = next(ib for _pn, ib, *_ in page_img_data if _pn == pn)
+            ocr_items, api_elapsed, status = _call_qwen30b(img_bytes, coord_prompt, TAG)
+            if status != "ok" or not ocr_items:
+                logging.warning(f"{TAG} Step7: page={pn} coord failed: {status}")
+                continue
+
+            # Build lookup: text -> bbox
+            coord_lookup = {}
+            for ocr_item in ocr_items:
+                text = ocr_item.get("text", "")
+                bbox = ocr_item.get("bbox")
+                if text and bbox and len(bbox) == 4:
+                    coord_lookup[text] = bbox
+
             scale_x = cw / 1000.0
             scale_y = ch / 1000.0
-            for it in page_items:
-                bbox = it.get("bbox")
-                if not bbox or len(bbox) != 4:
-                    continue
-                left = bbox[0] * scale_x + cox
-                right = bbox[2] * scale_x + cox
-                top = bbox[1] * scale_y + coy
-                bottom = bbox[3] * scale_y + coy
-                new_positions.append([pn, left, right, top, bottom])
 
-        ck["positions"] = new_positions
+            # ── 按 text_lines 顺序收集 bbox，未匹配的标记 None ──
+            raw_bboxes = []
+            for tl in text_lines:
+                bbox = coord_lookup.get(tl)
+                if bbox:
+                    raw_bboxes.append(list(bbox))
+                else:
+                    raw_bboxes.append(None)
+
+            # ── 计算平均行高，插值填充 null bbox ──
+            heights = [b[3] - b[1] for b in raw_bboxes if b is not None]
+            avg_h = sum(heights) / len(heights) if heights else 20
+
+            for i in range(len(raw_bboxes)):
+                if raw_bboxes[i] is None:
+                    nxt = next((j for j in range(i + 1, len(raw_bboxes)) if raw_bboxes[j] is not None), None)
+                    if nxt is not None:
+                        gap = nxt - i
+                        est_top = raw_bboxes[nxt][1] - avg_h * gap
+                        est_bot = raw_bboxes[nxt][3] - avg_h * gap
+                        raw_bboxes[i] = [raw_bboxes[nxt][0], est_top, raw_bboxes[nxt][2], est_bot]
+                    else:
+                        prv = next((j for j in range(i - 1, -1, -1) if raw_bboxes[j] is not None), None)
+                        if prv is not None:
+                            gap = i - prv
+                            est_top = raw_bboxes[prv][1] + avg_h * gap
+                            est_bot = raw_bboxes[prv][3] + avg_h * gap
+                            raw_bboxes[i] = [raw_bboxes[prv][0], est_top, raw_bboxes[prv][2], est_bot]
+
+            # ── 转换为 PDF 坐标 ──
+            matched = sum(1 for b in raw_bboxes if b is not None)
+            for bbox in raw_bboxes:
+                if bbox is not None:
+                    left = bbox[0] * scale_x + cox
+                    right = bbox[2] * scale_x + cox
+                    top = bbox[1] * scale_y + coy
+                    bottom = bbox[3] * scale_y + coy
+                    new_positions.append([pn, left, right, top, bottom])
+                else:
+                    new_positions.append([pn, None, None, None, None])
+
+            logging.info(
+                f"{TAG} Step7: page={pn} — {matched}/{len(text_lines)} coords, "
+                f"api_time={api_elapsed:.1f}s"
+            )
+
+        # 过滤 None 占位，add_positions 不支持 None 坐标
+        ck["positions"] = [p for p in new_positions if p[1] is not None]
         ck["row_positions"] = []
-        logging.info(f"{TAG} Step7: {len(new_positions)} positions stored, row_positions=[]")
+        logging.info(f"{TAG} Step7: {len(ck['positions'])}/{len(new_positions)} positions stored (filtered None), row_positions=[]")
 
         # ── Step 8: Save extracted_data ──
         ck[ext._param.field_name] = json.dumps(extracted_data, ensure_ascii=False)

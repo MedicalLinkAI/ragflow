@@ -229,6 +229,13 @@ class SmartSplitter(ProcessBase, LLM):
 
         self.callback(0.5, "LLM responded. Parsing segments...")
 
+        # ── Guard: if LLM backend returned an error string (e.g. connection failure, retries exhausted),
+        #    propagate it directly instead of attempting JSON parse.
+        if isinstance(llm_response, str) and llm_response.startswith("**ERROR**"):
+            logging.error(f"[SmartSplitter] LLM backend error: {llm_response[:500]}")
+            self.set_output("_ERROR", llm_response)
+            return
+
         try:
             segments = json.loads(llm_response)
             if not isinstance(segments, list):

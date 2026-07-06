@@ -148,14 +148,13 @@ class Extractor(ProcessBase, LLM):
                     is_lab_report = rec_type == "LabReport"
 
                     if is_lab_report:
-                        # table 需要先有上游 LLM 提取结果（items → item_names）
-                        msg, sys_prompt = self._sys_prompt_and_msg([], args)
-                        msg.insert(0, {"role": "system", "content": sys_prompt})
-                        ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
-                        
                         if extractor_type == "ENABLE_QWEN30B_OCR":
                             await qwen30b_ocr.process_table(self, ck)
                         else:
+                            msg, sys_prompt = self._sys_prompt_and_msg([], args)
+                            msg.insert(0, {"role": "system", "content": sys_prompt})
+                            ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
+                        
                             await self._process_qwen_ocr_vl_table(ck)
                     else:
                         # text 处理：OCR 模块内部自带 LLM 提取

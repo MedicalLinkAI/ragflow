@@ -13,33 +13,6 @@ import time
 import json_repair
 import requests
 
-
-# ── 文本 Prompt ──
-TEXT_PROMPT = (
-    "你是一个专业的医疗文档OCR识别引擎。请逐行识别图片中的所有可见文字内容，包括标题、正文、表格、页脚等。\n"
-    "\n"
-    "## 规则\n"
-    "1. 每一行文字作为一个独立条目，输出该行的完整文本内容和bbox坐标\n"
-    "2. 长段落按实际换行拆分为多行，每行单独一条\n"
-    "3. 同一行的标签+值（如'性别：女'）合并为一条，不要拆分\n"
-    "4. 不得跳过任何可见文字，包括签名、日期、声明、页码等\n"
-    "5. bbox为该行文字的最小包围框，坐标归一化到0-1000，格式[x1,y1,x2,y2]\n"
-    "\n"
-    "## 严格JSON格式要求\n"
-    "直接输出JSON数组，每个元素包含text和bbox两个字段。\n"
-    "正确示例：\n"
-    '[\n'
-    '  {"text": "性别：女", "bbox": [100, 200, 250, 230]},\n'
-    '  {"text": "年龄：68岁", "bbox": [100, 250, 270, 280]},\n'
-    '  {"text": "职业：农民", "bbox": [500, 210, 620, 231]}\n'
-    ']\n'
-    "错误示例（禁止省略字段名）：\n"
-    '[\n'
-    '  {"text": "性别：女", "bbox": [100, 200, 250, 230]}, "职业：农民", "bbox": [500, 210, 620, 231]}\n'
-    ']\n'
-    "请直接输出纯JSON数组，不要用markdown代码块包裹。"
-)
-
 # ── 纯文本 Prompt（Step3a: 只识别文本，不返回坐标）──
 TEXT_ONLY_PROMPT = (
     "你是一个专业的医疗文档OCR识别引擎。请逐行识别图片中的所有可见文字内容。\n"
@@ -56,6 +29,42 @@ TEXT_ONLY_PROMPT = (
     "正确示例：\n"
     '["性别：女", "年龄：68岁", "职业：农民"]\n'
     "请直接输出纯JSON数组，不要用markdown代码块包裹。"
+)
+
+# ── LaTeX 表格 Prompt（Step A: 图片 → LaTeX tabular）──
+TABLE_TO_LATEX_PROMPT = (
+    "你是一个专业的医疗文档表格识别引擎。请将图片中的表格精确转换为 LaTeX tabular 格式。\n"
+    "\n"
+    "## 核心规则\n"
+    "1. **列数完全一致**：数据行的列数必须与图片中表头的列数完全一致。"
+    "图片有 N 列，输出就必须有 N 列。\n"
+    "2. **不丢列**：图片中看到的每一列都必须输出。"
+    "医疗检验表格中常见的列包括：序号、项目代码（英文缩写）、项目名称（中文全称）、"
+    "前回値、結果、異常标识（H/L）、単位、参考区間。"
+    "所有这些列都必须完整保留，绝不允许跳过任何一列。\n"
+    "3. 使用标准 LaTeX tabular 语法：\n"
+    "   \\begin{tabular}{ccc...c}\n"
+    "   \\hline\n"
+    "   列1 & 列2 & ... & 列N \\\\\n"
+    "   \\hline\n"
+    "   値1 & 値2 & ... & 値N \\\\\n"
+    "   ...\n"
+    "   \\hline\n"
+    "   \\end{tabular}\n"
+    "4. 列对齐全部使用 c（居中），如 5 列就是 {ccccc}。\n"
+    "5. **保留原文**：所有可见文字原样输出，包括空格、↑↓箭头、★符号、H/L标识等。\n"
+    "6. LaTeX 特殊字符转义：# → \\#，% → \\%，& → \\&（作为内容时），"
+    "_ → \\_，~ → \\textasciitilde{}。\n"
+    "7. 空单元格直接留空（两个 & 之间不放空格以外的内容）。\n"
+    "8. 数据结束后立即输出 \\hline 和 \\end{tabular}，不要输出空行。\n"
+    "\n"
+    "## 多表格规则\n"
+    "如果图片中有多个独立的表格（上下排列），"
+    "每个表格独立输出为一个 \\begin{tabular}...\\end{tabular} 环境，"
+    "表格之间用空行分隔。\n"
+    "\n"
+    "## 输出要求\n"
+    "直接输出纯 LaTeX tabular 代码，不要使用代码块包裹，不要有任何额外文字。"
 )
 
 # ── 坐标定位 Prompt（Step7: 根据已知文本定位坐标）──
@@ -127,41 +136,7 @@ def _build_coord_prompt(text_lines: list) -> str:
         "请直接输出纯JSON数组，不要用markdown代码块包裹。"
     )
 
-# ── LaTeX 表格 Prompt（Step A: 图片 → LaTeX tabular）──
-TABLE_TO_LATEX_PROMPT = (
-    "你是一个专业的医疗文档表格识别引擎。请将图片中的表格精确转换为 LaTeX tabular 格式。\n"
-    "\n"
-    "## 核心规则\n"
-    "1. **列数完全一致**：数据行的列数必须与图片中表头的列数完全一致。"
-    "图片有 N 列，输出就必须有 N 列。\n"
-    "2. **不丢列**：图片中看到的每一列都必须输出。"
-    "医疗检验表格中常见的列包括：序号、项目代码（英文缩写）、项目名称（中文全称）、"
-    "前回値、結果、異常标识（H/L）、単位、参考区間。"
-    "所有这些列都必须完整保留，绝不允许跳过任何一列。\n"
-    "3. 使用标准 LaTeX tabular 语法：\n"
-    "   \\begin{tabular}{ccc...c}\n"
-    "   \\hline\n"
-    "   列1 & 列2 & ... & 列N \\\\\n"
-    "   \\hline\n"
-    "   値1 & 値2 & ... & 値N \\\\\n"
-    "   ...\n"
-    "   \\hline\n"
-    "   \\end{tabular}\n"
-    "4. 列对齐全部使用 c（居中），如 5 列就是 {ccccc}。\n"
-    "5. **保留原文**：所有可见文字原样输出，包括空格、↑↓箭头、★符号、H/L标识等。\n"
-    "6. LaTeX 特殊字符转义：# → \\#，% → \\%，& → \\&（作为内容时），"
-    "_ → \\_，~ → \\textasciitilde{}。\n"
-    "7. 空单元格直接留空（两个 & 之间不放空格以外的内容）。\n"
-    "8. 数据结束后立即输出 \\hline 和 \\end{tabular}，不要输出空行。\n"
-    "\n"
-    "## 多表格规则\n"
-    "如果图片中有多个独立的表格（上下排列），"
-    "每个表格独立输出为一个 \\begin{tabular}...\\end{tabular} 环境，"
-    "表格之间用空行分隔。\n"
-    "\n"
-    "## 输出要求\n"
-    "直接输出纯 LaTeX tabular 代码，不要使用代码块包裹，不要有任何额外文字。"
-)
+
 
 API_ENDPOINT = os.environ.get("QWEN30B_OCR_API_ENDPOINT", "http://10.16.3.16:8090/v1/chat/completions")
 MODEL_NAME = os.environ.get("QWEN30B_OCR_MODEL", "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8")
@@ -169,12 +144,12 @@ MODEL_NAME = os.environ.get("QWEN30B_OCR_MODEL", "Qwen/Qwen3-VL-30B-A3B-Instruct
 
 # ── API 调用 ──
 
-def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
+def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     """Call qwen3-vl-30b via OpenAI-compatible API (local vLLM or DashScope).
 
     Args:
         img_bytes: PNG image bytes.
-        prompt: Text prompt (TEXT_PROMPT or TABLE_PROMPT).
+        prompt: Text prompt ( TABLE_PROMPT).
         tag: Logging tag prefix.
 
     Returns:
@@ -255,11 +230,10 @@ def _call_qwen30b(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     logging.info(f"{tag} API returned {len(valid_items)} items, elapsed={elapsed:.1f}s")
     return valid_items, elapsed, "ok"
 
-
 def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     """Call qwen3-vl-30b and return raw parsed JSON (no item validation).
 
-    Used for text-only extraction (Step3a) and coordinate localization (Step7).
+    Used for text-only extraction (Step3a)
 
     Returns:
         tuple: (data, elapsed, status)
@@ -314,7 +288,7 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
 
     return data, elapsed, "ok"
 
-def _call_qwen30b_raw(img_bytes: bytes, prompt: str, tag: str, system_msg: str = None) -> tuple:
+def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg: str = None) -> tuple:
     """Call qwen3-vl-30b and return raw text content (no JSON parsing).
 
     Used for LaTeX extraction (Step A) where output is LaTeX markup, not JSON.
@@ -497,7 +471,7 @@ async def process_table(ext, ck: dict):
 
         for pn, img_bytes, page_w, page_h, crop_offset_x, crop_offset_y, crop_w, crop_h in page_img_data:
             # ── Step A: Image → LaTeX ──
-            latex_content, latex_elapsed, latex_status = _call_qwen30b_raw(
+            latex_content, latex_elapsed, latex_status = _call_qwen30b_latex_only(
                 img_bytes, TABLE_TO_LATEX_PROMPT, TAG,
                 system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。"
             )
@@ -560,7 +534,7 @@ async def process_table(ext, ck: dict):
             # ── Step C: 用 item_names 在原图定位坐标 ──
             if page_item_names_list:
                 table_prompt = _build_table_prompt(page_item_names_list)
-                ocr_items, coord_elapsed, coord_status = _call_qwen30b(
+                ocr_items, coord_elapsed, coord_status = _call_qwen30b_to_coord(
                     img_bytes, table_prompt, TAG
                 )
                 if coord_status == "ok" and ocr_items:
@@ -883,7 +857,7 @@ async def process_text(ext, ck: dict):
         for pn, text_lines, cox, coy, cw, ch in page_text_data:
             coord_prompt = _build_coord_prompt(text_lines)
             img_bytes = next(ib for _pn, ib, *_ in page_img_data if _pn == pn)
-            ocr_items, api_elapsed, status = _call_qwen30b(img_bytes, coord_prompt, TAG)
+            ocr_items, api_elapsed, status = _call_qwen30b_to_coord(img_bytes, coord_prompt, TAG)
             if status != "ok" or not ocr_items:
                 logging.warning(f"{TAG} Step7: page={pn} coord failed: {status}, "
                                 f"adding {len(text_lines)} placeholder(s)")

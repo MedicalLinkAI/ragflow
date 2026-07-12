@@ -72,9 +72,9 @@ def _apply_model_family_policies(
     sanitized_gen_conf = deepcopy(gen_conf) if gen_conf else {}
     sanitized_kwargs = dict(request_kwargs) if request_kwargs else {}
 
-    # Qwen3 family disables thinking by extra_body on non-stream chat requests.
+    # Qwen3 family disables thinking via chat_template_kwargs (vLLM native).
     if "qwen3" in model_name_lower:
-        sanitized_kwargs["extra_body"] = {"enable_thinking": False}
+        sanitized_kwargs["extra_body"] = {"chat_template_kwargs": {"enable_thinking": False}}
 
     if backend == "base":
         # GPT-5 and GPT-5.1 endpoints in this path have inconsistent generation-param support.

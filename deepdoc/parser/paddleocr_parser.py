@@ -435,7 +435,7 @@ class PaddleOCRParser(RAGFlowPdfParser):
         try:
             response_data = resp.json()
             # DEBUG: Log OCR result
-            self.logger.info(f"[PaddleOCR] result: {response_data.get('result')}")
+            # self.logger.info(f"[PaddleOCR] result: {response_data.get('result')}")
         except Exception as exc:
             raise RuntimeError(f"[PaddleOCR] response is not JSON: {exc}") from exc
 

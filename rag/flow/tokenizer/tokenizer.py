@@ -61,6 +61,7 @@ class Tokenizer(ProcessBase):
                 embd_model_config = get_model_config_by_type_and_name(self._canvas._tenant_id, LLMType.EMBEDDING, kb.embd_id)
         else:
             embd_model_config = get_tenant_default_model_by_type(self._canvas._tenant_id, LLMType.EMBEDDING)
+        logging.info(f"[Tokenizer] KB={self._canvas._kb_id}, embd_model_config type={type(embd_model_config).__name__}, vars={vars(embd_model_config) if hasattr(embd_model_config, '__dict__') else embd_model_config}")
         embedding_model = LLMBundle(self._canvas._tenant_id, embd_model_config)
         texts = []
         for c in chunks:
@@ -86,6 +87,8 @@ class Tokenizer(ProcessBase):
         cnts_ = np.array([])
         for i in range(0, len(texts), settings.EMBEDDING_BATCH_SIZE):
             async with embed_limiter:
+                batch_txt = "\n---\n".join(re.sub(r"</?(table|td|caption|tr|th)( [^<>]{0,12})?>", " ", t) for t in texts[i : i + settings.EMBEDDING_BATCH_SIZE])
+                logging.info(f"[EMBED-PIPELINE] batch[{i}:{i+settings.EMBEDDING_BATCH_SIZE}] text_for_embed={batch_txt}")
                 vts, c = await thread_pool_exec(batch_encode,texts[i : i + settings.EMBEDDING_BATCH_SIZE],)
             if len(cnts_) == 0:
                 cnts_ = vts

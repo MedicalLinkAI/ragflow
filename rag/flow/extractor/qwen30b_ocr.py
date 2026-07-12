@@ -68,6 +68,49 @@ TABLE_TO_LATEX_PROMPT = (
 )
 
 # ── 坐标定位 Prompt（Step7: 根据已知文本定位坐标）──
+
+
+def _fuzzy_lookup_bbox(name: str, coord_lookup: dict, threshold: float = 0.5):
+    """Fuzzy bbox lookup: exact match → strip * prefix → LCS similarity.
+
+    Args:
+        name: item name to look up
+        coord_lookup: dict mapping OCR text → bbox
+        threshold: minimum LCS similarity score (0-1)
+
+    Returns:
+        bbox list [x1,y1,x2,y2] or None
+    """
+    # 1. Exact match
+    if name in coord_lookup:
+        return coord_lookup[name]
+
+    # 2. Strip * prefix and retry exact match
+    name_clean = name.lstrip("*").strip()
+    for key, bbox in coord_lookup.items():
+        if key.lstrip("*").strip() == name_clean:
+            return bbox
+
+    # 3. LCS similarity fallback
+    best_bbox, best_score = None, 0.0
+    for key, bbox in coord_lookup.items():
+        key_clean = key.lstrip("*").strip()
+        m, n = len(name_clean), len(key_clean)
+        if m == 0 or n == 0:
+            continue
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if name_clean[i - 1] == key_clean[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+        lcs_len = dp[m][n]
+        score = lcs_len / max(m, n) if max(m, n) > 0 else 0
+        if score > best_score:
+            best_score = score
+            best_bbox = bbox if score >= threshold else None
+    return best_bbox if best_score >= threshold else None
+
+
 def _build_table_prompt(item_names: list) -> str:
     """根据已知检验项名称列表，生成定位坐标的 prompt。"""
     names_str = "、".join(item_names)
@@ -167,7 +210,7 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str) -> tuple:
             {"type": "text", "text": prompt},
         ]}],
         "max_tokens": 8192,
-        "temperature": 0.1,
+        "temperature": 0,
     }
     headers = {"Content-Type": "application/json"}
     if api_key:
@@ -248,7 +291,7 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
             {"type": "text", "text": prompt},
         ]}],
         "max_tokens": 16384,
-        "temperature": 0.1,
+        "temperature": 0,
     }
     headers = {"Content-Type": "application/json"}
     if api_key:
@@ -309,7 +352,7 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg
         "model": MODEL_NAME,
         "messages": messages,
         "max_tokens": 16384,
-        "temperature": 0.1,
+        "temperature": 0,
     }
     headers = {"Content-Type": "application/json"}
     if api_key:
@@ -552,6 +595,8 @@ async def process_table(ext, ck: dict):
                     matched = 0
                     for name in page_item_names_list:
                         bbox = coord_lookup.get(name)
+                        if not bbox:
+                            bbox = _fuzzy_lookup_bbox(name, coord_lookup)
                         if bbox:
                             left = bbox[0] * scale_x + crop_offset_x
                             right = bbox[2] * scale_x + crop_offset_x
@@ -597,6 +642,7 @@ async def process_table(ext, ck: dict):
         ck["row_positions"] = all_row_positions
         ck["positions"] = []
         ck["content_with_weight"] = html_table
+        ck["text"] = html_table
         ck[ext._param.field_name] = json.dumps(extracted_data, ensure_ascii=False)
 
         total_matched = sum(1 for rp in all_row_positions if rp[0] != 0)
@@ -640,12 +686,10 @@ async def process_text(ext, ck: dict):
         classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
         rec_type = classify_data.get("type", "")
 
-        content = ck.get("content_with_weight", "")
         logging.info(
             f"{TAG} ═══ START ═══ type={rec_type}, "
             f"doc_id={ck.get('doc_id')}, "
             f"img_id={ck.get('img_id', '')}, "
-            f"content_len={len(content)}"
         )
 
         # ── Step 2: Render pages at 200 DPI + crop (same logic as _process_qwen_ocr_vl_text) ──

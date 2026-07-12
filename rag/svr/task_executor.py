@@ -620,6 +620,7 @@ async def embedding(docs, mdl, parser_config=None, callback=None):
         if not c:
             c = d["content_with_weight"]
         c = re.sub(r"</?(table|td|caption|tr|th)( [^<>]{0,12})?>", " ", c)
+        logging.info(f"[EMBED] doc_id={d.get('doc_id')} content_for_embed={c}")
         if not c:
             c = "None"
         cnts.append(c)

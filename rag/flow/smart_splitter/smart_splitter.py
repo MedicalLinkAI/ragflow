@@ -223,8 +223,10 @@ class SmartSplitter(ProcessBase, LLM):
         ]
 
         self.callback(0.2, "Calling LLM for semantic splitting...")
-        # Enable JSON mode to force LLM to return valid JSON without reasoning text
-        llm_response = await self._generate_async(msg, response_format={"type": "json_object"})
+        # NOTE: Do NOT use response_format={"type": "json_object"} here.
+        # vLLM's json_object mode forces output as a single dict, not an array.
+        # The prompt already instructs the model to return a JSON array.
+        llm_response = await self._generate_async(msg)
         llm_response = strip_markdown_json_fence(llm_response)
 
         self.callback(0.5, "LLM responded. Parsing segments...")

@@ -183,6 +183,34 @@ def by_tcadp(filename, binary=None, from_page=0, to_page=100000, lang="Chinese",
     return sections, tables, tcadp_parser
 
 
+def _by_qwen_vl(
+    filename,
+    binary=None,
+    callback=None,
+    **kwargs,
+):
+    """Parse PDF using QwenVLParser (classify + extract + BBOX wrap)."""
+    from deepdoc.parser.qwen_vl_parser import QwenVLParser
+
+    pdf_parser = QwenVLParser()
+    ok, reason = pdf_parser.check_installation()
+    if not ok:
+        if callback:
+            callback(-1, f"QwenVL parser not available: {reason}")
+        return None, None, None
+
+    try:
+        sections, tables = pdf_parser.parse_pdf(
+            filepath=filename,
+            binary=binary,
+            callback=callback,
+        )
+        return sections, tables, pdf_parser
+    except Exception as e:
+        logging.error(f"Failed to parse pdf via QwenVLParser: {e}")
+        return None, None, None
+
+
 def by_paddleocr(
     filename,
     binary=None,
@@ -196,6 +224,10 @@ def by_paddleocr(
     tenant_id: str | None = None,
     **kwargs,
 ):
+    # ── QwenVL parser routing ──
+    if os.getenv("OCR_PARSER", "paddleocr") == "qwen-vl":
+        return _by_qwen_vl(filename, binary=binary, callback=callback, **kwargs)
+
     pdf_parser = None
     if tenant_id:
         if not paddleocr_llm_name:

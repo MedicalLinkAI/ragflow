@@ -49,6 +49,7 @@ from rag.prompts.generator import run_toc_from_text
 from rag.utils.base64_image import id2image
 from common import settings
 from rag.flow.extractor import qwen30b_ocr
+from rag.flow.extractor import qwen_vl_ocr
 
 
 class ExtractorParam(ProcessParamBase, LLMParam):
@@ -128,18 +129,33 @@ class Extractor(ProcessBase, LLM):
                     if _fn not in ("text", "image", "positions", "img_id", "id", "doc_id", "mom"):
                         args[_fn] = _fv
 
-                # OCR 处理模式选择（通过 EXTRACTOR_TYPE 环境变量控制）
+                # OCR 处理模式选择
+                # 优先级：OCR_PARSER=qwen-vl > EXTRACTOR_TYPE
+                # - OCR_PARSER=qwen-vl: QwenVLParser 路径，文本已提取，仅做坐标定位
                 # - ENABLE_QWEN30B_OCR（默认）: qwen3-vl-30b-instruct，LabReport → 表格处理，其他 → 文本处理
-                # - ENABLE_OCR_VL: qwen-vl-ocr 原方案（LabReport 表格 + 非 LabReport 文本）
+                # - ENABLE_OCR_VL: qwen-vl-ocr 原方案
                 # - ENABLE_NONE: 不做 OCR 处理，走上游 LLM 提取
-                extractor_type = os.environ.get("EXTRACTOR_TYPE", "ENABLE_QWEN30B_OCR").upper()
+                ocr_parser = os.environ.get("OCR_PARSER", "qwen-vl").lower()
+                extractor_type = os.environ.get("EXTRACTOR_TYPE", "NONE").upper()
 
-                if extractor_type == "ENABLE_NONE":
+                if ocr_parser == "qwen-vl":
+                    # QwenVLParser 路径：文本已由 QwenVLParser 提取，仅做 LLM 提取 + 坐标定位
+                    classify_raw = ck.get("classify_result_tks", "")
+                    classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
+                    rec_type = classify_data.get("type", "")
+                    is_lab_report = rec_type == "LabReport"
+
+                    if is_lab_report:
+                        await qwen_vl_ocr.process_table(self, ck)
+                    else:
+                        await qwen_vl_ocr.process_text(self, ck)
+
+                elif extractor_type == "ENABLE_NONE":
                     # 无 OCR：直接用上游 LLM 提取结构化数据
                     msg, sys_prompt = self._sys_prompt_and_msg([], args)
                     msg.insert(0, {"role": "system", "content": sys_prompt})
                     ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
-
+                    # 走上游 LLM 提取
                 elif extractor_type in ("ENABLE_QWEN30B_OCR", "ENABLE_OCR_VL"):
                     # 判断类型：LabReport 走 table，其他走 text
                     classify_raw = ck.get("classify_result_tks", "")

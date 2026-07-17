@@ -309,18 +309,33 @@ fi
 
 
 if [[ "${ENABLE_TASKEXECUTOR}" -eq 1 ]]; then
+    # Parse per-worker GPU assignment list (e.g., 0,1,0,1)
+    TASK_CUDA_VISIBLE_DEVICES_LIST="${TASK_CUDA_VISIBLE_DEVICES_LIST:-}"
+    TASK_CUDA_DEVICES=()
+    if [[ -n "$TASK_CUDA_VISIBLE_DEVICES_LIST" ]]; then
+        IFS="," read -r -a TASK_CUDA_DEVICES <<< "$TASK_CUDA_VISIBLE_DEVICES_LIST"
+    fi
+
     if [[ "${CONSUMER_NO_END}" -gt "${CONSUMER_NO_BEG}" ]]; then
         echo "Starting task executors on host '${HOST_ID}' for IDs in [${CONSUMER_NO_BEG}, ${CONSUMER_NO_END})..."
         for (( i=CONSUMER_NO_BEG; i<CONSUMER_NO_END; i++ ))
         do
-          task_exe "${i}" "${HOST_ID}" &
+          if [[ ${#TASK_CUDA_DEVICES[@]} -gt 0 ]] && [[ -n "${TASK_CUDA_DEVICES[$i]:-}" ]]; then
+              CUDA_VISIBLE_DEVICES="${TASK_CUDA_DEVICES[$i]}" task_exe "${i}" "${HOST_ID}" &
+          else
+              task_exe "${i}" "${HOST_ID}" &
+          fi
         done
     else
         # Otherwise, start a fixed number of workers
         echo "Starting ${WORKERS} task executor(s) on host '${HOST_ID}'..."
         for (( i=0; i<WORKERS; i++ ))
         do
-          task_exe "${i}" "${HOST_ID}" &
+          if [[ ${#TASK_CUDA_DEVICES[@]} -gt 0 ]] && [[ -n "${TASK_CUDA_DEVICES[$i]:-}" ]]; then
+              CUDA_VISIBLE_DEVICES="${TASK_CUDA_DEVICES[$i]}" task_exe "${i}" "${HOST_ID}" &
+          else
+              task_exe "${i}" "${HOST_ID}" &
+          fi
         done
     fi
 fi

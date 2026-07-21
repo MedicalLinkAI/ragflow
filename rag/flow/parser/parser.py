@@ -448,7 +448,7 @@ class Parser(ProcessBase):
                     bboxes.append({"text": section})
         elif parse_method.lower() == "paddleocr":
             # ── QwenVL parser routing ──
-            if os.environ.get("OCR_PARSER", "qwen-vl") == "qwen-vl":
+            if os.environ.get("OCR_PARSER", "paddleocr") == "qwen-vl":
                 from deepdoc.parser.qwen_vl_parser import QwenVLParser
 
                 pdf_parser = QwenVLParser()

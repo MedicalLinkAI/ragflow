@@ -135,8 +135,8 @@ class Extractor(ProcessBase, LLM):
                 # - ENABLE_QWEN30B_OCR（默认）: qwen3-vl-30b-instruct，LabReport → 表格处理，其他 → 文本处理
                 # - ENABLE_OCR_VL: qwen-vl-ocr 原方案
                 # - ENABLE_NONE: 不做 OCR 处理，走上游 LLM 提取
-                ocr_parser = os.environ.get("OCR_PARSER", "qwen-vl").lower()
-                extractor_type = os.environ.get("EXTRACTOR_TYPE", "NONE").upper()
+                ocr_parser = os.environ.get("OCR_PARSER", "paddleocr").lower()
+                extractor_type = os.environ.get("EXTRACTOR_TYPE", "ENABLE_OCR_VL").upper()
 
                 if ocr_parser == "qwen-vl":
                     # QwenVLParser 路径：文本已由 QwenVLParser 提取，仅做 LLM 提取 + 坐标定位

@@ -180,13 +180,20 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, page_num: int =
 
 
 def _fuzzy_lookup_bbox(name: str, coord_lookup: dict, threshold: float = 0.5):
-    """Fuzzy bbox lookup with LCS similarity fallback."""
+    """Fuzzy bbox lookup with whitespace-insensitive + LCS subsequence fallback."""
     if name in coord_lookup:
         return coord_lookup[name]
 
     name_clean = name.lstrip("*").strip()
     for key, bbox in coord_lookup.items():
         if key.lstrip("*").strip() == name_clean:
+            return bbox
+
+    # Whitespace-insensitive match: the coord model may insert/remove spaces
+    # (e.g. "10mg口服" -> "10mg 口服"), so compare with all whitespace stripped.
+    name_nospace = re.sub(r"\s+", "", name_clean)
+    for key, bbox in coord_lookup.items():
+        if re.sub(r"\s+", "", key.lstrip("*").strip()) == name_nospace:
             return bbox
 
     best_bbox, best_score = None, 0.0
@@ -200,6 +207,8 @@ def _fuzzy_lookup_bbox(name: str, coord_lookup: dict, threshold: float = 0.5):
             for j in range(1, n + 1):
                 if name_clean[i - 1] == key_clean[j - 1]:
                     dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
         lcs_len = dp[m][n]
         score = lcs_len / max(m, n) if max(m, n) > 0 else 0
         if score > best_score:
@@ -747,46 +756,30 @@ async def process_text(ext, ck: dict):
                     new_positions.append([pn, 0, 0, 0, 0])
                 continue
 
-            # Build lookup: text -> bbox
-            coord_lookup = {}
-            for ocr_item in ocr_items:
-                coord_lookup[ocr_item["text"]] = ocr_item["bbox"]
-
             scale_x = page_w / 1000.0
             scale_y = page_h / 1000.0
 
-            # Match text lines to bboxes
-            raw_bboxes = []
-            for tl in lines:
-                bbox = coord_lookup.get(tl)
-                if bbox:
-                    raw_bboxes.append(list(bbox))
-                else:
-                    bbox = _fuzzy_lookup_bbox(tl, coord_lookup)
-                    if bbox:
-                        raw_bboxes.append(list(bbox))
+            # Direct index mapping: coord model returns bboxes in the same
+            # order as input lines.  Avoid fragile text-matching (whitespace,
+            # punctuation differences break exact/fuzzy lookup).
+            raw_bboxes: list[list | None] = []
+            if len(ocr_items) == len(lines):
+                for item in ocr_items:
+                    raw_bboxes.append(list(item["bbox"]))
+            else:
+                # Counts differ — fall back to lookup for robustness
+                coord_lookup = {
+                    it["text"]: it["bbox"] for it in ocr_items
+                }
+                for idx, text_line in enumerate(lines):
+                    if idx < len(ocr_items):
+                        raw_bboxes.append(list(ocr_items[idx]["bbox"]))
                     else:
-                        raw_bboxes.append(None)
-
-            # Interpolation for missing bboxes
-            heights = [b[3] - b[1] for b in raw_bboxes if b is not None]
-            avg_h = sum(heights) / len(heights) if heights else 20
-
-            for i in range(len(raw_bboxes)):
-                if raw_bboxes[i] is None:
-                    nxt = next((j for j in range(i + 1, len(raw_bboxes)) if raw_bboxes[j] is not None), None)
-                    if nxt is not None:
-                        gap = nxt - i
-                        est_top = raw_bboxes[nxt][1] - avg_h * gap
-                        est_bot = raw_bboxes[nxt][3] - avg_h * gap
-                        raw_bboxes[i] = [raw_bboxes[nxt][0], est_top, raw_bboxes[nxt][2], est_bot]
-                    else:
-                        prv = next((j for j in range(i - 1, -1, -1) if raw_bboxes[j] is not None), None)
-                        if prv is not None:
-                            gap = i - prv
-                            est_top = raw_bboxes[prv][1] + avg_h * gap
-                            est_bot = raw_bboxes[prv][3] + avg_h * gap
-                            raw_bboxes[i] = [raw_bboxes[prv][0], est_top, raw_bboxes[prv][2], est_bot]
+                        bbox = (
+                            coord_lookup.get(text_line)
+                            or _fuzzy_lookup_bbox(text_line, coord_lookup)
+                        )
+                        raw_bboxes.append(list(bbox) if bbox else None)
 
             matched = sum(1 for b in raw_bboxes if b is not None)
             for bbox in raw_bboxes:

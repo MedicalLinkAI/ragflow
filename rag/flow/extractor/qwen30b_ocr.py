@@ -910,45 +910,25 @@ async def process_text(ext, ck: dict):
                     new_positions.append([pn, 0, 0, 0, 0])
                 continue
 
-            # Build lookup: text -> bbox
-            coord_lookup = {}
-            for ocr_item in ocr_items:
-                text = ocr_item.get("text", "")
-                bbox = ocr_item.get("bbox")
-                if text and bbox and len(bbox) == 4:
-                    coord_lookup[text] = bbox
-
             scale_x = cw / 1000.0
             scale_y = ch / 1000.0
 
-            # ── 按 text_lines 顺序收集 bbox，未匹配的标记 None ──
-            raw_bboxes = []
-            for tl in text_lines:
-                bbox = coord_lookup.get(tl)
-                if bbox:
-                    raw_bboxes.append(list(bbox))
-                else:
-                    raw_bboxes.append(None)
-
-            # ── 计算平均行高，插值填充 null bbox ──
-            heights = [b[3] - b[1] for b in raw_bboxes if b is not None]
-            avg_h = sum(heights) / len(heights) if heights else 20
-
-            for i in range(len(raw_bboxes)):
-                if raw_bboxes[i] is None:
-                    nxt = next((j for j in range(i + 1, len(raw_bboxes)) if raw_bboxes[j] is not None), None)
-                    if nxt is not None:
-                        gap = nxt - i
-                        est_top = raw_bboxes[nxt][1] - avg_h * gap
-                        est_bot = raw_bboxes[nxt][3] - avg_h * gap
-                        raw_bboxes[i] = [raw_bboxes[nxt][0], est_top, raw_bboxes[nxt][2], est_bot]
+            # Direct index mapping: coord model returns bboxes in the same
+            # order as input lines.  Avoid fragile text-matching (whitespace,
+            # punctuation differences break exact/fuzzy lookup).
+            raw_bboxes: list[list | None] = []
+            if len(ocr_items) == len(text_lines):
+                for item in ocr_items:
+                    bbox = item.get("bbox")
+                    raw_bboxes.append(list(bbox) if bbox and len(bbox) == 4 else None)
+            else:
+                # Counts differ — fill what we have, rest as None
+                for idx in range(len(text_lines)):
+                    if idx < len(ocr_items):
+                        bbox = ocr_items[idx].get("bbox")
+                        raw_bboxes.append(list(bbox) if bbox and len(bbox) == 4 else None)
                     else:
-                        prv = next((j for j in range(i - 1, -1, -1) if raw_bboxes[j] is not None), None)
-                        if prv is not None:
-                            gap = i - prv
-                            est_top = raw_bboxes[prv][1] + avg_h * gap
-                            est_bot = raw_bboxes[prv][3] + avg_h * gap
-                            raw_bboxes[i] = [raw_bboxes[prv][0], est_top, raw_bboxes[prv][2], est_bot]
+                        raw_bboxes.append(None)
 
             # ── 转换为 PDF 坐标 ──
             matched = sum(1 for b in raw_bboxes if b is not None)

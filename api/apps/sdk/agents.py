@@ -942,3 +942,48 @@ async def webhook_trace(agent_id: str):
             "finished": finished,
         }
     )
+
+
+@manager.route('/llms', methods=['GET'])  # noqa: F821
+@token_required
+def list_llms(tenant_id):
+    """List available LLM models for the tenant.
+
+    Query params:
+        model_type: filter by type (chat, embedding, ocr, etc.)
+    """
+    from api.db.services.tenant_llm_service import TenantLLMService
+    from api.db.db_models import TenantLLM
+
+    model_type = request.args.get("model_type")
+
+    try:
+        if model_type:
+            objs = TenantLLMService.query(
+                tenant_id=tenant_id,
+                model_type=model_type,
+                status="1",
+            )
+        else:
+            objs = TenantLLMService.query(tenant_id=tenant_id, status="1")
+
+        # Deduplicate by (llm_name, llm_factory, model_type)
+        seen = set()
+        models = []
+        for o in objs:
+            key = (o.llm_name, o.llm_factory, o.model_type)
+            if key in seen:
+                continue
+            seen.add(key)
+            models.append({
+                "llm_name": o.llm_name,
+                "llm_factory": o.llm_factory,
+                "model_type": o.model_type,
+            })
+
+        models.sort(key=lambda m: (m["model_type"], m["llm_name"]))
+        return get_json_result(data=models)
+
+    except Exception as e:
+        logging.exception("list_llms failed")
+        return get_json_result(code=-1, message=str(e))

@@ -122,6 +122,21 @@ class Extractor(ProcessBase, LLM):
                 return
 
             prog = 0
+
+            # Read Parser's parse_method from DSL (instead of env var)
+            _parser_method = "paddleocr"  # default
+            for _cid, _cpn in self._canvas.components.items():
+                _obj = _cpn.get("obj")
+                if _obj and getattr(_obj, "component_name", "") in ("Parser", "parser", "OCRParser", "ocr_parser"):
+                    _param = getattr(_obj, "_param", None)
+                    _setups = getattr(_param, "setups", None) if _param else None
+                    _setups = _setups or {}
+                    _pdf = _setups.get("pdf", {}) if isinstance(_setups, dict) else {}
+                    _pm = _pdf.get("parse_method", "")
+                    if _pm:
+                        _parser_method = _pm.lower()
+                    break
+
             for i, ck in enumerate(chunks):
                 args[chunks_key] = ck["text"]
                 # Pass through upstream business fields so downstream prompts can reference them via {field_name}
@@ -129,14 +144,16 @@ class Extractor(ProcessBase, LLM):
                     if _fn not in ("text", "image", "positions", "img_id", "id", "doc_id", "mom"):
                         args[_fn] = _fv
 
-                # OCR 处理模式选择
-                # 优先级：OCR_PARSER=qwen-vl > EXTRACTOR_TYPE
-                # - OCR_PARSER=qwen-vl: QwenVLParser 路径，文本已提取，仅做坐标定位
-                # - ENABLE_QWEN30B_OCR（默认）: qwen3-vl-30b-instruct，LabReport → 表格处理，其他 → 文本处理
-                # - ENABLE_OCR_VL: qwen-vl-ocr 原方案
-                # - ENABLE_NONE: 不做 OCR 处理，走上游 LLM 提取
-                ocr_parser = os.environ.get("OCR_PARSER", "paddleocr").lower()
-                extractor_type = os.environ.get("EXTRACTOR_TYPE", "ENABLE_OCR_VL").upper()
+                # OCR 处理模式选择（由 DSL parse_method + EXTRACTOR_TYPE 控制）
+                # - parse_method=qwen-vl: QwenVLParser 路径，文本已提取，仅做坐标定位
+                # - parse_method=paddleocr（默认）: EXTRACTOR_TYPE 控制子路径
+                #   - ENABLE_QWEN30B_OCR: qwen3-vl-30b-instruct
+                #   - ENABLE_OCR_VL（paddleocr 默认）: qwen-vl-ocr
+                #   - ENABLE_NONE: 不做 OCR 处理
+                ocr_parser = _parser_method
+                extractor_type = "ENABLE_QWEN30B_OCR" if ocr_parser == "paddleocr" else "NONE"
+
+                logging.info(f"extractor ocr_parser={ocr_parser}, extractor_type={extractor_type}, chunk_type={ck.get('type', '')}, chunk_id={ck.get('chunk_id', '')}")
 
                 if ocr_parser == "qwen-vl":
                     # QwenVLParser 路径：文本已由 QwenVLParser 提取，仅做 LLM 提取 + 坐标定位
@@ -156,7 +173,7 @@ class Extractor(ProcessBase, LLM):
                     msg.insert(0, {"role": "system", "content": sys_prompt})
                     ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
                     # 走上游 LLM 提取
-                elif extractor_type in ("ENABLE_QWEN30B_OCR", "ENABLE_OCR_VL"):
+                elif extractor_type == "ENABLE_QWEN30B_OCR":
                     # 判断类型：LabReport 走 table，其他走 text
                     classify_raw = ck.get("classify_result_tks", "")
                     classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
@@ -164,20 +181,9 @@ class Extractor(ProcessBase, LLM):
                     is_lab_report = rec_type == "LabReport"
 
                     if is_lab_report:
-                        if extractor_type == "ENABLE_QWEN30B_OCR":
-                            await qwen30b_ocr.process_table(self, ck)
-                        else:
-                            msg, sys_prompt = self._sys_prompt_and_msg([], args)
-                            msg.insert(0, {"role": "system", "content": sys_prompt})
-                            ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
-                        
-                            await self._process_qwen_ocr_vl_table(ck)
+                        await qwen30b_ocr.process_table(self, ck)
                     else:
-                        # text 处理：OCR 模块内部自带 LLM 提取
-                        if extractor_type == "ENABLE_QWEN30B_OCR":
-                            await qwen30b_ocr.process_text(self, ck)
-                        else:
-                            await self._process_qwen_ocr_vl_text(ck)
+                        await qwen30b_ocr.process_text(self, ck)
 
                 prog += 1./len(chunks)
                 if i % (len(chunks)//100+1) == 1:

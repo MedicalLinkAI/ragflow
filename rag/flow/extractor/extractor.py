@@ -151,7 +151,7 @@ class Extractor(ProcessBase, LLM):
                 #   - ENABLE_OCR_VL（paddleocr 默认）: qwen-vl-ocr
                 #   - ENABLE_NONE: 不做 OCR 处理
                 ocr_parser = _parser_method
-                extractor_type = "ENABLE_QWEN30B_OCR" if ocr_parser == "paddleocr" else "NONE"
+                extractor_type = "ENABLE_QWEN30B_OCR" if ocr_parser.startswith("paddleocr") else "NONE"
 
                 logging.info(f"extractor ocr_parser={ocr_parser}, extractor_type={extractor_type}, chunk_type={ck.get('type', '')}, chunk_id={ck.get('chunk_id', '')}")
 

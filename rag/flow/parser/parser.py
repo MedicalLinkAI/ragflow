@@ -446,116 +446,115 @@ class Parser(ProcessBase):
                         bboxes.append({"text": section})
                 else:
                     bboxes.append({"text": section})
+        elif parse_method.lower() == "qwen-vl":
+            # ── QwenVL parser routing (controlled by DSL parse_method) ──
+            from deepdoc.parser.qwen_vl_parser import QwenVLParser
+
+            pdf_parser = QwenVLParser()
+            lines, tables = pdf_parser.parse_pdf(
+                filepath=name,
+                binary=blob,
+                callback=self.callback,
+            )
+            bboxes = []
+            for item in lines:
+                # QwenVLParser returns 0-based page (consistent with PaddleOCR-VL)
+                # Convert to 1-based for downstream
+                box = {
+                    "text": item[0],
+                    "image": None,
+                    "positions": [(item[1] + 1, 0, 0, 0, 0)],  # (page_1based, x0, x1, y0, y1)
+                }
+                bboxes.append(box)
         elif parse_method.lower() == "paddleocr":
-            # ── QwenVL parser routing ──
-            if os.environ.get("OCR_PARSER", "paddleocr") == "qwen-vl":
-                from deepdoc.parser.qwen_vl_parser import QwenVLParser
 
-                pdf_parser = QwenVLParser()
-                lines, tables = pdf_parser.parse_pdf(
-                    filepath=name,
-                    binary=blob,
-                    callback=self.callback,
-                )
-                bboxes = []
-                for item in lines:
-                    # QwenVLParser returns 0-based page (consistent with PaddleOCR-VL)
-                    # Convert to 1-based for downstream
-                    box = {
-                        "text": item[0],
-                        "image": None,
-                        "positions": [(item[1] + 1, 0, 0, 0, 0)],  # (page_1based, x0, x1, y0, y1)
-                    }
-                    bboxes.append(box)
-            else:
-
-                def resolve_paddleocr_llm_name():
-                    configured = parser_model_name or conf.get("paddleocr_llm_name")
-                    if configured:
-                        return configured
-
-                    tenant_id = self._canvas._tenant_id
-                    if not tenant_id:
-                        return None
-
-                    from api.db.services.tenant_llm_service import TenantLLMService
-
-                    env_name = TenantLLMService.ensure_paddleocr_from_env(tenant_id)
-                    candidates = TenantLLMService.query(tenant_id=tenant_id, llm_factory="PaddleOCR", model_type=LLMType.OCR.value)
-                    if candidates:
-                        return candidates[0].llm_name
-                    return env_name
-
-                parser_model_name = resolve_paddleocr_llm_name()
-                if not parser_model_name:
-                    raise RuntimeError("PaddleOCR model not configured. Please add PaddleOCR in Model Providers or set PADDLEOCR_* env.")
+            def resolve_paddleocr_llm_name():
+                configured = parser_model_name or conf.get("paddleocr_llm_name")
+                if configured:
+                    return configured
 
                 tenant_id = self._canvas._tenant_id
-                ocr_model_config = get_model_config_by_type_and_name(tenant_id, LLMType.OCR, parser_model_name)
-                ocr_model = LLMBundle(tenant_id, ocr_model_config)
-                pdf_parser = ocr_model.mdl
+                if not tenant_id:
+                    return None
 
-                lines, tables = pdf_parser.parse_pdf(
-                    filepath=name,
-                    binary=blob,
-                    callback=self.callback,
-                    parse_method=conf.get("paddleocr_parse_method", "raw"),
-                )
-                bboxes = []
-                for t, poss in lines:
-                    # Get cropped image and positions
-                    cropped_image, positions = pdf_parser.crop(poss, need_position=True)
+                from api.db.services.tenant_llm_service import TenantLLMService
 
-                    # PaddleOCR's crop() returns 0-based page indices, but downstream
-                    # (SmartSplitter, task_executor, frontend) expects 1-based pages
-                    # (matching DeepDOC's convention: pdf_parser.py L1812 does pos[0][-1]+1).
-                    # Fix: convert page from 0-based to 1-based here.
-                    if positions:
-                        positions = [(p[0] + 1, *p[1:]) for p in positions]
+                env_name = TenantLLMService.ensure_paddleocr_from_env(tenant_id)
+                candidates = TenantLLMService.query(tenant_id=tenant_id, llm_factory="PaddleOCR", model_type=LLMType.OCR.value)
+                if candidates:
+                    return candidates[0].llm_name
+                return env_name
 
-                    box = {
-                        "text": t,
-                        "image": cropped_image,
-                        "positions": positions,
-                    }
-                    bboxes.append(box)
+            parser_model_name = resolve_paddleocr_llm_name()
+            if not parser_model_name:
+                raise RuntimeError("PaddleOCR model not configured. Please add PaddleOCR in Model Providers or set PADDLEOCR_* env.")
 
-                # ── 增强：将 PaddleOCR 表格的 row_positions 补到对应的 bbox 上 ──
-                # tables 是 _transfer_to_tables 返回的 list[dict]，每个 dict 含
-                # position_tag / row_positions / html。通过 position_tag 匹配 bbox。
-                if tables:
-                    # Build lookup: position_tag → table info
-                    table_lookup = {}
-                    for tbl in tables:
-                        tag = tbl.get("position_tag", "")
-                        if tag:
-                            table_lookup[tag] = tbl
+            tenant_id = self._canvas._tenant_id
+            ocr_model_config = get_model_config_by_type_and_name(tenant_id, LLMType.OCR, parser_model_name)
+            ocr_model = LLMBundle(tenant_id, ocr_model_config)
+            pdf_parser = ocr_model.mdl
 
-                    for box in bboxes:
-                        # sections 的 text 末尾可能包含 position_tag（raw 模式下 tag 附在 text 里）
-                        # 也可能 position_tag 是 section tuple 的第二个元素（已被提取到 poss 里）
-                        # 重建 tag 来匹配
-                        text = box.get("text", "")
-                        if "<table" not in text.lower() and "<tr" not in text.lower():
-                            continue
-                        # 找到包含表格 HTML 的 bbox，用 positions 匹配
-                        if box.get("positions"):
-                            p = box["positions"][0]  # (page_1based, x0, x1, top, bottom)
-                            # position_tag uses 1-based page; positions are now also 1-based
-                            candidate_tag = "@@{}\t{}\t{}\t{}\t{}##".format(
-                                int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(p[4])
+            lines, tables = pdf_parser.parse_pdf(
+                filepath=name,
+                binary=blob,
+                callback=self.callback,
+                parse_method=conf.get("paddleocr_parse_method", "raw"),
+            )
+            bboxes = []
+            for t, poss in lines:
+                # Get cropped image and positions
+                cropped_image, positions = pdf_parser.crop(poss, need_position=True)
+
+                # PaddleOCR's crop() returns 0-based page indices, but downstream
+                # (SmartSplitter, task_executor, frontend) expects 1-based pages
+                # (matching DeepDOC's convention: pdf_parser.py L1812 does pos[0][-1]+1).
+                # Fix: convert page from 0-based to 1-based here.
+                if positions:
+                    positions = [(p[0] + 1, *p[1:]) for p in positions]
+
+                box = {
+                    "text": t,
+                    "image": cropped_image,
+                    "positions": positions,
+                }
+                bboxes.append(box)
+
+            # ── 增强：将 PaddleOCR 表格的 row_positions 补到对应的 bbox 上 ──
+            # tables 是 _transfer_to_tables 返回的 list[dict]，每个 dict 含
+            # position_tag / row_positions / html。通过 position_tag 匹配 bbox。
+            if tables:
+                # Build lookup: position_tag → table info
+                table_lookup = {}
+                for tbl in tables:
+                    tag = tbl.get("position_tag", "")
+                    if tag:
+                        table_lookup[tag] = tbl
+
+                for box in bboxes:
+                    # sections 的 text 末尾可能包含 position_tag（raw 模式下 tag 附在 text 里）
+                    # 也可能 position_tag 是 section tuple 的第二个元素（已被提取到 poss 里）
+                    # 重建 tag 来匹配
+                    text = box.get("text", "")
+                    if "<table" not in text.lower() and "<tr" not in text.lower():
+                        continue
+                    # 找到包含表格 HTML 的 bbox，用 positions 匹配
+                    if box.get("positions"):
+                        p = box["positions"][0]  # (page_1based, x0, x1, top, bottom)
+                        # position_tag uses 1-based page; positions are now also 1-based
+                        candidate_tag = "@@{}\t{}\t{}\t{}\t{}##".format(
+                            int(p[0]), int(p[1]), int(p[2]), int(p[3]), int(p[4])
+                        )
+                        if candidate_tag in table_lookup:
+                            box["row_positions"] = table_lookup[candidate_tag]["row_positions"]
+                            box["layout_type"] = "table"
+                            # ── DIAG-LOG-2: parser.py table_lookup 匹配后 ──
+                            rp = box["row_positions"]
+                            import logging as _stdlib_logging
+                            _stdlib_logging.info(
+                                f"[DIAG-PARSER] matched tag={candidate_tag} "
+                                f"row_positions len={len(rp)} "
+                                f"row[0]={rp[0]} row[-1]={rp[-1]}"
                             )
-                            if candidate_tag in table_lookup:
-                                box["row_positions"] = table_lookup[candidate_tag]["row_positions"]
-                                box["layout_type"] = "table"
-                                # ── DIAG-LOG-2: parser.py table_lookup 匹配后 ──
-                                rp = box["row_positions"]
-                                import logging as _stdlib_logging
-                                _stdlib_logging.info(
-                                    f"[DIAG-PARSER] matched tag={candidate_tag} "
-                                    f"row_positions len={len(rp)} "
-                                    f"row[0]={rp[0]} row[-1]={rp[-1]}"
-                                )
         else:
             if conf.get("parse_method"):
                 vision_model_config = get_model_config_by_type_and_name(self._canvas._tenant_id, LLMType.IMAGE2TEXT, conf["parse_method"])

@@ -73,6 +73,7 @@ class Chunk(BaseModel):
     image_id: str = ""
     available: bool = True
     positions: list[list[int]] = Field(default_factory=list)
+    extracted_data_tks: str = ""  # MedLinkAI 扩展：结构化提取字段（JSON 字符串）
 
     @validator("positions")
     def validate_positions(cls, value):
@@ -1117,6 +1118,8 @@ async def list_chunks(tenant_id, dataset_id, document_id):
         chunk = settings.docStoreConn.get(req.get("id"), search.index_name(tenant_id), [dataset_id])
         if not chunk:
             return get_result(message=f"Chunk not found: {dataset_id}/{req.get('id')}", code=RetCode.NOT_FOUND)
+        # 保存 extracted_data_tks（MedLinkAI 需要此字段，在下方 _tks 清理前取出）
+        _extracted_data_tks = chunk.get("extracted_data_tks", "")
         k = []
         for n in chunk.keys():
             if re.search(r"(_vec$|_sm_|_tks|_ltks)", n):
@@ -1140,6 +1143,7 @@ async def list_chunks(tenant_id, dataset_id, document_id):
             "tag_kwd": chunk.get("tag_kwd", []),
             "tag_feas": chunk.get("tag_feas", {}),
             "row_position_int": chunk.get("row_position_int", []),
+            "extracted_data_tks": _extracted_data_tks,
         }
         res["chunks"].append(final_chunk)
         _ = Chunk(**final_chunk)
@@ -1501,6 +1505,9 @@ async def update_chunk(tenant_id, dataset_id, document_id, chunk_id):
         d["tag_kwd"] = req["tag_kwd"]
     if "tag_feas" in req:
         d["tag_feas"] = req["tag_feas"]
+    # MedLinkAI 扩展：支持更新 extracted_data_tks（结构化提取字段）
+    if "extracted_data_tks" in req:
+        d["extracted_data_tks"] = req["extracted_data_tks"]
     tenant_embd_id = DocumentService.get_tenant_embd_id(document_id)
     if tenant_embd_id:
         model_config = get_model_config_by_id(tenant_embd_id)

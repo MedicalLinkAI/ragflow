@@ -696,7 +696,11 @@ async def run_dataflow(task: dict):
     if doc_id == CANVAS_DEBUG_DOC_ID:
         return
 
-    if not chunks:
+    if not chunks or chunks.get("chunks") == []:
+        task_time_cost = timer() - task_start_ts
+        set_progress(task_id, prog=1., msg="No chunks produced. Task done ({:.2f}s)".format(task_time_cost))
+        DocumentService.increment_chunk_num(doc_id, task_dataset_id, 0, 0, task_time_cost)
+        logging.info("[Done] No chunks from pipeline, doc=%s, elapsed:%.2f", doc_id, task_time_cost)
         PipelineOperationLogService.create(document_id=doc_id, pipeline_id=dataflow_id,
                                            task_type=PipelineTaskType.PARSE, dsl=str(pipeline))
         return

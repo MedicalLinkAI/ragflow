@@ -109,6 +109,17 @@ class Tokenizer(ProcessBase):
         return chunks, token_count
 
     async def _invoke(self, **kwargs):
+        # Fast-path: when upstream (ChunkMerger) produces 0 chunks,
+        # skip tokenization & embedding entirely — pass empty chunks
+        # downstream so Invoke:SyncChunks can still sync the empty result.
+        upstream_chunks = kwargs.get("chunks")
+        if upstream_chunks is not None and len(upstream_chunks) == 0:
+            logging.info("[Tokenizer] Upstream chunks is empty, skipping tokenization and embedding.")
+            self.set_output("output_format", "chunks")
+            self.set_output("chunks", [])
+            self.callback(1.0, "No chunks to process, skipping.")
+            return
+
         try:
             chunks = kwargs.get("chunks")
             if chunks is not None:

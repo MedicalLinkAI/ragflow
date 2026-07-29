@@ -227,9 +227,17 @@ class Pipeline(Graph):
             # Return the last component's output that contains chunks data.
             # Side-effect components (e.g. Invoke) don't produce chunks,
             # so we walk backwards to find the actual data-producing component.
+            # Note: use `is not None` for "chunks" because empty list [] is valid
+            # (e.g. ChunkMerger filtered all noise chunks → 0 real chunks).
             for i in range(len(self.path) - 1, -1, -1):
                 out = self.get_component_obj(self.path[i]).output()
-                if out and (out.get("chunks") or out.get("json") or out.get("markdown") or out.get("text") or out.get("html")):
+                if out and (
+                    out.get("chunks") is not None
+                    or out.get("json")
+                    or out.get("markdown")
+                    or out.get("text")
+                    or out.get("html")
+                ):
                     return out
             return self.get_component_obj(self.path[-1]).output()
 

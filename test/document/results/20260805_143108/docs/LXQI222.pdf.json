@@ -1,0 +1,227 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\LXQI222.pdf",
+    "name": "LXQI222.pdf",
+    "size_kb": 62937.7,
+    "pages": 10
+  },
+  "doc_id": "c9872b6c908911f1a3da71efcdd7cc1f",
+  "upload_mode": "existing",
+  "run": null,
+  "run_label": null,
+  "progress": null,
+  "begin_at": "2026-08-05T14:31:14",
+  "end_at": "2026-08-05T14:31:14",
+  "elapsed_s": 0.9,
+  "chunks": [
+    {
+      "chunk_id": "a80da83339587c9e",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 140,
+      "content": "入院记录\n姓名：\n床号：23-03床\n病历号：0\n科室：呼吸与危重医学科医生\n站\n姓名：\n性别：女\n年龄：72岁\n出生地：贵州省贵阳市\n职业：退休人员\n民族：汉族\n婚姻：已婚\n联系地址：中国贵州省贵阳市\n入院时间：2025-10-30 14:34\n病史陈述者：本人\n主诉：咳嗽、咳痰5年，加重1周\n现病史：5年前患者无明显诱因出现咳嗽咳痰，伴喘息气促，活动后气促症状加重，痰为脓痰，呈黄色，\n不易咳出，无发热、咯血、寒颤、胸闷、胸痛、腹痛、腹胀等不适，曾于外院完善相关检查诊断“支气管\n哮喘”，行对症支持治疗后好转，长期予以“沙罗特罗替卡松”吸入治疗。期间上述症状反复，每于上感\n和天气变化时加重。1",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "b6c665d51c55d50e",
+      "pages": [
+        5,
+        6,
+        7
+      ],
+      "page_count_raw": 93,
+      "content": "出院记录\n姓名：\n床号：23-03床\n病历号：0\n科室：呼吸与危重医学科医生站\n姓名：\n性别：女\n年龄：72岁\n民族：汉族\n病历号：00\n科室：呼吸与危重医学科医生站\n入院日期：2025-10-30 14:34\n住院天数：8\n出院日期：2025-11-07 11:44\n籍贯：贵州省贵阳市\n职业：退休人员\n单位：贵阳供电局\n住址：中国贵州省贵阳\n入院情况：\n李新秋，72岁，女，因“咳嗽、咳痰5年，加重1周”于2025-10-30 14:34:00入院。现病史：5年前患者无\n明显诱因出现咳嗽咳痰，伴喘息气促，活动后气促症状加重，痰为脓痰，呈黄色，不易咳出，无发热、咯\n血、寒颤、胸闷、胸痛、腹痛、腹",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "f5ee14b3e82a5ff4",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 195,
+      "content": "肺功能通气阻力检查报告\n姓名：\n性别：女\n身高：151 cm\n病历号：\n年龄：72 Years\n体重：46 kg\nFlow [L/s]\nF/V ex\n10\n5\n0\n2\n4\n6\nF/V in\n8\nVol [L]\n6\n4\n1\nVol%Vcmax\n100\nVcmax\n20\n0\nTime [s]\n0\n1\n2\n3\n4\n5\n6\n2.0\nR [kPa/(L/s)] Normal breathingX [kPa/(L/s)]\n1.5\n1.0\n1.0\n0.5\n0.0\n0.4\n0.2\n0.2\n0.4\nF [Hz]\n5\n10\n15\n20\n25\n30\n35\n日期\n时间\n预计值\n实测值\n实/预\n25/10/31\n14:",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "d62a08157bb31cc5",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 32,
+      "content": "亦康互联网医院\n普通\n处方\n已使用\n已使用\n已使用\n联\n处方笺\n已使用\nNO.:\n2025-12-05\n已使用\n姓名：\n性别：女处方专用章\n年龄：72岁\n已使用\n费别：自费\n科别：内科\n已使用\n临床诊断：支气管哮喘\n已使用\nRp：\n已使用\n沙美特罗替卡松吸入粉雾剂\n已使用\n50μg:250μg*60泡\nx 3盒\n已使用\n用法用量：\n口腔吸入,一日两次,一次1.0揿;\n已使用\n补充说明：处方超7日为病情需要",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 10,
+    "check": {
+      "covered": 10,
+      "total": 10,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-05 05:02:29,237 INFO     29 [ChunkMerger] Merged 4 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1} (filtered 4 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "AdmissionRecord": 1,
+    "DischargeRecord": 1,
+    "ExaminationReport": 1,
+    "PrescriptionRecord": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 4,
+    "sources": 8,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1
+    },
+    "filtered_noise": 4
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-05 05:02:29,237 INFO     29 [ChunkMerger] Merged 4 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1} (filtered 4 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "复用监控列表中同名已有文档。 ",
+  "progress_msg": "05:02:30 Indexing done (0.04s). Task done (423.34s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "chunk_types": {
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

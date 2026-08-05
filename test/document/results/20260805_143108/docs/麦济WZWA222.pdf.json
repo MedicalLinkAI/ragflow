@@ -1,0 +1,216 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\麦济WZWA222.pdf",
+    "name": "麦济WZWA222.pdf",
+    "size_kb": 9514.5,
+    "pages": 5
+  },
+  "doc_id": "c9526904909311f1a3da71efcdd7cc1f",
+  "upload_mode": "existing",
+  "run": null,
+  "run_label": null,
+  "progress": null,
+  "begin_at": "2026-08-05T14:31:23",
+  "end_at": "2026-08-05T14:31:24",
+  "elapsed_s": 0.9,
+  "chunks": [
+    {
+      "chunk_id": "7bdaf56aa4d641ef",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 46,
+      "content": "内蒙古医科大学附属医院门诊病历\n姓名：\n年龄：70岁\n诊疗号：0022542899\n民族：汉族\n性别：男性\n科室：呼吸内科门诊\n联系电话：\n身份：\n4\n病情：\n就诊状态：\n就诊时间：2025-12-26 08:41\n生命体征（需要时）：\n体温：℃ 脉搏：74次/分 呼吸：次/分 血压：/mmHg\n主诉：气短10余年，加重伴咳嗽咳痰1月\n现病史：气短10余年，规律用药（信必可都保320，早晚各一吸），加重伴咳\n嗽咳痰1月，血氧饱和度97%。自己输液治疗（含激素）10余天，气\n短、咳嗽咳痰症状无改善。\n既往史：患者平素身体一般，高血压无，糖尿病无，心脏病无，肺结核无，鼻炎\n有，10年，吸烟史无，无",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "0b3bd742ea8fd977",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 12,
+      "content": "丰镇市医院\n诊断证明书\n姓名：\n年龄：\n性别：男\n病案号：10017815\n印象：1.慢性支气管炎急性加重期2.支气管哮喘3.慢性胃炎4.肺气肿\n处理意见：住院\n医师：宋志杰\n日期：2024年07月22日\n地址：呼和浩特市通道北街一号\n电话：0471--3451056",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "6dff757e6427fc6b",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 159,
+      "content": "肺常规通气检查报告\n测试号：0022542899\n姓名：\n出生日期：\n身高：165 cm\n临床印象：支气管哮喘\n住址：内蒙古自治区乌兰察布\n科别：\n住院号：0022542899\n性别：男\n年龄：70 Years\n体重：47 kg\n吸烟史：否\n联系电话：\n主管医生：\nF/V ex\nF/V in\nVol [L]\nVol%VCmax\nVCmax\nTime [s]\nVol [L]\nTime [s]\nFVC\n[L]\n3.34\n2.48\n74.0\nFEV 1\n[L]\n2.58\n1.45\n56.3\nFEV 2\n[L]\n1.82\nFEV 3\n[L]\n2.06\nFEV6\n[L]\n2.45\nFEV 1 % FVC",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "661fa8629b26fa6a",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 16,
+      "content": "东吉轩药店\n日期: 2026.01.23\n09: 23: 37\n单号: 20260123070132\n品名 规格 单价 数量 总计\n布地奈德福莫特罗吸入气雾剂\n(II)320ug/9ug/吸 60 吸/支\n268.00 2 536.00\n应收金额: 536.00\n实收金额: 536.00\n优惠金额: 0.00\n找零金额: 0.00\n会员:\n日期: 2026.01.23\n09: 23: 3\n单号: 20260123070132",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 6,
+    "check": {
+      "covered": 5,
+      "total": 5,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-05 06:09:06,204 INFO     29 [ChunkMerger] Merged 4 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1} (filtered 5 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 2,
+    "ExaminationReport": 1,
+    "MedicationRecord": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 4,
+    "sources": 8,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 2,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1
+    },
+    "filtered_noise": 5
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-05 06:09:06,204 INFO     29 [ChunkMerger] Merged 4 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1} (filtered 5 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "复用监控列表中同名已有文档。 ",
+  "progress_msg": "06:09:08 Indexing done (0.03s). Task done (147.34s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "chunk_types": {
+    "OutpatientRecord": 2,
+    "MedicationRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

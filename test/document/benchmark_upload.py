@@ -378,7 +378,14 @@ class RagflowClient:
 # 已知日志模式（RAGFlow pipeline / task_executor）
 _SMART_RE = re.compile(r"SmartSplitter done:\s*(\d+)\s*chunks from\s*(\d+)\s*LLM segments.*?Types:\s*(\{.*\})")
 _MERGE_RE = re.compile(r"ChunkMerger\] Merged\s*(\d+)\s*chunks from\s*(\d+)\s*sources:\s*(\{.*?\})(?:\s*\(filtered\s*(\d+)\s*noise chunks\))?")
-_TRACE_MERGE_RE = re.compile(r"(?:ChunkMerger:Merger|Tokenizer:MedEmbed)\s*\|\s*outputs=(\{.*\})")
+# Trace 行格式：[Trace] task=<id> | doc=<文件名> | <组件> | outputs={...}
+# 并行 worker 下 begin/done 切段会混入其他文档的 Trace 行，必须按 doc= 精确归属
+_TRACE_SMART_RE = re.compile(
+    r"\[Trace\] task=\w+ \| doc=(?P<doc>.*?) \| SmartSplitter:MedLink \| outputs=(?P<out>\{.*)"
+)
+_TRACE_MERGE_RE = re.compile(
+    r"(?:\[Trace\] task=\w+ \| doc=(?P<doc>.*?) \| )?(?:ChunkMerger:Merger|Tokenizer:MedEmbed)\s*\|\s*outputs=(\{.*\})"
+)
 _PROGRESS_MSG_RE = re.compile(r"set_progress\([^)]*\), progress:\s*([0-9.]+), progress_msg:\s*(.*)")
 _DONE_NO_CHUNKS_RE = re.compile(r"\[Done\] (.*)")
 _SYNC_ERR_RE = re.compile(r"Invoke:SyncChunks finished\. error=(\S+)")
@@ -446,9 +453,17 @@ def split_logs_by_doc(lines: list[str], doc_ids: list[str]) -> dict[str, list[st
     return segments
 
 
-def analyze_doc_log(seg: list[str]) -> dict[str, Any]:
-    """从文档日志段提取 SmartSplitter / ChunkMerger / Extractor / 错误证据。"""
+def analyze_doc_log(seg: list[str], doc_name: str | None = None) -> dict[str, Any]:
+    """从文档日志段提取 SmartSplitter / ChunkMerger / Extractor / 错误证据。
+
+    SmartSplitter types 归属：优先按 Trace 行 doc=<文件名> 精确匹配（并行 worker
+    下 begin/done 切段会混入其他文档的 Trace 行，按"段内最后一条"归属不可靠）；
+    无精确匹配时回退旧格式 "SmartSplitter done" 日志行。
+    """
     smart: dict[str, Any] = {"found": False}
+    trace_smarts: list[dict[str, Any]] = []  # 段内全部 SmartSplitter Trace 行
+    own_smarts: list[dict[str, Any]] = []  # doc=<doc_name> 精确匹配的行
+    cross_smarts: list[dict[str, Any]] = []  # 其他文档的行（串档诊断证据）
     merge: dict[str, Any] = {"found": False}
     skips: list[dict[str, str]] = []
     errors: list[str] = []
@@ -456,14 +471,22 @@ def analyze_doc_log(seg: list[str]) -> dict[str, Any]:
     done_msg: str | None = None
     sync_error: str | None = None
     for line in seg:
-        m = _SMART_RE.search(line)
+        m = _TRACE_SMART_RE.search(line)
         if m:
-            smart = {
-                "found": True,
-                "chunks": int(m.group(1)),
-                "segments": int(m.group(2)),
-                "types": try_pyobj(m.group(3)) or {},
-            }
+            payload = try_json(m.group("out"))
+            types: dict[str, int] = {}
+            if isinstance(payload, dict) and isinstance(payload.get("chunks"), str):
+                tm = re.search(r"types=\s*(\{.*\})", payload["chunks"])
+                if tm:
+                    tobj = try_pyobj(tm.group(1))
+                    if isinstance(tobj, dict):
+                        types = {str(k): int(v) for k, v in tobj.items()}
+            item = {"doc": m.group("doc"), "types": types}
+            trace_smarts.append(item)
+            if doc_name is not None and m.group("doc") == doc_name:
+                own_smarts.append(item)
+            elif doc_name is not None:
+                cross_smarts.append(item)
         m = _MERGE_RE.search(line)
         if m:
             noise = int(m.group(4)) if m.group(4) else 0
@@ -488,9 +511,27 @@ def analyze_doc_log(seg: list[str]) -> dict[str, Any]:
         m = _SYNC_ERR_RE.search(line)
         if m:
             sync_error = m.group(1)[:200]
+    # 归属：本文档 Trace 行的最后一条（多次重试时取终态）
+    if own_smarts:
+        last = own_smarts[-1]
+        smart = {"found": True, "chunks": sum(last["types"].values()) or None,
+                 "segments": None, "types": last["types"]}
+    # 回退：旧格式 "SmartSplitter done" 日志行（无 Trace 记录时）
+    if not smart.get("found"):
+        for line in seg:
+            m = _SMART_RE.search(line)
+            if m:
+                smart = {
+                    "found": True,
+                    "chunks": int(m.group(1)),
+                    "segments": int(m.group(2)),
+                    "types": try_pyobj(m.group(3)) or {},
+                }
     return {"smart_splitter": smart, "chunk_merger": merge, "skips": skips,
             "errors": errors,
-            "progress_msg": progress_msg, "done_msg": done_msg, "sync_error": sync_error}
+            "progress_msg": progress_msg, "done_msg": done_msg, "sync_error": sync_error,
+            "smart_splitter_trace": trace_smarts,
+            "smart_splitter_cross_doc": cross_smarts}
 
 
 def extractor_stats_to_types(stats: dict) -> dict[str, int]:
@@ -885,7 +926,7 @@ def run() -> int:
             rep["log_segment"] = seg
             if not seg:
                 rep["note"] += "worker 日志中未找到该 doc_id（容器可能已重启或未重新解析）。 "
-            log_an = analyze_doc_log(seg)
+            log_an = analyze_doc_log(seg, doc_name=pdf["name"])
             rep["smart_types"] = log_an["smart_splitter"].get("types", {}) if log_an["smart_splitter"].get("found") else {}
             rep["merge_info"] = log_an["chunk_merger"] if log_an["chunk_merger"].get("found") else {}
             rep["skips"] = log_an["skips"]
@@ -893,6 +934,10 @@ def run() -> int:
             rep["progress_msg"] = log_an["progress_msg"]
             rep["done_msg"] = log_an["done_msg"]
             rep["sync_error"] = log_an["sync_error"]
+            rep["cross_doc_smarts"] = log_an["smart_splitter_cross_doc"]
+            if rep["cross_doc_smarts"]:
+                rep["note"] += (f"并行 worker 串档日志 {len(rep['cross_doc_smarts'])} 条"
+                                 f"（已按 Trace 行 doc= 精确归属排除）。 ")
 
             # chunk 类型分布（最终落库分布）：优先从 Trace outputs 的 chunks types 解析
             # （ChunkMerger/Tokenizer 输出的 "N items, types={...}" 即最终落库类型），
@@ -902,7 +947,9 @@ def run() -> int:
                 m = _TRACE_MERGE_RE.search(line)
                 if not m:
                     continue
-                payload = try_json(m.group(1))
+                if m.group("doc") is not None and m.group("doc") != pdf["name"]:
+                    continue  # 并行 worker 串档：其他文档的 Trace 行不参与归属
+                payload = try_json(m.group(2))
                 if not isinstance(payload, dict) or "chunks" not in payload:
                     continue
                 ck = payload["chunks"]

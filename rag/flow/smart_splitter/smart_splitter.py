@@ -325,7 +325,16 @@ class SmartSplitter(ProcessBase, LLM):
                             f"no match found, fallback to first_line path"
                         )
 
-                # 再次验证修正后的范围
+                # 再次验证修正后的范围（增强：bbox_end 越界时截断容错，不丢弃整个 segment）
+                if b_end >= len(sections) and 0 <= b_start < len(sections):
+                    # LLM 返回的 bbox_end 可能超出最后一个 section 索引（如长文本末页），截断而非丢弃
+                    logging.warning(
+                        f"[SmartSplitter] Segment {seg_idx} type={seg.get('type', '?')} "
+                        f"bbox_end={b_end} out of range (len(sections)={len(sections)}), "
+                        f"truncated to {len(sections) - 1}"
+                    )
+                    b_end = len(sections) - 1
+
                 if not (0 <= b_start <= b_end < len(sections)):
                     # 仍然无效，走 fallback
                     continue

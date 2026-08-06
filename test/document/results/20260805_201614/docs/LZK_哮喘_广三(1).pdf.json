@@ -1,0 +1,326 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\LZK 哮喘 广三(1).pdf",
+    "name": "LZK 哮喘 广三(1).pdf",
+    "size_kb": 5325.3,
+    "pages": 16
+  },
+  "doc_id": "5963bc44913b11f19b5e81513a69a703",
+  "upload_mode": "existing",
+  "run": null,
+  "run_label": null,
+  "progress": null,
+  "begin_at": "2026-08-06T10:30:48",
+  "end_at": "2026-08-06T10:30:49",
+  "elapsed_s": 1.6,
+  "chunks": [
+    {
+      "chunk_id": "9e3c7cfba99c8855",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 58,
+      "content": "病历编号：\n性别：男\n年龄：40岁\n就诊科室：内科门诊（荔湾）\n就诊时间：2025-10-10 14:36:06\n主诉：BAIYUN V8\n现病史：自上次访视至今，询问及查询HIS系统受试者有新增AE，无SAE、哮喘急性发作，有新增合并用药，发生2次医疗相关事件[2025年9月3日因过敏性鼻炎就诊专科门诊、本周曾因上呼吸道感染到社区医院就诊(具体不详，因HIS系统滞后无法收集具体情况及受试者无法回忆起当时情况及用药情况，待收集具体情况后补充详情)]。于2025年8月4日、2025年9月1日收到加重警报邮件，联系受试者后，均判断非哮喘急性发作。\n完成下流操作：\n1、查看受试者电子日志，受试者漏填",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a6d2d8e829f278ad",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 34,
+      "content": "就诊卡\n流水号：\n姓名\n龄：40岁\n就诊科\n目：2025-10-24 15:45:39\n主诉：安全性电话随访\n现病史：今日10:27\n固定电话（020-\n(159\n5），询问上次访视至今有无不适，及收集合并用药使用情况，受试者告知无\n不适，并补充告知上次访视不良事件及合并用药情况，告知受试者2025年10月10日因中心对\nV8访视窗（理论2025年11月5日±4天）计算错误，提前完成V8随访，今日获知该情况后因受试\n者不愿返院随访确定于2025年10月10日提前终止药物治疗，因该PD对受试者权益造成影响，\n目前无安全性异常表现。\n合并用药更新：\n1、小柴胡颗粒、（自行购药）2025.10.6-",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "017ffd0c3f78f5a6",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 25,
+      "content": "病历编号：\n姓名：\n性别：\n年龄：40岁\n就诊科：\n就诊时间：2025-11-17 10:10:48\n主诉：支气管哮喘治疗后复查：\n现病史：2021年2月前开始出现咳嗽、咯痰，粘白，量中，能咯出，咳嗽呈阵发性、刺激性，伴咽痒，咳嗽以夜间明显，自觉有吸入性呼吸困难，伴喘息，无胸闷，曾有鼻塞、流涕、喷嚏。无咽痛，无伴反酸、嗳气、腹胀。无上腹部隐痛不适感，无伴发热、畏寒，影响睡眠。晨起有咽干，曾到本院就诊两次，症状不见明显缓解。2021-1-9血常规：白细胞：\n12.52*109/L 嗜酸粒细胞：0.65*109/L 5.2%。经治疗后症状明显缓解。无咳嗽、咯痰、气促。病情稳定。本次门诊距上次门诊间",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "d93c2e5657ecfd66",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 26,
+      "content": "门(急)诊处方\n就诊时间:2025-07-18\n就诊科室:内科门诊\n主诊医\n姓名\n性别:男\n年龄:40岁\n卡号:\n患者\n医疗证号:\n处方号\n地址:PT027气雾剂 2024017-呼吸科\n身份证\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n布地奈德福莫特罗吸入粉雾剂0.125/0.006*60吸6盒\n183.41100.46\nSig\n2吸/次,吸入,bid*90天",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "fdf864ca87d842a6",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 26,
+      "content": "门(急)诊处方\n就诊时间:2025-04-25\n就诊科室:内科门诊\n主诊\n姓名\n性别:男\n年龄:40岁\n卡号:\n患者类型:GLP支付\n医疗证号:\n处方号\n地址:PT027气雾剂 2024017-呼吸科\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n布地奈德福莫特罗吸入粉雾剂(II)●●@ug*60吸6盒\n183.41100.46\nSig\n2吸/次,吸入,bid*90天",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "9315192c029e920d",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "门(急)诊处方\n就诊时间:2025-02-26\n就诊科室:内科门诊\n主诊\n性别:男\n年龄:40岁\n卡号\n医疗证号:\n处方\n015\n地址:PT027气雾剂 2024017-呼吸科\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n布地奈德福莫特罗吸入粉雾剂BDII/●@0.1g*60吸2盒\n183.41 366.82\nSig\n2吸/次,吸入,bid*30天",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "070bf89c3f8c24d3",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 26,
+      "content": "门(急)诊处方\n就诊时间:2025-01-24\n就诊科室:内科门诊\n主诊医\n姓名\n性别:男\n年龄:40岁\n卡号:4\n患者类型:GCP支付\n医疗证号:\n处方号:\n地址:PT027气雾剂 2024017-呼吸科\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n布地奈德福莫特罗吸入粉雾剂HIV●@1ug*60吸4盒\n183.41 733.64\nSig\n2吸/次,吸入,bid*60天",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "51a087475d50794c",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 31,
+      "content": "门(急)诊处方\n就诊时间:2025-01-03\n就诊科室:内科门诊\n主诊\n性别:男\n年龄:40岁\n卡号\n患者类型:GCP支付\n医疗证号:\n处方\n地址:PT027气雾剂 2024017-呼吸科\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n布地奈德福莫特罗吸入粉雾剂(Ⅱ型)/●⑥ug*60吸2盒\n183.41 366.82\nSig\n2吸/次,吸入,bid*30天\n医师:\n医生编号:1326\n配剂人:\n核对人:\n合计:\n收费员:",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "e870da93a6266e39",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 26,
+      "content": "门(急)诊处方\n就诊时间:2024-12-04\n就诊科室:内科门诊\n主诊\n姓名\n性别:男\n年龄:39岁\n卡号\n患者\n医疗证号:\n处方\n地址:PT027气雾剂 2024017-呼吸科\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n布地奈德福莫特罗吸入粉雾剂(Ⅱ型)/●(50ug*60吸2盒\n183.41 366.82\nSig\n2吸/次,吸入,bid*30天",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "e8933ae34c00d9bc",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 198,
+      "content": "激发试验检查报告\n姓名：\n测试号：\n门诊/住院号：\n000\n年龄：\n出生日期：\n19\n性别：\n男\n身高：\n170\n病区：\n内科门诊\n体重：\n81 kg\n机器编号：\n床号：\n电话：\nPred\nA1\nA1/Pd\nNS\nP1 chg%1\nP2 chg%2\nP3 chg%3\nFVC\n[L]\n4.84\n4.69\n97.1\n4.29\n4.22\n-10.1\n3.64\n-22.5\n4.01\n-14.6\nPEV 1\n[L]\n4.01\n3.05\n76.2\n2.72\n2.69\n-11.8\n2.24\n-26.5\n2.44\n-20.0\nPEV 1 % PVC\n[%]\n83.32\n65.02\n78.0\n63.54\n63.",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "0be40ec40dc70750",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 209,
+      "content": "检查日期：2021/1/21\n检查时间：16:43\n编号：16\n广州医科大学附属第三医院\n支气管扩张试验检查报告\n姓名：\n测试号：\n年龄：36岁\n性别：男\n病区：\n机器编号：\n门诊/住院号：\n出生日期：\n身高：\n体重：\n床号：\n电话：\nPred\nA1\nA1/Pd\nP1\nA2/Pd\nchg%1\nP2\nA3/Pd\nchg%2\nP3\nA4/Pd\nchg%3\nFVC\n[L]\n4.86\n3.48\n71.5%\n4.01\n82.4%\n15.19\n4.15\n85.4%\n19.47\n4.01\n82.6%\n15.47\nFEV 1\n[L]\n4.03\n1.97\n48.8%\n2.33\n57.9%\n18.59\n2.33\n",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "4f886dcfb78e7bb5",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 30,
+      "content": "广州医科大学附属第三医院\n处方笺\n普通\n诊疗卡\n患者姓名\n年龄：41岁\n费别：南医保\n科室：内科门诊（荔湾）\n日期：2026-01-05 17:17:14\n处方号\n地址：荔湾\n2024017-呼吸科\n联系电\n身份号码：\n2739\n诊断：支气管哮喘(急性发作期),过敏性鼻炎[变应性鼻炎],急性气管支气管炎\nR\nP:\n布地奈德福莫特罗吸入粉雾剂(II) 160ug/4.5ug*60吸\n2盒\n剂量：每次2吸\n（\n1\n30\n盒）\n用法：吸入用药\nbid\n01-05\n处方金额：366.82元\n取药药房：门诊西药房（荔湾）",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "bb4ea41a5a5d1a8f",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 44,
+      "content": "广州医科大学附属第三医院\nThe Third Affiliated Hospital of Guangzhou Medical University\n门(急)诊病历信息\n就诊卡\n流水\n姓\n病历编号:\n年 龄:41岁\n就诊科室:内科门诊(荔湾) 医\n就诊时间:2026-01-05 17:07:54\n主 诉:支气管哮喘治疗后复查,咳嗽、咯痰、喘息5天\n现 病 史:2021年2月前开始出现咳嗽、咯痰,粘白,量中,能咯出,咳嗽呈阵发性、刺激\n性,伴咽痒,咳嗽以夜间明显,自觉有吸入性呼吸困难,伴喘息,无胸闷,曾有鼻塞、流\n涕、喷嚏,无咽痛,无伴反酸、嗳气、腹胀,无上腹部隐痛不适感,无伴发热、畏寒,影响\n",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "7861af5bcd41227a",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 27,
+      "content": "门诊/住院病历信息\n就诊卡号：0\n病历编号：\n姓名：\n性别：男\n年龄：41岁\n就诊科室：内科门诊（荔湾）\n就诊时间：2026-02-04 11:21:11\n主诉：支气管哮喘治疗后复查\n现病史：2021年2月前开始出现咳嗽、哮喘，粘白，量中，能咳出，咳嗽呈阵发性，刺激性，伴咽痒，咳嗽以夜间明显，自觉有吸入性呼吸困难，伴喘息，无胸闷，曾有鼻塞、流涕、喷嚏，无咽痛，无伴反酸、嗳气、腹胀，无上腹前隐痛不适感，无伴发热，畏寒，影响睡眠，晨起有咽干，曾到本院就诊两次，症状不见明显缓解。2021-1-9血常规：白细胞：12.52*109/L 嗜酸性粒细胞：0.65*109/L 5.2%。经治疗后症状明显缓解",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "709e62643377e708",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 2884,
+      "content": "广州医科大学附属第三医院\n肺功能检查报告\n地址：广州市多宝路63号 电话：020-81292126\nCOSMED\n姓名：\n科室/床号：\nID：\n出生日期：1984/12/8\n预计值：ERS 93\n日期：2024/10/22\n性别：Male\n地区修正：Chinese\n详细描述：内科门诊\nCompany：\n年龄：39\n体重(Kg)：89.0\n身高(cm)：177.5\nBMI(Kg/m²：28.2\n吸烟：曾经(10/20)\n用力肺活量 Forced Vital Capacity\nF(l/s)\nV(l)\nBEST #3 - 2024/10/22 11:03\n沙丁胺醇 (400.0000 mcg) #4",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "page_sum": 16,
+    "check": {
+      "covered": 16,
+      "total": 16,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 5,
+      "recognized_count": 5,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 7,
+      "recognized_count": 7,
+      "extractor_count": 7,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 3,
+      "recognized_count": 3,
+      "extractor_count": 3,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-06 02:25:14,919 INFO     29 [ChunkMerger] Merged 15 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 5, 'Extractor:Medication': 1, 'Extractor:Prescription': 7, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3} (filtered 5 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 5,
+    "PrescriptionRecord": 7,
+    "ExaminationReport": 3
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 15,
+    "sources": 8,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 5,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 7,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 3
+    },
+    "filtered_noise": 5
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-06 02:25:14,919 INFO     29 [ChunkMerger] Merged 15 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 5, 'Extractor:Medication': 1, 'Extractor:Prescription': 7, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3} (filtered 5 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "复用监控列表中同名已有文档。 ",
+  "progress_msg": "02:25:19 Indexing done (0.22s). Task done (668.68s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "OutpatientRecord": 5,
+    "PrescriptionRecord": 7,
+    "ExaminationReport": 3
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 7,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 3
+  }
+}

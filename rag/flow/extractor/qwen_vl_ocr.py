@@ -20,6 +20,42 @@ import json_repair
 import requests
 
 
+# ── LaTeX 符号替换（LLM 输出单位/名称常带 LaTeX 转义，如 $\mu$mol/L）──
+
+_LATEX_SYMBOL_MAP = {
+    "mu": "μ", "micro": "μ",
+    "alpha": "α", "beta": "β", "gamma": "γ", "delta": "δ",
+    "times": "×", "cdot": "·", "div": "÷",
+    "leq": "≤", "le": "≤", "geq": "≥", "ge": "≥",
+    "uparrow": "↑", "downarrow": "↓",
+    "approx": "≈", "pm": "±", "degree": "°", "circ": "°",
+}
+
+_LATEX_PATTERN = re.compile(r"\$?\\([a-zA-Z]+)\$?")
+
+
+def _detex(value):
+    """将字符串中的 LaTeX 转义替换为 Unicode 符号（如 $\\mu$mol/L → μmol/L）。
+
+    未收录的命令退化为命令名本身（去掉反斜杠与 $），保留信息不抛错。
+    另处理数学模式包裹的比较符（如 $<$5.2 → <5.2）。
+    """
+    if not isinstance(value, str) or "$" not in value and "\\" not in value:
+        return value
+    value = _LATEX_PATTERN.sub(lambda m: _LATEX_SYMBOL_MAP.get(m.group(1), m.group(1)), value)
+    value = value.replace("$<$", "<").replace("$>$", ">").replace("$\u2264$", "≤").replace("$\u2265$", "≥")
+    return value
+
+
+def _detex_items(items: list) -> None:
+    """就地替换 items 中所有字符串字段的 LaTeX 转义。"""
+    for it in items or []:
+        if isinstance(it, dict):
+            for k, v in it.items():
+                if isinstance(v, str):
+                    it[k] = _detex(v)
+
+
 # ── 坐标定位 Prompt（复用 qwen30b_ocr 的逻辑）──
 
 def _build_table_prompt(item_names: list) -> str:
@@ -91,21 +127,20 @@ def _build_coord_prompt(text_lines: list) -> str:
     )
 
 
-API_ENDPOINT = os.environ.get("QWEN30B_OCR_API_ENDPOINT", "http://10.16.3.16:8090/v1/chat/completions")
-MODEL_NAME = os.environ.get("QWEN30B_OCR_MODEL", "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8")
+from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
 
 
-def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, page_num: int = 0) -> tuple:
+def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple, page_num: int = 0) -> tuple:
     """Call qwen3-vl-30b for coordinate localization.
 
     Returns:
         tuple: (items, elapsed, status)
             items: list of {"text": ..., "bbox": [x1,y1,x2,y2]}, or None
     """
-    api_key = os.environ.get("DASHSCOPE_API_KEY", "")
+    api_endpoint, model_name, api_key = endpoint_cfg
     b64 = base64.b64encode(img_bytes).decode()
     payload = {
-        "model": MODEL_NAME,
+        "model": model_name,
         "messages": [{"role": "user", "content": [
             {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
             {"type": "text", "text": prompt},
@@ -118,13 +153,13 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, page_num: int =
         headers["Authorization"] = f"Bearer {api_key}"
 
     logging.info(
-        f"{tag} coord API call start, page={page_num}, endpoint={API_ENDPOINT}, "
-        f"model={MODEL_NAME}, img_bytes={len(img_bytes)}, prompt_len={len(prompt)}\n"
+        f"{tag} coord API call start, page={page_num}, endpoint={api_endpoint}, "
+        f"model={model_name}, img_bytes={len(img_bytes)}, prompt_len={len(prompt)}\n"
         f"{tag} coord prompt:\n{prompt}"
     )
     t0 = time.time()
     try:
-        r = requests.post(API_ENDPOINT, json=payload, headers=headers, timeout=120)
+        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} coord API request failed: {e}")
@@ -167,7 +202,9 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, page_num: int =
             continue
         text = it.get("name") or it.get("text", "")
         bbox = it.get("bbox") or it.get("bbox_2d")
-        if text and bbox and len(bbox) == 4:
+        if not isinstance(bbox, (list, tuple)) or len(bbox) != 4:
+            continue
+        if text and bbox:
             valid_items.append({"text": text, "bbox": bbox})
 
     logging.info(
@@ -306,7 +343,7 @@ def _render_page_image(doc_id: str, page_num_0based: int, tag: str):
 
 # ── LabReport 处理（用 item name 定位坐标，不裁剪，支持多页） ──
 
-async def process_table(ext, ck: dict):
+async def process_table(ext, ck: dict, llm_name: str):
     """Process LabReport chunks when OCR_PARSER=qwen-vl.
 
     Multi-page support: groups positions by page, processes each page independently.
@@ -320,6 +357,9 @@ async def process_table(ext, ck: dict):
     TAG = "[qwen-vl-table]"
     try:
         t_start = time.time()
+
+        # 直接用 parse_method 作 llm_name 查 tenant_llm 表解析模型端点
+        endpoint_cfg = resolve_vl_ocr_endpoint(ext._canvas.get_tenant_id(), llm_name)
 
         doc_id = ext._canvas._doc_id
         from rag.flow.extractor.extractor import strip_markdown_json_fence
@@ -411,6 +451,7 @@ async def process_table(ext, ck: dict):
         all_row_positions = []
 
         # Build name → source page mapping from raw_text + positions
+        # key 经 _detex 归一化，与 Step B 提取后已替换 LaTeX 的 item 名称对齐
         raw_lines = raw_text.split("\n")
         name_to_page = {}  # cleaned_line → page_num
         for i, raw_line in enumerate(raw_lines):
@@ -471,17 +512,24 @@ async def process_table(ext, ck: dict):
             try:
                 page_data = json.loads(json_str)
             except json.JSONDecodeError as e:
-                logging.warning(f"{TAG} page={pn} JSON parse error: {e}")
-                continue
+                logging.info(f"{TAG} page={pn} JSON strict parse failed, trying json_repair: {e}")
+                try:
+                    page_data = json_repair.loads(json_str)
+                except Exception as e2:
+                    logging.warning(f"{TAG} page={pn} json_repair also failed: {e2}")
+                    continue
 
-            if isinstance(page_data, list):
-                logging.warning(f"{TAG} page={pn} JSON is list, skip")
+            if not isinstance(page_data, dict):
+                logging.warning(f"{TAG} page={pn} JSON is not dict (type={type(page_data).__name__}), skip")
                 continue
 
             page_items = page_data.get("items", [])
             if not page_items:
                 logging.warning(f"{TAG} page={pn} no items extracted")
                 continue
+
+            # LLM 提取后立即替换 LaTeX 转义，保证后续 Step C 匹配与落库均使用归一化值
+            _detex_items(page_items)
 
             all_items.extend(page_items)
 
@@ -517,7 +565,7 @@ async def process_table(ext, ck: dict):
             img_bytes, page_w, page_h = page_img_data[pn]
             table_prompt = _build_table_prompt(names)
             ocr_items, coord_elapsed, coord_status = _call_qwen30b_coord(
-                img_bytes, table_prompt, TAG, page_num=pn
+                img_bytes, table_prompt, TAG, endpoint_cfg, page_num=pn
             )
             if coord_status == "ok" and ocr_items:
                 scale_x = page_w / 1000.0
@@ -556,7 +604,7 @@ async def process_table(ext, ck: dict):
             logging.warning(f"{TAG} No items extracted from any page")
             return
 
-        # ── Build HTML table from all items ──
+        # ── Build HTML table from all_items ──
         html_rows = []
         for it in all_items:
             cells = [
@@ -593,7 +641,7 @@ async def process_table(ext, ck: dict):
 
 # ── 非 LabReport 文本处理（用文本行定位坐标，不裁剪） ──
 
-async def process_text(ext, ck: dict):
+async def process_text(ext, ck: dict, llm_name: str):
     """Process non-LabReport chunks when OCR_PARSER=qwen-vl.
 
     The chunk text is already extracted by QwenVLParser (BBOX-wrapped).
@@ -607,6 +655,9 @@ async def process_text(ext, ck: dict):
     TAG = "[qwen-vl-text]"
     try:
         t_start = time.time()
+
+        # 直接用 parse_method 作 llm_name 查 tenant_llm 表解析模型端点
+        endpoint_cfg = resolve_vl_ocr_endpoint(ext._canvas.get_tenant_id(), llm_name)
 
         doc_id = ext._canvas._doc_id
         from rag.flow.extractor.extractor import strip_markdown_json_fence
@@ -709,9 +760,15 @@ async def process_text(ext, ck: dict):
             try:
                 extracted_data = json.loads(extracted_json_str)
             except json.JSONDecodeError as e:
-                logging.warning(f"{TAG} JSON parse error: {e}")
-                extracted_data = {}
-                extracted_json_str = "{}"
+                logging.info(f"{TAG} JSON strict parse failed, trying json_repair: {e}")
+                try:
+                    extracted_data = json_repair.loads(extracted_json_str)
+                    if isinstance(extracted_data, dict):
+                        extracted_json_str = json.dumps(extracted_data, ensure_ascii=False)
+                except Exception as e2:
+                    logging.warning(f"{TAG} json_repair also failed: {e2}")
+                    extracted_data = {}
+                    extracted_json_str = "{}"
 
             if isinstance(extracted_data, list):
                 logging.warning(f"{TAG} extracted_data is list, treat as empty")
@@ -745,7 +802,7 @@ async def process_text(ext, ck: dict):
 
             coord_prompt = _build_coord_prompt(lines)
             ocr_items, api_elapsed, status = _call_qwen30b_coord(
-                img_bytes, coord_prompt, TAG, page_num=pn
+                img_bytes, coord_prompt, TAG, endpoint_cfg, page_num=pn
             )
             if status != "ok" or not ocr_items:
                 logging.warning(

@@ -199,8 +199,10 @@ class TestSplitLatexLines:
 class TestQwenVLParserInit:
     def test_default_init(self):
         parser = QwenVLParser()
-        assert parser.api_url is not None
-        assert parser.model is not None
+        # 端点/模型不再从环境变量取默认值，未传入时为 None，由 check_installation 拦截
+        assert parser.api_url is None
+        assert parser.model is None
+        assert parser.api_key == ""
         assert parser.request_timeout == 300
         assert parser.outlines == []
         assert parser.page_images == []

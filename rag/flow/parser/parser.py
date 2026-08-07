@@ -446,11 +446,14 @@ class Parser(ProcessBase):
                         bboxes.append({"text": section})
                 else:
                     bboxes.append({"text": section})
-        elif parse_method.lower() == "qwen-vl":
-            # ── QwenVL parser routing (controlled by DSL parse_method) ──
+        elif parse_method.startswith("Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"):
+            # ── QwenVL parser routing (controlled by DSL parse_method, 大小写敏感) ──
+            # 模型端点/密钥直接用 parse_method 作 llm_name 查 tenant_llm 表
             from deepdoc.parser.qwen_vl_parser import QwenVLParser
+            from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
 
-            pdf_parser = QwenVLParser()
+            api_endpoint, model_name, api_key = resolve_vl_ocr_endpoint(self._canvas.get_tenant_id(), parse_method)
+            pdf_parser = QwenVLParser(api_url=api_endpoint, model=model_name, api_key=api_key)
             lines, tables = pdf_parser.parse_pdf(
                 filepath=name,
                 binary=blob,

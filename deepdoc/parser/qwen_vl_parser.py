@@ -227,19 +227,16 @@ class QwenVLParser(RAGFlowPdfParser):
         api_url: Optional[str] = None,
         model: Optional[str] = None,
         *,
+        api_key: Optional[str] = None,
         request_timeout: int = 300,
     ):
         super().__init__()
 
         self.outlines: list = []
-        self.api_url = api_url or os.getenv(
-            "QWEN30B_OCR_API_ENDPOINT",
-            "http://10.16.3.16:8090/v1/chat/completions",
-        )
-        self.model = model or os.getenv(
-            "QWEN30B_OCR_MODEL",
-            "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
-        )
+        # 端点/模型/密钥由调用方从 tenant_llm 表解析后传入，不再读环境变量
+        self.api_url = api_url
+        self.model = model
+        self.api_key = api_key or ""
         self.request_timeout = request_timeout
         self.logger = logging.getLogger(self.__class__.__name__)
         # Ensure propagation to root logger
@@ -499,7 +496,7 @@ class QwenVLParser(RAGFlowPdfParser):
         }
 
         headers = {"Content-Type": "application/json"}
-        api_key = os.environ.get("DASHSCOPE_API_KEY", "")
+        api_key = self.api_key
         if api_key:
             headers["Authorization"] = f"Bearer {api_key}"
 

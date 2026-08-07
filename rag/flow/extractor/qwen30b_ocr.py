@@ -181,13 +181,12 @@ def _build_coord_prompt(text_lines: list) -> str:
 
 
 
-API_ENDPOINT = os.environ.get("QWEN30B_OCR_API_ENDPOINT", "http://10.16.3.16:8090/v1/chat/completions")
-MODEL_NAME = os.environ.get("QWEN30B_OCR_MODEL", "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8")
+from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
 
 
 # ── API 调用 ──
 
-def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str) -> tuple:
+def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple) -> tuple:
     """Call qwen3-vl-30b via OpenAI-compatible API (local vLLM or DashScope).
 
     Args:
@@ -201,10 +200,10 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str) -> tuple:
             elapsed: API call duration in seconds.
             status: "ok" or error description.
     """
-    api_key = os.environ.get("DASHSCOPE_API_KEY", "")
+    api_endpoint, model_name, api_key = endpoint_cfg
     b64 = base64.b64encode(img_bytes).decode()
     payload = {
-        "model": MODEL_NAME,
+        "model": model_name,
         "messages": [{"role": "user", "content": [
             {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
             {"type": "text", "text": prompt},
@@ -216,11 +215,11 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
-    logging.info(f"{tag} API call start, endpoint={API_ENDPOINT}, model={MODEL_NAME}, img_bytes={len(img_bytes)}")
+    logging.info(f"{tag} API call start, endpoint={api_endpoint}, model={model_name}, img_bytes={len(img_bytes)}")
     
     t0 = time.time()
     try:
-        r = requests.post(API_ENDPOINT, json=payload, headers=headers, timeout=120)
+        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
@@ -273,7 +272,7 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     logging.info(f"{tag} API returned {len(valid_items)} items, elapsed={elapsed:.1f}s")
     return valid_items, elapsed, "ok"
 
-def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
+def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple) -> tuple:
     """Call qwen3-vl-30b and return raw parsed JSON (no item validation).
 
     Used for text-only extraction (Step3a)
@@ -282,10 +281,10 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
         tuple: (data, elapsed, status)
             data: parsed JSON (list or dict), or None on failure.
     """
-    api_key = os.environ.get("DASHSCOPE_API_KEY", "")
+    api_endpoint, model_name, api_key = endpoint_cfg
     b64 = base64.b64encode(img_bytes).decode()
     payload = {
-        "model": MODEL_NAME,
+        "model": model_name,
         "messages": [{"role": "user", "content": [
             {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
             {"type": "text", "text": prompt},
@@ -297,10 +296,10 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
-    logging.info(f"{tag} API call start, endpoint={API_ENDPOINT}, model={MODEL_NAME}, img_bytes={len(img_bytes)}")
+    logging.info(f"{tag} API call start, endpoint={api_endpoint}, model={model_name}, img_bytes={len(img_bytes)}")
     t0 = time.time()
     try:
-        r = requests.post(API_ENDPOINT, json=payload, headers=headers, timeout=120)
+        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
@@ -331,7 +330,7 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str) -> tuple:
 
     return data, elapsed, "ok"
 
-def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg: str = None) -> tuple:
+def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple, system_msg: str = None) -> tuple:
     """Call qwen3-vl-30b and return raw text content (no JSON parsing).
 
     Used for LaTeX extraction (Step A) where output is LaTeX markup, not JSON.
@@ -340,7 +339,7 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg
         tuple: (content, elapsed, status)
             content: raw text string, or None on failure.
     """
-    api_key = os.environ.get("DASHSCOPE_API_KEY", "")
+    api_endpoint, model_name, api_key = endpoint_cfg
     b64 = base64.b64encode(img_bytes).decode()
     messages = [{"role": "user", "content": [
         {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
@@ -349,7 +348,7 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg
     if system_msg:
         messages.insert(0, {"role": "system", "content": system_msg})
     payload = {
-        "model": MODEL_NAME,
+        "model": model_name,
         "messages": messages,
         "max_tokens": 16384,
         "temperature": 0,
@@ -358,10 +357,10 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
-    logging.info(f"{tag} API call start (raw), endpoint={API_ENDPOINT}, model={MODEL_NAME}")
+    logging.info(f"{tag} API call start (raw), endpoint={api_endpoint}, model={model_name}")
     t0 = time.time()
     try:
-        r = requests.post(API_ENDPOINT, json=payload, headers=headers, timeout=120)
+        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
@@ -384,7 +383,7 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, system_msg
 
 # ── 表格处理（LabReport） ──
 
-async def process_table(ext, ck: dict):
+async def process_table(ext, ck: dict, llm_name: str):
     """Process LabReport chunks — 3-step pipeline per page.
 
     Step A: Image → LaTeX tabular (qwen3-vl-30b, ensures complete item recognition)
@@ -398,6 +397,9 @@ async def process_table(ext, ck: dict):
     TAG = "[qwen30b-table]"
     try:
         t_start = time.time()
+
+        # 直接用 parse_method 作 llm_name 查 tenant_llm 表解析模型端点
+        endpoint_cfg = resolve_vl_ocr_endpoint(ext._canvas.get_tenant_id(), llm_name)
 
         # ── Step 1: Render pages at 200 DPI ──
         import fitz
@@ -515,7 +517,7 @@ async def process_table(ext, ck: dict):
         for pn, img_bytes, page_w, page_h, crop_offset_x, crop_offset_y, crop_w, crop_h in page_img_data:
             # ── Step A: Image → LaTeX ──
             latex_content, latex_elapsed, latex_status = _call_qwen30b_latex_only(
-                img_bytes, TABLE_TO_LATEX_PROMPT, TAG,
+                img_bytes, TABLE_TO_LATEX_PROMPT, TAG, endpoint_cfg,
                 system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。"
             )
             if latex_status != "ok" or not latex_content:
@@ -578,7 +580,7 @@ async def process_table(ext, ck: dict):
             if page_item_names_list:
                 table_prompt = _build_table_prompt(page_item_names_list)
                 ocr_items, coord_elapsed, coord_status = _call_qwen30b_to_coord(
-                    img_bytes, table_prompt, TAG
+                    img_bytes, table_prompt, TAG, endpoint_cfg
                 )
                 if coord_status == "ok" and ocr_items:
                     # scale: model 0-1000 → cropped image pts, then offset back to page pts
@@ -661,7 +663,7 @@ async def process_table(ext, ck: dict):
 
 # ── 文本处理（非 LabReport） ──
 
-async def process_text(ext, ck: dict):
+async def process_text(ext, ck: dict, llm_name: str):
     """Process non-LabReport chunks using qwen3-vl-30b-instruct.
 
     Called from extractor.py when type != LabReport.
@@ -680,6 +682,9 @@ async def process_text(ext, ck: dict):
     TAG = "[qwen30b-text]"
     try:
         t_start = time.time()
+
+        # 直接用 parse_method 作 llm_name 查 tenant_llm 表解析模型端点
+        endpoint_cfg = resolve_vl_ocr_endpoint(ext._canvas.get_tenant_id(), llm_name)
 
         # ── Step 1: Get record type (for crop logic) ──
         classify_raw = ck.get("classify_result_tks", "")
@@ -785,7 +790,7 @@ async def process_text(ext, ck: dict):
         all_page_texts = []
 
         for pn, img_bytes, page_w, page_h, cox, coy, cw, ch in page_img_data:
-            data, api_elapsed, status = _call_qwen30b_text_only(img_bytes, TEXT_ONLY_PROMPT, TAG)
+            data, api_elapsed, status = _call_qwen30b_text_only(img_bytes, TEXT_ONLY_PROMPT, TAG, endpoint_cfg)
             if status != "ok" or not isinstance(data, list):
                 logging.warning(f"{TAG} Step3: page={pn} OCR failed: {status}")
                 continue
@@ -901,7 +906,7 @@ async def process_text(ext, ck: dict):
         for pn, text_lines, cox, coy, cw, ch in page_text_data:
             coord_prompt = _build_coord_prompt(text_lines)
             img_bytes = next(ib for _pn, ib, *_ in page_img_data if _pn == pn)
-            ocr_items, api_elapsed, status = _call_qwen30b_to_coord(img_bytes, coord_prompt, TAG)
+            ocr_items, api_elapsed, status = _call_qwen30b_to_coord(img_bytes, coord_prompt, TAG, endpoint_cfg)
             if status != "ok" or not ocr_items:
                 logging.warning(f"{TAG} Step7: page={pn} coord failed: {status}, "
                                 f"adding {len(text_lines)} placeholder(s)")

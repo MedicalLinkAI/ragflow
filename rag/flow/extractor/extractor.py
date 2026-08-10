@@ -61,6 +61,13 @@ class ExtractorParam(ProcessParamBase, LLMParam):
         super().check()
         self.check_empty(self.field_name, "Result Destination")
 
+    def gen_conf(self):
+        # Force greedy decoding regardless of DSL settings: structured extraction
+        # requires fully deterministic output, so ignore temperatureEnabled switch.
+        conf = super().gen_conf()
+        conf["temperature"] = 0.0
+        return conf
+
 
 class Extractor(ProcessBase, LLM):
     component_name = "Extractor"

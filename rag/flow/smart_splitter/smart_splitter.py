@@ -122,6 +122,14 @@ class SmartSplitterParam(ProcessParamBase, LLMParam):
         super().check()
         self.check_empty(self.classify_field, "Classify field name")
 
+    def gen_conf(self):
+        # Force greedy decoding regardless of DSL settings: bbox splitting
+        # requires fully deterministic output, so ignore temperatureEnabled switch.
+        conf = super().gen_conf()
+        conf["temperature"] = 0.0
+        logging.info(f"[SmartSplitter] gen_conf: forced deterministic sampling -> {conf}")
+        return conf
+
 
 class SmartSplitter(ProcessBase, LLM):
     """

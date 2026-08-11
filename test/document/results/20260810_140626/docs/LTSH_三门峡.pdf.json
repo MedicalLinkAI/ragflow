@@ -1,0 +1,163 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和德美-哮喘\\LTSH 三门峡.pdf",
+    "name": "LTSH 三门峡.pdf",
+    "size_kb": 6481.0,
+    "pages": 5
+  },
+  "doc_id": "ab76d5fc948311f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T14:21:05",
+  "end_at": "2026-08-10T14:26:07",
+  "elapsed_s": 302.0,
+  "chunks": [],
+  "pages": {},
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 06:25:28,897 INFO     29 [ChunkMerger] Merged 2 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 2,
+    "sources": 8,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 06:25:28,897 INFO     29 [ChunkMerger] Merged 2 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "chunks 查询失败: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)) ",
+  "chunk_count_api": 2,
+  "process_begin_at": "2026-08-10T06:21:06",
+  "process_duration": 265.09152,
+  "progress_msg": "06:25:31 Indexing done (0.06s). Task done (260.91s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

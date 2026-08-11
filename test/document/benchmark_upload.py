@@ -81,7 +81,7 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument("--medlinkai-base", default=_env("MLA_BASE", "http://localhost:3160"),
                    help="MedLinkAI API base，不含 /api/v1")
-    p.add_argument("--ragflow-base", default=_env("RAGFLOW_BASE", "http://localhost:19380/api/v1"),
+    p.add_argument("--ragflow-base", default=_env("RAGFLOW_BASE", "http://127.0.0.1:19380/api/v1"),
                    help="RAGFlow API base（含 /api/v1）")
     p.add_argument("--ragflow-api-key", default=_env("RAGFLOW_API_KEY", "ragflow-ZihvOw9xL9fS9nKMWPrAHe3Qxeb9E2eo6VzXyIcIyq4"),
                    help="RAGFlow API Key")

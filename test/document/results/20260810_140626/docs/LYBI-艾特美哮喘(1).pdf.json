@@ -1,0 +1,206 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和德美-哮喘\\LYBI-艾特美哮喘(1).pdf",
+    "name": "LYBI-艾特美哮喘(1).pdf",
+    "size_kb": 2168.4,
+    "pages": 3
+  },
+  "doc_id": "5f64042c948411f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T14:26:07",
+  "end_at": "2026-08-10T14:29:54",
+  "elapsed_s": 226.7,
+  "chunks": [
+    {
+      "chunk_id": "1f138b8206241da2",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 66,
+      "content": "新乡市第二人民医院\n门（急）诊病历\n门诊号：\n姓名\n性别\n男性\n年龄\n35岁\n婚姻\n已婚\n职业\n工人\n籍贯\n河南省新乡市\n临时住址\n河南省新乡市卫滨区\n永久住址或工作单位\n联系人\n联系人关系\n本人或户主\n联系电话\n就诊类别\n初诊\n是否需下转至基层医疗机构\n否\n建议下转的基层医疗机构/持续性医疗机构\n是否流感样病例\n否\n应检人员类别\n就诊科室\n呼吸内科门诊\n就诊日期\n2025-05-28\n发病日期\n主诉\n发作性咳嗽、咳痰、胸闷、气喘2年\n现病史\n发作性咳嗽、咳痰、胸闷、气喘2年\n既往史\n无高血压史。\n个人史\n无吸烟史。\n婚育史\n已婚\n过敏史\n无\n家族史\n体格检查\nT 36℃, P\n次/分, R\n",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "255a9faa510a2ac4",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 190,
+      "content": "2\n肺功能测验结果\n新乡市第二人民医院\n呼吸科\n12323\nFVC\nPRE\nFEV1\nPRE\nFEV1%\nPRE\n应诊日期 2025/5/28\n病人号码 W\n姓名\n出生日期 1990/2/5\n人种 中国人\n吸烟 非吸烟者\n患者组\n年龄 35\n性别 男\n高度, cm 170\n重量, kg 85\nBMI 29.41\n包-年\n14\n12\n10\n8\n6\n4\n2\n0\n-2\n-4\n8\n7\n6\n5\n4\n3\n2\n1\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n已预测的\n容积(L)\n时间(s)\n质量控制等级: D 变化性: FEV1=0.08L (2.26%), FVC=0.31",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a0e2f78eb59f102d",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 90,
+      "content": "肺功能测验结果\n新乡市第二人民医院\n呼吸科\n12323\nFVC\nFEV1\nFEV1%\nPRE\nPRE\nPRE\n应诊日期 2025/5/28\n病人号码\n年龄 85\n姓氏\n性别 男\n名字\n高度, cm 170\n出生日期 1990/2/5\n重量, kg 85\n人种 中国人\nBMI 29.41\n吸烟 非吸烟者\n患者组 包-年\n14\n12\n10\n8\n6\n4\n2\n0\n-2\n-4\n已预测的\n-6\n-8\n-10\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n8\n7\n6\n5\n4\n3\n2\n1\n0\n时间(s)\n@已预测的\n质量控制等级: D 变化性: FEV1=0.06L (2.63%",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3
+    ],
+    "page_sum": 4,
+    "check": {
+      "covered": 3,
+      "total": 3,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 06:29:47,715 INFO     29 [ChunkMerger] Merged 3 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 2} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 2
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 3,
+    "sources": 8,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 2
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 06:29:47,715 INFO     29 [ChunkMerger] Merged 3 chunks from 8 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 2} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "",
+  "chunk_count_api": 3,
+  "process_begin_at": "2026-08-10T06:26:08",
+  "process_duration": 221.24513,
+  "progress_msg": "06:29:49 Indexing done (0.06s). Task done (218.47s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 2
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 2
+  }
+}

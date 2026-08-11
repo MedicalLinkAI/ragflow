@@ -1,0 +1,274 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和糖尿病\\JBYA 联药 湘雅三.pdf",
+    "name": "JBYA 联药 湘雅三.pdf",
+    "size_kb": 775.7,
+    "pages": 8
+  },
+  "doc_id": "c2d3fb5a870711f1a42715083c6c5e0f",
+  "upload_mode": "skip",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T15:08:17",
+  "end_at": "2026-08-10T15:08:19",
+  "elapsed_s": 2.0,
+  "chunks": [
+    {
+      "chunk_id": "4c2a056117889f03",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 42,
+      "content": "门诊病历\n科室\n门诊全科\n就诊日期\n2025-03-01\n就诊时间\n14:12:26\n姓名\n性别\n女\n年龄\n58岁\n联系电话\n身份证\n详细地址\n湖南省岳阳市湘阴县岭北镇夹洲村夹洲十组\n主诉\n糖尿病患者常规监测血糖。\n现病史\n患者诉多年前发现血糖高，伴有口干，多饮，多尿，在上级医院诊断“2型糖尿病”，血糖控制一般，\n血压控制良好，今前来常规复诊。\n既往史\n2型糖尿病，高血压2级\n个人史\n无\n家族史\n否认家族中有类似病史，否认家族中有其他遗传病史。\n过敏史\n无\n体格检查\n体温：36℃，血压：135/86mmHg，一般情况可，心肺腹（-）。\n辅助检查\n诊断\n1.诊断：2型糖尿病\n处理意见\n1.盐酸二",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "98faf303a7e04ecc",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 42,
+      "content": "养天和大药房\n流水号：806581202503230257\n收银员：唐红娟\n日期：2025-03-23 10:21:15\n品名\n批号\n厂家/产地\n规格\n零售价\n数量\n金额\n优惠\n1 盐酸二甲双胍缓释片\n20051289\n悦康药业\n0.5g*30\n16.00\n6\n96.00\n0\n2.苯磺酸氨氯地平片\n20103551\n四川省百草生物药业\n5mg*24\n26.00\n3\n78.00\n0\n零售总额：174.00\n价格优惠： 0.00\n应收金额：174.00\n付款：174.00\n找零：0\n顾客姓名：姜必言\n会员卡号：8036545742\n会员积分：1253.50\n门店名称：岳麓区春江店\n门店地址：长沙市",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "38e84ce62030c23b",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 42,
+      "content": "养天和大药房\n流水号：806581202501220207\n收银员：唐红娟\n日期：2025-01-22 09:36:13\n品名\n批号\n厂家/产地\n规格\n零售价\n数量\n金额\n优惠\n1 盐酸二甲双胍缓释片\n20051289\n悦康药业\n0.5g*30\n16.00\n6\n96.00\n0\n2.苯磺酸氨氯地平片\n20103551\n四川省百草生物药业\n5mg*24\n26.00\n3\n78.00\n0\n零售总额：174.00\n价格优惠：0.00\n应收金额：174.00\n付款：174.00\n找零：0\n顾客姓名：姜必白\n会员卡号：8036545742\n会员积分：1035.60\n门店名称：岳麓区春江店\n门店地址：长沙市观",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "6b5ccfd7fbf52c0b",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 41,
+      "content": "长沙市岳麓区观沙岭街道社区卫生服务中心\n门诊病历\n科室\n门诊全科\n就诊日期\n2024-04-02\n就诊时间\n09:32:37\n姓名\n性别\n女\n年龄\n57岁\n联系电话\n身份证\n详细地址\n观沙岭\n主诉\n糖尿病患者常规监测血糖及购药。\n现病史\n患者糖尿病多年，规律使用降糖药，血糖控制不住，血压控制良好，今前来常规监测血糖血压及\n购药。\n既往史\n2型糖尿病，高血压2级\n个人史\n家族史\n否认家族中有类似病史，否认家族中有其他遗传病史，否认家族性肿瘤病史。\n过敏史\n无\n体格检查\n体温：36℃，血压：132/89mmHg、一般情况可，心肺腹-。\n辅助检查\n诊断\n主诊断：2型糖尿病\n处理意见\n1.盐酸二甲双胍",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "41e27671fa8e16c1",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>9.93</td><td>%</td><td>4.2-6.2</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          1,
+          55,
+          116,
+          298,
+          309
+        ]
+      ]
+    },
+    {
+      "chunk_id": "ee9adf9be8ff141e",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>GLU</td><td>None</td><td>12.67</td><td>mmol/L</td><td>3.9-6.1</td><td>True</td></tr><tr><td>OGTT 1h</td><td>None</td><td>32.31</td><td>mmol/L</td><td>3.89-11.1</td><td>True</td></tr><tr><td>OGTT 2h</td><td>None</td><td>32.20</td><td>mmol/L</td><td>3.9-7.9</td><td>True</td></tr></table",
+      "row_position_int": [
+        [
+          5,
+          195,
+          212,
+          305,
+          315
+        ],
+        [
+          5,
+          195,
+          232,
+          319,
+          330
+        ],
+        [
+          5,
+          195,
+          232,
+          335,
+          345
+        ]
+      ]
+    },
+    {
+      "chunk_id": "c7a08cb19dd96538",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>GllbA1c</td><td>10.70</td><td>%</td><td>4.2-6.3</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          2,
+          74,
+          133,
+          78,
+          89
+        ]
+      ]
+    },
+    {
+      "chunk_id": "4130157a21917312",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>葡萄糖餐前</td><td>BS(餐前)</td><td>11.60</td><td>mmol/L</td><td>3.90-6.1</td><td>True</td></tr><tr><td>空腹C肽</td><td>CPS000</td><td>3.24</td><td>ng/ml</td><td>1.1-4.4</td><td>False</td></tr></table>",
+      "row_position_int": [
+        [
+          4,
+          57,
+          104,
+          74,
+          84
+        ],
+        [
+          4,
+          57,
+          90,
+          85,
+          95
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": 8,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {},
+  "merge_info": {},
+  "skips": [],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：JBYA 联药 湘雅三.pdf），请勿重复上传。如需重新上传，请先删除原文件。 worker 日志中未找到该 doc_id（容器可能已重启或未重新解析）。 ",
+  "chunk_count_api": 8,
+  "process_begin_at": "2026-07-24T02:31:39",
+  "process_duration": 145.80183,
+  "progress_msg": null,
+  "done_msg": null,
+  "sync_error": null,
+  "cross_doc_smarts": [],
+  "chunk_types": {},
+  "extractor_types": {}
+}

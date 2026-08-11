@@ -1,0 +1,571 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\707新增\\WHTA，男，47岁.pdf",
+    "name": "WHTA，男，47岁.pdf",
+    "size_kb": 12795.0,
+    "pages": 10
+  },
+  "doc_id": "d952dce694c911f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T22:43:26",
+  "end_at": "2026-08-10T22:47:50",
+  "elapsed_s": 263.5,
+  "chunks": [
+    {
+      "chunk_id": "3a9964367454b88f",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 28,
+      "content": "华阴市人民医院\n病理检查报告单\n姓名：\n性别：男\n年龄：39\n病理号：2018-0079\n送检单位：本院\n科别：普外科\n住院号：1800732\n床号：25\n送检日期：2018-01-27\n送检医师：韩晔\n送检材料：食管\n临床诊断：\n肉眼所见：\n送检食管组织，长11cm，直径1.5cm，浆膜面灰红色光滑，切开粘膜灰红色光滑，距食管\n端3cm，下端7cm处有一突出，长6cm，直径3cm，突出顶端有一灰白色隆起肿块，V4x2x2c\n，切开切面灰白色质硬，肿块周检见淋巴结5枚，直径0.3cm；另见灰黄色脂肪组织一堆，\nV6x6x4cm，其内未见明显肿大淋巴结；另见灰红色切缘一块，直径1cm；另见钢钉切",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "961e4b5cc10f7a68",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 45,
+      "content": "24小时内入出院记录\n姓名\n性别：男\n年龄：47岁\n民族：汉族\n出生日期：1978-01-07\n婚姻状况：已婚\n籍贯：\n出生地：\n国籍：\n证件号码：\n工作单位：\n职业：\n详细地址：\n联系电话：\n联系人：\n关系：配偶\n入院日期：2026-01-16 10:19\n病历完成时间：2026-01-16 10:49\n病史陈述者：患者本人\n可靠性：可靠\n是否传染病：否\n既往是否健康：是\n主诉：食管鳞癌术后7年余，肝转移11月余。\n现病史：7年余前（2018-01）因吞咽困难就诊华阴市人民医院，确诊食管鳞癌，行食管癌根治术，术后病理及分期不详，术后行5周期全身化疗，具体方案及剂量不详。术后定期复查。2020",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "53f2f91019190e53",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 40,
+      "content": "第 2 页\n姓名\n性别 男\n年龄 47 岁 住院号\n床号 231.2+13\n送检科\n检查日期 2025-12-05 15:02:38\n检查项目\n胸部CT增强扫描,胸部CT增强薄层扫描成像,下腹部CT增强扫描,上腹部(肝胆胰脾)CT增强薄层扫描成\n像,上腹部(肝胆胰脾)CT增强扫描\n影像学表现\n原系\"食管CA术后\"改变,现片示:食管局部见线状高密度影,吻合口壁增厚,增强扫描呈轻度不\n均匀强化。胸廓对称,左侧部分肋骨形态欠规则,胸壁软组织未见明显异常;双侧肺野透光度正常,\n肺纹理走行自然,双肺见散在索条及絮状密度增高影;双侧肺门不大;纵隔窗示纵隔无偏移,心影及\n大血管未见明显异常,纵隔内未见明显肿",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "9d58a26b71f68c61",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 43,
+      "content": "CT诊断报告单\n扫码查看影像报告\n诊疗号\n影像号 7159990\n检查号 16220702\n报告日期 2026-02-03 16:13:41\n性别 男\n年龄 48 岁\n住院号\n床号 231.2+7\n送检科别\n检查日期 2026-02-03 10:27:28\n检查项目\n胸部CT增强扫描,下腹部CT增强扫描,上腹部(肝胆胰脾)CT增强扫描,胸部CT增强薄层扫描成像\n影像学表现\n原系\"食管CA术后\"改变,现片示:食管局部见线状高密度影,吻合口壁增厚,增强扫描呈轻度不\n均匀强化。胸廓对称,左侧部分肋骨形态欠规则,胸壁软组织未见明显异常;双侧肺野透光度正常,\n肺纹理走行自然,双肺见散在索条及絮状密度增高",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "45c5f347501e0189",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 31,
+      "content": "陕西省人民医院\nMR诊断报告单\n诊疗号\n影像号\n检查号\n扫码查看影像报告\n姓名\n性别 男\n年龄 47岁 住院号\n告日期 2025-12-05 20:46:59\n送检\n床号 231.240\n检查日期 2025-12-05 19:14:50\n检查项目\n颅脑磁共振平扫(陕HR),脑弥散成像(DWI)(陕HR),盆腔功能成像(DWI),盆腔磁共振平扫,颅脑磁共振增\n强灌注成像(PWI)\n影像学表现\n双侧大脑半球、小脑半球及脑干对称,灰白质对比自然,脑实质内未见明显异常信号影,DWI未见明显\n异常高信号,增强扫描未见异常强化。脑室系统对称。中线结构居中。脑沟、脑池正常。所见垂体大\n小形态信号未见异常。\n",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "5a40e3a15dcd9bc2",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 35,
+      "content": "项目名称后标注“*”为必填项\n诊断结论:\n1. 窦性心律\n2. 正常范围心电图\n签名：\n姓名\n性别：男\n年龄：47岁\n住院号：0001145836 QRS（陕HR）：102↑ms(60-100)\nID号：0020553584 P:116↑ms(0-110)\n二病区床号：231.2+7\nQT/QTc（陕HR）：328/397ms(320-440/0-440)\nQRS电轴：70°（-30-90)\nP-R（陕HR）：154ms(120-200)\nRv5/Sv1:1.6/0.63mV(0-2.5/0-1.5)\n纸速：25mm/s\n灵敏度：10mm/mV\n滤波：40\n检查日期：2026-01-04 13",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a4ab0f223a43c8a7",
+      "pages": [
+        0,
+        7,
+        8,
+        9
+      ],
+      "page_count_raw": 44,
+      "content": "<table><tr><td>谷丙转氨酶</td><td>ALT</td><td>34</td><td>U/L</td><td>9-50</td><td>False</td></tr><tr><td>谷草转氨酶</td><td>AST</td><td>29</td><td>U/L</td><td>15-40</td><td>False</td></tr><tr><td>碱性磷酸酶</td><td>ALP</td><td>199</td><td>U/L</td><td>45-125</td><td>True</td></tr><tr><td>γ-谷氨酰基转移酶</td><td>GGT</td><",
+      "row_position_int": [
+        [
+          7,
+          397,
+          410,
+          132,
+          262
+        ],
+        [
+          7,
+          380,
+          393,
+          132,
+          262
+        ],
+        [
+          7,
+          362,
+          375,
+          132,
+          262
+        ],
+        [
+          7,
+          343,
+          357,
+          132,
+          309
+        ],
+        [
+          7,
+          326,
+          339,
+          132,
+          248
+        ],
+        [
+          7,
+          308,
+          321,
+          132,
+          248
+        ],
+        [
+          7,
+          290,
+          304,
+          132,
+          254
+        ],
+        [
+          7,
+          273,
+          286,
+          132,
+          268
+        ],
+        [
+          7,
+          255,
+          268,
+          132,
+          226
+        ],
+        [
+          7,
+          238,
+          251,
+          132,
+          232
+        ],
+        [
+          7,
+          220,
+          233,
+          130,
+          207
+        ],
+        [
+          7,
+          202,
+          215,
+          130,
+          194
+        ],
+        [
+          8,
+          406,
+          421,
+          130,
+          252
+        ],
+        [
+          8,
+          392,
+          404,
+          130,
+          222
+        ],
+        [
+          8,
+          375,
+          387,
+          130,
+          214
+        ],
+        [
+          8,
+          359,
+          370,
+          130,
+          187
+        ],
+        [
+          8,
+          342,
+          353,
+          130,
+          193
+        ],
+        [
+          8,
+          324,
+          336,
+          130,
+          191
+        ],
+        [
+          8,
+          307,
+          319,
+          126,
+          205
+        ],
+        [
+          8,
+          290,
+          302,
+          124,
+          240
+        ],
+        [
+          8,
+          273,
+          285,
+          123,
+          211
+        ],
+        [
+          8,
+          255,
+          267,
+          121,
+          397
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          419,
+          432,
+          106,
+          211
+        ],
+        [
+          9,
+          401,
+          414,
+          106,
+          200
+        ],
+        [
+          9,
+          382,
+          395,
+          105,
+          205
+        ],
+        [
+          9,
+          363,
+          376,
+          103,
+          222
+        ],
+        [
+          9,
+          344,
+          357,
+          101,
+          227
+        ],
+        [
+          9,
+          325,
+          338,
+          100,
+          227
+        ],
+        [
+          9,
+          306,
+          319,
+          100,
+          215
+        ],
+        [
+          9,
+          287,
+          300,
+          99,
+          220
+        ],
+        [
+          9,
+          268,
+          281,
+          97,
+          239
+        ],
+        [
+          9,
+          248,
+          261,
+          96,
+          243
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          398,
+          411,
+          479,
+          657
+        ],
+        [
+          9,
+          398,
+          411,
+          479,
+          657
+        ],
+        [
+          9,
+          379,
+          392,
+          479,
+          634
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          340,
+          354,
+          479,
+          563
+        ],
+        [
+          9,
+          321,
+          334,
+          479,
+          591
+        ],
+        [
+          9,
+          302,
+          315,
+          479,
+          618
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 12,
+    "check": {
+      "covered": 11,
+      "total": 10,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 未完全覆盖：覆盖 11/10 页，缺失 []，超范围 []"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 5,
+      "recognized_count": 5,
+      "extractor_count": 5,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 14:44:07,852 INFO     29 [ChunkMerger] Merged 18 chunks from 9 sources: {'Extractor:LabExam': 3, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 12, 'Extractor:Progress': 1} (filtered 4 noise chunks)",
+        "2026-08-10 14:47:44,147 INFO     29 [ChunkMerger] Merged 7 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 5, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "ExaminationReport": 5,
+    "DischargeRecord": 1,
+    "LabReport": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 7,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 5,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 14:44:07,852 INFO     29 [ChunkMerger] Merged 18 chunks from 9 sources: {'Extractor:LabExam': 3, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 12, 'Extractor:Progress': 1} (filtered 4 noise chunks)"
+    },
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 14:47:44,147 INFO     29 [ChunkMerger] Merged 7 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 5, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "",
+  "chunk_count_api": 7,
+  "process_begin_at": "2026-08-10T14:43:28",
+  "process_duration": 257.34467,
+  "progress_msg": "14:47:45 Indexing done (0.07s). Task done (234.30s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 1,
+    "DischargeRecord": 1,
+    "ExaminationReport": 5
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 5
+  }
+}

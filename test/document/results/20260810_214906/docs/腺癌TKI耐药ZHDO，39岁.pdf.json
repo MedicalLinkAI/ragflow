@@ -1,0 +1,908 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\707新增\\腺癌TKI耐药ZHDO，39岁.pdf",
+    "name": "腺癌TKI耐药ZHDO，39岁.pdf",
+    "size_kb": 7763.4,
+    "pages": 22
+  },
+  "doc_id": "a144653494d011f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T23:31:59",
+  "end_at": "2026-08-10T23:43:28",
+  "elapsed_s": 689.5,
+  "chunks": [
+    {
+      "chunk_id": "f256e8ff2624ae40",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 64,
+      "content": "入院记录\n姓名：\n性别：男\n年龄：38岁\n婚姻状况：已婚\n出生地：\n民族：汉族\n现住址：\n职业：自由职业者\n入院时间：2025-09-09 10:41\n记录时间：2025-09-09 11:01\n病史陈述者\n联系人姓名：\n联系人电话：\n病史真实性确认签字：\n主诉：咳嗽3+月，发现右上肺占位10+天\n现病史：入院前3+月，患者无明显诱因出现咳嗽、咳痰等不适，为白色粘痰，量少，患者未重视，未行治疗，病程中患者上述症状持续存在。10+天前，患\n民医院就诊，完善胸部CT\n提示“1.右上肺见团块影，形态不规则，内密度欠均，相应气管受压变窄，大小约6.4cm*8.2cm,考虑\n占位性病变，肺Ca可能性大。",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "f67d202bbeadbc92",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 28,
+      "content": "出院证明书\n(医院保存联)\n姓名：\n性别：男\n年龄：38岁\n入院时间：2025-09-09 10:41\n住院证字\n号\n出院时间：2025-09-12\n病人单位或住址：\n出院诊断：1.右肺上叶腺癌cT4N1M1c IVB期（伴多发骨、肝脏、脑转移） 2.肝继发恶性肿瘤？ 3.\n多发骨继发恶性肿瘤？ 4.中脑继发恶性肿瘤？ 5.癌性疼痛\n诊疗小结：患者因“咳嗽3+月，发现右上肺占位10+天”入院。辅助检查：2025-09-01 [*胸部,增\n强],1、右肺上叶团块，肿瘤占位性病变可能，其它待排。2、双肺另见小结节，必要时随诊。3、右\n肺中叶及双肺下叶见散在斑条影。4、纵膈见多发淋巴结显示，部分稍大",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "fbf23cdfb0507498",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 37,
+      "content": "医学影像检查报告单\n住院\n检查号：\n患者姓名：\n性别：男\n患者年龄：38岁\n申请科室：\n床号：\n设备名称：CT1(联影CT)(1住)\n检查部位：[*胸部,增强]\n联系电话：\n检查技师：\n检查时间：2025-09-01 08:34:37\n报告时间：2025/9/1 9:31:33\n描述：\n右肺上叶见团块影，边缘呈分叶状，局部与胸膜粘连，见支气管截\n断，较大层面范围约7.9cm×6.9cm，增强扫描呈轻度不均匀强化，周围\n见斑条影及小结节影。双肺另见长径约0.4-0.6cm实性小结节。右肺中\n叶及双肺下叶见散在斑条影。纵膈见多发淋巴结显示，部分稍大。心脏\n不大，心包少量积液。左侧胸膜稍增厚。肝右叶",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "44fc43894d516628",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 24,
+      "content": "住院号\n门诊号：-\n病理号[\n姓名\n性别 男\n年龄 38岁\n病人编号\n病区\n就诊号\n收到日期 2025-09-10\n送检科室\n送检单位 本院\n送检医生\n标本名称 右肺包块\n临床诊断\n肉眼所见\n(右肺包块)灰白色组织多粒,直径0.4cm,点纸全\n病理诊断\n(右肺包块,穿刺活检)结合免疫组化结果:癌细胞CK(+),CK7(+),TTF-1(+),NapsinA(+),Ki67(+,约60%),CK20(-),SATB2(-),\n支持肺腺癌。\n报告医生 阙柳\n审核医生 阙柳\n复诊医生\n报告时间 2025-09-15",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "659ed1a4d9c539e9",
+      "pages": [
+        6,
+        7
+      ],
+      "page_count_raw": 280,
+      "content": "检测概览\n基本信息\n受检者信息\n样本信息\n临床信息\n姓名\n样本编号：\n临床/病理诊断：肺癌怀疑骨转移肝转移\n性别：男\n样本类型：石蜡块\n手术史/用药史：/\n年龄：38岁\n采样部位：/\n既往基因检测结果：/\n送检单位\n家族史：/\n采集日期：\n接收日期：2025-09-18\n报告日期：2025-09-21\n本报告中的临床诊断等信息来自受检者送检时提供的信息，而非来自检测结果。\n项目简介\n项目名称\n肺癌靶向18基因检测\n检测方法\n目标区域探针捕获技术和二代测序技术(Next-Generation Sequencing,NGS)\n检测范围\n本检测基于非小细胞肺癌指南和专家共识，检测非小细胞肺癌靶向治疗",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "10b356910026373e",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 44,
+      "content": "患者信息\n姓名\n性别\n男\n年龄\n38岁\n送检单位\n样本信息\n样本编号\n样本类型\n采样部位\n样本采集日期\n样本接收日期\n报告日期\n石蜡块\n—\n2025-09-18\n2025-09-20\n检测项目\nPD-L1蛋白表达检测\n抗体型号\n临床信息\n临床/病理诊断\n肺癌怀疑骨转移肝转移\n手术史/用药史\n—\n二、检测结果\n检测内容\n检测结果\n检测结果提示\nPD-L1蛋白\nTPS\n<1%\nPD-L1蛋白表达。\n表达水平\nCPS\n1\nTC\n<1%\nIC\n1%\n检测结果图示\nPDL1×200\nHE×200",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "353e6708cacbe5d7",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 36,
+      "content": "出院证明书\n(医院保存联)\n住院证字\n号\n姓名\n年龄：38岁 入院时间：2025-12-04 09:00\n科\n床号：029 出院时间：2025-12-07\n病人单位或住址\n出院诊断：1.恶性肿瘤化学治疗 2.右肺上叶腺癌伴肝脏、骨多发转移（cT4N2M1 IVB期 EGFR\nL858R+）3.恶性肿瘤靶向治疗 4.肝继发恶性肿瘤 5.骨继发恶性肿瘤 6.化疗相关恶心和呕吐 7.\n化疗后骨髓抑制 8.轻度贫血\n诊疗小结：患者因“发现右肺上叶占位5+月，右肺上叶腺癌靶向治疗中。”入院。入院查体：\nT36.5℃，P75次/分，R20次/分，BP127/82mmHg，专科检查：[ECOG评分：1分，胸",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "1b41afaefa8e3bde",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 32,
+      "content": "出院证明书\n(医院保存联)\n住院证字\n号\n性别：男 年龄：39岁 入院时间：2025-12-29 09:54\n床号： 出院时间：2025-12-31\n病人单位或住址\n出院诊断：1.姑息性化疗 2.右肺上叶腺癌伴肝脏、骨多发转移（cT4N2M1 IVB期 EGFR L858R+）\n3.肝继发恶性肿瘤 4.骨继发恶性肿瘤 5.化疗相关性恶心和呕吐 6.化疗相关性吞咽困难 7.肝功\n能不全\n诊疗小结：患者因“发现右肺上叶占位6+月，右肺上叶腺癌1周期化疗后20+天。”入院。入院查\n体：T36.7℃；P85次/分；R18次/分；BP117/81mmHg，专科检查：ECOG评分：1分，胸廓正常，双肺\n语",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "4f65b5ba31c6f832",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 43,
+      "content": "出院证明书\n(病人保存联)\n住院证字\n号\n姓名：\n性别：男\n年龄：39岁\n入院时间：2026-01-21 10:07\n出院时间：2026-01-24\n病人单位或住址\n出院诊断：1.恶性肿瘤化学治疗 2.右肺上叶腺癌伴肝脏、骨多发转移（cT4N2M1 IVB期 EGFR\nL858R+）\n3.恶性肿瘤靶向治疗\n4.肝继发恶性肿瘤\n5.骨继发恶性肿瘤\n6.化疗相关恶心和呕吐\n7.化疗后骨髓抑制\n8.白细胞减少\n9.恶性肿瘤的治疗后的随诊检查\n诊疗小结：患者因“发现右肺上叶占位7月，右肺上叶腺癌2周期化疗后20+天。”入院。入院查体：\nT36.6℃，P76次/分，R19次/分，BP113/75mmHg",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "0596c33509b3a5ee",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 42,
+      "content": "民医院\n出院证明书\n(病人保存联)\n住院证字\n号\n姓名：\n性别：男\n年龄：39岁\n入院时间：2026-02-24 09:09\n出院时间：2026-02-26\n病人单位或住址：\n出院诊断：1.右肺上叶腺癌伴肝脏、骨多发转移（cT4N2M1 IVB期 EGFR L858R+）\n2.肝继发恶性肿\n瘤\n3.骨继发恶性肿瘤\n4.恶性肿瘤靶向治疗\n5.化疗后血小板减少\n6.姑息性化疗\n诊疗小结：患者因“右肺上叶腺癌3周期化疗后20+天。”入院。入院查体：T36.4℃；P93次/分；\nR18次/分；BP107/70mmHg，专科检查：ECOG评分：1分，胸廓正常，双肺语颤正常，双肺叩诊清音，\n双肺呼吸音清，",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "6965a23d558f17ed",
+      "pages": [
+        13,
+        14
+      ],
+      "page_count_raw": 69,
+      "content": "入院记录\n姓名：\n性别：男\n年龄：\n婚姻状况：未婚\n出生地：\n民族：汉族\n现住址：\n职业：自由职业者\n入院时间：2026-03-23 10:38\n记录时间：2026-03-23 10:46\n病史陈述者：\n联系人姓名：\n联系人电话：\n病史真实性确认签字：\n主诉：右肺上叶腺癌4周期化疗后1+月。\n现病史：2025-06患者无明显诱因出现咳嗽、咳痰等不适，为白色粘痰，量少，患者未重视，未\n行治疗，病程中患者上述症状持续存在。\n民医院就诊，完善胸部CT提示“1.右上肺见\n团块影，形态不规则，内密度欠均，相应气管受压变窄，大小约6.4cm*8.2cm,考虑占位性病变，肺Ca\n可能性大。3.纵隔内可见淋巴",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "64bf3154b25a40d7",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 35,
+      "content": "出院证明书\n(病人保存联)\n住院证字\n号\n性别：男 年龄：39岁 入院时间：2026-03-23 10:38\n床号\n出院时间：2026-03-25\n病人单位或住址：\n出院诊断：1.右肺上叶腺癌伴肝脏、骨多发转移（cT4N2M1 IVB期 EGFR L858R+） 2.肝继发恶性肿\n瘤 3.骨继发恶性肿瘤 4.肝功能不全\n诊疗小结：患者因“右肺上叶腺癌4周期化疗后1+月。”入院。入院查体：T36.4℃ ;P93次/分；\nR18次/分;BP107/70mmHg\n诊疗经过：完善检查，2026-03-23 急诊肾功(无二氧化碳)+急诊肝功（无ADA）+电解质三项（急\n诊）+钙测定（急诊）:丙氨酸氨基转",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "92a016cfe30f3637",
+      "pages": [
+        22
+      ],
+      "page_count_raw": 42,
+      "content": "医学影像检查报告单\n扫码查看影像\n检查号:\n患者姓名:\n性别:男\n年龄:39岁\n住院号:\n申请科室\n床号:023\n联系电话\n检查室:CT1(联影CT)(1住)\n检查技师:羊媛颖\n检查时间:2026-03-25 08:22:58\n检查部位:[*盆腔,增强][*上腹部,增强][*下腹部,增强][*胸部,增强]\n检查技术:-\n描述:\n1、“肺CA”复查,右肺上叶见团块影,边缘呈分叶状,局部与胸膜粘连,见支气\n管截断,较大层面范围约5.6cm×5.3cm,增强扫描呈轻度不均匀强化,周围见斑条\n影及小结节影,较CT260121-240片病灶稍增大。\n2、双肺另见长径约0.4-0.7cm微小结节,较大者位",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "d9db015f494bdccc",
+      "pages": [
+        19
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>癌胚抗原</td><td>CEA</td><td>163.87</td><td>ng/ml</td><td>0-4.5</td><td>True</td></tr><tr><td>神经元特异性烯醇化酶</td><td>NSE</td><td>49.25</td><td>ng/ml</td><td><16.5</td><td>True</td></tr><tr><td>胃泌素释放肽前体</td><td>Pro-GRP</td><td>55.98</td><td>pg/ml</td><td>0-78.62</td><td>False</td></tr></table>",
+      "row_position_int": [
+        [
+          19,
+          107,
+          148,
+          189,
+          202
+        ],
+        [
+          19,
+          107,
+          210,
+          203,
+          216
+        ],
+        [
+          19,
+          107,
+          190,
+          217,
+          229
+        ]
+      ]
+    },
+    {
+      "chunk_id": "3ea7baa1232a39fa",
+      "pages": [
+        20
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>11.40</td><td>秒</td><td>9-14</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>0.99</td><td>None</td><td>0.77-1.19</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>87</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>活化部分凝血活酶时间</td",
+      "row_position_int": [
+        [
+          20,
+          47,
+          110,
+          160,
+          171
+        ],
+        [
+          20,
+          47,
+          141,
+          174,
+          184
+        ],
+        [
+          20,
+          47,
+          113,
+          186,
+          197
+        ],
+        [
+          20,
+          47,
+          147,
+          200,
+          210
+        ],
+        [
+          20,
+          47,
+          97,
+          212,
+          222
+        ],
+        [
+          20,
+          45,
+          92,
+          224,
+          234
+        ],
+        [
+          20,
+          44,
+          82,
+          237,
+          247
+        ]
+      ]
+    },
+    {
+      "chunk_id": "0870dc648fa8fb24",
+      "pages": [
+        21
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>6.77</td><td>10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>中性粒细胞百分率</td><td>None</td><td>73.40</td><td>%</td><td>40-75</td><td>False</td></tr><tr><td>淋巴细胞百分率</td><td>None</td><td>15.30</td><td>%</td><td>20-50</td><td>True</td></tr><tr><td>单核细胞百分率</td",
+      "row_position_int": [
+        [
+          21,
+          39,
+          95,
+          142,
+          154
+        ],
+        [
+          21,
+          39,
+          119,
+          155,
+          168
+        ],
+        [
+          21,
+          39,
+          108,
+          169,
+          181
+        ],
+        [
+          21,
+          39,
+          108,
+          182,
+          195
+        ],
+        [
+          21,
+          39,
+          108,
+          196,
+          208
+        ],
+        [
+          21,
+          39,
+          108,
+          209,
+          222
+        ],
+        [
+          21,
+          39,
+          107,
+          223,
+          235
+        ],
+        [
+          21,
+          38,
+          96,
+          237,
+          250
+        ],
+        [
+          21,
+          38,
+          96,
+          250,
+          263
+        ],
+        [
+          21,
+          38,
+          96,
+          265,
+          277
+        ],
+        [
+          21,
+          38,
+          96,
+          278,
+          291
+        ],
+        [
+          21,
+          38,
+          89,
+          292,
+          305
+        ],
+        [
+          21,
+          38,
+          99,
+          307,
+          319
+        ],
+        [
+          21,
+          38,
+          89,
+          320,
+          333
+        ],
+        [
+          21,
+          38,
+          108,
+          335,
+          347
+        ],
+        [
+          21,
+          35,
+          108,
+          348,
+          361
+        ],
+        [
+          21,
+          35,
+          108,
+          362,
+          375
+        ],
+        [
+          21,
+          35,
+          117,
+          377,
+          389
+        ],
+        [
+          21,
+          35,
+          117,
+          391,
+          404
+        ],
+        [
+          21,
+          35,
+          86,
+          404,
+          417
+        ],
+        [
+          21,
+          35,
+          101,
+          419,
+          431
+        ],
+        [
+          21,
+          33,
+          81,
+          433,
+          446
+        ],
+        [
+          21,
+          33,
+          101,
+          447,
+          460
+        ],
+        [
+          21,
+          33,
+          90,
+          462,
+          474
+        ],
+        [
+          21,
+          33,
+          90,
+          476,
+          489
+        ]
+      ]
+    },
+    {
+      "chunk_id": "2a28073933f66d7e",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 9,
+      "content": "<table><tr><td>标本颜色</td><td>None</td><td>黄色</td><td>None</td><td>None</td><td>False</td></tr><tr><td>标本性状</td><td>None</td><td>半稀便</td><td>None</td><td>None</td><td>False</td></tr><tr><td>红细胞</td><td>None</td><td>无</td><td>/HP</td><td>无</td><td>False</td></tr><tr><td>镜下白细胞</td><td>None</td><td>无</td",
+      "row_position_int": [
+        [
+          16,
+          41,
+          82,
+          168,
+          180
+        ],
+        [
+          16,
+          41,
+          82,
+          182,
+          194
+        ],
+        [
+          16,
+          41,
+          72,
+          197,
+          208
+        ],
+        [
+          16,
+          41,
+          91,
+          210,
+          222
+        ],
+        [
+          16,
+          41,
+          82,
+          224,
+          235
+        ],
+        [
+          16,
+          41,
+          82,
+          238,
+          250
+        ],
+        [
+          16,
+          41,
+          72,
+          251,
+          263
+        ],
+        [
+          16,
+          41,
+          72,
+          266,
+          276
+        ],
+        [
+          16,
+          41,
+          91,
+          278,
+          290
+        ]
+      ]
+    },
+    {
+      "chunk_id": "88cc33b2f257e14a",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 13,
+      "content": "<table><tr><td>颜色</td><td>None</td><td>淡黄色</td><td>None</td><td>None</td><td>False</td></tr><tr><td>浊度</td><td>None</td><td>透明</td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿胆原</td><td>None</td><td>None</td><td>None</td><td>None</td><td>False</td></tr><tr><td>胆红素</td><td>None</td><td>None",
+      "row_position_int": [
+        [
+          17,
+          44,
+          65,
+          155,
+          166
+        ],
+        [
+          17,
+          44,
+          65,
+          171,
+          182
+        ],
+        [
+          17,
+          44,
+          80,
+          203,
+          214
+        ],
+        [
+          17,
+          44,
+          80,
+          219,
+          230
+        ],
+        [
+          17,
+          44,
+          70,
+          234,
+          245
+        ],
+        [
+          17,
+          44,
+          80,
+          250,
+          260
+        ],
+        [
+          17,
+          44,
+          80,
+          266,
+          276
+        ],
+        [
+          17,
+          44,
+          89,
+          281,
+          292
+        ],
+        [
+          17,
+          44,
+          83,
+          296,
+          307
+        ],
+        [
+          17,
+          44,
+          79,
+          311,
+          322
+        ],
+        [
+          17,
+          44,
+          79,
+          326,
+          337
+        ],
+        [
+          17,
+          44,
+          77,
+          341,
+          352
+        ],
+        [
+          17,
+          44,
+          67,
+          356,
+          367
+        ]
+      ]
+    },
+    {
+      "chunk_id": "2a8207a2042b6cfd",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 18,
+      "content": "<table><tr><td>总蛋白</td><td>None</td><td>81.60</td><td>g/L</td><td>65-85</td><td>False</td></tr><tr><td>白蛋白</td><td>None</td><td>44.30</td><td>g/L</td><td>40-55</td><td>False</td></tr><tr><td>球蛋白</td><td>None</td><td>37.30</td><td>g/l</td><td>20-40</td><td>False</td></tr><tr><td>丙氨酸氨基转移酶</td><td>None",
+      "row_position_int": [
+        [
+          18,
+          47,
+          82,
+          163,
+          174
+        ],
+        [
+          18,
+          47,
+          82,
+          176,
+          187
+        ],
+        [
+          18,
+          47,
+          77,
+          190,
+          201
+        ],
+        [
+          18,
+          47,
+          130,
+          202,
+          213
+        ],
+        [
+          18,
+          47,
+          150,
+          216,
+          227
+        ],
+        [
+          18,
+          47,
+          90,
+          229,
+          240
+        ],
+        [
+          18,
+          47,
+          99,
+          243,
+          253
+        ],
+        [
+          18,
+          47,
+          94,
+          255,
+          266
+        ],
+        [
+          18,
+          45,
+          84,
+          268,
+          279
+        ],
+        [
+          18,
+          45,
+          79,
+          282,
+          292
+        ],
+        [
+          18,
+          45,
+          59,
+          294,
+          305
+        ],
+        [
+          18,
+          45,
+          58,
+          308,
+          319
+        ],
+        [
+          18,
+          45,
+          58,
+          320,
+          331
+        ],
+        [
+          18,
+          45,
+          58,
+          334,
+          345
+        ],
+        [
+          18,
+          45,
+          67,
+          347,
+          358
+        ],
+        [
+          18,
+          45,
+          67,
+          361,
+          372
+        ],
+        [
+          18,
+          45,
+          67,
+          373,
+          384
+        ],
+        [
+          18,
+          41,
+          102,
+          387,
+          398
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "page_sum": 23,
+    "check": {
+      "covered": 22,
+      "total": 22,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 6,
+      "recognized_count": 6,
+      "extractor_count": 6,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 5,
+      "recognized_count": 5,
+      "extractor_count": 5,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 15:43:20,861 INFO     29 [ChunkMerger] Merged 19 chunks from 9 sources: {'Extractor:LabExam': 6, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 6, 'Extractor:Admission': 2, 'Extractor:ExaminationReport': 5, 'Extractor:Progress': 1} (filtered 5 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 6,
+      "recognized_count": 6,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "AdmissionRecord": 2,
+    "DischargeRecord": 6,
+    "ExaminationReport": 5,
+    "LabReport": 6
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 19,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 6,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 6,
+      "Extractor:Admission": 2,
+      "Extractor:ExaminationReport": 5,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 5
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 15:43:20,861 INFO     29 [ChunkMerger] Merged 19 chunks from 9 sources: {'Extractor:LabExam': 6, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 6, 'Extractor:Admission': 2, 'Extractor:ExaminationReport': 5, 'Extractor:Progress': 1} (filtered 5 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "",
+  "chunk_count_api": 19,
+  "process_begin_at": "2026-08-10T15:32:00",
+  "process_duration": 685.0583,
+  "progress_msg": "15:43:24 Indexing done (0.16s). Task done (643.37s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 6,
+    "DischargeRecord": 6,
+    "AdmissionRecord": 2,
+    "ExaminationReport": 5
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 6,
+    "AdmissionRecord": 2,
+    "ExaminationReport": 5
+  }
+}

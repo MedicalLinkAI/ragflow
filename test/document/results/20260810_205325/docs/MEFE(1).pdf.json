@@ -1,0 +1,198 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和德美-哮喘\\MEFE(1).pdf",
+    "name": "MEFE(1).pdf",
+    "size_kb": 5373.2,
+    "pages": 3
+  },
+  "doc_id": "7a4c2dd094bd11f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:14:54",
+  "end_at": "2026-08-10T21:16:43",
+  "elapsed_s": 109.0,
+  "chunks": [
+    {
+      "chunk_id": "6328dee71a7c6ab1",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 143,
+      "content": "JAEGER TOENNIES\n徐州市中心医院\n东南大学医学院附属徐州医院\n肺功能检查报告\n姓名：\n门诊/住院号：\n5832\n身高：\n178 cm\n年龄：\n32 Years\n性别：\n男\n测试号：\n2025051412\n体重：\n68 kg\n科别：\n呼吸与危重症医学科\nFlow [L/s]\nF/V ex\n10\n5\n0\n1\n2\n3\n4\n5\n6\n7\n1\n2\n10\nF/V in\n日期\n预计值\n前次\n前/预\n后次\n后/预\n改善率\n时间\n25/5/28\n25/5/28\n9:33:12\n10:00:0\nVC MAX\n[L]\n5.31\n4.00\n75.3\n4.63\n87.1\n15.62\nERV\n[L]\n1.56",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "29bc37ded4a994d8",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 74,
+      "content": "徐州市中心医院\n门（急）诊病历\n姓名：\n性别：男\n科室：呼吸与危重症门诊\n号别：普通号\n姓名\n证件类型\n居民身份证\n性别\n男\n证件号码\n3:\n出生日期\n1992年07月11日\n门诊编号\n0005832911\n婚姻\n就诊时间\n2025-02-20 13:22\n陪伴者姓名\n初诊/复诊/急诊\n复诊\n陪伴者与患者的关系\n过敏史\n否认(病史提供人)\n联系人电话\n主诉：支气管哮喘复诊。\n病史：现病史：哮喘，患者来院进行D5982C00008项目V15随访\n既往史：有既往疾病史，鼻炎。\n体格检查：\n体温：(℃)，脉搏：次/分，血压：/(mmHg)，呼吸：次/分，意识状态：清醒\n皮肤粘膜：颜色正常，无皮疹，无",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3
+    ],
+    "page_sum": 3,
+    "check": {
+      "covered": 3,
+      "total": 3,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 13:16:40,667 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "ExaminationReport": 1,
+    "OutpatientRecord": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 2,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:16:40,667 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：MEFE(1).pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 2,
+  "process_begin_at": "2026-08-10T13:14:55",
+  "process_duration": 106.3531,
+  "progress_msg": "13:16:41 Indexing done (0.02s). Task done (99.90s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

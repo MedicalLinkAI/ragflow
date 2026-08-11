@@ -48,6 +48,10 @@ from deepdoc.parser.qwen_vl_parser import (  # noqa: E402
     _fix_tabular_colspec,
     _parse_json_array,
     _split_latex_lines,
+    _has_repetition_loop,
+    _truncate_repetition_loop,
+    _dedup_repeated_blocks,
+    _dedup_latex_rows,
 )
 import deepdoc.parser.qwen_vl_parser as qwen_vl_mod  # noqa: E402
 
@@ -578,7 +582,11 @@ class TestCallVlm:
         assert result == "result text"
 
     def test_api_call_with_api_key(self):
-        parser = QwenVLParser(api_url="http://mock:8080/v1/chat/completions")
+        # api_key 由调用方构造注入（零环境变量约定），不再读环境变量
+        parser = QwenVLParser(
+            api_url="http://mock:8080/v1/chat/completions",
+            api_key="test-key-123",
+        )
         mock_resp = MagicMock()
         mock_resp.json.return_value = {
             "choices": [{"message": {"content": "ok"}}]
@@ -586,8 +594,7 @@ class TestCallVlm:
         mock_resp.raise_for_status = MagicMock()
 
         with patch.object(qwen_vl_mod.requests, "post", return_value=mock_resp) as mock_post:
-            with patch.dict(os.environ, {"DASHSCOPE_API_KEY": "test-key-123"}):
-                result = parser._call_vlm(b"img", "prompt")
+            result = parser._call_vlm(b"img", "prompt")
 
         # Check Authorization header was set
         call_kwargs = mock_post.call_args
@@ -664,3 +671,286 @@ class TestPrompts:
         assert qwen_vl_mod.TABLE_PROMPT
         assert "LaTeX" in qwen_vl_mod.TABLE_PROMPT
         assert "tabular" in qwen_vl_mod.TABLE_PROMPT
+
+    def test_table_prompt_forbids_textup_wrapping(self):
+        # 生产幻觉案例：模型用 \textup{ 包裹 ↑ 箭头后陷入重复循环
+        assert "\\textup" in qwen_vl_mod.TABLE_PROMPT
+
+
+# ================================================================
+# 14. Repetition-loop hallucination defense (table path)
+# ================================================================
+
+LOOP = "\\textup{" * 500  # degenerate nesting as seen in production logs
+
+
+class TestHasRepetitionLoop:
+    def test_detects_nested_textup_loop(self):
+        latex = "\\begin{tabular}{cc}\na & b \\\\\n[AST/ALT]谷草/谷丙 & 2.14 & & " + LOOP
+        assert _has_repetition_loop(latex) is True
+
+    def test_normal_latex_no_loop(self):
+        latex = "\\begin{tabular}{cc}\na & \\textmu mol/L \\\\\n\\end{tabular}"
+        assert _has_repetition_loop(latex) is False
+
+    def test_single_textup_not_loop(self):
+        # 合法的单个 \textup{↑} 不应被判为循环
+        assert _has_repetition_loop("x & \\textup{↑} & y \\\\") is False
+
+    def test_empty_input(self):
+        assert _has_repetition_loop("") is False
+        assert _has_repetition_loop(None) is False
+
+
+class TestTruncateRepetitionLoop:
+    def test_cut_drops_incomplete_row(self):
+        prefix = "\\begin{tabular}{cc}\na & b \\\\\n[AST]谷草 & 15 & & "
+        out = _truncate_repetition_loop(prefix + LOOP)
+        assert "\\textup" not in out
+        assert "a & b" in out
+        assert "[AST]" not in out  # 循环所在的不完整行被丢弃
+
+    def test_cut_keeps_complete_rows(self):
+        prefix = "\\begin{tabular}{cc}\na & b \\\\\nc & d \\\\\n"
+        out = _truncate_repetition_loop(prefix + LOOP)
+        assert "\\textup" not in out
+        assert "c & d" in out
+
+    def test_no_loop_unchanged(self):
+        latex = "\\begin{tabular}{c}\na \\\\\n\\end{tabular}"
+        assert _truncate_repetition_loop(latex) == latex
+
+
+class TestTableRepetitionRetry:
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    def test_retry_recovers_full_table(self):
+        parser = self._make_parser()
+        looped = "\\begin{tabular}{cc}\na & b \\\\\nc & " + LOOP
+        clean = "\\begin{tabular}{cc}\na & b \\\\\nc & d \\\\\n\\end{tabular}"
+        with patch.object(parser, "_call_vlm", side_effect=[looped, clean]) as m:
+            sections, _ = parser._extract_table_page(b"img", 1, 0)
+        assert m.call_count == 2
+        # 重试必须携带 repetition_penalty 以跳出贪心循环
+        extra = m.call_args_list[1].kwargs.get("extra_params")
+        assert extra and extra.get("repetition_penalty", 1) > 1
+        texts = "\n".join(s[0] for s in sections)
+        assert "c & d" in texts  # 重试恢复了完整表格
+        assert "\\textup" not in texts
+
+    def test_both_looped_salvages_prefix(self):
+        parser = self._make_parser()
+        looped1 = "\\begin{tabular}{cc}\na & b \\\\\nx & 1 & & " + LOOP
+        looped2 = "\\begin{tabular}{cc}\n" + LOOP
+        with patch.object(parser, "_call_vlm", side_effect=[looped1, looped2]):
+            sections, _ = parser._extract_table_page(b"img", 1, 0)
+        texts = "\n".join(s[0] for s in sections)
+        assert "\\textup" not in texts
+        assert "a & b" in texts  #  salvaged 前缀行保留
+
+    def test_no_loop_no_retry(self):
+        parser = self._make_parser()
+        clean = "\\begin{tabular}{cc}\na & b \\\\\n\\end{tabular}"
+        with patch.object(parser, "_call_vlm", return_value=clean) as m:
+            sections, _ = parser._extract_table_page(b"img", 1, 0)
+        assert m.call_count == 1
+        assert len(sections) > 0
+
+    def test_extra_params_merged_into_payload(self):
+        parser = QwenVLParser(api_url="http://mock:8080/v1", model="m")
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {"choices": [{"message": {"content": "ok"}}]}
+        mock_resp.raise_for_status = MagicMock()
+        with patch.object(qwen_vl_mod.requests, "post", return_value=mock_resp) as mock_post:
+            parser._call_vlm(b"img", "prompt", extra_params={"repetition_penalty": 1.2})
+        payload = mock_post.call_args.kwargs.get("json", {})
+        assert payload["repetition_penalty"] == 1.2
+        # 默认调用不带 repetition_penalty
+        with patch.object(qwen_vl_mod.requests, "post", return_value=mock_resp) as mock_post2:
+            parser._call_vlm(b"img", "prompt")
+        payload2 = mock_post2.call_args.kwargs.get("json", {})
+        assert "repetition_penalty" not in payload2
+
+
+class TestDedupRepeatedBlocks:
+    def test_detects_cycle(self):
+        out, rep = _dedup_repeated_blocks(["a", "b", "c"] * 8)
+        assert out == ["a", "b", "c"]
+        assert rep == (3, 8, 24)
+
+    def test_no_repetition(self):
+        lines = [f"line{i}" for i in range(30)]
+        out, rep = _dedup_repeated_blocks(lines)
+        assert out == lines
+        assert rep is None
+
+    def test_short_input_untouched(self):
+        lines = ["a", "b"] * 5  # 10 行 < 20 阈值
+        out, rep = _dedup_repeated_blocks(lines)
+        assert rep is None
+
+    def test_tail_run_collapsed(self):
+        """真实案例（page=9）：尾部同一行刷屏，非从头开始。"""
+        head = [f"line{i}" for i in range(20)]
+        out, rep = _dedup_repeated_blocks(head + ["病理诊断："] * 300)
+        assert rep == (1, 300, 320)
+        assert out == head + ["病理诊断："]
+
+    def test_mid_run_collapsed(self):
+        head = [f"line{i}" for i in range(10)]
+        mid = ["x"] * 30
+        tail = [f"tail{i}" for i in range(10)]
+        out, rep = _dedup_repeated_blocks(head + mid + tail)
+        assert rep == (1, 30, 50)
+        assert out == head + ["x"] + tail
+
+    def test_run_below_threshold_untouched(self):
+        lines = [f"line{i}" for i in range(20)] + ["dup"] * 4
+        out, rep = _dedup_repeated_blocks(lines)
+        assert rep is None
+        assert out == lines
+
+    def test_low_uniqueness_ratio_collapsed(self):
+        """小段交替重复：单 run < 5 但唯一率极低。"""
+        lines = (["正常", "3.5"] * 5 + ["正常", "4.0"] * 5) * 15  # 300 行仅 3 唯一
+        out, rep = _dedup_repeated_blocks(lines)
+        assert rep is not None
+        assert len(out) < len(lines)
+
+    def test_form_header_double_block_keeps_tail(self):
+        """真实案例（XJJA page=10）：双栏表单表头 姓名/性别/年龄 物理印两次，
+        属真实内容而非幻觉。应仅折叠重复块，唯一尾部必须保留
+        （旧版误判为 cycle=3 幻觉，45→3 行截断丢掉了主诉/现病史）。"""
+        header = ["姓名：", "性别：女", "年龄：57岁"]
+        tail = [f"content{i}" for i in range(39)]
+        lines = header * 2 + tail
+        out, rep = _dedup_repeated_blocks(lines)
+        assert rep == (3, 15, 45)
+        assert out == header + tail  # 42 行保留，尾部不丢
+
+    def test_cycle_run_collapsed_tail_kept(self):
+        """前缀块连续重复 N 次：折叠整个连续段，保留后续唯一尾部。"""
+        block = ["a", "b", "c"]
+        tail = [f"tail{i}" for i in range(10)]
+        out, rep = _dedup_repeated_blocks(block * 5 + tail)
+        assert rep == (3, 8, 25)  # repeats = n // cycle = 25 // 3
+        assert out == block + tail
+
+
+class TestTextRepetitionRetry:
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    def test_retry_recovers_full_text(self):
+        parser = self._make_parser()
+        repeated = json.dumps(["a", "b", "c"] * 8)  # 24 行, cycle=3
+        clean = json.dumps(["l1", "l2", "l3", "l4", "l5"])
+        with patch.object(parser, "_call_vlm", side_effect=[repeated, clean]) as m:
+            sections, _ = parser._extract_text_page(b"img", 1, 0)
+        assert m.call_count == 2
+        extra = m.call_args_list[1].kwargs.get("extra_params")
+        assert extra and extra.get("repetition_penalty", 1) > 1
+        assert len(sections) == 5  # 重试恢复完整页
+
+    def test_retry_also_repeated_keeps_truncated(self):
+        parser = self._make_parser()
+        repeated = json.dumps(["a", "b", "c"] * 8)
+        with patch.object(parser, "_call_vlm", return_value=repeated) as m:
+            sections, _ = parser._extract_text_page(b"img", 1, 0)
+        assert m.call_count == 2
+        assert len(sections) == 3  # 截断兕底
+    
+    def test_retry_shorter_than_collapsed_keeps_collapsed(self):
+        """重试结果干净但比折叠版更短：保留折叠版，避免二次丢内容。"""
+        parser = self._make_parser()
+        header = ["姓名：", "性别：女", "年龄：57岁"]
+        first = json.dumps(header * 2 + [f"line{i}" for i in range(39)])  # 折叠后 42 行
+        shorter_clean = json.dumps(["l1", "l2", "l3", "l4", "l5"])
+        with patch.object(parser, "_call_vlm", side_effect=[first, shorter_clean]) as m:
+            sections, _ = parser._extract_text_page(b"img", 1, 0)
+        assert m.call_count == 2
+        assert len(sections) == 42  # 保留折叠版，不采纳更短的重试
+
+    def test_no_repetition_single_call(self):
+        parser = self._make_parser()
+        with patch.object(parser, "_call_vlm", return_value='["x", "y"]') as m:
+            sections, _ = parser._extract_text_page(b"img", 1, 0)
+        assert m.call_count == 1
+        assert len(sections) == 2
+
+
+# ---------------------------------------------------------------------------
+# 15. 表格行级刷屏防御（\multicolumn 单宏刷屏、同一行重复 N 次）
+# ---------------------------------------------------------------------------
+
+_RUN_ROW = r"\multicolumn{2}{c}{日} & \multicolumn{2}{c}{00} & \multicolumn{2}{c}{0 0 0 0} \\"
+_RUN_LATEX = "\n".join(
+    [
+        r"\begin{tabular}{cccc}",
+        r"\hline",
+        r"\multicolumn{2}{c}{项目} & \multicolumn{2}{c}{结果} \\",
+        r"\hline",
+        r"A & 1 \\",
+        r"B & 2 \\",
+    ]
+    + [_RUN_ROW] * 100
+)
+
+
+class TestDedupLatexRows:
+    def test_collapses_identical_row_run(self):
+        out, rep = _dedup_latex_rows(_RUN_LATEX)
+        assert rep is not None
+        preview, repeats = rep
+        assert repeats == 100
+        lines = [l for l in out.split("\n") if l.strip() == _RUN_ROW]
+        assert len(lines) == 1  # 110 行折叠为 1 行
+
+    def test_short_run_untouched(self):
+        latex = "\n".join([r"A & 1 \\"] * 4)  # < 5 阈值，合法重复行不动
+        out, rep = _dedup_latex_rows(latex)
+        assert rep is None
+        assert out == latex
+
+    def test_no_repetition_untouched(self):
+        out, rep = _dedup_latex_rows(r"\begin{tabular}{cc}" + "\n" + r"A & 1 \\" + "\n" + r"B & 2 \\")
+        assert rep is None
+
+    def test_structure_lines_not_treated_as_data(self):
+        latex = "\n".join([r"\hline"] * 10)  # 无 & 的结构行不参与检测
+        out, rep = _dedup_latex_rows(latex)
+        assert rep is None
+
+
+class TestTableRowRepetitionRetry:
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    def test_retry_recovers_clean_table(self):
+        parser = self._make_parser()
+        clean = "\n".join(
+            [r"\begin{tabular}{cc}", r"\hline", r"A & 1 \\", r"B & 2 \\", r"C & 3 \\"]
+        )
+        with patch.object(parser, "_call_vlm", side_effect=[_RUN_LATEX, clean]) as m:
+            sections, _ = parser._extract_table_page(b"img", 1, 0)
+        assert m.call_count == 2
+        extra = m.call_args_list[1].kwargs.get("extra_params")
+        assert extra and extra.get("repetition_penalty", 1) > 1
+        # 采用重试的干净表格，而非折叠版
+        assert any("C & 3" in s[0] for s in sections)
+
+    def test_retry_also_repeated_keeps_collapsed(self):
+        parser = self._make_parser()
+        with patch.object(parser, "_call_vlm", return_value=_RUN_LATEX) as m:
+            sections, _ = parser._extract_table_page(b"img", 1, 0)
+        assert m.call_count == 2
+        run_rows = [s for s in sections if s[0].strip() == _RUN_ROW]
+        assert len(run_rows) == 1  # 兕底：折叠版保留 1 行
+
+    def test_no_row_repetition_single_call(self):
+        parser = self._make_parser()
+        clean = "\n".join([r"\begin{tabular}{cc}", r"A & 1 \\", r"B & 2 \\"])
+        with patch.object(parser, "_call_vlm", return_value=clean) as m:
+            sections, _ = parser._extract_table_page(b"img", 1, 0)
+        assert m.call_count == 1

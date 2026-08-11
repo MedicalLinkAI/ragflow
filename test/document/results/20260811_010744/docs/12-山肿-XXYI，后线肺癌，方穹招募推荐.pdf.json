@@ -1,0 +1,1123 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\709-101\\12-山肿-XXYI，后线肺癌，方穹招募推荐.pdf",
+    "name": "12-山肿-XXYI，后线肺癌，方穹招募推荐.pdf",
+    "size_kb": 14480.9,
+    "pages": 37
+  },
+  "doc_id": "db844cb494ee11f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "RUNNING",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-11T03:08:22",
+  "end_at": "2026-08-11T03:24:16",
+  "elapsed_s": 953.6,
+  "chunks": [
+    {
+      "chunk_id": "08ca1b45acabb71e",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 13,
+      "content": "26-03-02 术中冰冻病理报告单\n病理号：2\n姓名\n性别：女 年龄：67岁 收到日期：2024-06-19 14:28\n送检医院： 送检科室：胸外科 病案号：8001067375\n送检医生：5123 病 区：胸外科 床号：1-18床\n冰冻诊断：\n(右肺中叶)浸润性腺癌。\n(脏层胸膜结节)查见腺癌。\n(壁层胸膜结节)查见腺癌。\n26-03\n报告医生：\n报告日期：2024-06-19 14:54",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "0dacb68858ea8ccc",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 39,
+      "content": "病理诊断报告单\n姓名：\n性别：女 年龄：67岁\n送检医院：\n病案\n床号：1-18床\n收到日期：2024-06-19\n门诊号：\n报告日期：2024-06-21\n标本名称：1.肺切除标本，2.右肺中叶，3.临床诊断：\n入院诊断：肺占位性病变,腰椎间盘突\n壁层胸膜结节，4.脏层胸膜\n出\n巨检:右肺中叶：肺组织一块，V：9x6x2cm，上附钢钉长6cm，临床己切开，切面见一灰白结节，\nV：2.7x2.4x2.3cm，切面灰白质脆，紧邻脏层胸膜，距钢钉侧切缘0.8cm，距支气管断端\n1.5cm。支气管周围查见结节样物1枚，直径0.8cm。其余肺组织切面灰红灰黑质软。\n脏层胸膜结节：肺组织一块，V：3.5",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "dc233ddf756f08a2",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 33,
+      "content": "基因检测报告单\n标本编号：\n姓\n性别：女\n年龄：67岁\n科室病区：\n送检医院：本院\n病案号\n床\n号：1-33床\n送检\n门诊号：\n送检日期：2024-06-20\n病理诊断：浸润性非黏液腺癌\n原病理号：202435432\n标本类型：手术石蜡标本\n检测方法：ARMS荧光定量PCR法\n检测项目：五种突变基因检测（详见附表）\n检测位点：详见附表\n检测结果：EGFR基因第21号外显子序列L858R突变\n检测可能的局限性：\n1、肿瘤组织（细胞）可能存在较大异质性，即不同病灶甚至同一病灶内的组织的突变图\n谱可能也存在差异。另外，不同疾病发展或治疗阶段取出的样本中的突变可能不同。\n2. 基于肿瘤生物学机制的复杂",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "dc034f6a44099208",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 57,
+      "content": "病理诊断报告单\n病理号\n姓名：\n性别：女\n年龄：67岁\n科室病区：\n送检医院：\n病案号：8001067375\n床号：1-18床\n收到日期：2024-06-19\n门诊号：\n报告日期：2024-06-26\n标本名称：1.肺切除标本，2.右肺中\n临床诊断：入院诊断：肺占位性病变,腰椎\n叶，3.壁层胸膜结节，4.脏\n间盘突出\n层胸膜\n巨检：右肺中叶：肺组织一块，V：9x6x2cm，上附钢钉长6cm，临床已切开，切面见一灰白结\n节，V：2.7x2.4x2.3cm，切面灰白质脆，紧邻脏层胸膜，距钢钉侧切缘0.8cm，距支气管\n断端1.5cm。支气管周围查见结节样物1枚，直径0.8cm。其余肺组织切面灰红灰",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "6ee2f870418547b1",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 79,
+      "content": "基因检测报告单\n标本\n姓名\n性别：女\n年龄：67岁\n科室病区\n送检医院：本院\n病\n床\n号：1-33床\n送检医\n门诊号：\n送检日期：2024-06-20\n检测位点附表\n检测项目\n外显子/密码子\n突变类型\nEGFR基因\nExon-19\n19-del\nExon-21\nL858R\nExon-20\nT790M\nExon-20\n20-ins\nExon-18\nG719X\nExon-20\nS768I\nExon-21\nL861Q\nKRAS基因\nExon-2\nG12D/S\nG12A/V/R/C、G13C\nBRAF基因\nExon-15\nV600E1/E2/K/R/D1/D2\nNRAS基因\nExon-3\nQ61R/K",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "305463224b873a62",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "病理诊断报告单\n病理号\n姓名：夕\n性别：女 年龄：67岁 科室病区\n送检医院：188.8.15\n病. 1067375 床号：1-\n收到日期：2024-06-19 门诊号：\n报告日期：2024-06-21\n肿瘤分级：低分化。\n肿瘤数量：1个。\n脉管内癌栓：脉管内见癌栓。\n神经侵犯：神经未见癌组织侵犯。\n沿气道播散STAS：查见STAS。\n胸膜侵犯：侵及壁层胸膜，PL3(改进Hammar分级)。\n切缘情况：支气管断端及肺切缘均未见癌。\n周围肺情况：周围肺组织示炭末沉积及细支气管化生。\n支气管周围淋巴结：查见支气管周围淋巴结（0/1）枚，未见癌组织转移。\n送检淋巴结：送检\"第7组\"淋巴结（0/1）枚",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "e416f825ee57a457",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 24,
+      "content": "、心达院医子影像科\n影像诊断报告书\n取报告生\n可扫码查\n姓名\n性别：女\n年龄：67岁\n影像号\n523551\n病区：胸外科\n病床：1-18床\n病\n检查时间：2024-06-16 21:18:43\n设备：DISCOVERY MR750w2024061614049\n检查项目：颅脑MRI（平扫）\n影像表现：\n双侧基底节区、放射冠、半卵圆中心、额顶叶可见多发斑片状异\n常信号，T1WI、DWI呈等低信号，T2WI呈稍高信号，T2flair呈高信\n号。脑室系统扩张，侧脑室前后角旁白质对称性\nair高信号。中\n线结构居中。脑干、小脑形态信号未见异\n双侧基底节区、放射冠、半卵圆中心\n顶叶多发缺血灶\n2. 脑萎缩",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "99cb6470ad48b304",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 34,
+      "content": "住院\n取报告48小时后\n可扫码去二防山\n影像诊断报告书\n性别：女\n年龄：67岁\n影像号：450\n科_\n病区：胸外科\n病床：1-18床\n病...\n检查时间：2024-06-18 09:28:48\n设备：Revolution CT\n2\n检查项目：双肺CT（平扫+强化）\n影像表现：双侧胸廓对称，气管纵隔居中，右肺中叶外段（im34）见结节状密\n度增高影，大小约28×26mm，边界较清，示支气管截断征，邻近叶间\n胸膜轻度受牵拉，增强扫描团块呈轻-中度强化，其内穿行血管壁毛\n糙；双肺另见粟粒及微小结节，较大者位于右侧斜裂（im39），大小\n约5×3mm，边界清。双肺见条片状密度增高影。纵隔内见增大淋巴结",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "d4796d545b23d085",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 22,
+      "content": "住院\n取报告48小时\n可扫码查\n影像诊断报告书\n性别：女\n年龄：67岁\n病区：胸外科\n病床：1-33床\n病案号：80\n时间：2024-06-20 15:03:45\n检查项目：胸部正位片\n影像表现： 双侧胸廓对称，气管、纵隔居中，右肺纹理模糊，左肺野清晰，\n双肺纹理走行自然。心脏、大血管影未见异常。双侧膈面光滑，双侧\n肋膈角稍钝。右侧胸腔引流管，右侧胸壁软组织积气。\n影像诊断：右肺术后改变。\n双侧肋膈角稍钝。\n报告医师：\n审核医师：\n报告时间：\n17:26:30审核时间：\n2024-06-21\n07:53:41",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "295ecd331b1b13f9",
+      "pages": [
+        11,
+        12
+      ],
+      "page_count_raw": 62,
+      "content": "八院记录\n出生地\n：\n职\n：\n年\n龄：67岁\n入院日期：2024-06-16 09:47:48\n民\n族：汉族\n记录日期：2024-06-16 15:24:34\n婚\n姻：已婚\n病史陈述者：患者本人\n主诉：查体发现肺结节1天。\n现病史：患者1天前查体行胸部CT示右肺中叶软组织密度肿块，最大截面约2.8*2.4cm，可见浅分叶及毛\n刺，血管穿行，右肺中叶外侧段支气管狭窄闭塞，平素偶有胸闷、憋气，伴右侧胸痛，无明显咳嗽、咳痰，\n无咳血，无声音嘶哑，无饮水呛咳，无明显头晕、头痛，无发热、盗汗，无明显恶心、呕吐，无黑便、血便\n等症状，未行特殊治疗。现为行进一步治疗来我科就诊，门诊以“肺占位性病变”为诊断收",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "f0df54f81aa38297",
+      "pages": [
+        13,
+        14,
+        15
+      ],
+      "page_count_raw": 50,
+      "content": "记录\n姓名\n性别：女\n年龄：67岁\n入院日期：2024-06-16 09:47:48\n出院日期：2024-06-24 11:00:00\n住院天数：8天\n入院情\n7岁。患者1天前查体行胸部CT示右肺中叶软组织密度肿块，最大截面约2.8*\n2.4cm，可见浅分叶及毛刺，血管穿行，右肺中叶外侧段支气管狭窄闭塞，平素偶有胸闷、憋气，伴右侧胸\n痛，无明显咳嗽、咳痰，无咳血，无声音嘶哑，无饮水呛咳，无明显头晕、头痛，无发热、盗汗，无明显恶\n心、呕吐，无黑便、血便等症状，未行特殊治疗。现为行进一步治疗来我科就诊，门诊以“肺占位性病变”\n为诊断收入院。患者自本次发病以来，饮食可，睡眠可，大便如常，小便如常，体",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a511afef2370e808",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 32,
+      "content": "手术记录\n年龄：67岁\n病\n手术日期：2024-06-19\n手术时间：12:50~14:35\n才\n1.肺占位性病变2.腰椎间盘突出\n术中诊断：\n1.右肺中叶癌2.胸膜继发恶性肿瘤3.腰椎间盘突出\n手术名称：胸腔镜右肺中叶切除+脏层胸膜结节切除+壁层胸膜结节切除+淋巴结切除术\n麻醉方法：\n全身麻醉\n手术指导者：\n手术经过、术中发现的情况及处理：\n患者入室后，核查患者姓名、疾病名称、住院号、胸部CT姓名全部一致，患者平卧位行气管插管、全\n身麻醉后，取左侧卧位，左侧胸壁下垫海绵垫，固定患者，调整手术床呈折刀位。标记手术切口。常规碘伏\n消毒3遍，铺无菌巾，于右侧腋中线第5肋间切开皮肤约2.5cm，探查",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "adad93f1d4a37533",
+      "pages": [
+        20
+      ],
+      "page_count_raw": 20,
+      "content": "放射(1)\n报告时间↓\n项目\n02-27 16:23\n双肺CT（平扫）\n开单科室 新区胸外科门诊\n诊断 肺恶性肿瘤个人史\n检查F\n审核医\n开单时间 2026-02-27 09:17\n气肿及脓性分泌物，双肺呼吸音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n报告日期 2026-02-27 16:23\n检查科室 新区医院医学影像科\n检查项目\n双肺CT（平扫）\n检查描述\n双侧胸廓对称，气管纵隔居中，右肺下叶术区局部见高密度缝合线及团片状软组织密度影、索条影，邻近胸膜增厚。双肺间质纹理增多。双肺见粟粒结节，边界清。双肺见条片状密度增高影。纵隔未见明显增大淋巴结。主动脉及冠脉见钙化影。右侧胸腔积液。甲状腺",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "83fee44a5632f5e6",
+      "pages": [
+        20,
+        21
+      ],
+      "page_count_raw": 10,
+      "content": "CDSS\n主诉:肺占位术后1.5年余来诊。\n现病史:患者于1.5年前因肺占位行手术治疗,术后病理示恶性肿瘤,术后恢复良好。\n既往史:无\n过敏史:无\n体格检查:神志清,可,手术切口愈合良好,无红肿及脓性分泌物,呼吸音清,无明显干湿啰音,腹软,无压痛及反跳痛。\n辅助检查:\n门诊诊断:肺恶性肿瘤个人史\n治疗计划:\n26",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "6161bc9a1888fc76",
+      "pages": [
+        22
+      ],
+      "page_count_raw": 9,
+      "content": "主诉：肺占位术后1年余来诊。\n现病史：患者于*年*月*日行*手术治疗，术后病理提示恶性肿瘤，术后恢复良好。\n既往史：无\n过敏史：无\n体格检查：神志清，精神可，手术切口愈合良好，无红肿及脓性分泌物，无明显干湿啰音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤\n治疗计划：继",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "9cafbb163190b123",
+      "pages": [
+        23
+      ],
+      "page_count_raw": 9,
+      "content": "主诉：肺占位术后1.5年余来诊。\n现病史：患者于1.5年前因\n术治疗，术后病理示恶性肿瘤，术后\n体格检查：神志清，精神可，手术切口愈合良好，无红肿及脓性分泌\n音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤个人史\n治疗计划：继续服用奥",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "451a92e89927200d",
+      "pages": [
+        24
+      ],
+      "page_count_raw": 11,
+      "content": "主诉: 肺占位术后1年余来诊。\n现病史: 患者于1年前因\n手术治疗, 术后病理示恶性肿瘤, 辅助靶向治疗,\n既往史\n过敏史:\n体格检查: 神志清, 精神可, 手术切口愈合良好, 无红\n音, 腹软, 无压痛及反跳痛。\n辅助检查:\n门诊诊断:\n肺恶性肿瘤\n治疗计划: 继续靶向治疗, 定",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "c9aec4ce1ae7789f",
+      "pages": [
+        25
+      ],
+      "page_count_raw": 14,
+      "content": "25-09-19 08:02\n诊断证明\n25-09-19 08:09\n2025-09-19 08:02\n初诊病历\n主诉：肺占位术后1年余来诊。\n现病史：患者于1年前因肺占位行手术治疗，术后病理示恶性肿瘤，术后恢复良好。\n既往\n体格检查：神志清，精神可，手术切口愈合良好，无红肿及脓性分泌\n音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤个人史\n治疗计划：继续服用奥希替尼治疗",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "fececd09cc55c1bd",
+      "pages": [
+        27
+      ],
+      "page_count_raw": 22,
+      "content": "放射(1)\n报告时间↓ 项目\n09-19 13:48 双肺CT（平扫）\n报告号 8810332\n原始报告 原始图像 申请单 对比报告 复制\n开单科室 新区胸外科门诊 开单医\n开单时间 2025-09-19 08:07\n诊断 肺恶性肿瘤个人史\n检查目的 体格检查：神志清，挂冲一\n八泌物，双肺呼吸音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n日期 2025-09-19 13:48 检查科室\n学影像科\n检查项目\n双肺CT（平扫）\n检查描述\n双侧胸廓对称，气管纵隔居中，右肺下叶术区局部见高密度缝合线及团片状软组织密度影、索条影，邻近胸膜增厚。双肺间质纹理增多。双肺见粟粒结节，边界清。双\n肺见条片状密度",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "beb65cce450b2498",
+      "pages": [
+        28
+      ],
+      "page_count_raw": 33,
+      "content": "报告时间↓ 项目\n报告号 RMZZ_1001883808\n原始报告 原始图像 申请单 对比报告 复\n检验(5)\n检查(3)\n09-19 10:33 肝胆胰脾肾彩超\n开单科室 新区胸外科门诊 开单医\n龙\n开单时间 2025-09-19 08:07\n门诊病历\n诊断 肺恶性肿瘤^\\史\n检查目的\n清，精神可，手术切\n，无红肿及脓性分泌物，双肺呼吸音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n门急诊病历(2)\n报\n报告日期 2025-09-19 10:33 检查科室 -\n检查检验报告\n实验室(2)\n放射(1)\n超声(1)\n检查项目\n肝胆胰脾肾彩超\n检查描述\n超声显示:肝脏大小、形态可，被膜光整，肝左叶探",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "7600fbc9a7b34854",
+      "pages": [
+        29
+      ],
+      "page_count_raw": 13,
+      "content": "2025-08-15 09:4\n门诊初诊病历\n主诉：肺占位术后1年余来诊。\n现病史：患者于1年前因\n术后病理示恶性肿瘤，术后恢复良好。\n既往史：无\n过敏史:无\n体格检查：神...，精神可，手术切口愈合良好，无红肿及脓性分泌物，双肺呼吸音清，无明显干湿\n音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤个人史\n治疗计划：继续服用奥希替尼治疗。",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "bd28abe0e03af6ed",
+      "pages": [
+        30
+      ],
+      "page_count_raw": 18,
+      "content": "心电图检查报告单\n检查时间：2025/6/20 9:39:04\n女\n心率：75bpm\nP-R间期：138ms\n诊断：窦性心律\n性\nSV1：0.71mV\nQRS时限：95ms\n大致正常心电图\n年龄：68岁\nRV5：1.26mV\nQT/QTc：409/457ms\n科室：新区胸外科门诊\nRV5+SV1：1.97mV\n电轴：7°\n25mm/s 10mm/mV\n(本报告仅供临床医师结合临床参考，不作诊断证明之用) 报告日期：2025/6/20 9",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "32dbd76dee7c4fb0",
+      "pages": [
+        31
+      ],
+      "page_count_raw": 19,
+      "content": "放射(1)\n报告时间↓ 项目\n06-20 14:53 双肺CT（平扫）\n报告\n原始报告 原始图像 申请单 对比报告 复制\n开单科室 肺癌 门诊 开单医生\n开单时间 2025-06-20 08:23\n诊断 肺恶性肿瘤个人史\n检查目的 体格检查 精神可，手术\n炎性分泌物，双肺呼吸音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n报告日期 2025-06-20 14:53 检查科:\n检查项目\n双肺CT（平扫）\n检查描述\n双侧胸廓对称，气管纵隔居中，右肺下叶术区局部见高密度缝合线及团片状软组织密度影、索条影，邻近胸膜增厚。双肺间质纹理增多。双肺见粟粒结节，边界清。双肺见条片状密度增高影。纵隔未见明显增大淋",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "acd3e4a86465837d",
+      "pages": [
+        32
+      ],
+      "page_count_raw": 9,
+      "content": "主诉：肺占位术后3月余来诊。\n现病史：患者于3月前因肺占位行手术治疗，术后病理示恶性肿瘤，术后恢复良好。\n既往史：无\n过敏史:无\n体格检查：神志清，精神可，手术切口愈合良好，无红肿及脓性分泌物，双肺呼吸音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤个人史\n治疗计划：肺癌术后辅助奥希替尼治疗。",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "99b6b3986068a291",
+      "pages": [
+        33
+      ],
+      "page_count_raw": 9,
+      "content": "主诉：肺占位术后4月余来诊。\n现病史：患者于4月前因肺占位行手术治疗，术后病理示恶性肿瘤，术后恢复良好。\n既往史：无\n过敏史:无\n体格检查：神志清，精神可，手术切口愈合良好，无红肿及脓性分泌物，叩及音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤个人史\n治疗计划：术后辅助奥希替尼靶向治疗",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "1f5664b6917c33a0",
+      "pages": [
+        34
+      ],
+      "page_count_raw": 9,
+      "content": "主诉：肺占位术后5月余来诊。\n现病史：患者于5月前因肺占位行手术治疗，术后病理示恶性肿瘤，术后恢复良好。\n既往史：无\n过敏史:无\n体格检查：神志清，精神可，手术切口愈合良好，无红肿及脓性分泌物，双肺呼吸音清，无明显干湿啰音，腹软，无压痛及反跳痛。\n辅助检查：\n门诊诊断：\n肺恶性肿瘤个人史\n治疗计划：继续服用奥希替尼。",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "98d1b4287a701f48",
+      "pages": [
+        35
+      ],
+      "page_count_raw": 20,
+      "content": "临沂市人民医院\n术中冰冻病理报告单\n病理\n姓\n性别：女\n年龄：67岁\n收到日期：2024-06-19 14:28\n送检医院：\n送检科室\n病\n送检医生：5123\n病\n区.\n床号：1-18床\n冰冻诊断：\n(右肺中叶)浸润性腺癌。\n(脏层胸膜结节)查见腺癌。\n(壁层胸膜结节)查见腺癌。\n报告医生：\n2024-06-19 14:54",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "040697981cfccca0",
+      "pages": [
+        36,
+        37
+      ],
+      "page_count_raw": 28,
+      "content": "影像学报告\n检查号\n姓名\n性别：女\n年龄：69岁\n科\n临床试验病房\n病房：702643\n病床：702643\n住院号：7122764316\n检查时间：2026-03-10 09:26 报告时间：2026-03-12 08:1\n检查部位：[胸部,增强]\n影像描述：\n原诊“肺癌靶向治疗后进展”复查：\n右肺局部术后，右肺下叶见条片状软组织影，局部结节影，强化欠均（\n图7-37）。左肺上叶见条片影。纵隔见肿大淋巴结，图7-24示大者短径\n约12mm。右侧叶间胸膜增厚，右侧胸膜多发结节样增厚，强化，右侧胸腔少\n量积液。甲状腺局部示低密度影，强化不均匀。扫及左肾上腺略增粗。\n影像诊断：\n1、肺癌靶向治疗后进",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "500a272efa96e884",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>癌胚抗原</td><td>None</td><td>19.80</td><td>ng/mL</td><td>0--5</td><td>True</td></tr><tr><td>糖类抗原125</td><td>None</td><td>15.700</td><td>u/ml</td><td>0--35</td><td>False</td></tr><tr><td>非小细胞肺癌相关抗原</td><td>None</td><td>1.330</td><td>ng/ml</td><td>0.1--3.3</td><td>False</td></tr><tr><td>鳞状",
+      "row_position_int": [
+        [
+          16,
+          248,
+          292,
+          157,
+          166
+        ],
+        [
+          16,
+          248,
+          298,
+          176,
+          185
+        ],
+        [
+          16,
+          248,
+          333,
+          193,
+          202
+        ],
+        [
+          16,
+          248,
+          325,
+          210,
+          219
+        ]
+      ]
+    },
+    {
+      "chunk_id": "d3f4dae5b20c4c77",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>钾</td><td>None</td><td>4.06</td><td>mmol/L</td><td>3.5--5.3</td><td>False</td></tr><tr><td>钠</td><td>None</td><td>140.6</td><td>mmol/L</td><td>137--147</td><td>False</td></tr><tr><td>氯</td><td>None</td><td>106.5</td><td>mmol/L</td><td>99--110</td><td>False</td></tr><tr><td>二氧化碳</td><t",
+      "row_position_int": [
+        [
+          17,
+          235,
+          254,
+          151,
+          160
+        ],
+        [
+          17,
+          235,
+          254,
+          167,
+          177
+        ],
+        [
+          17,
+          235,
+          254,
+          185,
+          194
+        ],
+        [
+          17,
+          235,
+          271,
+          201,
+          211
+        ],
+        [
+          17,
+          235,
+          271,
+          218,
+          227
+        ],
+        [
+          17,
+          235,
+          254,
+          235,
+          245
+        ],
+        [
+          17,
+          235,
+          254,
+          252,
+          261
+        ],
+        [
+          17,
+          235,
+          246,
+          269,
+          279
+        ],
+        [
+          17,
+          235,
+          262,
+          286,
+          295
+        ],
+        [
+          17,
+          235,
+          262,
+          302,
+          312
+        ],
+        [
+          17,
+          235,
+          262,
+          320,
+          329
+        ],
+        [
+          17,
+          235,
+          262,
+          336,
+          346
+        ],
+        [
+          17,
+          235,
+          262,
+          354,
+          363
+        ],
+        [
+          17,
+          235,
+          271,
+          370,
+          380
+        ],
+        [
+          17,
+          235,
+          271,
+          387,
+          397
+        ],
+        [
+          17,
+          235,
+          271,
+          404,
+          414
+        ],
+        [
+          17,
+          235,
+          262,
+          421,
+          430
+        ],
+        [
+          17,
+          235,
+          290,
+          437,
+          447
+        ],
+        [
+          17,
+          235,
+          274,
+          455,
+          464
+        ],
+        [
+          17,
+          235,
+          282,
+          471,
+          481
+        ],
+        [
+          17,
+          235,
+          287,
+          489,
+          499
+        ],
+        [
+          17,
+          235,
+          320,
+          506,
+          515
+        ],
+        [
+          17,
+          235,
+          312,
+          523,
+          532
+        ]
+      ]
+    },
+    {
+      "chunk_id": "961625be21e9d3b6",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>磷</td><td>None</td><td>1.20</td><td>mmol/L</td><td>0.9--1.34</td><td>False</td></tr><tr><td>镁</td><td>None</td><td>0.94</td><td>mmol/L</td><td>0.7--1.1</td><td>False</td></tr><tr><td>尿素</td><td>None</td><td>3.70</td><td>mmol/L</td><td>2.9--8.2</td><td>False</td></tr><tr><td>肌酐</td><td",
+      "row_position_int": [
+        [
+          18,
+          235,
+          253,
+          43,
+          52
+        ],
+        [
+          18,
+          235,
+          245,
+          60,
+          69
+        ],
+        [
+          18,
+          235,
+          261,
+          77,
+          86
+        ],
+        [
+          18,
+          235,
+          261,
+          94,
+          102
+        ],
+        [
+          18,
+          235,
+          261,
+          111,
+          120
+        ],
+        [
+          18,
+          235,
+          261,
+          127,
+          136
+        ],
+        [
+          18,
+          235,
+          261,
+          144,
+          153
+        ],
+        [
+          18,
+          235,
+          269,
+          161,
+          170
+        ],
+        [
+          18,
+          235,
+          269,
+          178,
+          187
+        ],
+        [
+          18,
+          235,
+          269,
+          195,
+          204
+        ],
+        [
+          18,
+          235,
+          261,
+          212,
+          221
+        ],
+        [
+          18,
+          235,
+          287,
+          229,
+          238
+        ],
+        [
+          18,
+          235,
+          272,
+          246,
+          255
+        ],
+        [
+          18,
+          235,
+          281,
+          263,
+          272
+        ],
+        [
+          18,
+          235,
+          285,
+          280,
+          289
+        ],
+        [
+          18,
+          235,
+          317,
+          298,
+          307
+        ],
+        [
+          18,
+          235,
+          309,
+          314,
+          323
+        ],
+        [
+          18,
+          235,
+          287,
+          332,
+          340
+        ],
+        [
+          18,
+          235,
+          285,
+          348,
+          357
+        ],
+        [
+          18,
+          235,
+          298,
+          365,
+          374
+        ],
+        [
+          18,
+          235,
+          277,
+          382,
+          391
+        ],
+        [
+          18,
+          235,
+          277,
+          399,
+          408
+        ],
+        [
+          18,
+          235,
+          317,
+          416,
+          425
+        ],
+        [
+          18,
+          235,
+          317,
+          433,
+          442
+        ],
+        [
+          18,
+          235,
+          271,
+          451,
+          459
+        ],
+        [
+          18,
+          235,
+          261,
+          467,
+          476
+        ],
+        [
+          18,
+          235,
+          278,
+          484,
+          493
+        ]
+      ]
+    },
+    {
+      "chunk_id": "ce14c4b39af62b7b",
+      "pages": [
+        19
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>6.94</td><td>x10^9/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>4.23</td><td>x10^12/L</td><td>3.8--5.1</td><td>False</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>124.0</td><td>g/L</td><td>115--150</td><td>False</td></tr><tr><td>红细胞比积</",
+      "row_position_int": [
+        [
+          19,
+          242,
+          275,
+          92,
+          102
+        ],
+        [
+          19,
+          242,
+          275,
+          109,
+          119
+        ],
+        [
+          19,
+          242,
+          283,
+          126,
+          135
+        ],
+        [
+          19,
+          242,
+          292,
+          143,
+          152
+        ],
+        [
+          19,
+          242,
+          299,
+          160,
+          169
+        ],
+        [
+          19,
+          242,
+          332,
+          176,
+          186
+        ],
+        [
+          19,
+          242,
+          332,
+          193,
+          203
+        ],
+        [
+          19,
+          242,
+          299,
+          211,
+          220
+        ],
+        [
+          19,
+          242,
+          299,
+          227,
+          237
+        ],
+        [
+          19,
+          242,
+          275,
+          244,
+          254
+        ],
+        [
+          19,
+          242,
+          299,
+          261,
+          271
+        ],
+        [
+          19,
+          242,
+          299,
+          278,
+          287
+        ],
+        [
+          19,
+          242,
+          299,
+          295,
+          304
+        ],
+        [
+          19,
+          242,
+          283,
+          312,
+          321
+        ],
+        [
+          19,
+          242,
+          283,
+          330,
+          339
+        ],
+        [
+          19,
+          242,
+          275,
+          346,
+          356
+        ],
+        [
+          19,
+          242,
+          275,
+          364,
+          373
+        ],
+        [
+          19,
+          242,
+          292,
+          380,
+          390
+        ],
+        [
+          19,
+          242,
+          292,
+          398,
+          407
+        ],
+        [
+          19,
+          242,
+          299,
+          415,
+          424
+        ],
+        [
+          19,
+          242,
+          292,
+          432,
+          442
+        ],
+        [
+          19,
+          242,
+          292,
+          450,
+          459
+        ],
+        [
+          19,
+          242,
+          308,
+          467,
+          477
+        ],
+        [
+          19,
+          242,
+          308,
+          484,
+          494
+        ]
+      ]
+    },
+    {
+      "chunk_id": "77449c2dcf33f0e7",
+      "pages": [
+        26
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>癌胚抗原</td><td>None</td><td>19.08</td><td>ng/mL</td><td>0--5</td><td>True</td></tr><tr><td>糖类抗原125</td><td>None</td><td>24.810</td><td>u/ml</td><td>0--35</td><td>False</td></tr><tr><td>非小细胞肺癌相关抗原</td><td>None</td><td>2.040</td><td>ng/ml</td><td>0.1--3.3</td><td>False</td></tr><tr><td>鳞状",
+      "row_position_int": [
+        [
+          26,
+          307,
+          346,
+          151,
+          161
+        ],
+        [
+          26,
+          307,
+          383,
+          186,
+          195
+        ],
+        [
+          26,
+          307,
+          376,
+          202,
+          211
+        ],
+        [
+          26,
+          307,
+          376,
+          202,
+          211
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "page_sum": 39,
+    "check": {
+      "covered": 37,
+      "total": 37,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 9,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "LOST",
+      "evidence": [
+        "SyncChunks 同步失败: None"
+      ]
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 1,
+      "extractor_count": 2,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "LOST",
+      "evidence": [
+        "SyncChunks 同步失败: None"
+      ]
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "LOST",
+      "evidence": [
+        "SyncChunks 同步失败: None"
+      ]
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 18,
+      "recognized_count": 16,
+      "extractor_count": 18,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 19:15:31,387 INFO     29 [ChunkMerger] Merged 28 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 2, 'Extractor:ExaminationReport': 18, 'Extractor:Progress': 1} (filtered 4 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 5,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "LOST",
+      "evidence": [
+        "SyncChunks 同步失败: None"
+      ]
+    }
+  },
+  "smart_types": {
+    "ExaminationReport": 16,
+    "AdmissionRecord": 1,
+    "DischargeRecord": 1,
+    "ProgressNote": 1,
+    "LabReport": 5,
+    "OutpatientRecord": 9
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 28,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 5,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 2,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 2,
+      "Extractor:ExaminationReport": 18,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 4
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 19:15:31,387 INFO     29 [ChunkMerger] Merged 28 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 2, 'Extractor:ExaminationReport': 18, 'Extractor:Progress': 1} (filtered 4 noise chunks)"
+    }
+  ],
+  "log_errors": [
+    "2026-08-10 19:09:17,224 ERROR    29 OpenAI async completion",
+    "2026-08-10 19:09:17,387 ERROR    29 async base giving up: **ERROR**: MAX_RETRIES_EXCEEDED - Request timed out.",
+    "2026-08-10 19:09:17,387 ERROR    29 [qwen-vl-text] Unexpected error",
+    "2026-08-10 19:09:17,436 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:09:17,478 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:30,399 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:30,403 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:31,377 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:31,388 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:31,399 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:31,401 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:31,896 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:31,898 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:34,989 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:34,991 ERROR    29 'NoneType' object has no attribute 'encode'",
+    "2026-08-10 19:15:36,784 ERROR    29 'NoneType' object has no attribute 'encode'"
+  ],
+  "note": "chunk 明细已按 ES 当前数据重统计（原为解析中快照）。 ",
+  "chunk_count_api": 33,
+  "process_begin_at": "2026-08-10T19:08:23",
+  "process_duration": 893.6184,
+  "progress_msg": "19:15:36 Indexing done (0.14s). Task done (2838.76s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "ExaminationReport": 18
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 2,
+    "ExaminationReport": 18
+  }
+}

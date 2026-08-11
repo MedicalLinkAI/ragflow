@@ -1,0 +1,290 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和糖尿病\\WAYA-糖尿病-长春.pdf",
+    "name": "WAYA-糖尿病-长春.pdf",
+    "size_kb": 27572.0,
+    "pages": 8
+  },
+  "doc_id": "47f841b294c111f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:42:06",
+  "end_at": "2026-08-10T21:44:06",
+  "elapsed_s": 120.1,
+  "chunks": [
+    {
+      "chunk_id": "5f2d83a7968c76bd",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 28,
+      "content": "吉林省人民醫院\n门（急）诊病历\n姓名：\n性别：男\n年龄：\n时间：2024年3月7日\n门诊号：2403070\n婚姻：\n职业：其他\n就诊类型：○初诊○复诊○急诊\n过敏史：否认药物及食品过敏史\n科室：内分泌代谢病二科门诊\n住址：\n主诉：糖尿病开药\n简要病史：糖尿病，要求开二甲双胍。\n既往史和其他病史：\n体格检查（选填项目）：体温：\n；脉搏：次/分；呼\n吸：次/分；血压/mmHg。\n专科检查(必要项目)：\n辅助检查及结果：\n初步诊断：2型糖尿病\n诊疗意见：口服,每天二次,次/次,盐酸二甲双胍缓释片,\n每天二次, 1.00g/次\n签名：蒋立军\n时间：2024年03月07日13时04分39\n秒\n(以上病历",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "3dfb64a46398e18e",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 23,
+      "content": "黑龙江博尚医院\n门诊病历\n姓名：\n门诊号：2403\n科室：综合内科门诊\n性别：男\n年龄：43岁\n就诊时间：2024-02-21 10:49\n主诉：\n多饮，多尿，多食，口干，口渴半年，加重一周。\n现病史：\n既往史：\n既往否认重要病史。\n药物过敏史：\n无。\n辅助检查：\n检验结果-2024-02-21 09:51- 空腹血糖16.40mmol/L↑\n检验结果-2024-02-21 09:44- 糖化血红蛋白8.58%↑\n初步诊断：\n2型糖尿病\n处理措施：\n每天2次，每次1.0g\n医师签名：李月菊",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "deeb6da6a43005f5",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 33,
+      "content": "长春民康利药房\n票号：04311228929\n收银员：77\n会员\n交易时间：2025-1-22\n18:21:22\n品名\n规格\n单位\n内码\n数量\n单价\n金额\n生产企业\n生产批号\n圣邦杰\n盐酸二甲双胍缓释片(山东司邦得\n制药有限公司)\n0.5g*40T\n单价\n4.8\n数量10\n合计48.00\n总页数：1.00\n总折扣：0.00\n合计：48.00\n付款：48.00\n找零：0.00\n*号代表含兴奋剂药品，请运动员慎\n用\n祝您健康！\n请您当日开取发票，如有其他\n原因请在15日内开取发票",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "e695dec74083d919",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 33,
+      "content": "长春民康利药房\n票号：04311345628\n收银员：77\n会员名\n交易时间：2025-4-29\n12:28:12\n品名\n规格\n单位\n内码\n数量\n单价\n金额\n生产企业\n生产批号\n圣邦杰\n盐酸二甲双胍缓释片(山东司邦得\n制药有限公司)\n0.5g*40T\n单价\n4.8\n数量10\n合计48.00\n总页数：1.00\n总折扣：0.00\n合计：48.00\n付款：48.00\n找零：0.00\n*号代表含兴奋剂药品,请运动员慎\n用\n祝您健康!\n请您当日开取发票，如有其他\n原因请在15日内开取发票",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "5e694c9eecf41830",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>血糖</td><td>GLU</td><td>10.46</td><td>mmol/L</td><td>3.89-6.11</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          3,
+          43,
+          60,
+          140,
+          151
+        ]
+      ]
+    },
+    {
+      "chunk_id": "06f03d82bec0d84a",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>9.8</td><td>%</td><td>4-6</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          4,
+          140,
+          182,
+          405,
+          413
+        ]
+      ]
+    },
+    {
+      "chunk_id": "367726712bd5ae64",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>葡萄糖测定(空腹己糖激酶法)</td><td>GLU</td><td>11.50</td><td>mmol/L</td><td>3.9--6.1</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          5,
+          101,
+          247,
+          172,
+          185
+        ]
+      ]
+    },
+    {
+      "chunk_id": "d630c4bc3deff21a",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白（高效液相色谱法）</td><td>0101409</td><td>8.40</td><td>%</td><td>4--6</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          6,
+          100,
+          248,
+          168,
+          179
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": 8,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": [
+        "2026-08-10 13:43:53,727 INFO     29 [ChunkMerger] Merged 8 chunks from 9 sources: {'Extractor:LabExam': 4, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 4,
+      "recognized_count": 4,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 2,
+    "LabReport": 4,
+    "MedicationRecord": 2
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 8,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 4,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 2,
+      "Extractor:Medication": 2,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:43:53,727 INFO     29 [ChunkMerger] Merged 8 chunks from 9 sources: {'Extractor:LabExam': 4, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：WAYA-糖尿病-长春.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 8,
+  "process_begin_at": "2026-08-10T13:42:09",
+  "process_duration": 105.76241,
+  "progress_msg": "13:43:54 Indexing done (0.05s). Task done (98.99s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 4,
+    "OutpatientRecord": 2,
+    "MedicationRecord": 2
+  },
+  "extractor_types": {
+    "MedicationRecord": 2,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

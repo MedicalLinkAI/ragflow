@@ -1,0 +1,300 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和糖尿病\\XJYo-糖尿病-哈大四.pdf",
+    "name": "XJYo-糖尿病-哈大四.pdf",
+    "size_kb": 1624.0,
+    "pages": 9
+  },
+  "doc_id": "eddf381a94c111f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:46:45",
+  "end_at": "2026-08-10T21:49:06",
+  "elapsed_s": 140.8,
+  "chunks": [
+    {
+      "chunk_id": "deefd29c7c865042",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 21,
+      "content": "哈尔滨同迈综合门诊\n姓名:\n就诊日期: 2021-09-12\n就诊号: 20210912003\n姓名:\n年龄: 48岁\n性别: 男\n地址:\n药物过敏史:\n主诉: 糖尿病患者体检\n现病史: 患者自述确诊2型糖尿病8年余, 近段时间, 血糖升高, 口服降\n糖灵片, 降糖效果甚微, 自测指尖血糖14.2mmol/L, 来院诊治\n既往史: 2型糖尿病\n查体: T36.5℃ BP135-90mmHg -\n辅助检查: 已回报\n临床诊断: 2型糖尿病\n治疗意见: 盐酸二甲双胍片 每日3次 每次0.5g 随餐口服\n半月后复诊\n医师(签字):\n主治医师\n赵东强",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "6454dac9dc8e84b5",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 16,
+      "content": "哈尔滨体诚人药房有限公司\n(P23010122054)销售单\n号12875 日期2024-08-22\n药师：高芳 代码Y2301240061\n品名 盐酸二甲双胍片\n国家编码\n单价6.00 数量15.0 金额90.00\n单位 盒 规格0.25g/24T/2板\n批号22110778 效期2025-11-1\n产地：北京市小康药业有限公\n销售员：05\n合计：90.00 折前金额：90.0\n实收：90.00\n积分 0522\n付款方式：现金01#\n健康热线：",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "18cbb394374473df",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 19,
+      "content": "哈尔滨泽福大药房有限\n公司销售单据\nNO.8555800415612312005\n2024-12-19 19:10:28\n会员 销售员:张子欣\n01 020749 盐酸二甲双胍片\n规格 0.25gX24片/2板 单位:1\n产地 北京市永康药业有限公司\n批号 23082416 效期 2026/0\n数量:15 单价:7.00\n总金额:￥105.00 元\n应收:￥105.00 实收:￥100.00\n优惠:￥5.00 找零:0.00\n付款方式:现金01#\n健康热线:\n地址:\n药品是特殊商品,一经售出不退\n如需开具发票者,持销售小票1\n到店开具。",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "c997f23beced3c0f",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>None</td><td>9.46</td><td>%</td><td>4--6</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          3,
+          59,
+          143,
+          348,
+          365
+        ]
+      ]
+    },
+    {
+      "chunk_id": "651e1ce07a5265a5",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白LA1c</td><td>HbA1c</td><td>7.50</td><td>None</td><td>None</td><td>False</td></tr></table>",
+      "row_position_int": [
+        [
+          7,
+          43,
+          323,
+          1864,
+          1909
+        ]
+      ]
+    },
+    {
+      "chunk_id": "87956bb3ce46cb29",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白A1</td><td>None</td><td>8%</td><td>%</td><td>4--6</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          8,
+          132,
+          334,
+          735,
+          767
+        ]
+      ]
+    },
+    {
+      "chunk_id": "cb4995fe5aeeb0be",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>葡萄糖（已糖激酶法）</td><td>None</td><td>14.46</td><td>mmol/L</td><td>3.6--6.11</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          9,
+          158,
+          404,
+          715,
+          749
+        ]
+      ]
+    },
+    {
+      "chunk_id": "798bbe5c030240b0",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>None</td><td>8.0</td><td>%</td><td>4—6</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          4,
+          69,
+          154,
+          274,
+          290
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": 9,
+      "missing": [
+        1
+      ],
+      "out_of_range": [],
+      "verdict": "❌ 未完全覆盖：覆盖 8/9 页，缺失 [1]，超范围 []"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": [
+        "2026-08-10 13:48:59,886 INFO     29 [ChunkMerger] Merged 8 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 5,
+      "recognized_count": 5,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 1,
+    "LabReport": 5,
+    "MedicationRecord": 2
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 8,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 5,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 2,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:48:59,886 INFO     29 [ChunkMerger] Merged 8 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：XJYo-糖尿病-哈大四.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 8,
+  "process_begin_at": "2026-08-10T13:46:46",
+  "process_duration": 134.78493,
+  "progress_msg": "13:49:00 Indexing done (0.05s). Task done (126.72s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 5,
+    "OutpatientRecord": 1,
+    "MedicationRecord": 2
+  },
+  "extractor_types": {
+    "MedicationRecord": 2,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

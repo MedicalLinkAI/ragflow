@@ -1,0 +1,202 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和德美-哮喘\\LTSH 三门峡.pdf",
+    "name": "LTSH 三门峡.pdf",
+    "size_kb": 6481.0,
+    "pages": 5
+  },
+  "doc_id": "907f140694bc11f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:08:21",
+  "end_at": "2026-08-10T21:12:22",
+  "elapsed_s": 241.7,
+  "chunks": [
+    {
+      "chunk_id": "2ed1d4336f00a08e",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 35,
+      "content": "渑池县人民医院\n门诊病历\n姓名:\n门诊号: 613003\n就诊时间:2025-05-27 14:24 科别: 呼吸与危重症医学科门诊\n姓名\n性别:男 年龄:56岁 婚否:已婚\n职业:农民 工作单位:无\n联系电话: 住址:河南省三门峡市渑池县仁村乡大\n水沟村八组8号\n病史叙述者:本人 身份证号:\n过敏史:无\n主诉:发作性胸闷、气喘4天。\n现病史:患者于4天前受凉后出现胸闷、气喘,活动后加重,伴有咳\n嗽,咳痰不明显,无胸痛、发热、咯血、盗汗等,未予治疗,症\n状持续无缓解。\n既往史:平素身体良好;无特殊疾病史;否认“肝炎、结核”等病史;\n否认手术史;否认外伤史;否认输血史及献血史;否认药物及食\n物过",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a8533aeb1b44b50d",
+      "pages": [
+        3,
+        4,
+        5
+      ],
+      "page_count_raw": 457,
+      "content": "JAEGE R PCMED\n渑池县人民医院\n肺功能检查报告\n综合测试\n姓名：\n性别：男\n年龄：56 Years\n身高：165 cm\n体重：70 kg\n备注：\n联系电话：\n住院号：0\n测试号：\n吸烟史：\n既往史：\n职业：\n测试日期\n测试时间\n预计值\n实测值\n实/预\nVC MAX\n[L]\n3.85\n2.72\n70.6\nFVC\n[L]\n3.71\n2.68\n72.2\nMV\n[L/min]\n10.00\n18.75\n187.5\nFEV 1\n[L]\n2.98\n1.10\n36.9\nFEV 1 % FVC\n[%]\n83.77\n41.10\n49.1\nPEF\n[L/s]\n7.87\n2.33\n29.6\nMEF 75\n",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": 5,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 13:12:19,771 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 2,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:12:19,771 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：LTSH 三门峡.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 2,
+  "process_begin_at": "2026-08-10T13:08:22",
+  "process_duration": 238.53096,
+  "progress_msg": "13:12:20 Indexing done (0.02s). Task done (227.02s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "OutpatientRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

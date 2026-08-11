@@ -1,0 +1,200 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和德美-哮喘\\GFXI 商丘.pdf",
+    "name": "GFXI 商丘.pdf",
+    "size_kb": 3218.5,
+    "pages": 4
+  },
+  "doc_id": "6067e0fa94bb11f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T20:59:51",
+  "end_at": "2026-08-10T21:02:28",
+  "elapsed_s": 156.7,
+  "chunks": [
+    {
+      "chunk_id": "f69d93bd69551d2e",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 101,
+      "content": "民权县人民医院\n入院记录\n姓名：\n科室：呼吸二病区\n床号：111\n住院号：\n体格检查\nT:36.4℃ P:82次/分 R:30次/分 BP:120/60mmHg\n发育正常，营养中等，神志清晰，精神差，体位主动，面容呈急性病容，表情忧\n虑，走入病房，检查合作。\n皮肤：色泽正常，温度和湿度正常，弹性正常，毛发分布正常。无水肿，无皮疹，\n无淤点、紫癜，无瘢痕，无溃疡，无皮下结节，无蜘蛛痣、肝掌。\n淋巴结：全身浅表淋巴结无肿大。\n头部：头颅正常，无压痛、异常隆起、肿块、凹陷，结膜正常巩膜无黄染。左眼瞳孔\n2.5mm，对光反射正常，右眼瞳孔2.5mm，对光反射正常，听力尚可。外鼻无畸形，鼻窦\n无压痛。口",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "b1ba7a714cf225f0",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 126,
+      "content": "民权县人民医院\n肺功能检查报告\n病人ID:\n2023-08-1501\n性别：\n女\n高度：\n158 cm\n名：\n出生日期：\n1957/7/2\n体重：\n60 kg\n姓：\n年龄：\n66 years\nBMI：\n24.0 kg/m²\n体积\n流量\n体积\n时间[s]\n时间[s]\n单位\n预测值\n之前\n%预值\n沙丁胺醇\n(400\n%预值\n%变化\nug)\nVC\nI\n(1)\n2.37\n1.66\n70%\n2.20\n93%\n+32.2%\nVC\nI\n(1)\n2.37\n1.66\n70%\n2.20\n93%\n+32.2%\nFEV1\nI\n(1)\n1.99\n0.88\n44%\n1.27\n64%\n+44.4%\nFEV1/FVC\n%\n(",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "page_sum": 4,
+    "check": {
+      "covered": 4,
+      "total": 4,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 13:02:26,172 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 2,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:02:26,172 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：GFXI 商丘.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 2,
+  "process_begin_at": "2026-08-10T12:59:52",
+  "process_duration": 154.9116,
+  "progress_msg": "13:02:26 Indexing done (0.03s). Task done (147.02s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

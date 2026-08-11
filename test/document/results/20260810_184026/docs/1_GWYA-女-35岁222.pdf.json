@@ -1,0 +1,218 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\1_GWYA-女-35岁222.pdf",
+    "name": "1_GWYA-女-35岁222.pdf",
+    "size_kb": 1177.0,
+    "pages": 5
+  },
+  "doc_id": "ea22935894a711f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T18:40:28",
+  "end_at": "2026-08-10T18:44:18",
+  "elapsed_s": 229.7,
+  "chunks": [
+    {
+      "chunk_id": "0583cd1b756ed1e9",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 97,
+      "content": "长葛市华健医院\n入院记录\n姓名\n科室:呼吸内科\n床\n住院\n姓名\n性别:女\n年龄:34岁\n床号:\n住院号\n职业:农民\n民族:汉\n婚姻:已婚\n身份证\n籍贯:河南省许昌市\n联系\n住址:\n入院时间:2024-02-14 11:14\n工作单位:\n病历采集时间:2024-02-14 11:27\n联系人\n与患者关系:本人\n联系电话:1515\n病史陈述人:本人及家属\n过敏史:布洛芬、青霉素\n呼吸内科第(4)次住院\n主诉:间断咳嗽、咳痰伴胸闷8年余,加重伴发热5天。\n现病史:8余年前受凉后出现咳嗽、咳痰,咳嗽呈间断性,不剧烈,咳痰初期为黄痰,后\n期白粘痰,量较大,可咳出,遇冷及刺激性气味咳嗽加重,伴有气喘,闻刺",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "7625b0c9ae31e052",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 22,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女\n年龄: 35 住院(门诊)\n科别: 内\n25年12月20日\n费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛老城\nRp:\n本地奈德倍美舒写粉吸入剂160ug×60μ×2\nSy:320ug吸入每天二次\n华健医院\n收费专用章\n4110820322963\n医师\n审核:\n核对:\n调配:\n发药:\n药费:",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "695acf4ee8be0d5d",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 20,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门诊)\n科别: 内 26年 1月 24日 费别: 自 职 农\n临床诊断: 支气管哮喘 床号/地址 郑州志城\nRp:\n布地奈德福莫特罗粉吸入剂 160ug×60s×2支\n甲泼尼龙片\n5y: 320ug 吸入 每天三次\n4mg×24片×1盒\n5y: 8mg 吸入 每天二次\n华健医院\n收费专用章\n医师\n审核:\n核对:\n调配:\n发药:\n药费:",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "134cba3e5d72882d",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 20,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门\n科别: 内 26年2月20日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛市志诚\nR P:\n布地奈德福莫特罗粉吸入剂160ug×60μx7支\nSy: 320ug吸入每天二次\n华健\n医院\n收费专用章\n1082032295\n医师\n审核:\n核对:\n调配:\n发药:\n药费:",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": 5,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 3,
+      "recognized_count": 3,
+      "extractor_count": 3,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": [
+        "2026-08-10 10:44:11,200 INFO     29 [ChunkMerger] Merged 4 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 3, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "AdmissionRecord": 1,
+    "PrescriptionRecord": 3
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 4,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 3,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 10:44:11,200 INFO     29 [ChunkMerger] Merged 4 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 3, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：1_GWYA-女-35岁222.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 4,
+  "process_begin_at": "2026-08-10T10:40:34",
+  "process_duration": 218.18263,
+  "progress_msg": "10:44:12 Indexing done (0.05s). Task done (210.78s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "PrescriptionRecord": 3,
+    "AdmissionRecord": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 3,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

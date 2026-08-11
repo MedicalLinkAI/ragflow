@@ -1,0 +1,196 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和德美-哮喘\\LIJI 徐州中心医院.pdf",
+    "name": "LIJI 徐州中心医院.pdf",
+    "size_kb": 235.8,
+    "pages": 2
+  },
+  "doc_id": "4630c9da94bc11f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:06:16",
+  "end_at": "2026-08-10T21:08:21",
+  "elapsed_s": 124.5,
+  "chunks": [
+    {
+      "chunk_id": "4cc26b0080f3d8a8",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 43,
+      "content": "徐州矿务集团总医院\n徐州医科大学第二附属医院\n间病房入、出院记录\n：十二病区护理单元 床号：6 住院号：00214234\n工作单位：-\n性别：女\n年龄：49岁\n籍贯：江苏省徐州市泉山区\n民族：汉族\n婚姻：已婚\n职业：职工\n住址：江苏徐州市\n供史者与（患者关系）：本人\n入院日期：2025-04-23 09:05:08\n记录日期：2025年04月25日08时29分\n主诉：声音嘶哑10余天\n入院情况：患者因“声音嘶哑10余天”入院。查体：会厌无肿胀，杓会厌襞稍充血肿胀，室带无新生物，右侧声\n带边缘息肉样隆起，表面光滑，声门闭合不全。辅助检查：电子喉镜（2025-04-20本院）示：舌扁桃体增生，会\n",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "bb290e50e795c242",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 219,
+      "content": "徐州医科大学附属医院\n肺功能检查报告\n舒张试验\n姓名：\n科别：\n性别：\n身高：158 cm\n号：210254\n/住院号：门诊\n48 岁\n体重：49.6 kg\nFlow [L/s]\nF/V ex\nVolume [L]\nCO [%]\n0.30\n0.25\n0.20\n0.15\n0.10\n0.05\n0.00\n0\n10\n5\n0\n5\n10\n1\n2\n3\n4\n5\n6\n7\nF/V in\nTime [s]\n0\n10\n20\n30\n40\n50\n预计值\n前次\n前/预\n后次\n后/预\n改善率\n日期\n24-11-29\n24-11-29\n时间\n10:51:30\n11:27:38\nVT\n[L]\n0.35\n0.42\n118.7\nBF",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2
+    ],
+    "page_sum": 2,
+    "check": {
+      "covered": 2,
+      "total": 2,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 13:08:16,850 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "DischargeRecord": 1,
+    "ExaminationReport": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 2,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:08:16,850 INFO     29 [ChunkMerger] Merged 2 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：LIJI-女-45岁-类风湿性关节炎.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 2,
+  "process_begin_at": "2026-08-10T13:06:18",
+  "process_duration": 120.44451,
+  "progress_msg": "13:08:18 Indexing done (0.02s). Task done (114.49s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "DischargeRecord": 1,
+    "ExaminationReport": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

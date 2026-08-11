@@ -1,0 +1,234 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\706-101\\湘潭-LGJI-肺腺癌-方穹推荐706-IB期.pdf",
+    "name": "湘潭-LGJI-肺腺癌-方穹推荐706-IB期.pdf",
+    "size_kb": 2015.3,
+    "pages": 9
+  },
+  "doc_id": "5f2b1bd294d711f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-11T00:20:14",
+  "end_at": "2026-08-11T00:23:44",
+  "elapsed_s": 209.9,
+  "chunks": [
+    {
+      "chunk_id": "aff8ce98a200a3ba",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 32,
+      "content": "金域医学\nKlngMed Diagnostics\n病理诊断报告书\n1/1\n标本条码\n医院\n病人姓名\n科室\n性别\n男\n房/床号\n病理号\n年龄\n49岁\n接收时间\n2026-03-04 15:21:00\n住院/门诊号\n采样时间\n2026-03-03 15:05:43\n患者电话\n申请医生\n项目名称\n免疫组化10项\n送检材料\n临床诊断\n大体描述:\n灰红碎组织一堆，大小1*0.8*0.5cm。取1盒全\n镜下所见:\n诊断意见:\n(左肺穿刺活检)低分化腺癌。\n1号蜡块免疫组化: CK (+++)、CK5/6 (-)、P40 (-)、CK7 (+++)、TTF-1 (+++)、NapsinA (灶+)、Syn ",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "f471b9fc0d2c211c",
+      "pages": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 165,
+      "content": "基本信息\n受检者基本信息\n受检者姓名：\n性别：男\n年龄：49岁\n病理诊断*：肺腺癌\n用药史*：/\n处方医师：/\n医疗机构：/\n样本基本信息\n肿瘤样本编号：\n肿瘤样本类型：石蜡切片\n肿瘤样本采集部位：/\n肿瘤样本采集日期：/\n样本接收日期：2026-03-12\n注*：以上受检者基本信息来自患者送检时提供信息，而非来自本次检测结果，本次检测不对此内容进行解读。\n结果概览\n项目分类\n检测项目\n检测结果\n基因组变异检测结果\n明确/潜在临床意义的变异\nKRAS p.G13D; TP53 p.G154V\n临床意义不明的变异\n未见变异\n微卫星不稳定评估（MSI）\n微卫星不稳定评估（MSI）\n微卫星稳定型（M",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "b047059542e41bdf",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 30,
+      "content": "长沙益康肿瘤医院\n出院记录\n性别 男 年龄 49岁 病区\n号\n入院时间：2026-03-02\n出院时间：2026-03-09\n住院天数：7天\n入院诊断：1.左肺占位性质待查\n入院时情况：患者，男，49岁，因咳嗽2月余，发现肺部占位4天入院，目前症见：时有咳嗽，\n夜间咳甚，咳吐黄白痰，时有痰中夹带血丝，食纳可，无恶心呕吐、恶寒发热、腹痛腹胀等不适，夜寐一\n般，二便可，近期体重无减轻。查体：浅表淋巴结未扪及，胸廓对称无畸形，胸骨无压痛，两侧呼吸运动\n正常，无胸膜摩擦感，双侧语颤正常，叩诊呈清音，未闻及明显干湿啰音，未闻及胸膜摩擦音。辅助检\n查：（2026年1月26日 长沙市第四医院）胸部CT：1.",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "61862c8a90c7091b",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 16,
+      "content": "疾病诊断书\n交病人收\n长沙盈康肿瘤医院住院病人疾病诊断书\n姓名\n性别 男\n年龄 49岁\n住院号\n职业\n黄\n家\n入院时间：2026-03-02\n出院时间：2026-03-09\n出院诊断：肺恶性肿瘤 左肺 低分化腺癌\n出院医嘱：建议行抗肿瘤专科治疗。\n住院医生\n签发日期 2026-03-09",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "49c8e3e12592ea1b",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 32,
+      "content": "长沙市第四医院（长沙市中西医结合医院）\n湖南HR\nCT 诊断报告单\n姓名：\n性别：男\n年龄：49 岁\n门诊号：20260126\n科室：\n水新城)\n床号：\n住院号：\n摄片、\n检查日期：2026/1/26 19:56:46\n报告日期：2026-01-26 20:14:00\n检查项目：(CT)平扫一薄层扫描（加收）,(CT)平扫-胸部\n检查方法：\n影像表现：\n双侧胸廓对称。双肺支气管-血管束稍增多。双肺见散在囊状透亮影，大者位于左肺上叶大小约29×25mm。右肺中\n叶内侧段可见斑点状、条索状高密度影，边界清晰。双肺下垂部见斑片状稍高密度影，边界模糊。左肺上叶尖后段-下\n叶背段见肿块影，大小约80×4",
+      "row_position_int": []
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "page_sum": 9,
+    "check": {
+      "covered": 9,
+      "total": 9,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 3,
+      "recognized_count": 3,
+      "extractor_count": 3,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 16:23:40,217 INFO     29 [ChunkMerger] Merged 5 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 2, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "ExaminationReport": 3,
+    "DischargeRecord": 2
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 5,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 2,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 3,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 16:23:40,217 INFO     29 [ChunkMerger] Merged 5 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 2, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：湘潭-LGJI-肺腺癌-方穹推荐706-IB期.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 5,
+  "process_begin_at": "2026-08-10T16:20:16",
+  "process_duration": 205.2509,
+  "progress_msg": "16:23:41 Indexing done (0.07s). Task done (193.12s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "DischargeRecord": 2,
+    "ExaminationReport": 3
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 2,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 3
+  }
+}

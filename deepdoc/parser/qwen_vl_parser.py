@@ -109,7 +109,8 @@ TABLE_PROMPT = (
     "   \\hline\n"
     "   \\end{tabular}\n"
     "4. 列对齐全部使用 c（居中），如 5 列就是 {ccccc}。\n"
-    "5. **保留原文**：所有可见文字原样输出，包括空格、↑↓箭头、★符号、H/L标识等。\n"
+    "5. **保留原文**：所有可见文字原样输出，包括空格、↑↓箭头、★符号、H/L标识等。"
+    "↑↓箭头等符号直接输出原字符，严禁用 \\textup{}、\\textbf{} 等 LaTeX 命令包裹任何单元格内容。\n"
     "6. LaTeX 特殊字符转义：# → \\#，% → \\%，& → \\&（作为内容时），"
     "_ → \\_，~ → \\textasciitilde{}。\n"
     "7. 空单元格直接留空（两个 & 之间不放空格以外的内容）。\n"
@@ -162,6 +163,154 @@ def _fix_tabular_colspec(latex: str, max_cols: int = 20) -> str:
         _replace_colspec,
         latex,
     )
+
+
+# ── Degenerate repetition-loop defense (VLM hallucination) ────────
+# Greedy decoding (temperature=0) can fall into runaway loops like
+# \textup{\textup{\textup{... when emitting arrows/symbols, burning the
+# whole max_tokens budget and truncating the rest of the table.
+
+_REPETITION_LOOP_RE = re.compile(r"(?:\\[a-zA-Z]+\{){10,}")
+
+
+def _has_repetition_loop(latex: str) -> bool:
+    """Detect runaway LaTeX command nesting like \\textup{\\textup{... ."""
+    return bool(_REPETITION_LOOP_RE.search(latex or ""))
+
+
+def _truncate_repetition_loop(latex: str) -> str:
+    """Cut output at the repetition loop start, salvaging the valid prefix.
+
+    The row in which the loop started is incomplete (no \\ terminator),
+    so it is dropped along with the loop.
+    """
+    m = _REPETITION_LOOP_RE.search(latex or "")
+    if not m:
+        return latex
+    cut = latex[: m.start()]
+    lines = cut.split("\n")
+    if lines:
+        last = lines[-1].strip()
+        if last and not last.endswith("\\\\") and not re.search(r"\\(?:begin|end|hline)", last):
+            lines = lines[:-1]
+    result = "\n".join(lines)
+    logging.warning(
+        f"{TAG} degenerate repetition loop at char {m.start()}, "
+        f"truncating {len(latex)}→{len(result)} chars"
+    )
+    return result
+
+
+_SYMBOL_ONLY_RE = re.compile(r'^[+\-*=#|~_·•\s]+$')
+
+
+_MIN_ROW_RUN = 5
+_MIN_TEXT_RUN = 5
+_MAX_UNIQUENESS_RATIO = 0.03
+
+
+def _dedup_repeated_blocks(
+    lines: list[str],
+) -> tuple[list[str], Optional[tuple[int, int, int]]]:
+    """Detect and truncate repeated content (model hallucination).
+
+    Covers three shapes, applied iteratively until the output is clean
+    (a single response may contain several spam segments):
+    1. prefix block cycle: consecutive repetitions of lines[0:cycle]
+       (cycle >= 3), collapsed to a single occurrence while keeping the
+       unique tail — medical forms legitimately repeat header fields
+       (e.g. 姓名/性别/年龄 printed in two columns), so truncating to the
+       prefix would destroy real content
+    2. identical-row run at any position: one line repeated >= _MIN_TEXT_RUN
+       times in a row (e.g. a trailing "病理诊断：" spam filling the token
+       budget), collapsed to a single occurrence
+    3. degenerate uniqueness: huge output with almost no distinct lines
+
+    Returns (lines, rep_info); rep_info=(cycle, repeats, n) describes the
+    first pattern detected, None when the input is clean.
+    """
+    if len(lines) <= 20:
+        return lines, None
+    first_rep: Optional[tuple[int, int, int]] = None
+    for _ in range(10):  # bounded passes; each removes one spam pattern
+        n = len(lines)
+        detected: Optional[tuple[tuple[int, int, int], list[str]]] = None
+        # 1) prefix block cycle: collapse the consecutive run of the prefix
+        #    block, preserving the unique tail (form headers like 姓名/性别/年龄
+        #    are physically printed twice in two-column forms — not hallucination)
+        for cycle in range(3, n // 2 + 1):
+            if lines[cycle:2 * cycle] == lines[0:cycle] and n // cycle >= 2:
+                k = 2
+                while (
+                    (k + 1) * cycle <= n
+                    and lines[k * cycle:(k + 1) * cycle] == lines[0:cycle]
+                ):
+                    k += 1
+                detected = ((cycle, n // cycle, n), lines[:cycle] + lines[k * cycle:])
+                break
+        # 2) identical-line run at any position
+        if not detected:
+            i = 0
+            while i < n:
+                j = i + 1
+                while j < n and lines[j] == lines[i]:
+                    j += 1
+                if j - i >= _MIN_TEXT_RUN:
+                    detected = ((1, j - i, n), lines[: i + 1] + lines[j:])
+                    break
+                i = j
+        # 3) degenerate uniqueness ratio
+        if not detected and n >= 100 and len(set(lines)) <= _MAX_UNIQUENESS_RATIO * n:
+            uniq: list[str] = []
+            for t in lines:
+                if not uniq or uniq[-1] != t:
+                    uniq.append(t)
+            detected = ((1, n, n), uniq)
+        if not detected:
+            break
+        if first_rep is None:
+            first_rep = detected[0]
+        lines = detected[1]
+        if len(lines) <= 20:
+            break
+    return lines, first_rep
+
+
+def _dedup_latex_rows(
+    latex: str,
+) -> tuple[str, Optional[tuple[str, int]]]:
+    """Collapse runs of consecutive identical data rows (model hallucination).
+
+    Covers the single-macro runaway pattern (e.g. \\multicolumn rows repeated
+    verbatim until the token budget is exhausted), which the nested-macro
+    detector _has_repetition_loop cannot see.
+
+    Returns (latex, rep_info); rep_info=(row_preview, repeats) when a run of
+    >= _MIN_ROW_RUN identical data rows was collapsed to one, else None.
+    """
+    lines = latex.split("\n")
+    out: list[str] = []
+    rep_info: Optional[tuple[str, int]] = None
+    i = 0
+    n = len(lines)
+    while i < n:
+        line = lines[i]
+        stripped = line.strip()
+        if "&" in stripped:
+            j = i + 1
+            while j < n and lines[j].strip() == stripped:
+                j += 1
+            if j - i >= _MIN_ROW_RUN:
+                if rep_info is None:
+                    rep_info = (stripped[:60], j - i)
+                out.append(line)  # keep first occurrence only
+                i = j
+                continue
+        out.append(line)
+        i += 1
+    if rep_info is None:
+        return latex, None
+    return "\n".join(out), rep_info
 
 
 def _parse_json_array(raw: str) -> Optional[list[str]]:
@@ -392,22 +541,36 @@ class QwenVLParser(RAGFlowPdfParser):
             return [], bbox_idx
 
         # Filter: keep only string elements, skip pure symbol lines (e.g. "++", "--", "+")
-        _SYMBOL_ONLY_RE = re.compile(r'^[+\-*=#|~_·•\s]+$')
         lines = [t for t in lines if isinstance(t, str) and not _SYMBOL_ONLY_RE.match(t.strip())]
 
         # Dedup: detect and truncate repeated content blocks (model hallucination)
-        n = len(lines)
-        if n > 20:
-            for cycle in range(3, n // 2 + 1):
-                if lines[cycle:2 * cycle] == lines[0:cycle]:
-                    repeats = n // cycle
-                    if repeats >= 2:
-                        logging.warning(
-                            f"{TAG} page={page_1based} detected repetition "
-                            f"(cycle={cycle}, repeats={repeats}x), truncating {n}→{cycle} lines"
-                        )
-                        lines = lines[:cycle]
-                        break
+        lines, rep = _dedup_repeated_blocks(lines)
+        if rep:
+            cycle, repeats, n = rep
+            logging.warning(
+                f"{TAG} page={page_1based} detected repetition "
+                f"(cycle={cycle}, repeats={repeats}x), collapsing {n}→{len(lines)} lines"
+            )
+            # Retry once with repetition_penalty: if the model looped early,
+            # the collapsed version may still be missing content the loop ate.
+            raw2 = self._call_vlm(
+                img_bytes, TEXT_PROMPT, extra_params={"repetition_penalty": 1.2}
+            )
+            lines2 = _parse_json_array(raw2)
+            if lines2:
+                lines2 = [
+                    t for t in lines2
+                    if isinstance(t, str) and not _SYMBOL_ONLY_RE.match(t.strip())
+                ]
+                lines2, rep2 = _dedup_repeated_blocks(lines2)
+                # Only adopt the retry when it is clean AND strictly longer
+                # than the collapsed version — a shorter clean retry would
+                # silently drop content the collapse already salvaged.
+                if lines2 and not rep2 and len(lines2) > len(lines):
+                    logging.info(
+                        f"{TAG} page={page_1based} retry recovered {len(lines2)} lines"
+                    )
+                    lines = lines2
 
         if not lines:
             logging.warning(f"{TAG} page={page_1based} text extraction returned no lines after filtering")
@@ -444,6 +607,42 @@ class QwenVLParser(RAGFlowPdfParser):
             logging.warning(f"{TAG} page={page_1based} table extraction returned empty")
             return [], bbox_idx
 
+        # Repetition-loop defense: retry once with repetition_penalty to
+        # escape the greedy loop and recover the truncated tail rows;
+        # if the retry also loops, salvage the valid prefix.
+        if _has_repetition_loop(latex):
+            logging.warning(
+                f"{TAG} page={page_1based} table output degenerated into "
+                f"repetition loop, retrying with repetition_penalty"
+            )
+            raw2 = self._call_vlm(
+                img_bytes, TABLE_PROMPT, extra_params={"repetition_penalty": 1.2}
+            )
+            latex2 = _strip_fence(raw2) if raw2 else ""
+            if latex2 and not _has_repetition_loop(latex2):
+                latex = latex2
+            else:
+                latex = _truncate_repetition_loop(latex)
+
+        # Row-repetition defense: identical data rows repeated verbatim in a
+        # run (single-macro runaway, e.g. \multicolumn 刷屏). Same pattern:
+        # retry with repetition_penalty, fall back to the collapsed version.
+        latex, row_rep = _dedup_latex_rows(latex)
+        if row_rep:
+            preview, repeats = row_rep
+            logging.warning(
+                f"{TAG} page={page_1based} table row repeated {repeats}x "
+                f"({preview}...), retrying with repetition_penalty"
+            )
+            raw2 = self._call_vlm(
+                img_bytes, TABLE_PROMPT, extra_params={"repetition_penalty": 1.2}
+            )
+            latex2 = _strip_fence(raw2) if raw2 else ""
+            latex2, rep2 = _dedup_latex_rows(latex2)
+            if latex2 and not rep2 and not _has_repetition_loop(latex2):
+                latex = latex2
+            # else: keep the collapsed version
+
         # Fix degenerate column specs (VLM hallucination)
         latex = _fix_tabular_colspec(latex)
 
@@ -473,7 +672,12 @@ class QwenVLParser(RAGFlowPdfParser):
         )
         return sections, bbox_idx
 
-    def _call_vlm(self, img_bytes: bytes, prompt: str) -> Optional[str]:
+    def _call_vlm(
+        self,
+        img_bytes: bytes,
+        prompt: str,
+        extra_params: Optional[dict] = None,
+    ) -> Optional[str]:
         """Call Qwen3-VL API with image + prompt."""
         b64 = base64.b64encode(img_bytes).decode("ascii")
         prompt_tag = "classify" if "table" in prompt.lower() or "text" in prompt.lower() and len(prompt) < 100 else ("table" if "LaTeX" in prompt else "text")
@@ -494,6 +698,8 @@ class QwenVLParser(RAGFlowPdfParser):
             "temperature": 0,
             "max_tokens": 16384,
         }
+        if extra_params:
+            payload.update(extra_params)
 
         headers = {"Content-Type": "application/json"}
         api_key = self.api_key

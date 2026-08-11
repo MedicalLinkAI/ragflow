@@ -1,0 +1,415 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\707新增\\HAWE   食道癌  51   男   河南(2)(4)(1).pdf",
+    "name": "HAWE   食道癌  51   男   河南(2)(4)(1).pdf",
+    "size_kb": 3364.7,
+    "pages": 7
+  },
+  "doc_id": "7b5d6c3294c411f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T22:05:01",
+  "end_at": "2026-08-10T22:11:38",
+  "elapsed_s": 396.3,
+  "chunks": [
+    {
+      "chunk_id": "b1945f1d317fe005",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 17,
+      "content": "病理检查报告单\n姓名：\n性别：男\n年龄：50岁\n病理号：2\n送检单位：本院\n科别：门诊心血管内科住院号：\n床号：\n送检日期：2024-12-18\n送检医师\n送检标本：内镜组织活检\n临床诊断：(R13.x00)吞咽困难\n大体所见：\n送检灰白灰红组织四块，总大小约0.7*0.4*0.2cm。\n病理图像：\n病理诊断：\n(食管)中分化鳞状细胞癌。",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "0a49e40a48ca86b2",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 40,
+      "content": "炫速CT检查报告单\n姓名：\n性别：男\n年龄：51岁\n检查号：\n科室：\n床号：1\n检查日期：2025-12-10 19:53\n住院号：\n检查项：\n报告日期：2025-12-10 21:42\n检查部位及方法：腹盆腔（上下腹盆腔）平扫+增强扫描，胸部增强\n检查所见：\n食管恶性肿瘤：食管中段局部管壁增厚，增强扫描不均匀强化，其内见高密度支架影，支\n架周围见气体影，与邻近纵隔分界不清，内见积气影。右肺见多发类结节影、斑片状磨玻璃影及\n高密度影，边界欠清，局部支气管欠通畅，增强扫描明显强化；双肺见淡片状及条索状高密度\n影，边界欠清；气管、支气管通畅，双侧肺门影不大，心脏形态如常，心包见少量积液。右肺\n门及",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a92293084722c98f",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 41,
+      "content": "炫速CT检查报告单\n姓名：**\n性别：男\n年龄：51岁\n检查号：\n科室\n床号\n检查日期：2026-01-19 15:30\n住院号\n检查项目：CT\n报告日期：2026-01-19 18:12\n检查部位及方法：CT薄层加收，胸部CT平扫+增强，上下腹部、盆腔CT平扫+增强+延迟显像，增强\n检查所见：\nCT薄层扫描（加收）\n食管恶性肿瘤：食管中段局部管壁增厚，增强后轻度强化，其内见高密度支架影，支架周\n围见气体影，与邻近纵隔分界不清。双肺见多发类结节影、斑片状磨玻璃影，边界欠清，局部支\n气管欠通畅；双肺见淡片状及条索状高密度影，边界欠清；双侧肺门影不大，心脏形态如常，\n心包见少量积液。右肺门及纵隔见",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "4b7d5973d2ba3fcb",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 66,
+      "content": "出院记录\n姓名\n性别:男\n年龄:51岁\n床号:\n住院号\n姓名:\n性别:男\n年龄:51岁\n入院日期:2026-01-18 10:15\n出院日期:2026年01月28日\n住院天数:10天\n入院情况:因确诊食管鳞癌1年余,间断痰中带血3天。入院。1年(2024年12月18日)\n余前因进食哽噎,无胸背部疼痛、呛咳等症状。在信阳市罗山镇医院行胃镜示:距门齿约\n26cm处见一隆起,表面伴有糜烂,距门齿约30cm处可见一不规则环周新生物,中央凹陷伴有\n溃疡型改变。胃镜活检病理(病理号20245743)示:食管中分化鳞状细胞癌。完善相关检查\n临床分期为“cT3N+M0”属于局部晚期,后在罗山镇医院行信迪利单抗",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "f4414bef3a705f3a",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>6.84</td><td>10~9/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>中性粒细胞百分比</td><td>%NEUT</td><td>71.7</td><td>%</td><td>40--75</td><td>False</td></tr><tr><td>淋巴细胞百分比</td><td>%LYMPH</td><td>20.3</td><td>%</td><td>20--50</td><td>False</td></tr><tr><td>单核细胞百分比",
+      "row_position_int": [
+        [
+          7,
+          151,
+          192,
+          133,
+          141
+        ],
+        [
+          7,
+          151,
+          205,
+          142,
+          149
+        ],
+        [
+          7,
+          151,
+          199,
+          150,
+          158
+        ],
+        [
+          7,
+          151,
+          199,
+          159,
+          166
+        ],
+        [
+          7,
+          151,
+          205,
+          167,
+          175
+        ],
+        [
+          7,
+          151,
+          205,
+          175,
+          183
+        ],
+        [
+          7,
+          151,
+          205,
+          184,
+          191
+        ],
+        [
+          7,
+          151,
+          199,
+          192,
+          200
+        ],
+        [
+          7,
+          151,
+          199,
+          201,
+          208
+        ],
+        [
+          7,
+          151,
+          205,
+          209,
+          217
+        ],
+        [
+          7,
+          151,
+          205,
+          218,
+          225
+        ],
+        [
+          7,
+          151,
+          192,
+          226,
+          234
+        ],
+        [
+          7,
+          151,
+          184,
+          234,
+          242
+        ],
+        [
+          7,
+          151,
+          191,
+          243,
+          250
+        ],
+        [
+          7,
+          151,
+          205,
+          252,
+          260
+        ],
+        [
+          7,
+          337,
+          389,
+          144,
+          152
+        ],
+        [
+          7,
+          337,
+          389,
+          144,
+          152
+        ],
+        [
+          7,
+          337,
+          389,
+          153,
+          160
+        ],
+        [
+          7,
+          337,
+          389,
+          161,
+          169
+        ],
+        [
+          7,
+          337,
+          376,
+          170,
+          177
+        ],
+        [
+          7,
+          337,
+          383,
+          178,
+          186
+        ],
+        [
+          7,
+          337,
+          383,
+          186,
+          194
+        ],
+        [
+          7,
+          337,
+          369,
+          195,
+          202
+        ],
+        [
+          7,
+          337,
+          383,
+          203,
+          211
+        ],
+        [
+          7,
+          337,
+          383,
+          212,
+          219
+        ],
+        [
+          7,
+          337,
+          389,
+          219,
+          227
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "page_sum": 6,
+    "check": {
+      "covered": 6,
+      "total": 7,
+      "missing": [
+        1
+      ],
+      "out_of_range": [],
+      "verdict": "❌ 未完全覆盖：覆盖 6/7 页，缺失 [1]，超范围 []"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 3,
+      "recognized_count": 3,
+      "extractor_count": 3,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 14:11:32,607 INFO     29 [ChunkMerger] Merged 5 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "ExaminationReport": 3,
+    "DischargeRecord": 1,
+    "LabReport": 1
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 5,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 1,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 3,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 14:11:32,607 INFO     29 [ChunkMerger] Merged 5 chunks from 9 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "",
+  "chunk_count_api": 5,
+  "process_begin_at": "2026-08-10T14:05:03",
+  "process_duration": 391.5729,
+  "progress_msg": "14:11:34 Indexing done (0.18s). Task done (318.27s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 1,
+    "DischargeRecord": 1,
+    "ExaminationReport": 3
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 3
+  }
+}

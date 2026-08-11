@@ -1,0 +1,417 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和糖尿病\\SZQI-糖尿病-河北.pdf",
+    "name": "SZQI-糖尿病-河北.pdf",
+    "size_kb": 350.2,
+    "pages": 2
+  },
+  "doc_id": "1d42193494c111f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:40:55",
+  "end_at": "2026-08-10T21:42:06",
+  "elapsed_s": 71.3,
+  "chunks": [
+    {
+      "chunk_id": "8d1094df8eae3520",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 23,
+      "content": "门诊病历\n姓名:\n性别: 男\n年龄: 60\nID号:\n科室: 卫生室\n日期: 2024年9月30日\n主 诉 : 近日来体重下降, 尿量增多, 容易饥饿\n既往病史: 无\n检 查 : 指尖血血糖9.5mmol/L\n体温36.5℃\n体态正常\n心率齐72次/分\n双下肢无浮肿\n辅助检查: 糖化血红蛋白(静脉血)9.3%\n血糖(静脉血)9.2mmol/L\n主要诊断: 2型糖尿病\n处 置 : 1, 禁食高糖高油脂食物\n2, 适当增加运动\n3, 继续检测血糖\n4, 门诊随访\n医师签章: 李永利\n日期: 2024年9月30日",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "e0db0650fe2b75ad",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HBA1C</td><td>9.62</td><td>%</td><td>4-6</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          2,
+          198,
+          229,
+          411,
+          419
+        ]
+      ]
+    },
+    {
+      "chunk_id": "60f1c7ab6d15d110",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 29,
+      "content": "<table><tr><td>葡萄糖</td><td>GL</td><td>9.80</td><td>mmol/L</td><td>3.9-6.1</td><td>True</td></tr><tr><td>总胆固醇</td><td>BOL</td><td>5.51</td><td>mmol/L</td><td>3.1-5.2</td><td>True</td></tr><tr><td>甘油三酯</td><td>TC</td><td>1.00</td><td>mmol/L</td><td>0.56-1.7</td><td>False</td></tr><tr><td>高密度脂蛋白胆固醇</td",
+      "row_position_int": [
+        [
+          2,
+          175,
+          191,
+          143,
+          149
+        ],
+        [
+          2,
+          175,
+          195,
+          151,
+          157
+        ],
+        [
+          2,
+          175,
+          195,
+          159,
+          165
+        ],
+        [
+          2,
+          175,
+          222,
+          167,
+          173
+        ],
+        [
+          2,
+          175,
+          222,
+          175,
+          181
+        ],
+        [
+          2,
+          175,
+          200,
+          185,
+          191
+        ],
+        [
+          2,
+          175,
+          198,
+          193,
+          199
+        ],
+        [
+          2,
+          175,
+          192,
+          202,
+          207
+        ],
+        [
+          2,
+          175,
+          194,
+          211,
+          217
+        ],
+        [
+          2,
+          175,
+          200,
+          220,
+          226
+        ],
+        [
+          2,
+          175,
+          200,
+          228,
+          234
+        ],
+        [
+          2,
+          175,
+          188,
+          238,
+          244
+        ],
+        [
+          2,
+          175,
+          220,
+          246,
+          252
+        ],
+        [
+          2,
+          175,
+          186,
+          255,
+          261
+        ],
+        [
+          2,
+          175,
+          214,
+          265,
+          271
+        ],
+        [
+          2,
+          175,
+          225,
+          274,
+          280
+        ],
+        [
+          2,
+          175,
+          217,
+          283,
+          289
+        ],
+        [
+          2,
+          336,
+          366,
+          133,
+          139
+        ],
+        [
+          2,
+          336,
+          360,
+          142,
+          148
+        ],
+        [
+          2,
+          336,
+          360,
+          150,
+          156
+        ],
+        [
+          2,
+          336,
+          360,
+          159,
+          165
+        ],
+        [
+          2,
+          336,
+          382,
+          167,
+          173
+        ],
+        [
+          2,
+          336,
+          349,
+          175,
+          181
+        ],
+        [
+          2,
+          336,
+          370,
+          184,
+          190
+        ],
+        [
+          2,
+          336,
+          349,
+          192,
+          198
+        ],
+        [
+          2,
+          336,
+          361,
+          201,
+          207
+        ],
+        [
+          2,
+          336,
+          361,
+          209,
+          215
+        ],
+        [
+          2,
+          336,
+          369,
+          218,
+          223
+        ],
+        [
+          2,
+          336,
+          385,
+          226,
+          232
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2
+    ],
+    "page_sum": 3,
+    "check": {
+      "covered": 2,
+      "total": 2,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": [
+        "2026-08-10 13:41:59,861 INFO     29 [ChunkMerger] Merged 3 chunks from 9 sources: {'Extractor:LabExam': 2, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 1,
+    "LabReport": 2
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 3,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 2,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 7
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:41:59,861 INFO     29 [ChunkMerger] Merged 3 chunks from 9 sources: {'Extractor:LabExam': 2, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 7 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：SZQI-糖尿病-河北.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 3,
+  "process_begin_at": "2026-08-10T13:40:56",
+  "process_duration": 65.00552,
+  "progress_msg": "13:42:00 Indexing done (0.02s). Task done (58.99s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 2,
+    "OutpatientRecord": 1
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

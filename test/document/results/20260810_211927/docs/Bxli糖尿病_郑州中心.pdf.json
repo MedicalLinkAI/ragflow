@@ -1,0 +1,266 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\诺和糖尿病\\Bxli糖尿病 郑州中心.pdf",
+    "name": "Bxli糖尿病 郑州中心.pdf",
+    "size_kb": 1126.6,
+    "pages": 7
+  },
+  "doc_id": "1dee142694be11f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-10T21:19:28",
+  "end_at": "2026-08-10T21:21:06",
+  "elapsed_s": 98.1,
+  "chunks": [
+    {
+      "chunk_id": "5edba32e2a5c2d17",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 26,
+      "content": "中西医结合医院\n病人门（急）诊病历\n病人ID M024474 姓名\n性别：女 出生时间： 1958年8月27日\n籍贯：河南郑州市 民族：汉族 婚否：已婚 职业：无\n身份\n电话号码\n17\n工作单位： 常住地址：郑州市金水区花园路39号3号院\n门诊号： 74164 接诊时间： 2025年1月8日9时38分\n就诊时间：2025-1-8 09:41:09 体温：36.3℃\n主诉：尿里边带泡沫，去大药店门口测血糖买二甲双胍片。\n现病史：口干，喝水多，尿里带泡沫，来我院检查治疗。\n体格检查：\n西医诊断：1.糖尿病 中医诊断：\n建议： 1、糖尿病饮食；保持心情愉悦；\n2、适量运动；\n3、规律服药；\n4、定期",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "eddae4eab56360c6",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 26,
+      "content": "医结合医院处方笺\n普通\n性别：女\n年龄：67岁\n费别：自费\n病人ID：M024474\n处方号：74164\n就诊序号：52849\n体重：/（kg）\n药物过敏史：无\n住址：郑州市金水区花园路39号院\n开方日期：2025-1-8 09:41\n就诊科室：内科门诊\n临床诊断：糖尿病\nRp:\n盐酸二甲双胍片\n0.5g*60 X 5盒\n用法：每次0.5g 一日三次 口服\n备注：\n医师：张建鹏\n审核：\n核对：\n金额合计：50.00元\n调配：\n发药：\n药房：西药费",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "d54334e3f0392d1d",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 28,
+      "content": "页中西医结合医院处方笺\n普通\n姓名\n性别：女\n年龄：66岁\n费别：自费\n病人ID：M024474\n处方号：74165\n就诊序号：74164\n体重：/（kg）\n药物过敏史：无\n住址：\n开方日期：2025-05-07 09:39\n就诊科室：内科门诊\n临床诊断：糖尿病\nRp：\n盐酸二甲双胍片\n0.5g\nX 5盒\n用法：每次0.5g TID 口服\n备注：\n医师：张建鹏\n审核：\n核对：\n金额合计：50.00元\n调配：\n发药：\n药房：西药房",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "dc4085da82937e37",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 14,
+      "content": "百顺中西医结合医院\n527836\n自费\n西药费\n50.00\n大额记账：\n大病补充：\n原账户余额：\n现金支付：\n伍拾元整\n50.00\n27836\n0061\n2025-01-",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "2d74a5a0caf87db3",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 13,
+      "content": "20250507530576\n新密佰顺中西医结合医院\n530576\n女\n自费\n西药费\n50.00\n大额记账：\n大病补充：\n原帐户余额：\n现金支付：\n伍拾元整\n50.00",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "7bee5e6e9aa92097",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>8.6%</td><td>%</td><td>4-6%</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          4,
+          211,
+          232,
+          84,
+          214
+        ]
+      ]
+    },
+    {
+      "chunk_id": "8e1f5b580b6c4825",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>11.2%</td><td>%</td><td>4-6%</td><td>True</td></tr></table>",
+      "row_position_int": [
+        [
+          5,
+          211,
+          232,
+          92,
+          313
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "page_sum": 7,
+    "check": {
+      "covered": 7,
+      "total": 7,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 2,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "FILTERED",
+      "evidence": [
+        "2026-08-10 13:21:03,138 INFO     29 [ChunkMerger] Merged 7 chunks from 9 sources: {'Extractor:LabExam': 2, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 2, 'Extractor:Prescription': 2, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 5 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 2,
+      "recognized_count": 2,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "OutpatientRecord": 1,
+    "PrescriptionRecord": 2,
+    "LabReport": 2,
+    "MedicationRecord": 2
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 7,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 2,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 2,
+      "Extractor:Prescription": 2,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 1,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 5
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 13:21:03,138 INFO     29 [ChunkMerger] Merged 7 chunks from 9 sources: {'Extractor:LabExam': 2, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 2, 'Extractor:Prescription': 2, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1} (filtered 5 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "重复文件(409)：该文件已上传（文件名：Bxli糖尿病 郑州中心.pdf），请勿重复上传。如需重新上传，请先删除原文件。 已删除重传。 ",
+  "chunk_count_api": 7,
+  "process_begin_at": "2026-08-10T13:19:29",
+  "process_duration": 95.04334,
+  "progress_msg": "13:21:03 Indexing done (0.05s). Task done (88.70s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 2,
+    "OutpatientRecord": 1,
+    "MedicationRecord": 2,
+    "PrescriptionRecord": 2
+  },
+  "extractor_types": {
+    "MedicationRecord": 2,
+    "PrescriptionRecord": 2,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 1
+  }
+}

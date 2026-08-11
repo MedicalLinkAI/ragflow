@@ -1,0 +1,888 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\709-101\\BJCA,男，49，肺鳞癌一线(1).pdf",
+    "name": "BJCA,男，49，肺鳞癌一线(1).pdf",
+    "size_kb": 14180.7,
+    "pages": 14
+  },
+  "doc_id": "14840e4e94f111f1bd9827cf206dfa2d",
+  "upload_mode": "upload_file+upload",
+  "run": "DONE",
+  "run_label": "DONE",
+  "progress": 1.0,
+  "begin_at": "2026-08-11T03:24:16",
+  "end_at": "2026-08-11T03:34:05",
+  "elapsed_s": 589.6,
+  "chunks": [
+    {
+      "chunk_id": "4fce37f226c36a0b",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 81,
+      "content": "姓名\n住址：福建省三明市尤溪县\n性别：男\n工作单位：/\n年龄：49岁\n入院日期：2026.03.16 10:21:29\n婚姻：已婚\n记录时间：2026.03.16 10:21:29\n民族：汉族\n病史陈述者：患者及家属\n出生地：福建省三明市\n病史可靠程度：基本可靠\n职业(工种)：/\n过敏史：未发现\n主诉：确诊左下肺鳞癌4天。\n现病史：缘于2026.03.05以“咳嗽、咳痰1月”就诊于尤溪县总医院，查“2026.03.06胸部\n增强CT：左肺下叶占位，大小约6.1cm×8.8cm；左肺下叶支气管部分闭塞，伴阻塞性肺不张、肺炎；双肺结节；左肺门及纵隔数枚淋巴结影，大者径约1cm。”\n于2026.03",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "018628e9c404ebf2",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 110,
+      "content": "测量结果:\nLved:46.5 mm\nLve5:28.9 mm\nLa:26.6 mm\nAo:25.7 mm\nLvpw:8.5 mm\nIvs:9.5 mm\nRv:20.1 mm\nRa-L:34.8 mm\nRa-M:25.5 mm\nPa:17.6 mm\nE:0.46 m/s\nA:0.63 m/s\nHr:90 bpm\nFb:37.8 %\nBf:68.0 %(Teich)\nEDV:99.8 ml\nSv:67.8 ml\nCo:6.1 L/min\nCi:4.0 L/min. m²\nH:166 cm\nW:52.5 kg\nBSA:1.5 m²\nLVM:140.2 g\nLVMI:93.4 g/m²\nB':0.0",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "49057c886efcf12c",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 23,
+      "content": "性别：男\n年龄：49岁\n门诊号：\n检查部位：肺部\n检查设备：GE-HD750\n流水号：0013240579\n检查技术：CT\n影像学所见：\n双肺纹理清晰，左肺下叶见团块软组织密度影，病灶内支气管闭塞，较大截面约7.6cm×\n8.3cm，增强扫描不均匀强化，周围散在条索斑片影。右肺散在小结节，大者右肺上叶尖段见一\n实性结节（Se4/Img46），大小约0.4cm×0.2cm。气管、余支气管通畅，纵隔及左肺门可见肿大\n淋巴结，大者短径约1.0cm，左侧胸腔少-中量积液，部分为包裹性。左侧胸膜结节状增厚。\n影像学诊断：\n1.左肺下叶肿块，考虑MT伴周围阻塞性肺炎，请结合临床。\n2.纵隔及左肺门肿大淋巴",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "89841050e5e76068",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 71,
+      "content": "门诊号:\n医院:\n申请医生\n申请科室\n检查日期: 2026-03-17 10:58:32\n检查医生\n报告日期: 2026-03-17 11:11:03\n报告医生: 蔡平\n审核日期: 2026-03-17 11:11:03\n审核医生: 蔡平\n电轴(-30~90°): 29\nQRS时限(<120): 100\nP-R间期(120~200): 134\nQ-T间期(0~450): 344\nQTc(0~450): 444\nSV1: 1.26\nRV5(0~2.5): 2.02\nR+S: 3.28\n心率(60~100): 100\n临床诊断: 肺肿物\n描述:\n诊断: 窦性心律 ST段改变\n报告状态 已审核\n检查",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "453ee80cd1b9fa05",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 16,
+      "content": "检查部位：头颅\n检查设备：飞利浦MR9 流水号：0013240580\n检查技术：MR\n检查参数：\n影像学所见：\n双侧大脑半球对称，灰白质对比正常，实质内未见明显异常信号，DWI未见异常高信号，SW\nI未见异常低信号，各脑沟、脑池未见增宽、变深，脑室系统未见增宽，中线结构居中，幕下小\n脑、脑干未见异常信号，双侧桥小脑角区未见明显异常。颅骨骨质未见异常信号。增强后未见\n明显强化。\n影像学诊断：\n颅脑MRI平扫及增强未见明显异常。\n报告医生：林佳辉 /林佳辉\n审核医生：陈明宏\n复核医生：\n此报告仅供本院医生参考，不做其它证明用，报告审核签字后生效。\n报告时间：2026-03-19",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "a2505c7fe14f7742",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 43,
+      "content": "病案号:\n11诊号:1K3392539b3\n血型:FEI/CI独|业冰(111)\n显像剂:18F-FDG\n血糖:5.1mmol/l活\n度:7.22mci注射部位:右手背静脉\n注射/显像间隔时间:54分钟采集方式:断层采集3D厚\n度:3.75mm采集仪器:Discovery MI\n临床诊断:肺部阴影\n简要病史:\n肺部鳞癌基线评估。既往:2025.12肋骨骨折。\n图像所见:\n空腹4hr以上,口服适量温水,静脉注射显像剂,平静休息后行躯干PET及CT断层显像,PET图像行衰减校正及迭代\n法重建,PET、CT图像行多层面、多幅显示,影像清晰。\n颈部PET/CT示眼球、眼眶、鼻咽部、颈面部、喉咽部、甲状",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "5318659083659bc1",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 35,
+      "content": "福建医科大学附属协和医院\n肺功能检查报告单\n姓名：\n性别：男\n年龄：49 Years\n病区床号：\n科室：\n病案号：\n身高：163 cm\n体重：61 kg\n测试号：Z0280275PF20280320\n预计值 实测值 实/预\nVC MAX [L] 3.92 2.48 63.3\nFVC [L] 3.77 2.48 65.8\nFEV 1 [L] 3.10 2.22 71.8\nFEV1%FVC [%] 81.86 89.56 109.4\nPEF [L/B] 8.05 6.38 79.3\nFIF25 [L/B] 7.01 6.16 87.9\nFIF50 [L/B] 4.31 2.76 64.1\nFIF7",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "533ca2fb6f15fb51",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 22,
+      "content": "姓\n住院\n性别：男\n年龄：40岁\n送检单位：本院\n送检科室：呼吸与危重症医学科 送检医生：黄世霜\n送检日期：2026-03-10\n临床诊断：肺炎。\n送检材料：左肺下叶粘膜组织\n肉眼所见：\n灰白组织7块，直径0.05-0.2cm。（包全）\n镜下所见：\n病理诊断：\n（左肺下叶粘膜组织）浸润性鳞状细胞癌。\n诊断医师：廖荣娥\n医生签名：廖荣娥\n报告时间：2026年03月12\n备注：\n1 本报告仅作临床医师参考；若发现病理诊断与临床不相符时请立即与我科联系。\n2 此报告需医生签名方为有效。\n本报告仅作临床医师参考\n联系电话： 0598-63067",
+      "row_position_int": []
+    },
+    {
+      "chunk_id": "e973753aa6c98061",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>总胆红素</td><td>TBIL</td><td>10.6</td><td>umol/L</td><td>0.0~23.0</td><td>False</td></tr><tr><td>直接胆红素</td><td>DBIL</td><td>1.4</td><td>umol/L</td><td>0.0~8.0</td><td>False</td></tr><tr><td>间接胆红素</td><td>IBIL</td><td>9.2</td><td>umol/L</td><td>0.0~20.0</td><td>False</td></tr><tr><td>总蛋白<",
+      "row_position_int": [
+        [
+          9,
+          95,
+          159,
+          138,
+          150
+        ],
+        [
+          9,
+          95,
+          159,
+          150,
+          162
+        ],
+        [
+          9,
+          95,
+          159,
+          163,
+          175
+        ],
+        [
+          9,
+          95,
+          159,
+          176,
+          188
+        ],
+        [
+          9,
+          95,
+          159,
+          189,
+          201
+        ],
+        [
+          9,
+          95,
+          159,
+          202,
+          214
+        ],
+        [
+          9,
+          95,
+          159,
+          214,
+          226
+        ],
+        [
+          9,
+          95,
+          206,
+          227,
+          239
+        ],
+        [
+          9,
+          95,
+          219,
+          240,
+          252
+        ],
+        [
+          9,
+          81,
+          138,
+          254,
+          265
+        ],
+        [
+          9,
+          95,
+          202,
+          267,
+          279
+        ],
+        [
+          9,
+          95,
+          159,
+          280,
+          292
+        ],
+        [
+          9,
+          95,
+          159,
+          293,
+          305
+        ],
+        [
+          9,
+          95,
+          159,
+          306,
+          318
+        ],
+        [
+          9,
+          95,
+          219,
+          319,
+          331
+        ],
+        [
+          9,
+          95,
+          219,
+          332,
+          343
+        ],
+        [
+          9,
+          95,
+          219,
+          345,
+          357
+        ],
+        [
+          9,
+          95,
+          159,
+          358,
+          370
+        ],
+        [
+          9,
+          95,
+          159,
+          371,
+          383
+        ],
+        [
+          9,
+          81,
+          177,
+          384,
+          396
+        ]
+      ]
+    },
+    {
+      "chunk_id": "f651f2ea193b012a",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙肝病毒表面抗原</td><td>None</td><td>0.00</td><td>IU/ml</td><td><0.05</td><td>False</td></tr><tr><td>乙肝病毒表面抗体</td><td>None</td><td>47.62</td><td>mIU/ml</td><td><10</td><td>True</td></tr><tr><td>乙肝病毒e抗原</td><td>None</td><td>0.41</td><td>S/CO</td><td><1</td><td>False</td></tr><tr><td>乙肝病毒e抗体</",
+      "row_position_int": [
+        [
+          8,
+          101,
+          230,
+          163,
+          177
+        ],
+        [
+          8,
+          101,
+          230,
+          180,
+          194
+        ],
+        [
+          8,
+          101,
+          208,
+          199,
+          213
+        ],
+        [
+          8,
+          101,
+          208,
+          216,
+          230
+        ],
+        [
+          8,
+          101,
+          230,
+          233,
+          247
+        ],
+        [
+          8,
+          101,
+          230,
+          251,
+          264
+        ],
+        [
+          8,
+          101,
+          275,
+          268,
+          282
+        ],
+        [
+          8,
+          101,
+          245,
+          286,
+          299
+        ]
+      ]
+    },
+    {
+      "chunk_id": "1467a5fe2ebf57ed",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 18,
+      "content": "<table><tr><td>尿素</td><td>UREA</td><td>4.1</td><td>mmol/L</td><td>3.1~7.4</td><td>False</td></tr><tr><td>肌酐</td><td>CREA</td><td>68</td><td>umol/L</td><td>57~97</td><td>False</td></tr><tr><td>UREA/CREA</td><td>None</td><td>0.06</td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿酸</td><td>URIC",
+      "row_position_int": [
+        [
+          9,
+          421,
+          505,
+          138,
+          150
+        ],
+        [
+          9,
+          421,
+          505,
+          150,
+          162
+        ],
+        [
+          9,
+          421,
+          489,
+          164,
+          176
+        ],
+        [
+          9,
+          421,
+          505,
+          176,
+          188
+        ],
+        [
+          9,
+          421,
+          511,
+          189,
+          201
+        ],
+        [
+          9,
+          421,
+          537,
+          202,
+          214
+        ],
+        [
+          9,
+          421,
+          517,
+          215,
+          227
+        ],
+        [
+          9,
+          421,
+          519,
+          229,
+          240
+        ],
+        [
+          9,
+          421,
+          477,
+          242,
+          254
+        ],
+        [
+          9,
+          421,
+          474,
+          255,
+          267
+        ],
+        [
+          9,
+          421,
+          479,
+          268,
+          280
+        ],
+        [
+          9,
+          421,
+          479,
+          281,
+          293
+        ],
+        [
+          9,
+          421,
+          479,
+          294,
+          306
+        ],
+        [
+          9,
+          421,
+          517,
+          307,
+          319
+        ],
+        [
+          9,
+          421,
+          479,
+          320,
+          332
+        ],
+        [
+          9,
+          421,
+          523,
+          333,
+          345
+        ],
+        [
+          9,
+          421,
+          517,
+          346,
+          358
+        ],
+        [
+          9,
+          421,
+          499,
+          359,
+          371
+        ]
+      ]
+    },
+    {
+      "chunk_id": "06ff8d75fd016e52",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>6.58</td><td>10^9/L</td><td>4.00~10.00</td><td>False</td></tr><tr><td>中性粒细胞%</td><td>None</td><td>63.90</td><td>%</td><td>50.00~70.00</td><td>False</td></tr><tr><td>淋巴细胞%</td><td>None</td><td>25.60</td><td>%</td><td>20.00~40.00</td><td>False</td></tr><tr><td",
+      "row_position_int": [
+        [
+          10,
+          79,
+          166,
+          101,
+          114
+        ],
+        [
+          10,
+          79,
+          160,
+          116,
+          128
+        ],
+        [
+          10,
+          79,
+          147,
+          129,
+          142
+        ],
+        [
+          10,
+          79,
+          147,
+          143,
+          156
+        ],
+        [
+          10,
+          79,
+          172,
+          157,
+          170
+        ],
+        [
+          10,
+          79,
+          172,
+          171,
+          184
+        ],
+        [
+          10,
+          79,
+          191,
+          185,
+          198
+        ],
+        [
+          10,
+          79,
+          178,
+          199,
+          212
+        ],
+        [
+          10,
+          79,
+          178,
+          213,
+          226
+        ],
+        [
+          10,
+          79,
+          204,
+          227,
+          239
+        ],
+        [
+          10,
+          79,
+          204,
+          241,
+          254
+        ],
+        [
+          10,
+          79,
+          166,
+          255,
+          267
+        ],
+        [
+          10,
+          79,
+          154,
+          269,
+          282
+        ],
+        [
+          10,
+          79,
+          166,
+          283,
+          295
+        ],
+        [
+          10,
+          79,
+          191,
+          297,
+          309
+        ],
+        [
+          10,
+          79,
+          239,
+          311,
+          323
+        ],
+        [
+          10,
+          79,
+          263,
+          325,
+          337
+        ],
+        [
+          10,
+          422,
+          568,
+          101,
+          114
+        ],
+        [
+          10,
+          422,
+          568,
+          116,
+          128
+        ],
+        [
+          10,
+          422,
+          548,
+          129,
+          142
+        ],
+        [
+          10,
+          422,
+          542,
+          143,
+          156
+        ],
+        [
+          10,
+          422,
+          511,
+          157,
+          170
+        ],
+        [
+          10,
+          422,
+          497,
+          171,
+          184
+        ],
+        [
+          10,
+          422,
+          522,
+          185,
+          198
+        ],
+        [
+          10,
+          422,
+          548,
+          199,
+          212
+        ],
+        [
+          10,
+          422,
+          511,
+          213,
+          226
+        ],
+        [
+          10,
+          422,
+          497,
+          227,
+          239
+        ]
+      ]
+    },
+    {
+      "chunk_id": "fa1b16ce59984f79",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>14.8</td><td>秒</td><td>11.0~15.0</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>1.18</td><td>None</td><td>None</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>76.0</td><td>%</td><td>70.0~150.0</td><td>False</td></tr><tr><td>活化部分凝血活酶时间<",
+      "row_position_int": [
+        [
+          11,
+          84,
+          197,
+          82,
+          96
+        ],
+        [
+          11,
+          84,
+          202,
+          99,
+          114
+        ],
+        [
+          11,
+          84,
+          171,
+          116,
+          131
+        ],
+        [
+          11,
+          84,
+          264,
+          133,
+          148
+        ],
+        [
+          11,
+          84,
+          239,
+          151,
+          166
+        ],
+        [
+          11,
+          84,
+          189,
+          169,
+          184
+        ],
+        [
+          11,
+          84,
+          183,
+          186,
+          201
+        ],
+        [
+          11,
+          84,
+          192,
+          204,
+          219
+        ]
+      ]
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 15,
+    "check": {
+      "covered": 14,
+      "total": 14,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_check": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 0,
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "UNKNOWN",
+      "evidence": []
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "chunk_count": 1,
+      "recognized_count": 1,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "chunk_count": 0,
+      "recognized_count": 0,
+      "extractor_count": 1,
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "FILTERED",
+      "evidence": []
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "chunk_count": 7,
+      "recognized_count": 7,
+      "extractor_count": 7,
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "OK",
+      "evidence": [
+        "2026-08-10 19:28:45,254 INFO     29 [ChunkMerger] Merged 33 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 9, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 16, 'Extractor:Progress': 1} (filtered 3 noise chunks)",
+        "2026-08-10 19:34:02,687 INFO     29 [ChunkMerger] Merged 13 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 7, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+      ]
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "chunk_count": 5,
+      "recognized_count": 5,
+      "extractor_count": 0,
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK",
+      "evidence": []
+    }
+  },
+  "smart_types": {
+    "AdmissionRecord": 1,
+    "ExaminationReport": 7,
+    "LabReport": 5
+  },
+  "merge_info": {
+    "found": true,
+    "merged": 13,
+    "sources": 9,
+    "stats": {
+      "Extractor:LabExam": 5,
+      "Extractor:Imaging": 1,
+      "Extractor:Clinical": 1,
+      "Extractor:Medication": 1,
+      "Extractor:Prescription": 1,
+      "Extractor:Discharge": 1,
+      "Extractor:Admission": 1,
+      "Extractor:ExaminationReport": 7,
+      "Extractor:Progress": 1
+    },
+    "filtered_noise": 6
+  },
+  "skips": [
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 19:28:45,254 INFO     29 [ChunkMerger] Merged 33 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 9, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 16, 'Extractor:Progress': 1} (filtered 3 noise chunks)"
+    },
+    {
+      "kind": "no_text_noise",
+      "line": "2026-08-10 19:34:02,687 INFO     29 [ChunkMerger] Merged 13 chunks from 9 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 7, 'Extractor:Progress': 1} (filtered 6 noise chunks)"
+    }
+  ],
+  "log_errors": [],
+  "note": "",
+  "chunk_count_api": 13,
+  "process_begin_at": "2026-08-10T19:24:18",
+  "process_duration": 586.28265,
+  "progress_msg": "19:34:04 Indexing done (0.07s). Task done (542.00s)",
+  "done_msg": null,
+  "sync_error": "None",
+  "cross_doc_smarts": [],
+  "chunk_types": {
+    "LabReport": 5,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 7
+  },
+  "extractor_types": {
+    "MedicationRecord": 1,
+    "PrescriptionRecord": 1,
+    "DischargeRecord": 1,
+    "AdmissionRecord": 1,
+    "ExaminationReport": 7
+  }
+}

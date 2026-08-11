@@ -302,6 +302,32 @@ def _latex_to_plain_text(line: str) -> str:
     return " ".join(cells)
 
 
+def _split_text_pages(raw_text: str, positions: list, sorted_pages: list) -> dict:
+    """按 positions 页码把多页 chunk 文本切分到各页。
+
+    raw_text 按 \\n 分割后与 positions 一一对应（第 i 行归属 positions[i][0] 页），
+    而不是按行数均分——各页行数通常极不均匀，均分会把表格行切到错误的页。
+
+    Returns:
+        dict: pn → 该页的原始文本（保留换行）
+    """
+    if len(sorted_pages) <= 1:
+        pn = sorted_pages[0] if sorted_pages else 0
+        return {pn: raw_text}
+
+    lines = raw_text.split("\n")
+    page_lines = {}
+    for i, line in enumerate(lines):
+        if i < len(positions) and isinstance(positions[i], (list, tuple)) and positions[i]:
+            pn = int(positions[i][0])
+        elif positions and isinstance(positions[-1], (list, tuple)) and positions[-1]:
+            pn = int(positions[-1][0])  # 超出行数：归属最后一个 position 的页
+        else:
+            pn = sorted_pages[0]
+        page_lines.setdefault(pn, []).append(line)
+    return {pn: "\n".join(ls) for pn, ls in page_lines.items()}
+
+
 def _render_page_image(doc_id: str, page_num_0based: int, tag: str):
     """Render a single PDF page at 200 DPI. No cropping.
 
@@ -424,47 +450,13 @@ async def process_table(ext, ck: dict, llm_name: str):
             return
 
         # Split by page using BBOX position mapping
-        # Build page→text mapping from positions
-        page_text_map = {}  # pn → list of text lines for that page
-        if len(sorted_pages) == 1:
-            # Single page: all text belongs to that page
-            page_text_map[sorted_pages[0]] = raw_text
-        else:
-            # Multi-page: split BBOX-wrapped lines by page number
-            # Build bbox_idx → page_num lookup from positions
-            bbox_to_page = {}
-            for p in positions:
-                if isinstance(p, (list, tuple)) and len(p) >= 1:
-                    pn = int(p[0])
-                    # Each position corresponds to a section; use index as bbox hint
-                    pass
-            # Fallback: split lines and distribute by page order
-            lines = raw_text.split("\n")
-            chunk_size = max(1, len(lines) // len(sorted_pages))
-            for i, pn in enumerate(sorted_pages):
-                start = i * chunk_size
-                end = start + chunk_size if i < len(sorted_pages) - 1 else len(lines)
-                page_text_map[pn] = "\n".join(lines[start:end])
+        # 第 i 行归属 positions[i][0] 页（各页行数极不均匀，不能按行数均分）
+        page_text_map = _split_text_pages(raw_text, positions, sorted_pages)
 
         # ── Per-page loop: Step B (LaTeX→JSON) ──
         all_items = []
+        all_item_pages = []  # 与 all_items 平行：每个 item 的提取来源页 pn
         all_row_positions = []
-
-        # Build name → source page mapping from raw_text + positions
-        # key 经 _detex 归一化，与 Step B 提取后已替换 LaTeX 的 item 名称对齐
-        raw_lines = raw_text.split("\n")
-        name_to_page = {}  # cleaned_line → page_num
-        for i, raw_line in enumerate(raw_lines):
-            clean = _strip_bbox_tags(raw_line.strip())
-            if not clean:
-                continue
-            if i < len(positions) and isinstance(positions[i], (list, tuple)) and positions[i]:
-                pn = int(positions[i][0])
-            elif positions and isinstance(positions[0], (list, tuple)) and positions[0]:
-                pn = int(positions[0][0])
-            else:
-                pn = sorted_pages[0] if sorted_pages else 0
-            name_to_page[clean] = pn
 
         for pn in sorted_pages:
             if pn not in page_img_data:
@@ -532,24 +524,18 @@ async def process_table(ext, ck: dict, llm_name: str):
             _detex_items(page_items)
 
             all_items.extend(page_items)
+            all_item_pages.extend([pn] * len(page_items))
 
-        # ── Step C: Locate item names — group by SOURCE page from positions ──
-        # Each item_name → find in raw_text lines → positions[i][0] = source page
+        # ── Step C: 按提取来源页归属 item ──
+        # 每个 item 由 Step B 逐页循环从该页文本提取，直接采纳提取页作为
+        # 坐标定位页；不能用全文档子串回退（会先命中多页重复出现的
+        # “检验项目”名称栏，把 item 误归到错误页）
         page_item_names = {}  # source_pn → [name, ...]
-        for it in all_items:
+        for it, src_pn in zip(all_items, all_item_pages):
             name = it.get("name", "") or it.get("item_code", "")
             if not name:
                 continue
-            # Find source page: exact match first, then substring
-            source_pn = name_to_page.get(name)
-            if source_pn is None:
-                for line_text, line_pn in name_to_page.items():
-                    if name in line_text or line_text in name:
-                        source_pn = line_pn
-                        break
-            if source_pn is None:
-                source_pn = sorted_pages[0] if sorted_pages else 0
-            page_item_names.setdefault(source_pn, []).append(name)
+            page_item_names.setdefault(src_pn, []).append(name)
 
         logging.info(
             f"{TAG} coord grouping: { {pn: len(names) for pn, names in page_item_names.items()} }"

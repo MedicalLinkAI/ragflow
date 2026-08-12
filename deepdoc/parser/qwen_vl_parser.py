@@ -207,6 +207,38 @@ _SYMBOL_ONLY_RE = re.compile(r'^[+\-*=#|~_·•\s]+$')
 _MIN_ROW_RUN = 5
 _MIN_TEXT_RUN = 5
 _MAX_UNIQUENESS_RATIO = 0.03
+_MIN_EMPTY_RUN = 20
+
+# A run of N consecutive "" elements: "","",... separated only by commas
+_EMPTY_RUN_RE = re.compile(r'""(?:\s*,\s*""){%d,}' % (_MIN_EMPTY_RUN - 1))
+
+
+def _is_empty_flood(raw: Optional[str]) -> bool:
+    """Detect empty-string flooding: greedy loop emitting "" elements.
+
+    The fingerprint is a LONG CONSECUTIVE run of empty elements — real
+    transcription content never produces dozens of them back to back,
+    while tables legitimately carry interspersed empty cells (e.g. 3
+    empty columns per row). Counting total empties instead misfires on
+    such tables (75 separated empties across 25 rows is not a flood).
+    Content-based, independent of response size.
+    """
+    if not raw:
+        return False
+    return bool(_EMPTY_RUN_RE.search(_strip_fence(raw)))
+
+
+def _is_truncated_array(raw: Optional[str]) -> bool:
+    """Detect token-budget truncation: array opened with '[' but no ']'.
+
+    A legitimate response is either a fully closed JSON array or '[]' for
+    an empty page, so an unclosed array is structural evidence of a
+    runaway loop regardless of response length.
+    """
+    if not raw:
+        return False
+    stripped = _strip_fence(raw)
+    return stripped.startswith("[") and "]" not in stripped
 
 
 def _dedup_repeated_blocks(
@@ -535,6 +567,24 @@ class QwenVLParser(RAGFlowPdfParser):
         """Extract text page via VLM → JSON array → sections."""
         raw = self._call_vlm(img_bytes, TEXT_PROMPT)
         lines = _parse_json_array(raw)
+
+        # Empty-string flood / truncated-array defense: a greedy loop can
+        # burn max_tokens on "" elements, leaving an unclosed array that
+        # fails every parse fallback. Fingerprints are content-based
+        # (empty-element count, missing ']'), independent of size.
+        if _is_empty_flood(raw) or _is_truncated_array(raw):
+            logging.warning(
+                f"{TAG} page={page_1based} text output degenerated into "
+                f"empty-string flood/truncated array, retrying with repetition_penalty"
+            )
+            raw2 = self._call_vlm(
+                img_bytes, TEXT_PROMPT, extra_params={"repetition_penalty": 1.2}
+            )
+            if raw2 and not _is_empty_flood(raw2) and not _is_truncated_array(raw2):
+                lines2 = _parse_json_array(raw2)
+                if lines2 is not None:
+                    lines = lines2
+            # retry still flooded/unparseable: keep the original salvage
 
         if not lines:
             logging.warning(f"{TAG} page={page_1based} text extraction returned no lines")

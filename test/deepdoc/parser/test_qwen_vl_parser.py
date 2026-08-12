@@ -52,6 +52,8 @@ from deepdoc.parser.qwen_vl_parser import (  # noqa: E402
     _truncate_repetition_loop,
     _dedup_repeated_blocks,
     _dedup_latex_rows,
+    _is_empty_flood,
+    _is_truncated_array,
 )
 import deepdoc.parser.qwen_vl_parser as qwen_vl_mod  # noqa: E402
 
@@ -954,3 +956,112 @@ class TestTableRowRepetitionRetry:
         with patch.object(parser, "_call_vlm", return_value=clean) as m:
             sections, _ = parser._extract_table_page(b"img", 1, 0)
         assert m.call_count == 1
+
+
+# ================================================================
+# 16. 空串刷屏防御（"" flood / 数组被 max_tokens 截断）
+# ================================================================
+# 真实案例（page=18，len=65498）：模型贪心循环刷 "" 空元素烧穿
+# token 预算，数组未闭合 → _parse_json_array 全部兜底失败 →
+# 旧代码直接 "returned no lines" 放弃，从未触发 repetition_penalty
+# 重试。指纹与响应大小无关：小响应的空串刷屏同样是故障。
+
+_FLOOD_CLEAN = json.dumps([f"line{i}" for i in range(10)])
+_FLOOD_DIRTY = json.dumps(["病历文书", "医嘱"] + [""] * 200)  # 闭合但空串刷屏
+_TRUNCATED = '["病历文书", "医嘱", ' + ", ".join(['""'] * 300)  # 无闭合 ]
+
+
+class TestEmptyFloodHelpers:
+    def test_flood_detected_by_empty_elements(self):
+        assert _is_empty_flood(_FLOOD_DIRTY) is True
+
+    def test_small_flood_detected(self):
+        """~100 字节的小响应照样触发——指纹不依赖响应大小。"""
+        assert _is_empty_flood(json.dumps([""] * 20)) is True
+
+    def test_below_threshold_not_flood(self):
+        """少量空串（<20）保持容忍，不误伤。"""
+        assert _is_empty_flood(json.dumps(["a", "b"] + [""] * 19)) is False
+
+    def test_interspersed_empty_cells_not_flood(self):
+        """真实误报反例（page=18 医嘱表）：每行带 3 个空单元格（单价/备注），
+        空串被内容隔开、总数 75 个，属合法表格而非刷屏。"""
+        rows = []
+        for i in range(25):
+            rows += [f"2026/1/{i + 1}", f"医嘱内容{i}", "停用", "", "", ""]
+        assert _is_empty_flood(json.dumps(rows)) is False
+
+    def test_clean_array_not_flood(self):
+        assert _is_empty_flood(_FLOOD_CLEAN) is False
+
+    def test_none_not_flood(self):
+        assert _is_empty_flood(None) is False
+
+    def test_truncated_array_detected(self):
+        assert _is_truncated_array(_TRUNCATED) is True
+
+    def test_closed_array_not_truncated(self):
+        assert _is_truncated_array('["a", "b"]') is False
+
+    def test_empty_page_not_truncated(self):
+        """真·空页 '[]' 完整闭合，不是截断。"""
+        assert _is_truncated_array("[]") is False
+
+    def test_fence_wrapped_truncated(self):
+        assert _is_truncated_array('```json\n["a", "b"\n') is True
+
+    def test_none_not_truncated(self):
+        assert _is_truncated_array(None) is False
+
+
+class TestTextEmptyFloodRetry:
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    def test_truncated_array_retries_with_penalty(self):
+        """真实案例形态：未闭合空串数组，解析失败 → 带惩罚因子重试。"""
+        parser = self._make_parser()
+        with patch.object(parser, "_call_vlm", side_effect=[_TRUNCATED, _FLOOD_CLEAN]) as m:
+            sections, _ = parser._extract_text_page(b"img", 18, 0)
+        assert m.call_count == 2
+        extra = m.call_args_list[1].kwargs.get("extra_params")
+        assert extra and extra.get("repetition_penalty", 1) > 1
+        assert len(sections) == 10  # 采纳重试的干净结果
+
+    def test_small_closed_flood_retries(self):
+        """闭合数组但空串刷屏：响应再小也触发重试。"""
+        parser = self._make_parser()
+        with patch.object(parser, "_call_vlm", side_effect=[_FLOOD_DIRTY, _FLOOD_CLEAN]) as m:
+            sections, _ = parser._extract_text_page(b"img", 18, 0)
+        assert m.call_count == 2
+        extra = m.call_args_list[1].kwargs.get("extra_params")
+        assert extra and extra.get("repetition_penalty", 1) > 1
+        assert len(sections) == 10
+
+    def test_retry_also_flooded_keeps_salvage(self):
+        """重试仍刷屏：只重试一次不无限循环，保留原解析的可用前缀。"""
+        parser = self._make_parser()
+        with patch.object(parser, "_call_vlm", return_value=_TRUNCATED) as m:
+            sections, _ = parser._extract_text_page(b"img", 18, 0)
+        assert m.call_count == 2
+        # json_repair 兜底从未闭合数组里救回前缀真实内容
+        assert [s[0] for s in sections] == ["病历文书", "医嘱"]
+
+    def test_empty_page_no_retry(self):
+        """真·空页：'[]' 不命中任何指纹，单次调用。"""
+        parser = self._make_parser()
+        with patch.object(parser, "_call_vlm", return_value="[]") as m:
+            sections, _ = parser._extract_text_page(b"img", 18, 0)
+        assert m.call_count == 1
+        assert sections == []
+
+    def test_interspersed_empty_cells_single_call(self):
+        """医嘱表每行 3 个空单元格：不触发重试，原样采纳。"""
+        parser = self._make_parser()
+        rows = []
+        for i in range(25):
+            rows += [f"2026/1/{i + 1}", f"医嘱内容{i}", "停用", "", "", ""]
+        with patch.object(parser, "_call_vlm", return_value=json.dumps(rows)) as m:
+            sections, _ = parser._extract_text_page(b"img", 18, 0)
+        assert m.call_count == 1
+        assert len(sections) == 75  # 25 行 × 3 非空单元格，空串被过滤

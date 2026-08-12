@@ -183,6 +183,152 @@ def _build_coord_prompt(text_lines: list) -> str:
 
 from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
 
+# LaTeX 转义归一化（复用 qwen_vl_ocr 实现）：Step B 从 LaTeX 提取的 items
+# 常残留 $<14$、$\mu$mol/L 等转义，必须在 Step C 坐标匹配与落库前归一化到
+# Unicode 空间，保证匹配空间与图片纯文本一致
+from rag.flow.extractor.qwen_vl_ocr import _detex_items
+
+
+# ── LaTeX 幻觉防御（与 deepdoc/parser/qwen_vl_parser.py 同款分层防御的轻量副本，
+#    避免 deepdoc 包的重依赖导入链；修改时必须与 parser 版本保持同步）──
+
+# token 级：连续嵌套宏 >=10 层（如 \textup{\textup{... 烧光 max_tokens）
+_REPETITION_LOOP_RE = re.compile(r"(?:\\[a-zA-Z]+\{){10,}")
+
+# 行级：含 & 的数据行连续相同 >=5 次视为刷屏（阈值避免误伤合法重复行）
+_MIN_ROW_RUN = 5
+
+
+def _has_repetition_loop(latex: str) -> bool:
+    """Detect runaway LaTeX command nesting like \\textup{\\textup{... ."""
+    return bool(_REPETITION_LOOP_RE.search(latex or ""))
+
+
+def _truncate_repetition_loop(latex: str) -> str:
+    """Cut output at the repetition loop start, salvaging the valid prefix.
+
+    The row in which the loop started is incomplete (no \\\\ terminator),
+    so it is dropped along with the loop.
+    """
+    m = _REPETITION_LOOP_RE.search(latex or "")
+    if not m:
+        return latex
+    cut = latex[: m.start()]
+    lines = cut.split("\n")
+    if lines:
+        last = lines[-1].strip()
+        if last and not last.endswith("\\\\") and not re.search(r"\\(?:begin|end|hline)", last):
+            lines = lines[:-1]
+    result = "\n".join(lines)
+    logging.warning(
+        f"[qwen30b-table] degenerate repetition loop at char {m.start()}, "
+        f"truncating {len(latex)}→{len(result)} chars"
+    )
+    return result
+
+
+def _dedup_latex_rows(latex: str) -> tuple:
+    """Collapse runs of consecutive identical data rows (model hallucination).
+
+    Covers the single-macro runaway pattern (e.g. \\multicolumn rows repeated
+    verbatim until the token budget is exhausted), which the nested-macro
+    detector _has_repetition_loop cannot see.
+
+    Returns (latex, rep_info); rep_info=(row_preview, repeats) when a run of
+    >= _MIN_ROW_RUN identical data rows was collapsed to one, else None.
+    """
+    lines = latex.split("\n")
+    out = []
+    rep_info = None
+    i = 0
+    n = len(lines)
+    while i < n:
+        line = lines[i]
+        stripped = line.strip()
+        if "&" in stripped:
+            j = i + 1
+            while j < n and lines[j].strip() == stripped:
+                j += 1
+            if j - i >= _MIN_ROW_RUN:
+                if rep_info is None:
+                    rep_info = (stripped[:60], j - i)
+                out.append(line)  # keep first occurrence only
+                i = j
+                continue
+        out.append(line)
+        i += 1
+    if rep_info is None:
+        return latex, None
+    return "\n".join(out), rep_info
+
+
+# 文本页行级重复防御（deepdoc/parser/qwen_vl_parser.py _dedup_repeated_blocks
+# 的轻量副本，避免 deepdoc 包的 beartype 重依赖导入链；修改时必须与 parser 版本保持同步）
+_MIN_TEXT_RUN = 5
+_MAX_UNIQUENESS_RATIO = 0.03
+
+
+def _dedup_repeated_blocks(lines):
+    """Detect and collapse repeated content in OCR text lines (model hallucination).
+
+    Covers three shapes, applied iteratively until the output is clean:
+    1. prefix block cycle: consecutive repetitions of lines[0:cycle]
+       (cycle >= 3), collapsed to a single occurrence while keeping the
+       unique tail — medical forms legitimately repeat header fields
+       (e.g. 姓名/性别/年龄 printed in two columns), so truncating to the
+       prefix would destroy real content
+    2. identical-row run at any position: one line repeated >= _MIN_TEXT_RUN
+       times in a row, collapsed to a single occurrence
+    3. degenerate uniqueness: huge output with almost no distinct lines
+
+    Returns (lines, rep_info); rep_info=(cycle, repeats, n) describes the
+    first pattern detected, None when the input is clean.
+    """
+    if len(lines) <= 20:
+        return lines, None
+    first_rep = None
+    for _ in range(10):  # bounded passes; each removes one spam pattern
+        n = len(lines)
+        detected = None
+        # 1) prefix block cycle: collapse the consecutive run of the prefix
+        #    block, preserving the unique tail
+        for cycle in range(3, n // 2 + 1):
+            if lines[cycle:2 * cycle] == lines[0:cycle] and n // cycle >= 2:
+                k = 2
+                while (
+                    (k + 1) * cycle <= n
+                    and lines[k * cycle:(k + 1) * cycle] == lines[0:cycle]
+                ):
+                    k += 1
+                detected = ((cycle, n // cycle, n), lines[:cycle] + lines[k * cycle:])
+                break
+        # 2) identical-line run at any position
+        if not detected:
+            i = 0
+            while i < n:
+                j = i + 1
+                while j < n and lines[j] == lines[i]:
+                    j += 1
+                if j - i >= _MIN_TEXT_RUN:
+                    detected = ((1, j - i, n), lines[: i + 1] + lines[j:])
+                    break
+                i = j
+        # 3) degenerate uniqueness ratio
+        if not detected and n >= 100 and len(set(lines)) <= _MAX_UNIQUENESS_RATIO * n:
+            uniq = []
+            for t in lines:
+                if not uniq or uniq[-1] != t:
+                    uniq.append(t)
+            detected = ((1, n, n), uniq)
+        if not detected:
+            break
+        if first_rep is None:
+            first_rep = detected[0]
+        lines = detected[1]
+        if len(lines) <= 20:
+            break
+    return lines, first_rep
+
 
 # ── API 调用 ──
 
@@ -330,7 +476,7 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cf
 
     return data, elapsed, "ok"
 
-def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple, system_msg: str = None) -> tuple:
+def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple, system_msg: str = None, extra_params: dict = None) -> tuple:
     """Call qwen3-vl-30b and return raw text content (no JSON parsing).
 
     Used for LaTeX extraction (Step A) where output is LaTeX markup, not JSON.
@@ -353,6 +499,8 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_c
         "max_tokens": 16384,
         "temperature": 0,
     }
+    if extra_params:
+        payload.update(extra_params)
     headers = {"Content-Type": "application/json"}
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
@@ -523,6 +671,44 @@ async def process_table(ext, ck: dict, llm_name: str):
             if latex_status != "ok" or not latex_content:
                 logging.warning(f"{TAG} StepA: page={pn} LaTeX failed: {latex_status}")
                 continue
+
+            # ── 幻觉防御 1：嵌套宏失控（\textup{\textup{...）——
+            # 带 repetition_penalty 重试一次；仍失控则截断到循环起点挽救有效前缀
+            if _has_repetition_loop(latex_content):
+                logging.warning(
+                    f"{TAG} StepA: page={pn} LaTeX degenerated into repetition loop, "
+                    f"retrying with repetition_penalty"
+                )
+                latex2, _, s2 = _call_qwen30b_latex_only(
+                    img_bytes, TABLE_TO_LATEX_PROMPT, TAG, endpoint_cfg,
+                    system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。",
+                    extra_params={"repetition_penalty": 1.2},
+                )
+                if s2 == "ok" and latex2 and not _has_repetition_loop(latex2):
+                    latex_content = latex2
+                else:
+                    latex_content = _truncate_repetition_loop(latex_content)
+
+            # ── 幻觉防御 2：行级刷屏（同一数据行逐字重复 >=5 次，如
+            # \multicolumn 单宏失控）——折叠后重试；重试干净则采用，否则保留折叠版
+            latex_content, row_rep = _dedup_latex_rows(latex_content)
+            if row_rep:
+                preview, repeats = row_rep
+                logging.warning(
+                    f"{TAG} StepA: page={pn} table row repeated {repeats}x "
+                    f"({preview}...), retrying with repetition_penalty"
+                )
+                latex2, _, s2 = _call_qwen30b_latex_only(
+                    img_bytes, TABLE_TO_LATEX_PROMPT, TAG, endpoint_cfg,
+                    system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。",
+                    extra_params={"repetition_penalty": 1.2},
+                )
+                if s2 == "ok" and latex2:
+                    latex2, rep2 = _dedup_latex_rows(latex2)
+                    if not rep2 and not _has_repetition_loop(latex2):
+                        latex_content = latex2
+                # else: 保留折叠版兑底
+
             logging.info(
                 f"{TAG} StepA: page={pn} — LaTeX: {latex_content}"
                 f"time={latex_elapsed:.1f}s"
@@ -560,6 +746,9 @@ async def process_table(ext, ck: dict, llm_name: str):
             if not page_items:
                 logging.warning(f"{TAG} StepB: page={pn} no items extracted")
                 continue
+
+            # LLM 提取后立即替换 LaTeX 转义，保证后续 Step C 匹配与落库均使用归一化值
+            _detex_items(page_items)
 
             page_item_names_list = [
                 it.get("name", "") or it.get("item_code", "")
@@ -802,21 +991,14 @@ async def process_text(ext, ck: dict, llm_name: str):
                 logging.warning(f"{TAG} Step3: page={pn} returned empty text array")
                 continue
 
-            # Dedup: detect and truncate repeated content blocks (model hallucination)
-            n = len(text_lines)
-            if n > 20:
-                for cycle in range(3, n // 2 + 1):
-                    # Check if lines[cycle:2*cycle] == lines[0:cycle]
-                    if text_lines[cycle:2 * cycle] == text_lines[0:cycle]:
-                        repeats = n // cycle
-                        if repeats >= 2:
-                            logging.warning(
-                                f"{TAG} Step3: page={pn} detected repetition "
-                                f"(cycle={cycle}, repeats={repeats}x), truncating {n}→{cycle} lines"
-                            )
-                            text_lines = text_lines[:cycle]
-                            n = cycle
-                            break
+            # Dedup: detect and collapse repeated content blocks (model hallucination)
+            text_lines, rep_info = _dedup_repeated_blocks(text_lines)
+            if rep_info:
+                cycle, repeats, n0 = rep_info
+                logging.warning(
+                    f"{TAG} Step3: page={pn} detected repetition "
+                    f"(cycle={cycle}, repeats={repeats}x), collapsing {n0}->{len(text_lines)} lines"
+                )
 
             page_text = "\n".join(text_lines)
             page_text_data.append((pn, text_lines, cox, coy, cw, ch))

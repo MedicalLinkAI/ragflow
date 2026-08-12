@@ -116,7 +116,27 @@ sys.modules["fitz"] = _fitz_mod
 
 # ── Import module under test ──────────────────────────────────────────
 import rag.flow.extractor.qwen_vl_ocr as qvl  # noqa: E402
-from rag.flow.extractor.qwen_vl_ocr import _split_text_pages  # noqa: E402
+from rag.flow.extractor.qwen_vl_ocr import _split_text_pages, _detex  # noqa: E402
+
+
+# ================================================================
+# 0. _detex — LaTeX 转义归一化（含数学模式比较值 $<14$）
+# ================================================================
+
+class TestDetex:
+    def test_math_wrapped_comparison_value(self):
+        # LBZH 实证：LaTeX 表格参考范围输出为 $<14$（整个值包在数学模式）
+        assert _detex("$<14$") == "<14"
+        assert _detex("$>100$") == ">100"
+
+    def test_bare_comparison_operator(self):
+        assert _detex("$<$14") == "<14"
+
+    def test_greek_letter_symbol(self):
+        assert _detex("$\\mu$mol/L") == "μmol/L"
+
+    def test_plain_text_untouched(self):
+        assert _detex("肌钙蛋白T") == "肌钙蛋白T"
 
 
 # ================================================================

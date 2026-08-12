@@ -32,6 +32,8 @@ _LATEX_SYMBOL_MAP = {
 }
 
 _LATEX_PATTERN = re.compile(r"\$?\\([a-zA-Z]+)\$?")
+# 数学模式包裹的比较值：$<14$ → <14（HIS LaTeX 表格参考范围的真实输出形式）
+_MATH_CMP_PATTERN = re.compile(r"\$([<>≤≥])([^$]*)\$")
 
 
 def _detex(value):
@@ -43,7 +45,8 @@ def _detex(value):
     if not isinstance(value, str) or "$" not in value and "\\" not in value:
         return value
     value = _LATEX_PATTERN.sub(lambda m: _LATEX_SYMBOL_MAP.get(m.group(1), m.group(1)), value)
-    value = value.replace("$<$", "<").replace("$>$", ">").replace("$\u2264$", "≤").replace("$\u2265$", "≥")
+    value = _MATH_CMP_PATTERN.sub(r"\1\2", value)
+    value = value.replace("$<$", "<").replace("$>$", ">").replace("$≤$", "≤").replace("$≥$", "≥")
     return value
 
 

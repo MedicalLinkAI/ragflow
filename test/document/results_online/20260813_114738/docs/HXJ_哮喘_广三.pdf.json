@@ -1,0 +1,307 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\HXJ 哮喘 广三.pdf",
+    "name": "HXJ 哮喘 广三.pdf",
+    "size_kb": 8215.2,
+    "pages": 17
+  },
+  "doc_id": "8e88044096cf11f19d3ab1cda0a97c3d",
+  "mode": "upload_file+upload",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 16,
+  "orm_synced": true,
+  "process_duration": 462.25275,
+  "begin_at": "2026-08-13T12:29:19",
+  "end_at": "2026-08-13T12:37:07",
+  "elapsed_s": 468.3,
+  "chunks": [
+    {
+      "chunk_id": "9a64964ab0dc39e2",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 32,
+      "content": "门(急)诊病历信息\n就诊卡\n流水\n病历编号:\n姓\n别:男\n年\n龄:64岁\n就诊科室:内科门诊(荔湾)\n医\n诊时间:2025-10-21 16:24:23\n主\n诉:取药\n现病史:\n既往史:\n过敏史:\n个人史:\n体格检查:\n专科情况:\n辅助检查:\n治疗项目:\n门诊诊断:\n支气管哮喘\n单病种:\n发病时间:\n处置:请仔细阅读药品说明书等文书资料,遵嘱诊疗,不适随诊。\n1孟鲁司特钠片(省采)◆\n1瓶10.0mg,口服,每晚1次\n30天\n2倍氯米松福莫特罗吸入气雾剂◆①\n1瓶2.0揿,吸入用药,一天2次\n30天"
+    },
+    {
+      "chunk_id": "123d09f137f3ebc7",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 28,
+      "content": "门(急)诊病历信息\n就诊卡号:\n流水号:\n病历编号:\n性别:男\n年\n龄:65岁\n就诊科室:内科门诊(荔湾)\n医生\n就诊时间:2025-11-19 11:33:52\n主诉:取药\n现病史:\n既往史:\n过敏史:\n个人史:\n体格检查:\n专科情况:\n辅助检查:\n治疗项目:\n门诊诊断:\n1、支气管哮喘\n处置:\n1孟鲁司特钠片(省采)◆\n1瓶10.0mg,口服,每晚1次\n30天\n2倍氯米松福莫特罗吸入气雾剂◆①\n1瓶2.0揿,吸入用药,一天2次\n30天"
+    },
+    {
+      "chunk_id": "e9ba6c8b673d22a3",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 56,
+      "content": "门(急)诊病历信息\n就诊卡号\n流水\n姓名\n性别:男\n年\n龄:65岁\n就诊科室:内科门诊(荔湾)\n病历编号:\n就诊时间:2025-12-12 09:26:46\n主诉:BAIYUN V8\n现病史:自上次访视至今,询问及查询HIS系统受试者无新增AE、SAE、哮喘急性发作,有新增合并用药。发生过2次医疗相关事件,就诊于荔湾区逢源街道社区中心1次,就诊于专科门诊1次。期间未收到ePRO触发的哮喘警报邮件。\n完成下流操作:\n1、静坐10分钟后,测量坐位生命体征,血压:120/76mmHg,脉搏频率:59次/分(NCS),呼吸:20次/分,体温:36.5℃;\n2、9:20体格检查:神志清,体置合作,自主体"
+    },
+    {
+      "chunk_id": "b89df886dac87779",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 43,
+      "content": "门(急)诊处方\n就诊时间:2025-09-15\n就诊科室:内科门诊\n主诊医\n姓名\n性别:男\n年龄:64岁\n卡号:4\n患者\n医疗证号:\n处方号\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n孟鲁司特钠片◆\n10mg*30/瓶\n30片\n1.05\n31.53\nSig\n10mg/次,口服,qn*30天\n倍氯米松福莫特罗吸入气雾剂◆\n6ug/揿*120揿\n221.61\n221.61\nSig\n2揿/次,吸入,bid*30天\n医师\n医生编号:1326\n配剂人:\n核对人:\n合计:\n收费员:\n打印时间:2025-12-19\n为了您的用药安全,药物处方当天有效 第1"
+    },
+    {
+      "chunk_id": "07de0fa7602fae1f",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 35,
+      "content": "门(急)诊处方\n就诊时间:2025-08-18\n就诊科室:内科门诊\n主诊\n姓名:\n性别:男\n年龄:64岁\n卡号\n患者类型:GCP支付\n医疗证号:\n处方\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n孟鲁司特钠片◆\n10mg*30/瓶\n28片\n1.05\n29.43\nSig\n10mg/次,口服,qn*28天\n倍氯米松福莫特罗吸入气雾剂\n6ug/揿*120揿\n221.61\n221.61\nSig\n2揿/次,吸入,bid*30天"
+    },
+    {
+      "chunk_id": "6ad3e194a9f96e45",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 34,
+      "content": "门(急)诊处方\n就诊时间:2025-05-30\n就诊科室:内科门诊\n主\n姓名\n性别:男\n年龄:64岁\n卡\n患者类型:GCP支付\n医疗证号:\n处\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n孟鲁司特钠片◆\n10mg*5/盒\n90片\n2.56\n230.58\nSig\n10mg/次,口服,qn*90天\n倍氯米松福莫特罗吸入气雾剂0006ug/揿*120瓶\n221.61\n664.83\nSig\n2揿/次,吸入,bid*90天"
+    },
+    {
+      "chunk_id": "b5de73e148f9851d",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 33,
+      "content": "门(急)诊处方\n就诊时间:2025-03-05\n就诊科室:内科门诊\n主诊医\n姓名\n性别:男\n年龄:64岁\n卡号:\n患者类型:GCP支付\n医疗证号:\n处方号:\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n倍氯米松福莫特罗吸入气雾剂0ug/6ug/瓶*120瓶\n221.61 443.22\nSig\n2揿/次,吸入,bid*60天\n孟鲁司特钠片\n10mg*30/瓶\n60片\n1.05\n63.06\nSig\n10mg/次,口服,qn*60天"
+    },
+    {
+      "chunk_id": "6cb0a3ad5d6497f0",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 33,
+      "content": "门(急)诊处方\n就诊时间:2025-03-05\n就诊科室:内科门诊\n主诊\n姓名\n性别:男\n年龄:64岁\n卡号\n患者类型:GCP支付\n医疗证号:\n处方\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n倍氯米松福莫特罗吸入气雾剂100ug/6ug/揿*120揿\n221.61 221.61\nSig\n2揿/次,吸入,bid*30天\n孟鲁司特钠片◆\n10mg*30/瓶\n30片\n1.05\n31.53\nSig\n10mg/次,口服,qn*30天"
+    },
+    {
+      "chunk_id": "f5a4bec70f8999ff",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 33,
+      "content": "门(急)诊处方\n就诊时间:2025-02-08\n就诊科室:内科门诊\n主诊\n姓名:\n性别:男\n年龄:64岁\n卡号:\n患者类型:001 支付\n医疗证号:\n处方\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n倍氯米松福莫特罗吸入气雾剂100ug/6ug/揿*120瓶\n221.61 221.61\nSig\n2揿/次,吸入,bid*30天\n孟鲁司特钠片◆\n10mg*30/瓶\n30片\n1.05\n31.53\nSig\n10mg/次,口服,qn*30天"
+    },
+    {
+      "chunk_id": "87bda04ac376881c",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 32,
+      "content": "门(急)诊处方\n就诊时间:2025-01-10\n就诊科室:内科门诊\n主诊\n性别:男\n年龄:64岁\n卡号\n患者类型:G\n医疗证号:\n处方\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n倍氯米松福莫特罗吸入气雾剂100ug/6ug/揿*120瓶\n221.61 221.61\nSig\n2揿/次,吸入,bid*30天\n孟鲁司特钠片\n10mg*30/瓶\n30片\n1.05\n31.53\nSig\n10mg/次,口服,qn*30天"
+    },
+    {
+      "chunk_id": "be23dd6fdc08c113",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 33,
+      "content": "门(急)诊处方\n就诊时间:2024-12-11\n就诊科室:内科门诊\n主诊\n姓名:\n性别:男\n年龄:64岁\n卡号\n患者类型:GCP支付\n医疗证号:\n处方\n地址:\n身份证号:\n诊断:支气管哮喘\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n倍氯米松福莫特罗吸入气雾剂100ug/6ug/瓶*120瓶\n221.61 221.61\nSig\n2揿/次,吸入,bid*30天\n孟鲁司特钠片◆\n10mg*30/瓶\n30片\n1.05\n31.53\nSig\n10mg/次,口服,qn*30天"
+    },
+    {
+      "chunk_id": "e5ef26d7bc54ef6e",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 33,
+      "content": "门(急)诊处方\n就诊时间:2024-11-18\n就诊科室:内科门诊\n主诊\n姓名\n性别:男\n年龄:63岁\n卡号:\n患者类型:GLP支付\n医疗证号:\n处方\n地址:\n身份证号:\n诊断:支气管哮喘,非危重\n西药处方\n组号\n项目名称\n规格\n总量\n单价\n金额\nR:\n倍氯米松福莫特罗吸入气雾剂100ug/6ug/揿*120揿\n221.61 221.61\nSig\n2揿/次,吸入,bid*30天\n孟鲁司特钠片\n10mg*30/瓶\n30片\n1.05\n31.53\nSig\n10mg/次,口服,qn*30天"
+    },
+    {
+      "chunk_id": "757f6b450032fc70",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 29,
+      "content": "处方笺\n普通\n诊疗\n患者姓\n男\n年龄：65岁\n费别：\n科室：\n2026-01-06 11:28:26\n处方号\n地址：\n联系电\n身份号\n诊断：支气管哮喘(急性发作期),过敏性鼻炎[变应性鼻炎],2型糖尿病,急性气管支气管炎\nR\nP:\n倍氯米松福莫特罗吸入气雾剂◆① 100ug/6ug/揿*120\n1瓶\n剂量：每次2揿 （1/60 瓶）\n用法：吸入用药\nbid 01-06\n孟鲁司特钠片(省采)◆\n10mg*5/盒\n30片\n剂量：每次10mg （1 片）\n用法：口服\nqd 01-06\n处方金额：298.47元\n取药药房：门诊西药房（荔湾）"
+    },
+    {
+      "chunk_id": "5311b694e6d8d844",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 38,
+      "content": "处方笺\n普通\n诊断：支气管哮喘(急性发作期),过敏性鼻炎[变应性鼻炎],2型糖尿病,急性气管支气管炎\n年龄：65岁\n费别\n科室\n6-01-06 11:31:02\n处方\n地址\n联系\n身份\nRp:\n左氧氟沙星片(省采)●⑥\n0.5g*28片/盒\n3片\n剂量：每次0.5g\n(1 片)\n用法：口服\nqd\n01-06\n醋酸泼尼松片●②⑥\n5mg*100/瓶\n6片\n剂量：每次10mg\n(2 片)\n用法：口服\nqm\n01-06\n盐酸氨溴索分散片(省采)●⑥\n30mg*50/盒\n15片\n剂量：每次30mg\n(1 片)\n用法：餐后口服\ntid\n01-06\n处方金额：3.47元\n取药药房：门诊西药房（荔湾）"
+    },
+    {
+      "chunk_id": "946ccc4aef8ea830",
+      "pages": [
+        16,
+        17
+      ],
+      "page_count_raw": 31,
+      "content": "医师手签：\n病历编号：\n姓名：\n性别：男\n年龄：65岁\n就诊科室：内科门诊（基础）\n医生：\n就诊时间：2026-02-04 11:23:30\n主诉：支气管哮喘治疗后复诊\n现病史：2022年3月前开始出现咳嗽、咯痰，粘白，量少，能咯出，咳嗽呈阵发性，偶则激性，伴轻度咽痒，无气促，夜间有喘息、胸闷，伴鼻塞、流涕、喉咙，无咽痛，\n无反酸、嗳气、腹胀，无上腹部隐痛不适感，无伴发热、畏寒，曾自服肺力咳症状未见缓解，现病情好转、稳定，本次门诊距上次门诊间隔时间7天；过去4周，症状控制情况：控制良好，吸入药物使用情况：遵医嘱使用；，吸入装置使用情况：有，正确；急性发作情况：\n两次就诊期间急性发作：发作次数："
+    },
+    {
+      "chunk_id": "f05a30b51b4a3704",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 32,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>9.17</td><td>10^9/L</td><td>3.5 -- 9.5</td><td>False</td></tr><tr><td>中性粒细胞总数</td><td>NEU</td><td>5.71</td><td>10^9/L</td><td>1.8 -- 6.3</td><td>False</td></tr><tr><td>中性粒细胞百分数</td><td>NEUN</td><td>62.30</td><td>%</td><td>40 -- 75</td><td>False</td></tr><tr><td"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "page_sum": 18,
+    "check": {
+      "covered": 17,
+      "total": 17,
+      "coverage_pct": 100.0,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "key_fields": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "matched_records": 15,
+      "present_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "-"
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "-"
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "-"
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "-"
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "-"
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "matched_records": 1,
+      "present_fields": [],
+      "missing_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "OK"
+    },
+    "_meta": {
+      "unmatched_records": 0
+    }
+  },
+  "note": "",
+  "progress_msg": "\n12:29:55: [QwenVL] page 6/17 (text)\n\n12:29:59: [QwenVL] page 7/17 (text)\n\n12:30:03: [QwenVL] page 8/17 (text)\n\n12:30:07: [QwenVL] page 9/17 (text)\n\n12:30:10: [QwenVL] page 10/17 (text)\n\n12:30:14: [QwenVL] page 11/17 (text)\n\n12:30:17: [QwenVL] page 12/17 (text)\n\n12:30:21: [QwenVL] page 13/17 (text)\n"
+}

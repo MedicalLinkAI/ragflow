@@ -1,0 +1,199 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\1_GWYA-女-35岁222.pdf",
+    "name": "1_GWYA-女-35岁222.pdf",
+    "size_kb": 1177.0,
+    "pages": 5
+  },
+  "doc_id": "1574fe9296c911f19d3ab1cda0a97c3d",
+  "mode": "upload_file+upload",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": false,
+  "process_duration": 173.58202,
+  "begin_at": "2026-08-13T11:43:00",
+  "end_at": "2026-08-13T11:45:57",
+  "elapsed_s": 177.4,
+  "chunks": [
+    {
+      "chunk_id": "fe3a74303989d665",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 96,
+      "content": "长葛市华健医院\n入院记录\n姓名\n科室：呼吸内科\n床\n住院\n姓名\n性别：女\n年龄：34岁\n床号：\n住院号\n职业：农民\n民族：汉\n婚姻：已婚\n身份证\n籍贯：河南省许昌市\n联系\n住址：\n入院时间：2024-02-14 11:14\n工作单位：\n病历采集时间：2024-02-14 11:27\n联系人\n与患者关系：本人\n联系电话：1513\n病史陈述人：本人及家属\n过敏史：布洛芬、青霉素\n呼吸内科 第(4)次住院\n主 诉：间断咳嗽、咳痰伴胸闷8年余，加重伴发热5天。\n现病史：8余年前受凉后出现咳嗽、咳痰，咳嗽呈间断性，不剧烈，咳痰初期为黄痰，后\n期白粘痰，量较大，可咳出，遇冷及刺激性气味咳嗽加重，伴有气喘，"
+    },
+    {
+      "chunk_id": "c669745e2c0b6da5",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 20,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门诊)\n科别: 内 25年12月20日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛老城\nR\nP:\n本地奈德倍氯米松吸入剂160ug×60μ×2\nSy:320ug吸入每天二次\n华健医院\n收费专用章\n4110820322963\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    },
+    {
+      "chunk_id": "f8240801eb206e51",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 21,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门诊)\n科别: 内 26年 1月 24日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 陈志成\nRp:\n布地奈德福莫特罗粉吸入剂 160ug×60s×2支\n甲泼尼龙片\nSy: 320ug 吸入 每天二次\n4mg×24片×1盒\nSy: 8mg 吸入 每天二次\n华健医院\n收费专用章\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    },
+    {
+      "chunk_id": "56dc872232d0192a",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 18,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门\n科别: 内 26年2月20日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛市志诚\nR P: 布地奈德福莫特罗粉吸入剂160ug×60μx7支\nSy: 320ug吸入每天二次\n华健医院\n收费专用章\n1082032295\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": 5,
+      "coverage_pct": 100.0,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "key_fields": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "matched_records": 3,
+      "present_fields": [
+        "encounter_date",
+        "diagnosis"
+      ],
+      "missing_fields": [
+        "chief_complaint"
+      ],
+      "verdict": "OK"
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "matched_records": 1,
+      "present_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "-"
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "-"
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "-"
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "verdict": "-"
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "-"
+    },
+    "_meta": {
+      "unmatched_records": 0
+    }
+  },
+  "note": "",
+  "progress_msg": "\n11:43:02 Task has been received.\n\n-------------------------------------\n[File]:\n11:43:02: File fetched.\n\n11:43:02: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n11:43:02: Start to work on a PDF.\n\n11:43:03: [PaddleOCR] submitting request\n\n11:43:09: [PaddleOCR] respon"
+}

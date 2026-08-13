@@ -1,0 +1,47 @@
+# 线上统计：LZQ 64 哮喘 深圳二院.pdf
+
+## 基本信息
+
+- 文件：`LZQ 64 哮喘 深圳二院.pdf`
+- 大小：50273.2 KB
+- PDF 总页数：20
+- doc_id：`e3bcaeee96d811f19d3ab1cda0a97c3d`
+- 处理方式：upload_file+upload
+- 状态：run=DONE  progress=1.0
+- chunk_count(status)：11  orm_synced：True
+- 处理耗时(服务端)：471.2959s  脚本耗时：484.1s
+
+## 1. 页面覆盖率
+
+| # | chunk_id(前8位) | 页数 | 页码范围 | 内容摘要 |
+|---|----------------|------|----------|----------|
+| 1 | 050bb007 | 4 | 1-4 | 门诊病历 科室:呼吸与危重症医学科 门 联系人 性别:女 年龄:62岁 婚姻状况 |
+| 2 | 862fe97c | 3 | 5-7 | 门诊病历 科室:呼吸与危重症医学科 姓名: 性别:女 门诊 联系方 年龄:62岁 |
+| 3 | d311336a | 3 | 8-10 | 科室:呼吸与危重症医学科 姓名: 性别:女 门诊 联系 年龄:63岁 婚姻状况: |
+| 4 | a73323d6 | 3 | 11-13 | 门诊病历 科室:呼吸与危重症医学科 姓名 性别:女 门诊 联系方式 年龄:63岁 |
+| 5 | 41bf4e72 | 1 | 14-14 | 门诊 姓名： 门(急)诊初诊病历 性别：女 科室：呼吸内科门诊 年龄：63岁 就 |
+| 6 | 01e73ef7 | 1 | 15-15 | 广东省医疗门诊收费票据（电子） 广东省 财政部监制 票据代码：44060125  |
+| 7 | 334ce1e5 | 1 | 16-16 | 电子发票(普通发票) 发票号码：25447000001429974977 开票日 |
+| 8 | 46f28079 | 1 | 17-17 | 门诊号 姓名 科室:呼吸内科门诊 门(急)诊初诊病历 电话 性别:女 年龄:63 |
+| 9 | 05c5d740 | 1 | 18-18 | 广东省医疗门诊收费票据（电子） 广东省 财政部监制 票据代码：44 票据号码：9 |
+| 10 | bc4685bf | 1 | 19-19 | 10:15 淘 交易成功 医药仁康堂医药专营店> 【信必可】布地奈德福莫特罗[  |
+| 11 | f70e81a4 | 1 | 20-20 | 电子发票（普通发票） 发票号码：26322000000914042776 开票日 |
+
+- chunks 总数：11
+- 各 chunk 页数合计（含跨页重复）：20
+- 页码并集：`[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]`
+- 覆盖页数：20 / 20（覆盖率 100.0%）
+- 缺失页：`[]`  超范围页：`[]`
+- **结论：✅ 完全覆盖：chunk 页码并集 = PDF 总页数**
+
+## 2. 关键字段提取统计（基于 chunks extracted_data_tks）
+
+| 类型 | 中文 | 提取记录数 | 核心字段命中 | 缺失字段 | 判定 |
+|------|------|-----------|--------------|----------|------|
+| OutpatientRecord | 门诊 | 6 | encounter_date, chief_complaint, diagnosis | - | **OK** |
+| AdmissionRecord | 入院 | 0 | - | encounter_date, dm_admission_time, cc_text, department | **-** |
+| DischargeRecord | 出院 | 0 | - | admission_date, discharge_date, department, outcome | **-** |
+| MedicationRecord | 购药 | 5 | encounter_date, pharmacy, payment_total | - | **OK** |
+| PrescriptionRecord | 处方 | 0 | - | encounter_date, prescriber, diagnosis | **-** |
+| ExaminationReport | 检查报告 | 0 | - | exam_date, report_date, exam_name, body_part, department | **-** |
+| LabReport | 检验报告 | 0 | - | report_time, report_category, report_name | **-** |

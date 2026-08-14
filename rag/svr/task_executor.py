@@ -1320,6 +1320,34 @@ async def get_server_ip() -> str:
         return 'Unknown'
 
 
+def recover_stale_pending_messages() -> int:
+    """Requeue pending messages left behind by dead consumers.
+
+    After a container restart, messages delivered to the previous executors
+    stay in the consumer group PEL forever since live consumers only read new
+    messages. Run once at startup under a distributed lock so that exactly one
+    executor re-adds messages idle longer than WORKER_HEARTBEAT_TIMEOUT.
+    """
+    lock = RedisDistributedLock("recover_stale_pending_messages", lock_value=CONSUMER_NAME, timeout=60, blocking_timeout=1)
+    if not lock.acquire():
+        logging.info("recover_stale_pending_messages skipped: another executor holds the lock")
+        return 0
+    try:
+        recovered = REDIS_CONN.recover_stale_pending_msgs(
+            settings.get_svr_queue_names(),
+            SVR_CONSUMER_GROUP_NAME,
+            WORKER_HEARTBEAT_TIMEOUT * 1000,
+        )
+        if recovered:
+            logging.info(f"recover_stale_pending_messages requeued {recovered} stale pending message(s)")
+        return recovered
+    except Exception as e:
+        logging.exception(f"recover_stale_pending_messages got exception: {e}")
+        return 0
+    finally:
+        lock.release()
+
+
 async def report_status():
     global CONSUMER_NAME, BOOT_AT, PENDING_TASKS, LAG_TASKS, DONE_TASKS, FAILED_TASKS
     REDIS_CONN.sadd("TASKEXE", CONSUMER_NAME)
@@ -1418,6 +1446,11 @@ async def main():
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
+
+    try:
+        recover_stale_pending_messages()
+    except Exception as e:
+        logging.exception(f"recover_stale_pending_messages at startup got exception: {e}")
 
     report_task = asyncio.create_task(report_status())
     tasks = []

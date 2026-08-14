@@ -6,18 +6,21 @@
 - 目标环境默认 http://10.16.3.16:3160（内网测试环境），RAGFlow 走 39480 端口
 - **不分析 worker 日志**（日志在服务器上），只统计：
   1. 覆盖率：chunks positions 页码并集 vs PDF 总页数
-  2. 关键字段：逐 chunk 拉 extracted_data_tks（结构化提取结果），
-     按特征字段归类到 7 类文档，统计各类核心字段是否提取到
+  2. 类型一致性：解析 status 接口 progress_msg 里 "SmartSplitter done: ... Types: {...}"
+     日志的类型个数，与 clinical 接口 encounters 各类型记录个数比对是否匹配
 
 重复文件处理（upload_file 返回 409）：
 - 默认：略过上传，复用 existing_doc_id，调 /upload（doc_id 模式）更新病案字段并重新解析
 - --reupload：先 DELETE 再重新上传（重新解析）
 - --stats-only：不上传、不触发解析，只对已有文档做统计
+- --reparse-list：取 GET /api/v1/documents 列表返回的文档（默认 20 个），
+  调 /{doc_id}/parse 直接触发重新解析并统计，完全不涉及上传、不改病案字段
 
 用法:
     python benchmark_online.py                        # 默认：已上传则略过上传只重新解析
     python benchmark_online.py --reupload             # 409 重复时删除后重传
     python benchmark_online.py --stats-only           # 只统计，不触发任何解析
+    python benchmark_online.py --reparse-list         # 取文档列表前 20 个，只重解析+统计
     python benchmark_online.py --only 哮喘            # 只处理文件名含"哮喘"的
     python benchmark_online.py --dataset-id <id>      # 手动指定 dataset（默认自动探测）
 """
@@ -38,18 +41,8 @@ from typing import Any
 import requests
 
 # ══════════════════════════════════════════════════════════════════
-# 常量：7 类文档核心字段 + 类型归属特征字段
+# 常量：类型标签 + clinical 接口类型键映射
 # ══════════════════════════════════════════════════════════════════
-
-DOC_TYPE_CORE_FIELDS: dict[str, list[str]] = {
-    "OutpatientRecord": ["encounter_date", "chief_complaint", "diagnosis"],
-    "AdmissionRecord": ["encounter_date", "dm_admission_time", "cc_text", "department"],
-    "DischargeRecord": ["admission_date", "discharge_date", "department", "outcome"],
-    "MedicationRecord": ["encounter_date", "pharmacy", "payment_total"],
-    "PrescriptionRecord": ["encounter_date", "prescriber", "diagnosis"],
-    "ExaminationReport": ["exam_date", "report_date", "exam_name", "body_part", "department"],
-    "LabReport": ["report_time", "report_category", "report_name"],
-}
 
 DOC_TYPE_LABELS: dict[str, str] = {
     "OutpatientRecord": "门诊",
@@ -59,26 +52,24 @@ DOC_TYPE_LABELS: dict[str, str] = {
     "PrescriptionRecord": "处方",
     "ExaminationReport": "检查报告",
     "LabReport": "检验报告",
+    "ProgressNote": "病程记录",
+    "MedicalOrder": "医嘱",
 }
 
-# 类型归属特征字段：extracted_data 中出现这些字段即计分，得分最高的类型胜出。
-# 核心字段本身也在其中；额外补充各类型特有的结构字段。
-DOC_TYPE_HINT_FIELDS: dict[str, list[str]] = {
-    "OutpatientRecord": ["chief_complaint", "diagnosis", "treatment_plan",
-                         "encounter_date", "visit_type"],
-    "AdmissionRecord": ["dm_admission_time", "cc_text", "pi_text", "dm_name",
-                        "dm_gender", "department"],
-    "DischargeRecord": ["discharge_date", "admission_date", "discharge_diagnosis",
-                        "treatment_summary", "outcome"],
-    "MedicationRecord": ["pharmacy", "payment_total", "medications",
-                         "purchase_date", "invoice_no"],
-    "PrescriptionRecord": ["prescriber", "prescription_type", "prescription_no",
-                           "diagnosis"],
-    "ExaminationReport": ["exam_name", "body_part", "exam_date", "report_date",
-                          "department"],
-    "LabReport": ["report_category", "report_name", "report_time", "lab_name",
-                  "items"],
+# clinical 接口 encounters 的类型列表键 → SmartSplitter 类型名
+CLINICAL_KEY_TO_TYPE: dict[str, str] = {
+    "outpatients": "OutpatientRecord",
+    "admission_records": "AdmissionRecord",
+    "discharge_summaries": "DischargeRecord",
+    "medications": "MedicationRecord",
+    "prescriptions": "PrescriptionRecord",
+    "examination_reports": "ExaminationReport",
+    "lab_reports": "LabReport",
+    "progress_notes": "ProgressNote",
+    "medical_orders": "MedicalOrder",
 }
+
+SMART_SPLITTER_TYPES_RE = re.compile(r"SmartSplitter done:.*?Types:\s*\{([^}]*)\}")
 
 # 线上测试环境（a800-116）默认配置
 DEFAULT_MLA_BASE = "http://10.16.3.16:3160"
@@ -125,6 +116,11 @@ def parse_args() -> argparse.Namespace:
                    help="409 重复时先 DELETE 再重传（默认：略过上传，只重新解析）")
     p.add_argument("--stats-only", action="store_true",
                    help="不上传、不触发解析，只对已有文档做统计")
+    p.add_argument("--reparse-list", action="store_true",
+                   help="不上传：取 GET /api/v1/documents 列表返回的文档，"
+                        "调 /{doc_id}/parse 触发重新解析并统计")
+    p.add_argument("--list-count", type=int, default=20,
+                   help="--reparse-list 模式：从文档列表取多少个文档")
     p.add_argument("--max-wait", type=int, default=1800, help="单文档进度等待上限（秒）")
     p.add_argument("--poll-interval", type=int, default=5, help="进度轮询间隔（秒）")
     p.add_argument("--page-size", type=int, default=100, help="文档列表分页大小")
@@ -245,82 +241,64 @@ def chunk_pages(positions: Any) -> list[int]:
     return pages
 
 
+def build_page_check(union: set[int], total_pages: int | None) -> dict:
+    """按页码并集生成覆盖率检查结论（total_pages 为 None 时无法核对）。"""
+    missing = sorted(set(range(1, (total_pages or 0) + 1)) - union) if total_pages else []
+    out_of_range = sorted(p for p in union if total_pages and p > total_pages)
+    covered = len(union)
+    coverage_pct = round(covered * 100.0 / total_pages, 1) if total_pages else None
+    if not union:
+        verdict = "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    elif total_pages is None:
+        verdict = "⚠️ PDF 页数未知，无法核对"
+    elif covered == total_pages and not out_of_range:
+        verdict = "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    else:
+        verdict = (f"❌ 未完全覆盖：覆盖 {covered}/{total_pages} 页，"
+                   f"缺失 {missing}，超范围 {out_of_range}")
+    return {"covered": covered, "total": total_pages, "coverage_pct": coverage_pct,
+            "missing": missing, "out_of_range": out_of_range, "verdict": verdict}
+
+
 def safe_name(name: str, limit: int = 60) -> str:
     """文件名的安全形式（用于输出文件名）。"""
     cleaned = re.sub(r'[\\/:*?"<>|\r\n\t ]+', "_", name).strip("._")
     return cleaned[:limit] or "unnamed"
 
 
-def try_json(text: str) -> Any:
-    try:
-        return json.loads(text)
-    except Exception:
-        return None
+def parse_smart_splitter_types(progress_msg: Any) -> dict[str, int]:
+    """从 progress_msg 的 "SmartSplitter done: ... Types: {...}" 日志解析类型个数。
 
-
-def is_nonempty(v: Any) -> bool:
-    """字段值是否非空（None/空串/空列表/空 dict 视为空）。"""
-    if v is None:
-        return False
-    if isinstance(v, str):
-        return bool(v.strip())
-    if isinstance(v, (list, dict)):
-        return len(v) > 0
-    return True
-
-
-def normalize_extracted(raw: Any) -> list[dict]:
-    """extracted_data_tks 归一化为 dict 列表（可能是 JSON 字符串 / dict / list）。"""
-    if isinstance(raw, str):
-        raw = try_json(raw) if raw.strip() else None
-    if raw is None:
-        return []
-    if isinstance(raw, dict):
-        return [raw]
-    if isinstance(raw, list):
-        return [d for d in raw if isinstance(d, dict)]
-    return []
-
-
-def match_record_type(record: dict) -> tuple[str, int] | None:
-    """按特征字段给提取记录归类：返回 (类型, 命中字段数)，无命中返回 None。"""
-    best: tuple[str, int] | None = None
-    for dtype, hints in DOC_TYPE_HINT_FIELDS.items():
-        score = sum(1 for f in hints if is_nonempty(record.get(f)))
-        if score > 0 and (best is None or score > best[1]):
-            best = (dtype, score)
-    return best
-
-
-def analyze_key_fields(chunk_details: list[dict]) -> dict[str, dict[str, Any]]:
-    """关键字段统计：逐 chunk 的 extracted_data_tks 归类到 7 类并核对核心字段。
-
-    返回 {dtype: {records, matched_records, present_fields, missing_fields, verdict}}
+    多次出现时取最后一行（重解析场景）。无匹配返回空 dict。
     """
-    type_records: dict[str, list[dict]] = {t: [] for t in DOC_TYPE_LABELS}
-    unmatched = 0
-    for detail in chunk_details:
-        records = normalize_extracted(detail.get("extracted_data_tks"))
-        for rec in records:
-            hit = match_record_type(rec)
-            if hit:
-                type_records[hit[0]].append(rec)
-            else:
-                unmatched += 1
-    result: dict[str, dict[str, Any]] = {}
-    for dtype, core in DOC_TYPE_CORE_FIELDS.items():
-        recs = type_records[dtype]
-        present = [f for f in core if any(is_nonempty(r.get(f)) for r in recs)]
-        missing = [f for f in core if f not in present]
-        result[dtype] = {
-            "label": DOC_TYPE_LABELS[dtype],
-            "core_fields": core,
-            "matched_records": len(recs),
-            "present_fields": present,
-            "missing_fields": missing,
-            "verdict": "OK" if recs else "-",
-        }
-    result["_meta"] = {"unmatched_records": unmatched}
+    if not progress_msg:
+        return {}
+    matches = SMART_SPLITTER_TYPES_RE.findall(str(progress_msg))
+    if not matches:
+        return {}
+    return {name: int(cnt) for name, cnt in re.findall(r"'(\w+)':\s*(\d+)", matches[-1])}
+
+
+def count_clinical_types(encounters: Any) -> dict[str, int]:
+    """汇总 clinical 接口 encounters 各类型列表的记录个数（按 SmartSplitter 类型名）。"""
+    counts: dict[str, int] = {}
+    for enc in encounters or []:
+        if not isinstance(enc, dict):
+            continue
+        for key, dtype in CLINICAL_KEY_TO_TYPE.items():
+            items = enc.get(key)
+            if isinstance(items, list) and items:
+                counts[dtype] = counts.get(dtype, 0) + len(items)
+    return counts
+
+
+def compare_type_counts(splitter: dict[str, int], clinical: dict[str, int]) -> dict[str, dict]:
+    """按类型比对两侧个数；任一侧出现的类型都列出，缺失侧按 0 计。"""
+    result: dict[str, dict] = {}
+    for dtype in sorted(set(splitter) | set(clinical)):
+        s = int(splitter.get(dtype, 0))
+        c = int(clinical.get(dtype, 0))
+        result[dtype] = {"splitter": s, "clinical": c, "match": s == c}
     return result
 
 
@@ -398,6 +376,16 @@ class MedlinkaiClient:
         )
         return resp.status_code in (200, 204)
 
+    # ── clinical 接口：按 source_id 拉 encounters（类型一致性比对用）──
+    def get_clinical(self, patient_id: str, source_id: str) -> dict:
+        resp = self.s.get(
+            f"{self.base}/api/v1/patients/{patient_id}/clinical",
+            params={"source_id": source_id},
+            timeout=60,
+        )
+        resp.raise_for_status()
+        return resp.json()
+
     # ── 状态查询：GET /{doc_id}/status（透传 RAGFlow，返回 run 字符串）──
     def get_status(self, doc_id: str) -> dict | None:
         resp = self.s.get(
@@ -449,8 +437,40 @@ class MedlinkaiClient:
             time.sleep(interval)
         return last, note + "进度等待超时（未达终态）。 "
 
-    # ── 按文件名查找已有文档（skip-upload / stats-only 兜底）──
-    def find_existing(self, filename: str) -> str | None:
+    # ── 触发重新解析（--reparse-list 用）：POST /{doc_id}/parse ──
+    def trigger_parse(self, doc_id: str) -> bool:
+        resp = self.s.post(
+            f"{self.base}/api/v1/documents/{doc_id}/parse",
+            params=self._ds_params(),
+            timeout=60,
+        )
+        resp.raise_for_status()
+        return True
+
+    # ── 文档列表（--reparse-list 用），返回 [{doc_id, patient_id, name, size_kb}] ──
+    def list_docs(self, page: int, page_size: int) -> list[dict]:
+        resp = self.s.get(
+            f"{self.base}/api/v1/documents",
+            params={**self._ds_params(), "page": page, "page_size": page_size},
+            timeout=30,
+        )
+        resp.raise_for_status()
+        body = resp.json()
+        out = []
+        for d in body.get("documents", []):
+            if not d.get("doc_id"):
+                continue
+            size = int(d.get("size") or 0)
+            out.append({
+                "doc_id": d["doc_id"],
+                "patient_id": d.get("patient_id") or "",
+                "name": d.get("name") or d["doc_id"],
+                "size_kb": round(size / 1024, 1) if size else None,
+            })
+        return out
+
+    # ── 按文件名查找已有文档（skip-upload / stats-only 兜底），返回 (doc_id, patient_id) ──
+    def find_existing(self, filename: str) -> tuple[str | None, str]:
         for page in range(1, 11):
             try:
                 resp = self.s.get(
@@ -464,12 +484,12 @@ class MedlinkaiClient:
                 for d in docs:
                     name = d.get("name") or ""
                     if name == filename or name.endswith(filename):
-                        return d.get("doc_id")
+                        return d.get("doc_id"), d.get("patient_id") or ""
                 if len(docs) < self.page_size:
                     break
             except requests.RequestException:
                 break
-        return None
+        return None, ""
 
 
 class RagflowClient:
@@ -538,21 +558,6 @@ class RagflowClient:
             page += 1
         return chunks, doc_info
 
-    def get_chunk_detail(self, dataset_id: str, doc_id: str, chunk_id: str) -> dict | None:
-        """单 chunk 详情（含 extracted_data_tks 结构化提取字段）。"""
-        try:
-            resp = requests.get(
-                f"{self.base}/datasets/{dataset_id}/documents/{doc_id}/chunks",
-                params={"id": chunk_id},
-                headers=self.headers,
-                timeout=30,
-            )
-            resp.raise_for_status()
-            items = resp.json().get("data", {}).get("chunks", [])
-            return items[0] if items else None
-        except Exception:
-            return None
-
 
 # ══════════════════════════════════════════════════════════════════
 # 报告生成
@@ -569,7 +574,7 @@ def render_doc_md(pdf: dict, rep: dict) -> str:
     lines.append("")
     lines.append(f"- 文件：`{pdf['name']}`")
     lines.append(f"- 大小：{pdf.get('size_kb')} KB")
-    lines.append(f"- PDF 总页数：{pdf.get('pages')}")
+    lines.append(f"- PDF 总页数：{pdf.get('pages') or '-'}")
     lines.append(f"- doc_id：`{rep.get('doc_id')}`")
     lines.append(f"- 处理方式：{rep.get('mode')}")
     lines.append(f"- 状态：run={rep.get('run')}  progress={rep.get('progress')}")
@@ -602,21 +607,21 @@ def render_doc_md(pdf: dict, rep: dict) -> str:
         lines.append(f"- 缺失页：`{check.get('missing')}`  超范围页：`{check.get('out_of_range')}`")
         lines.append(f"- **结论：{check.get('verdict')}**")
     lines.append("")
-    lines.append("## 2. 关键字段提取统计（基于 chunks extracted_data_tks）")
+    lines.append("## 2. 类型一致性（SmartSplitter 日志 vs clinical encounters）")
     lines.append("")
-    kf = rep.get("key_fields", {})
-    lines.append("| 类型 | 中文 | 提取记录数 | 核心字段命中 | 缺失字段 | 判定 |")
-    lines.append("|------|------|-----------|--------------|----------|------|")
-    for dtype, item in kf.items():
-        if dtype == "_meta":
-            continue
-        lines.append(f"| {dtype} | {item['label']} | {item['matched_records']} "
-                     f"| {', '.join(item['present_fields']) or '-'} "
-                     f"| {', '.join(item['missing_fields']) or '-'} | **{item['verdict']}** |")
-    meta = kf.get("_meta", {})
-    if meta.get("unmatched_records"):
+    tm = rep.get("type_match", {})
+    if not tm:
+        lines.append("**两侧均无可比对类型记录（SmartSplitter 日志缺失或 clinical 无类型）**")
+    else:
+        lines.append("| 类型 | 中文 | SmartSplitter chunks | clinical 记录 | 匹配 |")
+        lines.append("|------|------|---------------------|---------------|------|")
+        for dtype, item in tm.items():
+            mark = "✅" if item["match"] else "❌"
+            lines.append(f"| {dtype} | {DOC_TYPE_LABELS.get(dtype, dtype)} | {item['splitter']} "
+                         f"| {item['clinical']} | {mark} |")
+        bad = [dtype for dtype, item in tm.items() if not item["match"]]
         lines.append("")
-        lines.append(f"- 未归类提取记录：{meta['unmatched_records']} 条")
+        lines.append(f"- 判定：{'✅ 全部类型匹配' if not bad else '❌ 不匹配类型: ' + ', '.join(bad)}")
     lines.append("")
     return "\n".join(lines)
 
@@ -645,7 +650,7 @@ def collect_pdfs(pdf_dir: Path, only: str) -> list[dict]:
 def run() -> int:
     args = parse_args()
     pdf_dir = Path(args.pdf_dir)
-    if not pdf_dir.is_dir():
+    if not args.reparse_list and not pdf_dir.is_dir():
         print(f"[error] PDF 目录不存在: {pdf_dir}")
         return 1
 
@@ -656,17 +661,20 @@ def run() -> int:
     docs_dir = out / "docs"
     docs_dir.mkdir(parents=True, exist_ok=True)
 
-    # 疾病三级分类：优先从文件夹名匹配字典推导，失败回退命令行默认
-    illness_entries = fetch_illness_catalog(args.medlinkai_base)
-    folder_illness = resolve_illness_from_folder(pdf_dir.name, illness_entries)
-    illness_case = {
-        "illness_code_l1": (folder_illness or {}).get("illness_code_l1") or args.illness_code_l1,
-        "illness_label_l1": (folder_illness or {}).get("illness_label_l1") or args.illness_label_l1,
-        "illness_code_l2": (folder_illness or {}).get("illness_code_l2") or args.illness_code_l2,
-        "illness_label_l2": (folder_illness or {}).get("illness_label_l2") or args.illness_label_l2,
-        "illness_code_l3": (folder_illness or {}).get("illness_code_l3") or args.illness_code_l3,
-        "illness_label_l3": (folder_illness or {}).get("illness_label_l3") or args.illness_label_l3,
-    }
+    # 疾病三级分类：优先从文件夹名匹配字典推导，失败回退命令行默认（--reparse-list 不改病案字段，跳过）
+    if args.reparse_list:
+        illness_case: dict[str, str] = {}
+    else:
+        illness_entries = fetch_illness_catalog(args.medlinkai_base)
+        folder_illness = resolve_illness_from_folder(pdf_dir.name, illness_entries)
+        illness_case = {
+            "illness_code_l1": (folder_illness or {}).get("illness_code_l1") or args.illness_code_l1,
+            "illness_label_l1": (folder_illness or {}).get("illness_label_l1") or args.illness_label_l1,
+            "illness_code_l2": (folder_illness or {}).get("illness_code_l2") or args.illness_code_l2,
+            "illness_label_l2": (folder_illness or {}).get("illness_label_l2") or args.illness_label_l2,
+            "illness_code_l3": (folder_illness or {}).get("illness_code_l3") or args.illness_code_l3,
+            "illness_label_l3": (folder_illness or {}).get("illness_label_l3") or args.illness_label_l3,
+        }
     if args.seed is not None:
         random.seed(args.seed)
 
@@ -674,7 +682,8 @@ def run() -> int:
     rf_probe = RagflowClient(args.ragflow_base, args.ragflow_api_key)
     dataset_id = rf_probe.resolve_dataset(args.dataset_id, args.dataset_name)
 
-    mode_desc = ("只统计，不触发解析" if args.stats_only
+    mode_desc = ("取文档列表只重解析+统计，不上传" if args.reparse_list
+                 else "只统计，不触发解析" if args.stats_only
                  else "重复时删除重传" if args.reupload
                  else "重复时略过上传，只重新解析（默认）")
 
@@ -684,34 +693,56 @@ def run() -> int:
     print(f"MedLinkAI : {args.medlinkai_base}")
     print(f"RAGFlow   : {args.ragflow_base}")
     print(f"dataset   : {dataset_id}")
-    print(f"PDF 目录   : {pdf_dir}")
+    if args.reparse_list:
+        print(f"文档来源   : GET /api/v1/documents 列表前 {args.list_count} 个")
+    else:
+        print(f"PDF 目录   : {pdf_dir}")
+        print(f"病案字段   : name_abbr/gender/age 每文档自动生成；疾病=文件夹「{pdf_dir.name}」推导 → "
+              f"{illness_case['illness_label_l3']}({illness_case['illness_code_l3']})")
     print(f"重复处理   : {mode_desc}")
-    print(f"病案字段   : name_abbr/gender/age 每文档自动生成；疾病=文件夹「{pdf_dir.name}」推导 → "
-          f"{illness_case['illness_label_l3']}({illness_case['illness_code_l3']})")
     print(f"输出目录   : {out}")
     print("=" * 72)
-
-    pdfs = collect_pdfs(pdf_dir, args.only)
-    if not pdfs:
-        print("[error] 未找到 PDF 文件")
-        return 1
-    print(f"发现 {len(pdfs)} 个 PDF")
 
     mla = MedlinkaiClient(args.medlinkai_base, dataset_id, args.page_size,
                           api_key=args.api_key, basic_auth=args.basic_auth)
     rf = RagflowClient(args.ragflow_base, args.ragflow_api_key)
 
+    if args.reparse_list:
+        # 从文档列表取已有文档（不上传）；pages 未知（服务端不返回页数），覆盖率按未知处理
+        docs = mla.list_docs(page=1, page_size=args.list_count)
+        if args.only:
+            docs = [d for d in docs if args.only in d["name"]]
+        pdfs: list[dict] = [
+            {"path": None, "name": d["name"], "size_kb": d["size_kb"], "pages": None,
+             "doc_id": d["doc_id"], "patient_id": d["patient_id"]}
+            for d in docs
+        ]
+        if not pdfs:
+            print("[error] 文档列表为空")
+            return 1
+        print(f"从文档列表取 {len(pdfs)} 个文档")
+    else:
+        pdfs = collect_pdfs(pdf_dir, args.only)
+        if not pdfs:
+            print("[error] 未找到 PDF 文件")
+            return 1
+        print(f"发现 {len(pdfs)} 个 PDF")
+
     all_reports: list[dict] = []
 
     for idx, pdf in enumerate(pdfs, 1):
-        case = {
-            "name_abbr": args.name_abbr or extract_name_abbr(pdf["name"], idx),
-            "gender": args.gender or random.choice(["man", "woman"]),
-            "age": args.age or random.randint(18, 80),
-            **illness_case,
-        }
-        print(f"\n[{idx}/{len(pdfs)}] {pdf['name']} （PDF 页数: {pdf['pages']}）"
-              f" 病案: {case['name_abbr']}/{case['gender']}/{case['age']}岁")
+        if args.reparse_list:
+            print(f"\n[{idx}/{len(pdfs)}] {pdf['name']} （doc_id={pdf.get('doc_id')}）")
+            case: dict[str, Any] = {}
+        else:
+            case = {
+                "name_abbr": args.name_abbr or extract_name_abbr(pdf["name"], idx),
+                "gender": args.gender or random.choice(["man", "woman"]),
+                "age": args.age or random.randint(18, 80),
+                **illness_case,
+            }
+            print(f"\n[{idx}/{len(pdfs)}] {pdf['name']} （PDF 页数: {pdf['pages']}）"
+                  f" 病案: {case['name_abbr']}/{case['gender']}/{case['age']}岁")
         rep: dict[str, Any] = {
             "pdf": pdf,
             "doc_id": None,
@@ -726,17 +757,29 @@ def run() -> int:
             "elapsed_s": None,
             "chunks": [],
             "pages": {},
-            "key_fields": {},
+            "type_match": {},
             "note": "",
         }
 
         t0 = time.time()
         doc_id: str | None = None
+        patient_id = ""
         triggered = False  # 本次是否触发了（重新）解析
 
         # ── 上传 / 复用阶段 ──
-        if args.stats_only:
-            doc_id = mla.find_existing(pdf["name"])
+        if args.reparse_list:
+            doc_id = pdf.get("doc_id")
+            patient_id = pdf.get("patient_id") or ""
+            rep["mode"] = "reparse-list"
+            try:
+                mla.trigger_parse(doc_id)
+                triggered = True
+                print(f"  已触发重新解析 → doc_id={doc_id}")
+            except Exception as e:
+                rep["note"] += f"触发重新解析失败: {e} "
+                print(f"  [error] 触发重新解析失败: {e}")
+        elif args.stats_only:
+            doc_id, patient_id = mla.find_existing(pdf["name"])
             rep["mode"] = "stats-only"
             if doc_id:
                 print(f"  stats-only：找到已有文档 doc_id={doc_id}")
@@ -762,7 +805,7 @@ def run() -> int:
                 print(f"  [error] 上传失败: {e}")
         else:
             # 默认：先查已有文档（略过上传），没有再上传
-            doc_id = mla.find_existing(pdf["name"])
+            doc_id, patient_id = mla.find_existing(pdf["name"])
             if doc_id:
                 rep["mode"] = "existing+reparse"
                 print(f"  已上传，略过上传 → doc_id={doc_id}，触发重新解析")
@@ -802,6 +845,7 @@ def run() -> int:
         rep["doc_id"] = doc_id
 
         # ── 进度监控（status 接口）──
+        full_progress_msg = ""
         try:
             status, wait_note = mla.wait_status(doc_id, args.max_wait, args.poll_interval,
                                                 wait_running=triggered)
@@ -812,8 +856,9 @@ def run() -> int:
                 rep["chunk_count_api"] = status.get("chunk_count")
                 rep["orm_synced"] = status.get("orm_synced")
                 rep["process_duration"] = status.get("process_duration")
-                if status.get("progress_msg"):
-                    rep["progress_msg"] = str(status.get("progress_msg"))[:300]
+                full_progress_msg = str(status.get("progress_msg") or "")
+                if full_progress_msg:
+                    rep["progress_msg"] = full_progress_msg[:300]
                 print(f"  run={rep['run']} progress={rep['progress']} "
                       f"chunk_count={rep.get('chunk_count_api')} orm_synced={rep.get('orm_synced')}")
         except Exception as e:
@@ -848,26 +893,15 @@ def run() -> int:
                 union.update(pg_set)
                 page_sum += len(pg_set)
             total_pages = pdf.get("pages")
-            missing = sorted(set(range(1, (total_pages or 0) + 1)) - union) if total_pages else []
-            out_of_range = sorted(p for p in union if total_pages and p > total_pages)
-            covered = len(union)
-            coverage_pct = round(covered * 100.0 / total_pages, 1) if total_pages else None
-            if not chunks:
-                verdict = "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
-            elif total_pages is None:
-                verdict = "⚠️ PDF 页数未知，无法核对"
-            elif covered == total_pages and not out_of_range:
-                verdict = "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
-            else:
-                verdict = (f"❌ 未完全覆盖：覆盖 {covered}/{total_pages} 页，"
-                           f"缺失 {missing}，超范围 {out_of_range}")
+            check = build_page_check(union, total_pages)
+            missing = check["missing"]
+            covered = check["covered"]
+            coverage_pct = check["coverage_pct"]
+            verdict = check["verdict"]
             rep["pages"] = {
                 "union": sorted(union),
                 "page_sum": page_sum,
-                "check": {"covered": covered, "total": total_pages,
-                          "coverage_pct": coverage_pct,
-                          "missing": missing, "out_of_range": out_of_range,
-                          "verdict": verdict},
+                "check": check,
             }
             print(f"  chunks={len(chunks)} 覆盖页数={covered}/{total_pages}"
                   f"（{coverage_pct}%） 缺失={missing}")
@@ -875,24 +909,30 @@ def run() -> int:
             rep["note"] += f"chunks 查询失败: {e} "
             print(f"  [error] chunks 查询失败: {e}")
 
-        # ── 关键字段统计（逐 chunk 拉 extracted_data_tks）──
+        # ── 类型一致性统计（SmartSplitter 日志 vs clinical encounters）──
         try:
-            details: list[dict] = []
-            for c in rep["chunks"]:
-                cid = c.get("chunk_id")
-                if not cid:
-                    continue
-                d = rf.get_chunk_detail(dataset_id, doc_id, cid)
-                if d:
-                    details.append(d)
-            rep["key_fields"] = analyze_key_fields(details)
-            hit_types = [f"{t}({v['matched_records']})"
-                         for t, v in rep["key_fields"].items()
-                         if t != "_meta" and v["matched_records"] > 0]
-            print(f"  关键字段: 提取到类型 {', '.join(hit_types) or '无'}")
+            splitter_types = parse_smart_splitter_types(full_progress_msg)
+            if not splitter_types:
+                rep["note"] += "progress_msg 未找到 SmartSplitter 类型日志。 "
+            if not patient_id:
+                _doc_id2, patient_id = mla.find_existing(pdf["name"])
+            clinical_types: dict[str, int] = {}
+            if patient_id:
+                clinical = mla.get_clinical(patient_id, doc_id)
+                clinical_types = count_clinical_types(clinical.get("encounters") or [])
+            else:
+                rep["note"] += "未获取到 patient_id，跳过 clinical 比对。 "
+            rep["type_match"] = compare_type_counts(splitter_types, clinical_types)
+            bad = [f"{t}({v['splitter']}/{v['clinical']})"
+                   for t, v in rep["type_match"].items() if not v["match"]]
+            if bad:
+                print(f"  类型不匹配: {', '.join(bad)}")
+            else:
+                print(f"  类型匹配 ✅ {len(rep['type_match'])} 类，"
+                      f"共 {sum(v['splitter'] for v in rep['type_match'].values())} chunks")
         except Exception as e:
-            rep["note"] += f"关键字段统计失败: {e} "
-            print(f"  [error] 关键字段统计失败: {e}")
+            rep["note"] += f"类型一致性统计失败: {e} "
+            print(f"  [error] 类型一致性统计失败: {e}")
 
         rep["end_at"] = datetime.now().isoformat(timespec="seconds")
         rep["elapsed_s"] = round(time.time() - t0, 1)
@@ -917,17 +957,17 @@ def run() -> int:
     for rep in all_reports:
         p = rep["pdf"]
         check = rep["pages"].get("check", {})
-        kf = rep.get("key_fields", {})
+        tm = rep.get("type_match", {})
 
         def cell(dtype: str) -> str:
-            item = kf.get(dtype)
-            if not item or item["matched_records"] == 0:
+            item = tm.get(dtype)
+            if not item or (item["splitter"] == 0 and item["clinical"] == 0):
                 return "-"
-            miss = len(item["missing_fields"])
-            return "OK" if miss == 0 else f"缺{miss}"
+            mark = "" if item["match"] else "✗"
+            return f"{item['splitter']}/{item['clinical']}{mark}"
 
         summary_md.append(
-            f"| {p['name']} | {p['pages']} | {rep['doc_id'] or '-'} | {rep['run'] or '-'} "
+            f"| {p['name']} | {p['pages'] or '-'} | {rep['doc_id'] or '-'} | {rep['run'] or '-'} "
             f"| {len(rep['chunks'])} | {check.get('covered', '-')} "
             f"| {check.get('coverage_pct', '-')} | {check.get('missing', [])} "
             + "".join(f"| {cell(t)}" for t in DOC_TYPE_LABELS) + " |")
@@ -936,12 +976,16 @@ def run() -> int:
     n_done = sum(1 for r in all_reports if r.get("run") == "DONE")
     n_full = sum(1 for r in all_reports
                  if r["pages"].get("check", {}).get("verdict", "").startswith("✅"))
+    n_match = sum(1 for r in all_reports
+                  if r.get("type_match")
+                  and all(v["match"] for v in r["type_match"].values()))
     summary_md += [
         "",
-        f"- run=DONE：{n_done}/{n_total}；页面完全覆盖：{n_full}/{n_total}",
+        f"- run=DONE：{n_done}/{n_total}；页面完全覆盖：{n_full}/{n_total}；"
+        f"类型全部匹配：{n_match}/{n_total}",
         "",
-        "判定说明：OK=该类型提取记录齐全（核心字段全部非空）；缺N=命中该类型但缺 N 个核心字段；"
-        "-=未提取到该类型记录",
+        "判定说明：单元格=SmartSplitter chunk 数 / clinical 记录数，✗=两侧不一致；"
+        "-=两侧均无该类型记录",
         "",
     ]
     (out / "summary.md").write_text("\n".join(summary_md), encoding="utf-8")

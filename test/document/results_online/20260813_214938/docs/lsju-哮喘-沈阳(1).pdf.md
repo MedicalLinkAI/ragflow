@@ -1,0 +1,46 @@
+# 线上统计：lsju-哮喘-沈阳(1).pdf
+
+## 基本信息
+
+- 文件：`lsju-哮喘-沈阳(1).pdf`
+- 大小：6468.1 KB
+- PDF 总页数：9
+- doc_id：`a456f64a96bc11f19d3ab1cda0a97c3d`
+- 处理方式：existing+reparse
+- 状态：run=DONE  progress=1.0
+- chunk_count(status)：8  orm_synced：True
+- 处理耗时(服务端)：151.8842s  脚本耗时：156.3s
+
+## 1. 页面覆盖率
+
+| # | chunk_id(前8位) | 页数 | 页码范围 | 内容摘要 |
+|---|----------------|------|----------|----------|
+| 1 | 749136bb | 2 | 1-2 | 病例记录 科别： 主诉： 现病史：一 既往史： 体格检查： 病例记录 辅助检查： |
+| 2 | fa4a7aa1 | 1 | 3-3 | 北票成岩中医院 门诊病历 科别：内科门诊 姓名 性别：女 年龄：57岁 门诊号： |
+| 3 | 838db9ed | 2 | 4-5 | 病历记录 以下为中国医科大学附属第一医院门（急）诊病历记录 2021年10月11 |
+| 4 | 93f329a9 | 1 | 6-6 | 订单详情 完成 建议您关注病情进展并及时复诊 去复诊 > 再次购买 已签收 您的 |
+| 5 | 38b73181 | 1 | 7-7 | 13:19 5G 49 < 哮喘用药热卖榜第4名 85****3662 自营 京 |
+| 6 | d74fc370 | 1 | 8-8 | 电子发票(普通发票) 国家税务总局 辽宁省税务局 发票号码: 262170000 |
+| 7 | 16c5850f | 1 | 9-9 | 芳草大药房(孤岛路店) 欢迎光临 顾客姓名: 流水号: 001LS2025120 |
+| 8 | 56eae4e5 | 1 | 9-9 | 芳草大药房(孤岛路店) 欢迎光临 顾客姓名: 流水号: 0011S2025123 |
+
+- chunks 总数：8
+- 各 chunk 页数合计（含跨页重复）：10
+- 页码并集：`[1, 2, 3, 4, 5, 6, 7, 8, 9]`
+- 覆盖页数：9 / 9（覆盖率 100.0%）
+- 缺失页：`[]`  超范围页：`[]`
+- **结论：✅ 完全覆盖：chunk 页码并集 = PDF 总页数**
+
+## 2. 关键字段提取统计（基于 chunks extracted_data_tks）
+
+| 类型 | 中文 | 提取记录数 | 核心字段命中 | 缺失字段 | 判定 |
+|------|------|-----------|--------------|----------|------|
+| OutpatientRecord | 门诊 | 2 | encounter_date, chief_complaint, diagnosis | - | **OK** |
+| AdmissionRecord | 入院 | 0 | - | encounter_date, dm_admission_time, cc_text, department | **-** |
+| DischargeRecord | 出院 | 0 | - | admission_date, discharge_date, department, outcome | **-** |
+| MedicationRecord | 购药 | 5 | encounter_date, pharmacy, payment_total | - | **OK** |
+| PrescriptionRecord | 处方 | 0 | - | encounter_date, prescriber, diagnosis | **-** |
+| ExaminationReport | 检查报告 | 0 | - | exam_date, report_date, exam_name, body_part, department | **-** |
+| LabReport | 检验报告 | 0 | - | report_time, report_category, report_name | **-** |
+
+- 未归类提取记录：1 条

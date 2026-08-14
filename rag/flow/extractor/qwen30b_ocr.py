@@ -4,6 +4,7 @@
 # 表格处理（LabReport）：直接提取检验项 name/code + bbox，构建 row_positions 和 HTML 表格
 
 import base64
+import asyncio
 import json
 import logging
 import os
@@ -664,9 +665,11 @@ async def process_table(ext, ck: dict, llm_name: str):
 
         for pn, img_bytes, page_w, page_h, crop_offset_x, crop_offset_y, crop_w, crop_h in page_img_data:
             # ── Step A: Image → LaTeX ──
-            latex_content, latex_elapsed, latex_status = _call_qwen30b_latex_only(
+            # 同步 requests 调用推到线程，避免阻塞事件loop影响chunk级并发
+            latex_content, latex_elapsed, latex_status = await asyncio.to_thread(
+                _call_qwen30b_latex_only,
                 img_bytes, TABLE_TO_LATEX_PROMPT, TAG, endpoint_cfg,
-                system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。"
+                "你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。"
             )
             if latex_status != "ok" or not latex_content:
                 logging.warning(f"{TAG} StepA: page={pn} LaTeX failed: {latex_status}")
@@ -679,10 +682,11 @@ async def process_table(ext, ck: dict, llm_name: str):
                     f"{TAG} StepA: page={pn} LaTeX degenerated into repetition loop, "
                     f"retrying with repetition_penalty"
                 )
-                latex2, _, s2 = _call_qwen30b_latex_only(
+                latex2, _, s2 = await asyncio.to_thread(
+                    _call_qwen30b_latex_only,
                     img_bytes, TABLE_TO_LATEX_PROMPT, TAG, endpoint_cfg,
-                    system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。",
-                    extra_params={"repetition_penalty": 1.2},
+                    "你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。",
+                    {"repetition_penalty": 1.2},
                 )
                 if s2 == "ok" and latex2 and not _has_repetition_loop(latex2):
                     latex_content = latex2
@@ -698,10 +702,11 @@ async def process_table(ext, ck: dict, llm_name: str):
                     f"{TAG} StepA: page={pn} table row repeated {repeats}x "
                     f"({preview}...), retrying with repetition_penalty"
                 )
-                latex2, _, s2 = _call_qwen30b_latex_only(
+                latex2, _, s2 = await asyncio.to_thread(
+                    _call_qwen30b_latex_only,
                     img_bytes, TABLE_TO_LATEX_PROMPT, TAG, endpoint_cfg,
-                    system_msg="你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。",
-                    extra_params={"repetition_penalty": 1.2},
+                    "你是一个医疗文档表格识别专家。请将图片中的表格精确转换为LaTeX tabular格式输出。",
+                    {"repetition_penalty": 1.2},
                 )
                 if s2 == "ok" and latex2:
                     latex2, rep2 = _dedup_latex_rows(latex2)
@@ -768,8 +773,8 @@ async def process_table(ext, ck: dict, llm_name: str):
             # ── Step C: 用 item_names 在原图定位坐标 ──
             if page_item_names_list:
                 table_prompt = _build_table_prompt(page_item_names_list)
-                ocr_items, coord_elapsed, coord_status = _call_qwen30b_to_coord(
-                    img_bytes, table_prompt, TAG, endpoint_cfg
+                ocr_items, coord_elapsed, coord_status = await asyncio.to_thread(
+                    _call_qwen30b_to_coord, img_bytes, table_prompt, TAG, endpoint_cfg
                 )
                 if coord_status == "ok" and ocr_items:
                     # scale: model 0-1000 → cropped image pts, then offset back to page pts
@@ -979,7 +984,9 @@ async def process_text(ext, ck: dict, llm_name: str):
         all_page_texts = []
 
         for pn, img_bytes, page_w, page_h, cox, coy, cw, ch in page_img_data:
-            data, api_elapsed, status = _call_qwen30b_text_only(img_bytes, TEXT_ONLY_PROMPT, TAG, endpoint_cfg)
+            data, api_elapsed, status = await asyncio.to_thread(
+                _call_qwen30b_text_only, img_bytes, TEXT_ONLY_PROMPT, TAG, endpoint_cfg
+            )
             if status != "ok" or not isinstance(data, list):
                 logging.warning(f"{TAG} Step3: page={pn} OCR failed: {status}")
                 continue
@@ -1088,7 +1095,9 @@ async def process_text(ext, ck: dict, llm_name: str):
         for pn, text_lines, cox, coy, cw, ch in page_text_data:
             coord_prompt = _build_coord_prompt(text_lines)
             img_bytes = next(ib for _pn, ib, *_ in page_img_data if _pn == pn)
-            ocr_items, api_elapsed, status = _call_qwen30b_to_coord(img_bytes, coord_prompt, TAG, endpoint_cfg)
+            ocr_items, api_elapsed, status = await asyncio.to_thread(
+                _call_qwen30b_to_coord, img_bytes, coord_prompt, TAG, endpoint_cfg
+            )
             if status != "ok" or not ocr_items:
                 logging.warning(f"{TAG} Step7: page={pn} coord failed: {status}, "
                                 f"adding {len(text_lines)} placeholder(s)")

@@ -1,0 +1,48 @@
+# 线上统计：chho-麦济122-哮喘-沈阳-医大四院.pdf
+
+## 基本信息
+
+- 文件：`chho-麦济122-哮喘-沈阳-医大四院.pdf`
+- 大小：8763.4 KB
+- PDF 总页数：13
+- doc_id：`56be42c296ca11f19d3ab1cda0a97c3d`
+- 处理方式：existing+reparse
+- 状态：run=DONE  progress=1.0
+- chunk_count(status)：12  orm_synced：True
+- 处理耗时(服务端)：267.7367s  脚本耗时：270.4s
+
+## 1. 页面覆盖率
+
+| # | chunk_id(前8位) | 页数 | 页码范围 | 内容摘要 |
+|---|----------------|------|----------|----------|
+| 1 | 7bf2572a | 1 | 1-1 | 2/4 沈阳市第四人民医院 THE FOURTH PEOPLE'S HOSPIT |
+| 2 | cd5050e7 | 1 | 2-2 | 中国医科大学沈阳市第四人民医院 报告单 出生日期：1983-6-17 性别：女  |
+| 3 | aaf41bd8 | 1 | 3-3 | 中国医科大学沈阳市第四人民医院 肺功能报告单 姓名： 出生日期： 1983-6- |
+| 4 | 5e3bcc80 | 1 | 6-6 | 辽宁崇文厚德医院 门诊病历 科室：呼吸内一科门诊 姓名： 职业： 就诊日期：20 |
+| 5 | d3bbd55e | 1 | 7-7 | 新药特药大药房总店 流水单号 10020045213 结账时间 2025-11- |
+| 6 | 529590cf | 1 | 8-8 | 2/4 科 室:呼吸与危重症一门诊 诊断:(J45.900x001)支气管哮喘  |
+| 7 | d23d92af | 1 | 9-9 | 新药特药大药房总店 流水单号 10020044912 结账时间 2025-10- |
+| 8 | 182269b7 | 1 | 10-10 | 1/1 NO:25004949727 4号窗口 25/11/03 16:39 普 |
+| 9 | d8838687 | 1 | 11-11 | 沈阳市第四人民医院 处方笺 医疗类别:市医保 NO:25005558582 4号 |
+| 10 | 0bd58802 | 1 | 12-12 | 新药特药大药房总店 流水单号 10020046503 结账时间 2026-01- |
+| 11 | aa62bd91 | 1 | 13-13 | 沈阳市第四人民医院 处方笺 医疗类别:市医保 NO:26000513029 3号 |
+| 12 | ac113f49 | 2 | 4-5 | <table><tr><td>白细胞</td><td>None</td><td> |
+
+- chunks 总数：12
+- 各 chunk 页数合计（含跨页重复）：13
+- 页码并集：`[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]`
+- 覆盖页数：13 / 13（覆盖率 100.0%）
+- 缺失页：`[]`  超范围页：`[]`
+- **结论：✅ 完全覆盖：chunk 页码并集 = PDF 总页数**
+
+## 2. 关键字段提取统计（基于 chunks extracted_data_tks）
+
+| 类型 | 中文 | 提取记录数 | 核心字段命中 | 缺失字段 | 判定 |
+|------|------|-----------|--------------|----------|------|
+| OutpatientRecord | 门诊 | 2 | encounter_date, chief_complaint, diagnosis | - | **OK** |
+| AdmissionRecord | 入院 | 0 | - | encounter_date, dm_admission_time, cc_text, department | **-** |
+| DischargeRecord | 出院 | 0 | - | admission_date, discharge_date, department, outcome | **-** |
+| MedicationRecord | 购药 | 3 | encounter_date, pharmacy, payment_total | - | **OK** |
+| PrescriptionRecord | 处方 | 4 | encounter_date, prescriber, diagnosis | - | **OK** |
+| ExaminationReport | 检查报告 | 2 | exam_date, report_date, exam_name, body_part | department | **OK** |
+| LabReport | 检验报告 | 1 | - | report_time, report_category, report_name | **OK** |

@@ -1,0 +1,224 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\LHYA-哮喘-沈阳医大四.pdf",
+    "name": "LHYA-哮喘-沈阳医大四.pdf",
+    "size_kb": 4483.0,
+    "pages": 7
+  },
+  "doc_id": "a57842ea96d011f19d3ab1cda0a97c3d",
+  "mode": "existing+reparse",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 203.00761,
+  "begin_at": "2026-08-13T22:27:22",
+  "end_at": "2026-08-13T22:30:50",
+  "elapsed_s": 207.6,
+  "chunks": [
+    {
+      "chunk_id": "a9592912a0b4655f",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 24,
+      "content": "四平市中心人民医院\n门诊诊断书\n0003316\n(患者保管)\nSPZXYy-JLLC-042\n姓名\n性别\n女\n年龄\n54岁\n单位\n诊断\n支气管哮喘\n病情诊断摘要依据\n发作性喘息30余年，双肺干\n啰音，诊断支气管哮喘\n医生处理意见\n1.平喘治疗\n2.随访\n医生签字：\n门诊部负责人签字：\n科主任签字：\n门诊部盖章：2023年12月27日\n(无公章和医生章无效)"
+    },
+    {
+      "chunk_id": "b4192c28b95060b2",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 44,
+      "content": "四平市中医医院\n门诊病历\n初诊\n2025年11月26日\n肾病糖尿病科\n姓名\n性别\n女性\n年龄\n55岁\n门诊号码\n202511260272\n（1）\n发病日期\n2025-11-26\n类别\n自费\n保险卡号\n就诊方式\n便民门诊费\n医生\n王亚新\n联系地址\n四平铁西\n联系电话\n13689710485\n身份证号\n职业\n体温 36.5 ℃ 血压 130、80 mmHg 脉搏 70 次/分\n药物过敏史\n无\n主诉:\n自述糖尿病4年，支气管哮喘30余年\n病史:\n糖尿病4年，尿中有沫。伴双下肢水肿+。现二甲双胍片，0.5，日3次，口服。血糖控制不佳。葡萄糖：12.39mmol/1.，糖化：\n10.1%，一周前感冒山现"
+    },
+    {
+      "chunk_id": "d1018e4eeb133398",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 29,
+      "content": "四平市中医医院\n内二疗区\n门诊病历\n初诊\n2025年12月31日\n姓名\n性别：女性\n年龄：55岁\n门诊号码：202512310183\n（1）\n发病日期：2025-12-31\n类别：自费\n保险卡号\n就诊方式：服务号\n医生：张楷婷\n联系地址：吉林省四平市\n联系电话：13689710485\n身份证号：220303197009242283\n职业：\n体温 36.4 ℃ 血压 120/78 mmHg 脉搏 66 次/分\n药物过敏史：否\n主诉：发现血糖升高4年\n病史：发现血糖升高4年，现二甲双胍片0.5g日3次口服控制血糖。测空腹血糖11.41mmol/L，糖化血红蛋白8.9%，尿糖3+。\n临床诊断：2型糖"
+    },
+    {
+      "chunk_id": "b56fbc4fd50e8f10",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 118,
+      "content": "四平市中心人民医院\n常规通气+舒张试验\n姓名：\n年龄：53岁\n住院号：111630435\n身高：168cm\n性别：女\n吸烟史：\n测试号：20231227014\n体重：82kg\nFlow [L/s]\nF/V ex\nVol [L]\nVol%VCmax\nVCmax\nTime [s]\nF/V in\n测试日期\n测试时间\n预计值\n药前\n前/预%\n药后\n后/预% 改善率(%)\nMV\n[L/min]\n11.71\n27.39\n233.8\n23/12/27\n23/12/27\n7.6\nVC MAX\n[L]\n3.28\n3.52\n107.3\n3.78\n115.4\n15:36:14\n15:51:45\nFVC\n[L]\n3."
+    },
+    {
+      "chunk_id": "1a206ff8f57324cf",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 121,
+      "content": "四平市中心人民医院\n常规通气\n姓名：李洪燕\n性别：女\n年龄：53岁\n吸烟史：\n住院号：111630435\n测试号：20231227014\n身高：168 cm\n体重：82 kg\nFlow [L/s]\nF/V ex\nVol [L]\nVol%Vmax\nVCmax\nF/V in\nTime [s]\n预计值\n实测值\n实/预\n测试日期\n23/12/27\n测试时间\n15:36:14下午\nVT\n[L]\n0.59\n1.51\n258.6\nBF\n[1/min]\n20.00\n18.08\n90.4\nMV\n[L/min]\n11.71\n27.39\n233.8\nVC MAX\n[L]\n3.28\n3.52\n107.3\nERV\n[L"
+    },
+    {
+      "chunk_id": "dad2f80ec680a9da",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 37,
+      "content": "信康大药房--佳合分店\n单号：250927207100156\n日期：2025-09-27 17:52:20\n会员卡号：13689710485\n姓名：\n积分：37\n总积分：47\n药品名称\n规格\n生产企业/药品上市许可持有人\n产地\n剂型\n批号\n有效期\n数量\n单价\n金额\n12534\n185.00\n沙美特罗替卡松吸入粉雾剂\n50微克/250微克/60泡/盒\n葛兰素史克集团吸入粉雾剂\nJD6K\n2027-06-18\n2盒\n185.00\n370.00\n信康大药房温馨提示：您购买的\n药品需要常温储存(10℃-30℃)\n合计：\n370.00\n实收：\n370.00\n开票员：王影\n营业员：7139\n药品售出无质量"
+    },
+    {
+      "chunk_id": "102142f7614f8a0f",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 37,
+      "content": "信康大药房--佳合分店\n单号：251128207100163\n日期：2025-11-28 16:38:41\n会员卡号：13689710485\n姓名：\n积分：37\n总积分：84\n药品名称\n规格\n生产企业/药品上市许可持有人\n产地\n剂型\n批号\n有效期\n数量\n单价\n金额\n12534\n185.00\n沙美特罗替卡松吸入粉雾剂\n50微克/250微克/60泡/盒\n葛兰素史克集团吸入粉雾剂\nJD6K\n2027-06-18\n2盒\n185.00\n370.00\n信康大药房温馨提示：您购买的\n药品需要常温储存（10℃-30℃）\n合计：\n370.00\n实收：\n370.00\n开票员：张欣\n营业员：7140\n药品售出无质量"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "page_sum": 7,
+    "check": {
+      "covered": 7,
+      "total": 7,
+      "coverage_pct": 100.0,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "key_fields": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "matched_records": 3,
+      "present_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "verdict": "-"
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "verdict": "-"
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "matched_records": 2,
+      "present_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "verdict": "-"
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "matched_records": 2,
+      "present_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part"
+      ],
+      "missing_fields": [
+        "department"
+      ],
+      "verdict": "OK"
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "-"
+    },
+    "_meta": {
+      "unmatched_records": 0
+    }
+  },
+  "note": "",
+  "progress_msg": "[File]:\n22:27:23: File fetched.\n\n22:27:23: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n22:27:23: Start to work on a PDF.\n\n22:27:24: [QwenVL] Processing 7 pages...\n\n22:27:27: [QwenVL] page 1/7 (text)\n\n22:27:29: [QwenVL] page 2/7 (text)\n\n22:27:35: [QwenVL] page 3/7 ("
+}

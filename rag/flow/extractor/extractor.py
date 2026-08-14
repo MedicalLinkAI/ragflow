@@ -13,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import base64
+import asyncio
 import json
 import logging
 import math
@@ -72,6 +73,10 @@ class ExtractorParam(ProcessParamBase, LLMParam):
 class Extractor(ProcessBase, LLM):
     component_name = "Extractor"
 
+    # chunk 级并发度：同时在飞的 chunk 数上限。坐标定位走 VL 卡、结构化提取走
+    # 27B 文本模型，两端实测 6 并发零排队，与 QwenVLParser.PAGE_CONCURRENCY 对齐。
+    CHUNK_CONCURRENCY = 6
+
     async def _build_TOC(self, docs):
         self.callback(0.2,message="Start to generate table of content ...")
         docs = sorted(docs, key=lambda d:(
@@ -128,8 +133,6 @@ class Extractor(ProcessBase, LLM):
                 self.set_output("chunks", chunks)
                 return
 
-            prog = 0
-
             # Read Parser's parse_method from DSL (instead of env var)
             _parser_method = "paddleocr"  # default
             for _cid, _cpn in self._canvas.components.items():
@@ -144,12 +147,19 @@ class Extractor(ProcessBase, LLM):
                         _parser_method = _pm
                     break
 
-            for i, ck in enumerate(chunks):
-                args[chunks_key] = ck["text"]
+            # chunk 级并发：各 chunk 互相独立（各自持有 positions/img_id），
+            # 结果原地写回各自的 ck，输出顺序天然与输入一致；信号量限流。
+            sem = asyncio.Semaphore(self.CHUNK_CONCURRENCY)
+            done_count = 0
+
+            async def _process_chunk(ck):
+                nonlocal done_count
+                ck_args = dict(args)
+                ck_args[chunks_key] = ck["text"]
                 # Pass through upstream business fields so downstream prompts can reference them via {field_name}
                 for _fn, _fv in ck.items():
                     if _fn not in ("text", "image", "positions", "img_id", "id", "doc_id", "mom"):
-                        args[_fn] = _fv
+                        ck_args[_fn] = _fv
 
                 # OCR 处理模式选择（由 DSL parse_method 控制，大小写敏感）
                 # - parse_method=Qwen/Qwen3-VL-30B-A3B-Instruct-FP8: QwenVLParser 路径，文本已提取，仅做坐标定位
@@ -162,39 +172,43 @@ class Extractor(ProcessBase, LLM):
 
                 logging.info(f"extractor ocr_parser={ocr_parser}, extractor_type={extractor_type}, chunk_type={ck.get('type', '')}, chunk_id={ck.get('chunk_id', '')}")
 
-                if ocr_parser.startswith("Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"):
-                    # QwenVLParser 路径：文本已由 QwenVLParser 提取，仅做 LLM 提取 + 坐标定位
-                    classify_raw = ck.get("classify_result_tks", "")
-                    classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
-                    rec_type = classify_data.get("type", "")
-                    is_lab_report = rec_type == "LabReport"
+                async with sem:
+                    if ocr_parser.startswith("Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"):
+                        # QwenVLParser 路径：文本已由 QwenVLParser 提取，仅做 LLM 提取 + 坐标定位
+                        classify_raw = ck.get("classify_result_tks", "")
+                        classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
+                        rec_type = classify_data.get("type", "")
+                        is_lab_report = rec_type == "LabReport"
 
-                    if is_lab_report:
-                        await qwen_vl_ocr.process_table(self, ck, ocr_parser)
-                    else:
-                        await qwen_vl_ocr.process_text(self, ck, ocr_parser)
+                        if is_lab_report:
+                            await qwen_vl_ocr.process_table(self, ck, ocr_parser)
+                        else:
+                            await qwen_vl_ocr.process_text(self, ck, ocr_parser)
 
-                elif extractor_type == "ENABLE_NONE":
-                    # 无 OCR：直接用上游 LLM 提取结构化数据
-                    msg, sys_prompt = self._sys_prompt_and_msg([], args)
-                    msg.insert(0, {"role": "system", "content": sys_prompt})
-                    ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
-                    # 走上游 LLM 提取
-                elif extractor_type == "ENABLE_QWEN30B_OCR":
-                    # 判断类型：LabReport 走 table，其他走 text
-                    classify_raw = ck.get("classify_result_tks", "")
-                    classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
-                    rec_type = classify_data.get("type", "")
-                    is_lab_report = rec_type == "LabReport"
+                    elif extractor_type == "ENABLE_NONE":
+                        # 无 OCR：直接用上游 LLM 提取结构化数据
+                        msg, sys_prompt = self._sys_prompt_and_msg([], ck_args)
+                        msg.insert(0, {"role": "system", "content": sys_prompt})
+                        ck[self._param.field_name] = strip_markdown_json_fence(await self._generate_async(msg))
+                        # 走上游 LLM 提取
+                    elif extractor_type == "ENABLE_QWEN30B_OCR":
+                        # 判断类型：LabReport 走 table，其他走 text
+                        classify_raw = ck.get("classify_result_tks", "")
+                        classify_data = json.loads(classify_raw) if isinstance(classify_raw, str) and classify_raw else {}
+                        rec_type = classify_data.get("type", "")
+                        is_lab_report = rec_type == "LabReport"
 
-                    if is_lab_report:
-                        await qwen30b_ocr.process_table(self, ck, 'Qwen/Qwen3-VL-30B-A3B-Instruct-FP8___OpenAI-API')
-                    else:
-                        await qwen30b_ocr.process_text(self, ck, 'Qwen/Qwen3-VL-30B-A3B-Instruct-FP8___OpenAI-API')
+                        if is_lab_report:
+                            await qwen30b_ocr.process_table(self, ck, 'Qwen/Qwen3-VL-30B-A3B-Instruct-FP8___OpenAI-API')
+                        else:
+                            await qwen30b_ocr.process_text(self, ck, 'Qwen/Qwen3-VL-30B-A3B-Instruct-FP8___OpenAI-API')
 
-                prog += 1./len(chunks)
-                if i % (len(chunks)//100+1) == 1:
-                    self.callback(prog, f"{i+1} / {len(chunks)}")
+                # 进度回调：按完成数推进（顺序不确定，但进度单调递增）
+                done_count += 1
+                self.callback(done_count / len(chunks), f"[Extractor] {done_count}/{len(chunks)} chunks done")
+
+            # gather 按提交顺序收集；任一 chunk 异常原样上抛，与串行版行为一致
+            await asyncio.gather(*[_process_chunk(ck) for ck in chunks])
             self.set_output("chunks", chunks)
         else:
             msg, sys_prompt = self._sys_prompt_and_msg([], args)

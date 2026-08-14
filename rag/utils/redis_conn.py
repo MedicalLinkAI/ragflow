@@ -480,6 +480,58 @@ class RedisDB:
                 )
         return []
 
+    def recover_stale_pending_msgs(self, queue_names, group_name, min_idle_ms, count=100) -> int:
+        """Requeue pending messages that stayed unacked longer than min_idle_ms.
+
+        When an executor container restarts, messages delivered to the old
+        consumers remain in the consumer group PEL forever, because live
+        consumers only read new messages. This re-adds such stale entries to
+        the stream and acks the old ones so tasks are picked up again.
+        Returns the number of requeued messages.
+        """
+        recovered = 0
+        for queue_name in queue_names:
+            try:
+                entries = self.REDIS.xpending_range(queue_name, group_name, min="-", max="+", count=count)
+            except Exception as e:
+                if "no such key" not in str(e).lower():
+                    logging.warning(
+                        "RedisDB.recover_stale_pending_msgs " + str(queue_name) + " got exception: " + str(e)
+                    )
+                continue
+            for entry in entries or []:
+                msg_id = entry.get("message_id", b"")
+                if isinstance(msg_id, bytes):
+                    msg_id = msg_id.decode()
+                idle = int(entry.get("time_since_delivered", entry.get("idle", 0)) or 0)
+                if idle < min_idle_ms:
+                    continue
+                consumer = entry.get("consumer", b"")
+                if isinstance(consumer, bytes):
+                    consumer = consumer.decode()
+                try:
+                    messages = self.REDIS.xrange(queue_name, msg_id, msg_id)
+                    if not messages:
+                        # Stream entry already trimmed: drop it from the PEL.
+                        self.REDIS.xack(queue_name, group_name, msg_id)
+                        logging.warning(
+                            f"RedisDB.recover_stale_pending_msgs {queue_name} msg {msg_id} missing in stream, acked only"
+                        )
+                        continue
+                    self.REDIS.xadd(queue_name, messages[0][1])
+                    self.REDIS.xack(queue_name, group_name, msg_id)
+                    recovered += 1
+                    logging.info(
+                        f"RedisDB.recover_stale_pending_msgs requeued stale msg {queue_name} {msg_id} "
+                        f"consumer={consumer} idle={idle}ms"
+                    )
+                except Exception as e:
+                    logging.warning(
+                        "RedisDB.recover_stale_pending_msgs requeue "
+                        + str(queue_name) + " " + str(msg_id) + " got exception: " + str(e)
+                    )
+        return recovered
+
     def requeue_msg(self, queue: str, group_name: str, msg_id: str):
         for _ in range(3):
             try:

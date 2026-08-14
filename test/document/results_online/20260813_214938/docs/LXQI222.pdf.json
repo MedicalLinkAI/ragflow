@@ -1,0 +1,208 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\LXQI222.pdf",
+    "name": "LXQI222.pdf",
+    "size_kb": 62937.7,
+    "pages": 10
+  },
+  "doc_id": "a4816fe696d111f19d3ab1cda0a97c3d",
+  "mode": "existing+reparse",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": false,
+  "process_duration": 464.14798,
+  "begin_at": "2026-08-13T22:33:26",
+  "end_at": "2026-08-13T22:41:16",
+  "elapsed_s": 470.3,
+  "chunks": [
+    {
+      "chunk_id": "b97f22a53da9b618",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 142,
+      "content": "入院记录\n姓名：\n床号：23-03床\n病历号：0\n科室：呼吸与危重医学科医生\n站\n姓名：\n性别：女\n年龄：72岁\n出生地：贵州省贵阳市\n职业：退休人员\n民族：汉族\n婚姻：已婚\n联系地址：中国贵州省贵阳市\n入院时间：2025-10-30 14:34\n病史陈述者：本人\n主诉：咳嗽、咳痰5年，加重1周\n现病史：5年前患者无明显诱因出现咳嗽咳痰，伴喘息气促，活动后气促症状加重，痰为脓痰，呈黄色，\n不易咳出，无发热、咯血、寒颤、胸闷、胸痛、腹痛、腹胀等不适，曾于外院完善相关检查诊断“支气管\n哮喘”，行对症支持治疗后好转，长期予以“沙罗特罗替卡松”吸入治疗。期间上述症状反复，每于上感\n和天气变化时加重。1"
+    },
+    {
+      "chunk_id": "51880a0583029a52",
+      "pages": [
+        5,
+        6,
+        7
+      ],
+      "page_count_raw": 95,
+      "content": "出院记录\n姓名：\n床号：23-03床\n病历号：0\n科室：呼吸与危重医学科医生站\n姓名：\n性别：女\n年龄：72岁\n民族：汉族\n病历号：00\n科室：呼吸与危重医学科医生站\n入院日期：2025-10-30 14:34\n住院天数：8\n出院日期：2025-11-07 11:44\n籍贯：贵州省贵阳市\n职业：退休人员\n单位：贵阳供电局\n住址：中国贵州省贵阳\n入院情况：\n李新秋，72岁，女，因“咳嗽、咳痰5年，加重1周”于2025-10-30 14:34:00入院。现病史：5年前患者无\n明显诱因出现咳嗽咳痰，伴喘息气促，活动后气促症状加重，痰为脓痰，呈黄色，不易咳出，无发热、咯\n血、寒颤、胸闷、胸痛、腹痛、腹"
+    },
+    {
+      "chunk_id": "963bec4ca5b69875",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 335,
+      "content": "肺功能通气阻力检查报告\n姓名：\n性别：女\n身高：151 cm\n病历号：\n年龄：72 Years\n体重：46 kg\nFlow [L/s]\nF/V ex\n10\n5\n0\n2\n4\n6\nF/V In\n8\nVol [L]\n6\n4\n1\nVol%Vcmax\n100\nVcmax\n20\n0\nTime [s]\n0\n1\n2\n3\n4\n5\n6\n2.0\nR [kPa/(L/s)] Normal breathingX [kPa/(L/s)]\n0.4\n1.5\n0.2\n1.0\nR\nA-X\n0.5\n0.2\n0.0\nF [Hz]\n0.4\n5\n10\n15\n20\n25\n30\n35\n日期\n时间\n预计值\n实测值\n实/预\n25/10/31\n1"
+    },
+    {
+      "chunk_id": "d27ea89fcae633e1",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 28,
+      "content": "亦康互联网医院\n普通\n处方\n已使用\n已使用\n联\nNO.:\n处方笺\n已使用\n2025-12-05\n已使用\n姓名：\n性别：女方专用章\n年龄：72岁\n费别：自费\n科别：内科\n临床诊断：支气管哮喘\nRp:\n沙美特罗替卡松吸入粉雾剂\n50μg:250μg*60泡\nx 3盒\n用法用量：口腔吸入,一日两次,一次1.0揿;\n补充说明：处方超7日为病情需要\n医师：邢伟\n审核：张艳梅 处方金额：\n药房审核： 药房调配： 药房核对： 药房发药：\n注：处方自开具日起3日内有效。\n已使用"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 10,
+    "check": {
+      "covered": 10,
+      "total": 10,
+      "coverage_pct": 100.0,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "key_fields": {
+    "OutpatientRecord": {
+      "label": "门诊",
+      "core_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "chief_complaint",
+        "diagnosis"
+      ],
+      "verdict": "-"
+    },
+    "AdmissionRecord": {
+      "label": "入院",
+      "core_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "matched_records": 1,
+      "present_fields": [
+        "encounter_date",
+        "dm_admission_time",
+        "cc_text",
+        "department"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "DischargeRecord": {
+      "label": "出院",
+      "core_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "matched_records": 1,
+      "present_fields": [
+        "admission_date",
+        "discharge_date",
+        "department",
+        "outcome"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "MedicationRecord": {
+      "label": "购药",
+      "core_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "encounter_date",
+        "pharmacy",
+        "payment_total"
+      ],
+      "verdict": "-"
+    },
+    "PrescriptionRecord": {
+      "label": "处方",
+      "core_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "matched_records": 1,
+      "present_fields": [
+        "encounter_date",
+        "prescriber",
+        "diagnosis"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "ExaminationReport": {
+      "label": "检查报告",
+      "core_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "matched_records": 1,
+      "present_fields": [
+        "exam_date",
+        "report_date",
+        "exam_name",
+        "body_part",
+        "department"
+      ],
+      "missing_fields": [],
+      "verdict": "OK"
+    },
+    "LabReport": {
+      "label": "检验报告",
+      "core_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "matched_records": 0,
+      "present_fields": [],
+      "missing_fields": [
+        "report_time",
+        "report_category",
+        "report_name"
+      ],
+      "verdict": "-"
+    },
+    "_meta": {
+      "unmatched_records": 0
+    }
+  },
+  "note": "",
+  "progress_msg": "\n22:33:31: [QwenVL] Processing 10 pages...\n\n22:33:32: [QwenVL] page 1/10 (text)\n\n22:33:38: [QwenVL] page 2/10 (text)\n\n22:33:43: [QwenVL] page 3/10 (text)\n\n22:33:48: [QwenVL] page 4/10 (text)\n\n22:33:52: [QwenVL] page 5/10 (text)\n\n22:34:01: [QwenVL] page 6/10 (text)\n\n22:34:11: [QwenVL] page 7/10 (text"
+}

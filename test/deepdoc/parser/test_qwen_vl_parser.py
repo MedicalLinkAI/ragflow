@@ -8,6 +8,8 @@ import base64
 import json
 import os
 import sys
+import threading
+import time
 import types
 from io import BytesIO
 from unittest.mock import MagicMock, patch
@@ -46,6 +48,7 @@ from deepdoc.parser.qwen_vl_parser import (  # noqa: E402
     QwenVLParser,
     _strip_fence,
     _fix_tabular_colspec,
+    _collapse_colspec_run,
     _parse_json_array,
     _split_latex_lines,
     _has_repetition_loop,
@@ -128,6 +131,52 @@ class TestFixTabularColspec:
         latex = f"\\begin{{tabular}}{{{bad_spec}}}"
         result = _fix_tabular_colspec(latex, max_cols=10)
         assert "c" * 10 in result
+
+
+# ================================================================
+# 2b. _collapse_colspec_run
+# ================================================================
+
+class TestCollapseColspecRun:
+    def test_normal_colspec_untouched(self):
+        latex = "\\begin{tabular}{ccccc}\na & b \\\\\n\\end{tabular}"
+        result, rep = _collapse_colspec_run(latex)
+        assert result == latex
+        assert rep is None
+
+    def test_pipe_c_run_collapsed(self):
+        # {|c|c|c|... 500x — the runaway shape seen in production logs
+        latex = "\\begin{tabular}{" + "|c" * 500 + "}\n\\hline\n\\end{tabular}"
+        result, rep = _collapse_colspec_run(latex)
+        assert rep == ("c", 500)
+        assert "\\begin{tabular}{" + "|c" * 20 + "}" in result
+        assert "\\hline" in result  # tail content preserved
+
+    def test_unclosed_colspec_run_collapsed(self):
+        # token-budget truncation: loop never emitted the closing brace
+        latex = "\\begin{tabular}{" + "|c" * 300
+        result, rep = _collapse_colspec_run(latex)
+        assert rep is not None
+        assert rep[1] == 300
+        assert result == "\\begin{tabular}{" + "|c" * 20
+
+    def test_plain_char_run_collapsed(self):
+        latex = "\\begin{tabular}{" + "c" * 60 + "}\na \\\\\n\\end{tabular}"
+        result, rep = _collapse_colspec_run(latex)
+        assert rep == ("c", 60)
+        assert "\\begin{tabular}{" + "c" * 20 + "}" in result
+
+    def test_short_run_below_threshold_untouched(self):
+        latex = "\\begin{tabular}{" + "c" * 25 + "}"
+        result, rep = _collapse_colspec_run(latex)
+        assert result == latex
+        assert rep is None
+
+    def test_run_outside_tabular_untouched(self):
+        latex = "some text " + "c" * 60 + " then \\begin{tabular}{cc}\n\\end{tabular}"
+        result, rep = _collapse_colspec_run(latex)
+        assert result == latex
+        assert rep is None
 
 
 # ================================================================
@@ -437,6 +486,30 @@ class TestExtractTablePage:
         assert sections == []
         assert bbox_idx == 3
 
+    def test_colspec_run_triggers_retry_and_adopts_clean(self):
+        parser = self._make_parser()
+        bad = "\\begin{tabular}{" + "|c" * 200
+        good = "\\begin{tabular}{cc}\na & b \\\\\n\\end{tabular}"
+        with patch.object(parser, "_call_vlm", side_effect=[bad, good]) as mock_vlm:
+            sections, _ = parser._extract_table_page(b"img", 3, 0)
+        assert mock_vlm.call_count == 2
+        # retry must carry the repetition factor
+        assert mock_vlm.call_args_list[1].kwargs["extra_params"] == {
+            "repetition_penalty": 1.2
+        }
+        texts = [s[0] for s in sections]
+        assert "a & b \\\\" in texts
+
+    def test_colspec_run_retry_still_degenerate_keeps_collapsed(self):
+        parser = self._make_parser()
+        bad = "\\begin{tabular}{" + "|c" * 200
+        with patch.object(parser, "_call_vlm", return_value=bad):
+            sections, _ = parser._extract_table_page(b"img", 3, 0)
+        texts = [s[0] for s in sections]
+        assert any(t.startswith("\\begin{tabular}{|c|c") for t in texts)
+        # collapsed to max 20 columns
+        assert not any(t.count("|c") > 25 for t in texts)
+
     def test_page_index_is_0_based(self):
         parser = self._make_parser()
         latex = "\\begin{tabular}{c}\na \\\\\n\\end{tabular}"
@@ -536,6 +609,161 @@ class TestParsePdf:
 
         # callback should be called at least twice (start + done)
         assert cb.call_count >= 2
+
+
+# ================================================================
+# 9b. parse_pdf 页级并发（page-level concurrency）
+# ================================================================
+
+class TestParsePdfPageConcurrency:
+    """页级并发要求：
+    ① 输出 sections 必须按页码排序，与串行结果一致；
+    ② bbox 全局编号在并发结果回来后按页序统一分配，连续无跳变。
+    """
+
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    @staticmethod
+    def _make_images(n):
+        from PIL import Image
+        return [Image.new("RGB", (10, 10), color="white") for _ in range(n)]
+
+    def test_pages_processed_concurrently(self):
+        """6 页必须真正并行： barrier 等待 6 个线程同时到达，串行实现会死锁超时"""
+        parser = self._make_parser()
+        n = 6
+        barrier = threading.Barrier(n, timeout=5)
+        reached = []
+
+        def fake_classify(img_bytes):
+            reached.append(1)
+            barrier.wait()
+            return "text", None
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = self._make_images(n)
+            with patch.object(parser, "_classify_page", side_effect=fake_classify):
+                with patch.object(parser, "_call_vlm", return_value='["x"]'):
+                    sections, _ = parser.parse_pdf("dummy.pdf")
+
+        assert len(reached) == n
+        assert len(sections) == n
+
+    def test_output_order_matches_page_order_despite_reversed_completion(self):
+        """完成顺序故意颠倒（页1最慢），输出仍须按页序；墙钟时间证明并发真实发生"""
+        parser = self._make_parser()
+        delays = [0.6, 0.3, 0.05]  # 页1 最后完成
+        lines = [["A0", "A1"], ["B0"], ["C0"]]
+
+        # 用图片字节携带页标识（parse_pdf 会把 page_img.save 后的字节传给 VLM）
+        imgs = self._make_images(3)
+        for i, im in enumerate(imgs):
+            im.save = lambda buf, format=None, i=i: buf.write(str(i).encode())
+
+        def classify_by_img(img_bytes):
+            return "text", None
+
+        def vlm_by_img(img_bytes, prompt, extra_params=None):
+            tag = int(img_bytes.decode())
+            time.sleep(delays[tag])
+            return json.dumps(lines[tag])
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = imgs
+            with patch.object(parser, "_classify_page", side_effect=classify_by_img):
+                with patch.object(parser, "_call_vlm", side_effect=vlm_by_img):
+                    t0 = time.time()
+                    sections, _ = parser.parse_pdf("dummy.pdf")
+                    wall = time.time() - t0
+
+        assert [s[0] for s in sections] == ["A0", "A1", "B0", "C0"]
+        assert [s[1] for s in sections] == [0, 0, 1, 2]
+        # 串行需 0.95s+；并发墙钟应明显更短
+        assert wall < sum(delays) * 0.8
+
+    def test_bbox_global_numbering_assigned_in_page_order(self, caplog):
+        """bbox 全局编号必须按页序统一分配：页序 0-1 / 2 / 3-4，与完成顺序无关"""
+        import logging
+        parser = self._make_parser()
+        delays = [0.4, 0.2, 0.0]  # 页3 最先完成
+        per_page_sections = [
+            [("a", 0), ("b", 0)],
+            [("c", 1)],
+            [("d", 2), ("e", 2)],
+        ]
+
+        imgs = self._make_images(3)
+        for i, im in enumerate(imgs):
+            im.save = lambda buf, format=None, i=i: buf.write(str(i).encode())
+
+        def extract_by_img(img_bytes, page_1based, bbox_idx):
+            tag = int(img_bytes.decode())
+            time.sleep(delays[tag])
+            secs = per_page_sections[tag]
+            return secs, bbox_idx + len(secs)
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = imgs
+            with patch.object(parser, "_classify_page", return_value=("text", None)):
+                with patch.object(parser, "_extract_text_page", side_effect=extract_by_img):
+                    with caplog.at_level(logging.INFO):
+                        sections, _ = parser.parse_pdf("dummy.pdf")
+
+        assert [s[0] for s in sections] == ["a", "b", "c", "d", "e"]
+        # 全局 bbox 编号按页序连续分配：页1=0-1，页2=2，页3=3-4
+        ranges = [
+            r for r in caplog.text.splitlines()
+            if "global bbox" in r
+        ]
+        assert len(ranges) == 3
+        assert "0-1" in ranges[0] and "page=1" in ranges[0]
+        assert "2-2" in ranges[1] and "page=2" in ranges[1]
+        assert "3-4" in ranges[2] and "page=3" in ranges[2]
+
+    def test_concurrency_capped_at_six(self):
+        """12 页时同时在飞的页数不超过 6"""
+        parser = self._make_parser()
+        lock = threading.Lock()
+        state = {"current": 0, "peak": 0}
+
+        def fake_classify(img_bytes):
+            with lock:
+                state["current"] += 1
+                state["peak"] = max(state["peak"], state["current"])
+            time.sleep(0.05)
+            with lock:
+                state["current"] -= 1
+            return "text", None
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = self._make_images(12)
+            with patch.object(parser, "_classify_page", side_effect=fake_classify):
+                with patch.object(parser, "_call_vlm", return_value='["x"]'):
+                    parser.parse_pdf("dummy.pdf")
+
+        assert state["peak"] <= 6
+        assert state["peak"] >= 2  # 确保确实并发了，而不是退化成串行
+
+    def test_page_exception_propagates(self):
+        """某页提取失败时，异常应像串行版一样向上抛出"""
+        parser = self._make_parser()
+
+        imgs = self._make_images(3)
+        for i, im in enumerate(imgs):
+            im.save = lambda buf, format=None, i=i: buf.write(str(i).encode())
+
+        def extract_failing(img_bytes, page_1based, bbox_idx):
+            if img_bytes == b"1":
+                raise ConnectionError("vlm refused")
+            return [("ok", 0)], bbox_idx + 1
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = imgs
+            with patch.object(parser, "_classify_page", return_value=("text", None)):
+                with patch.object(parser, "_extract_text_page", side_effect=extract_failing):
+                    with pytest.raises(ConnectionError):
+                        parser.parse_pdf("dummy.pdf")
 
 
 # ================================================================

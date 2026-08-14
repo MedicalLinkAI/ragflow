@@ -165,6 +165,46 @@ def _fix_tabular_colspec(latex: str, max_cols: int = 20) -> str:
     )
 
 
+_MIN_COLSPEC_RUN = 30
+
+# Runaway loop INSIDE the tabular column spec itself: the VLM emits
+# \begin{tabular}{|c|c|c|... (hundreds/thousands of repeats, often one
+# huge line truncated mid-spec with no closing brace), burning the whole
+# token budget before any data row. Line/row-based detectors cannot see
+# this shape. Anchored to \begin{tabular}{ so real cell text never trips.
+_COLSPEC_RUN_RE = re.compile(
+    r'\\begin\{tabular\*?\}\{((?:\|?\s*[lcrpmbX]){' + str(_MIN_COLSPEC_RUN) + r',})([^}]*)\}?'
+)
+
+
+def _collapse_colspec_run(
+    latex: str, max_cols: int = 20
+) -> tuple[str, Optional[tuple[str, int]]]:
+    """Truncate a runaway colspec run ({|c|c|c|... Nx, N >= 30) to max_cols.
+
+    Salvage mirror of _fix_tabular_colspec for the pipe-separated runaway
+    shape: keeps the first max_cols column units, preserves everything
+    after the run (data rows the loop may have left intact).
+
+    Returns (latex, rep_info); rep_info=(col_char, count) when a run of
+    >= _MIN_COLSPEC_RUN column units was truncated, else None.
+    """
+    m = _COLSPEC_RUN_RE.search(latex or "")
+    if not m:
+        return latex, None
+    run = m.group(1)
+    units = re.findall(r'\|?\s*[lcrpmbX]', run)
+    if len(units) <= max_cols:
+        return latex, None
+    result = latex[: m.start(1)] + "".join(units[:max_cols]) + latex[m.end(1):]
+    col_char = units[0][-1]
+    logging.warning(
+        f"{TAG} degenerate colspec run: '{col_char}' repeated "
+        f"{len(units)}x, truncating to {max_cols}"
+    )
+    return result, (col_char, len(units))
+
+
 # ── Degenerate repetition-loop defense (VLM hallucination) ────────
 # Greedy decoding (temperature=0) can fall into runaway loops like
 # \textup{\textup{\textup{... when emitting arrows/symbols, burning the
@@ -403,6 +443,10 @@ class QwenVLParser(RAGFlowPdfParser):
     delegated to the Extractor layer.
     """
 
+    # 页级并发度：同时在飞的页数上限。实测 vLLM 接 4~6 并发零排队，
+    # 超过后单请求速度被摊薄且总吞吐不再增长。
+    PAGE_CONCURRENCY = 6
+
     def __init__(
         self,
         api_url: Optional[str] = None,
@@ -467,7 +511,10 @@ class QwenVLParser(RAGFlowPdfParser):
         sections: list[SectionTuple] = []
         bbox_idx = 0  # global BBOX counter
 
-        for page_idx in range(total_pages):
+        # 页级并发：每页独立 classify + extract，线程池限流 PAGE_CONCURRENCY
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        def _process_page(page_idx: int):
             page_img = self.page_images[page_idx]
             page_1based = page_idx + 1
 
@@ -480,23 +527,51 @@ class QwenVLParser(RAGFlowPdfParser):
             page_type, report_date = self._classify_page(img_bytes)
             logging.info(f"{TAG} page={page_1based} classify={page_type} report_date={report_date}")
 
-            if callback:
-                progress = 0.1 + 0.8 * (page_idx / total_pages)
-                callback(progress, f"[QwenVL] page {page_1based}/{total_pages} ({page_type})")
-
-            # Step 2: Extract content based on type
+            # Step 2: Extract content based on type.
+            # 传入 bbox_idx=0 做页内局部编号；全局编号在结果按页序
+            # 汇总后统一分配，避免乱序。
             if page_type == "table":
-                page_sections, bbox_idx = self._extract_table_page(
-                    img_bytes, page_1based, bbox_idx, report_date
+                page_sections, _ = self._extract_table_page(
+                    img_bytes, page_1based, 0, report_date
                 )
             else:
-                page_sections, bbox_idx = self._extract_text_page(
-                    img_bytes, page_1based, bbox_idx
+                page_sections, _ = self._extract_text_page(
+                    img_bytes, page_1based, 0
                 )
 
             logging.info(
                 f"{TAG} page={page_1based} {page_type}: {len(page_sections)} sections"
             )
+            return page_idx, page_type, page_sections
+
+        executor = ThreadPoolExecutor(
+            max_workers=self.PAGE_CONCURRENCY,
+            thread_name_prefix="qwen-vl-page",
+        )
+        futures = [executor.submit(_process_page, i) for i in range(total_pages)]
+        executor.shutdown(wait=False)
+
+        # 进度回调：按完成数推进（顺序不确定，但进度单调递增）
+        if callback:
+            done_count = 0
+            for _fut in as_completed(futures):
+                done_count += 1
+                progress = 0.1 + 0.8 * (done_count / total_pages)
+                callback(progress, f"[QwenVL] {done_count}/{total_pages} pages done")
+
+        # 按提交顺序（=页序）收集结果；f.result() 会将页内异常原样抛出，
+        # 与串行版行为一致
+        results = [f.result() for f in futures]
+        results.sort(key=lambda r: r[0])
+
+        # 按页序汇总：sections 顺序与串行版一致，bbox 全局编号连续分配
+        for page_idx, _page_type, page_sections in results:
+            if page_sections:
+                start = bbox_idx
+                bbox_idx += len(page_sections)
+                logging.info(
+                    f"{TAG} page={page_idx + 1} assigned global bbox {start}-{bbox_idx - 1}"
+                )
             sections.extend(page_sections)
 
         logging.info(f"{TAG} parse_pdf done: {len(sections)} sections from {total_pages} pages.")
@@ -656,6 +731,27 @@ class QwenVLParser(RAGFlowPdfParser):
         if not latex:
             logging.warning(f"{TAG} page={page_1based} table extraction returned empty")
             return [], bbox_idx
+
+        # Colspec-run defense: the greedy loop can sit inside the tabular
+        # column spec itself ({|c|c|c|... thousands of repeats, one huge
+        # line), burning the token budget before any data row. Line/row
+        # detectors cannot see this shape — detect it explicitly and retry
+        # with repetition_penalty; fall back to the collapsed spec.
+        latex, colspec_rep = _collapse_colspec_run(latex)
+        if colspec_rep:
+            unit, count = colspec_rep
+            logging.warning(
+                f"{TAG} page={page_1based} table colspec '{unit}' repeated {count}x, "
+                f"retrying with repetition_penalty"
+            )
+            raw2 = self._call_vlm(
+                img_bytes, TABLE_PROMPT, extra_params={"repetition_penalty": 1.2}
+            )
+            latex2 = _strip_fence(raw2) if raw2 else ""
+            latex2, rep2 = _collapse_colspec_run(latex2)
+            if latex2 and not rep2 and not _has_repetition_loop(latex2):
+                latex = latex2
+            # else: keep the collapsed version
 
         # Repetition-loop defense: retry once with repetition_penalty to
         # escape the greedy loop and recover the truncated tail rows;

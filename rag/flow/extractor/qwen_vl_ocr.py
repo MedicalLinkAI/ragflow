@@ -10,6 +10,7 @@
 #   - 文本已由 QwenVLParser 提取，不需要再做 text-only OCR
 
 import base64
+import asyncio
 import json
 import logging
 import os
@@ -553,8 +554,9 @@ async def process_table(ext, ck: dict, llm_name: str):
 
             img_bytes, page_w, page_h = page_img_data[pn]
             table_prompt = _build_table_prompt(names)
-            ocr_items, coord_elapsed, coord_status = _call_qwen30b_coord(
-                img_bytes, table_prompt, TAG, endpoint_cfg, page_num=pn
+            # 同步 requests 调用推到线程，避免阻塞事件loop影响chunk级并发
+            ocr_items, coord_elapsed, coord_status = await asyncio.to_thread(
+                _call_qwen30b_coord, img_bytes, table_prompt, TAG, endpoint_cfg, pn
             )
             if coord_status == "ok" and ocr_items:
                 scale_x = page_w / 1000.0
@@ -790,8 +792,9 @@ async def process_text(ext, ck: dict, llm_name: str):
                 continue
 
             coord_prompt = _build_coord_prompt(lines)
-            ocr_items, api_elapsed, status = _call_qwen30b_coord(
-                img_bytes, coord_prompt, TAG, endpoint_cfg, page_num=pn
+            # 同步 requests 调用推到线程，避免阻塞事件loop影响chunk级并发
+            ocr_items, api_elapsed, status = await asyncio.to_thread(
+                _call_qwen30b_coord, img_bytes, coord_prompt, TAG, endpoint_cfg, pn
             )
             if status != "ok" or not ocr_items:
                 logging.warning(

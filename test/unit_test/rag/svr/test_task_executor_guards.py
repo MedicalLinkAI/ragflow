@@ -46,7 +46,14 @@ def _install_xgboost_stub_if_unavailable():
 
 _install_xgboost_stub_if_unavailable()
 
-from rag.svr import task_executor
+# task_executor transitively imports third-party packages (scholarly,
+# graspologic, ...) that contain invalid escape sequences. deepdoc's
+# beartype claw import hook recompiles them while pytest's
+# filterwarnings=["error"] is active, turning SyntaxWarning into
+# SyntaxError. Downgrade warnings for the whole import chain.
+with warnings.catch_warnings():
+    warnings.simplefilter("default")
+    from rag.svr import task_executor
 
 
 def test_build_raptor_chunk_skips_missing_vector():

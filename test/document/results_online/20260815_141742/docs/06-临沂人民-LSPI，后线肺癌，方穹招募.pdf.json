@@ -1,0 +1,155 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "06-临沂人民-LSPI，后线肺癌，方穹招募.pdf",
+    "size_kb": 6420.2,
+    "pages": null,
+    "doc_id": "5a79e2fa7c5c11f18d62dd81525255fa",
+    "patient_id": "PAT-49d89dd05272"
+  },
+  "doc_id": "5a79e2fa7c5c11f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 330.439,
+  "begin_at": "2026-08-15T15:21:35",
+  "end_at": "2026-08-15T15:27:17",
+  "elapsed_s": 341.4,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 3,
+      "DischargeRecord": 1,
+      "LabReport": 3,
+      "OutpatientRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "2332b362e431c437",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 25,
+      "content": "彩色病理图文报告\n姓名：\n性别：女\n年龄：59岁\n收到日期：2025-10-24\n送检医院：本院\n送检科室：肺病科\n住院号：\n送检医生：0117\n标本名称：\n蜡块数：1\n特征图像：\n大体描述：\n(右肺)穿刺组织3条，长0.2-0.4CM,直径0.1CM。\n病理诊断：\n(右肺)穿刺玻变的纤维组织中可见少许癌巢浸润，结合免疫组化符合：肺腺癌，\n请结合临床及其它检查综合判断。\n免疫组化：CK(+)CK7(+)TTF-1(+)Napsin-A(+)P63(-)P40(-)Syn(-)INSM-1(-)Ki-67\n(+约20%)BRG1(+)。\n报告医生：张瑜\n审核医生：梁晓霞\n1.注：此结果仅针对本次"
+    },
+    {
+      "chunk_id": "d814401082a01bc0",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 39,
+      "content": "CT检查报告单\n患者编号:\n扫描日期: 1/13/2026\n姓名:\n性别:女\n年龄:59岁科别:\n住院号:\n扫描设备:SIEMENS_CT\n扫描方法:平扫+增强12张\n药品:碘普罗胺注射液\n100ml\n药品处理方式:静脉+静脉留置+高压注射\n检查项目:上腹+下腹+盆腔+胸部(平扫+增强)\n扫描所见:\n参考2025-11-21胸部CT,所见如下:\n1.右肺可见巨大不规则肿块,病变范围较广,累及右全肺,增强扫描不均匀强化,较前\n局部略缩小;余双肺见多发结节影,部分内可见空泡,最大径约2cm,较前部分略缩\n小。\n2.右侧腋窝、纵隔及右肺门见增大淋巴结,最大短径约1.5cm,不均匀强化。考虑MT,\n右"
+    },
+    {
+      "chunk_id": "1df5a58bb49207b8",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 42,
+      "content": "CT检查报告单\n患者编号：\n放射编号：\n扫描日期：2/26/2026\n姓名：\n性别：女\n年龄：59岁\n科别：\n住院号：\n扫描设备：SIEMENS_CT\n扫描方法：平扫+增强12张\n药品：碘普罗胺注射液\n100ml\n药品处理方式：静脉+静脉留置+高压注射\n检查项目：上腹+下腹+盆腔+胸部（平扫+增强）\n检查所见：\n参阅2026-01-13胸部CT前片，所见如下：\n1.右肺可见巨大不规则肿块，病变范围较广，累及右全肺，增强扫描不均匀强化，较前\n局部增大（8-31较原片7-31）；余双肺见多发结节影，部分内可见空泡，最大径约\n2cm，较前基本相仿。\n2.右侧腋窝、纵隔及右肺门见增大淋巴结，最大短径约"
+    },
+    {
+      "chunk_id": "8249119e529968fe",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 65,
+      "content": "科室：呼吸与危重症医学科 姓名：\n出院记录\n女，59岁，主因“确诊右肺腺癌5年”于2025-10-20入院。于\n2025年10月29日出院，住院天数：9天。\n入院情况：患者于2020年8月因咳嗽，咳痰伴右侧胸痛于北京市丰台中西医结合医院\n行胸部CT示：右肺门旁软组织团块影，考虑癌可能；8月31日于我院住院治疗，期间完善\n支气管镜检查，病理结果示：符合浸润性肺腺癌；基因检测示：EGFR Exon21-L858R突变(\n突变比例43.34%)，EGFR Exon19缺失突变(突变比例55.81%)，KRAS突变(突变比例\n27.72%)；予口服吉非替尼片(伊瑞可)靶向治疗至今，2021年1月复查提"
+    },
+    {
+      "chunk_id": "4790d4c97c55606d",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "科室：呼吸内科\n姓名：\n门诊病历号：\n[初诊病历记录(门诊放化疗患者专用)]\n就诊时间：2026年02月27日10时50分\n科别：呼吸内科\n主诉：确诊右肺腺癌5+年，临床试验中\n现病史：患者于2020-8开始出现咳嗽，咳痰伴右侧胸痛，就诊于\n完善相关检查，\n诊断：右肺腺癌，双肺多发转移，（具体转移不详）突变类型 Exon21-L858R突变，Exon19缺失突\n变，KRAS突变，一直维持吉非替尼治疗。2025-11复查病情病情进展，PFS1：63个月。诊断：右肺\n腺癌（驱动基因阴性） 右肺门、纵隔及右侧腋窝多发淋巴结转移 双肺多发转移 右侧胸膜转移\n肋骨转移。受试者于2025年11月11日签署"
+    },
+    {
+      "chunk_id": "78641863b828ce12",
+      "pages": [
+        10,
+        12
+      ],
+      "page_count_raw": 19,
+      "content": "<table><tr><td>EGFR c.2369C>T (p.T790M)</td><td>EGFR</td><td>6.6%</td><td>%</td><td>None</td><td>True</td></tr><tr><td>EGFR c.2235_2249del (p.E746_A750del)</td><td>EGFR</td><td>24.4%</td><td>%</td><td>None</td><td>True</td></tr><tr><td>化疗药物疗效评估</td><td>None</td><td>有效性较高药物：8个</td><td>None</td><td>No"
+    },
+    {
+      "chunk_id": "2a1883f8f293ad33",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>尿液分析-酸碱度</td><td>PH</td><td>5.0</td><td>None</td><td>4.5~8.0</td><td>False</td></tr><tr><td>尿液分析-亚硝酸盐</td><td>NIT</td><td>--</td><td>None</td><td>阴性(-)</td><td>False</td></tr><tr><td>尿液分析-葡萄糖</td><td>GLU</td><td>--</td><td>None</td><td>阴性(-)</td><td>False</td></tr><tr><td>尿液分析-比重</td>"
+    },
+    {
+      "chunk_id": "c2494d616a3ec5ce",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>血清丙氨酸氨基转移酶测定</td><td>ALT</td><td>41.0</td><td>U/L</td><td>7.0~40.0</td><td>True</td></tr><tr><td>血清天门冬氨酸氨基转移酶测定</td><td>AST</td><td>56.3</td><td>U/L</td><td>13.0~35.0</td><td>True</td></tr><tr><td>AST/ALT</td><td>AST/ALT</td><td>1.37</td><td>None</td><td>None</td><td>False</td></tr><t"
+    },
+    {
+      "chunk_id": "150528ee372e79b1",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>4.35</td><td>*10^9/L</td><td>3.50~9.50</td><td>False</td></tr><tr><td>中性粒细胞百分数</td><td>Neut%</td><td>65.1</td><td>%</td><td>40.0~75.0</td><td>False</td></tr><tr><td>淋巴细胞百分数</td><td>Lymph%</td><td>23.2</td><td>%</td><td>20.0~50.0</td><td>False</td></tr><tr><td"
+    }
+  ],
+  "pages": {
+    "union": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      12,
+      13,
+      14,
+      15
+    ],
+    "page_sum": 11,
+    "check": {
+      "covered": 11,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 3,
+      "clinical": 0,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n15:22:56: [QwenVL] 14/15 pages done\n\n15:22:58: [QwenVL] 15/15 pages done\n\n15:22:58: [QwenVL] Done: 491 sections from 15 pages.\n\n15:22:58: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:22:58: Start SmartSplitter: semantic split + classify.\n\n15:22:58: Loaded 491 OCR bboxes."
+}

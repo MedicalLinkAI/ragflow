@@ -1,0 +1,136 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "长沙-SZGU哮喘资料.pdf",
+    "size_kb": 1540.8,
+    "pages": null,
+    "doc_id": "2a12216e7ea911f1af97e3985ba7f8da",
+    "patient_id": "PAT-9552326bf8e5"
+  },
+  "doc_id": "2a12216e7ea911f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 8,
+  "orm_synced": true,
+  "process_duration": 342.91006,
+  "begin_at": "2026-08-15T15:06:51",
+  "end_at": "2026-08-15T15:12:38",
+  "elapsed_s": 347.0,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 3,
+      "MedicationRecord": 3,
+      "ExaminationReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "3c9a15475e261cd8",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 32,
+      "content": "中南大学湘雅医院\n门诊病历\n姓名：\n性别：男\n年龄：47岁\n出生日期：1977-02-08\n门诊号：0011488791 科别：慢阻肺专病门诊\n就诊日期：2024-08-20\n主诉：检查\n现病史：哮喘病人，要求检查。\n肺功能重阻，扩张阳性。\n既往史：\n过敏史：无\n个人史：\n家族史：\n体格检查结果：\n实验室检查结果：\n特殊检查结果：\n健康指导及处理意见：\n初步诊断：1、哮喘\n就诊医嘱明细\n检查：1.肺通气功能检查+肺最大通气量测定+支气管激发试验+流速容量测定\n检验：\n药品：1.布地奈德福莫特罗吸入粉雾剂(II)(阿斯利康，320ug*60吸)用法：\n1吸，2/日，1支，吸入\n2.甘氨酸茶碱钠缓"
+    },
+    {
+      "chunk_id": "4ac9e1d94346e9db",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 25,
+      "content": "长沙市第四医院门诊病历\n姓名：\n龄：46岁 科别：呼吸与危重症医学科门诊 门诊号：\n2023063010918\n2023-06-30 09:51 初诊记录\n主诉：确诊支气管哮喘18年。\n现病史：患者活动后有气促，无胸闷胸痛，无咳嗽咳痰，无低热盗汗。\n长期吸入舒利迭50/500，遂来我院。\n既往史：无\n结核\n等传染病史，无药物及食物过敏史\n个人史：既往无新冠病毒感染\n体格检查：肺呼吸音粗，无明显啰音。\n辅助检查：\n检查结果：\n初步诊断：西医：支气管哮喘\n处方：\n1.沙美特罗替卡松粉吸入剂 50ug/500ug*60吸*1瓶×1.000瓶 500.00ug\n喷入 Bid\n处理：1、自备沙丁胺醇气雾"
+    },
+    {
+      "chunk_id": "175fbd1d23977533",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 71,
+      "content": "Date 24-8-20\nTime 10:43:25上\n中南大学湘雅医院\n支气管舒张实验检查报告\n姓名:\nID号: 0011488791\n测试号:\n出生日期: 1977-2-08\n年龄: 47 岁\n身高: 165 cm\n性别: 男\n体重: 82 kg\nFENO:\n身份证号:\n保险:\n电话:\nPred A1 A1/P P1 P1/P chg%1 F2 P2/P chg%2 P3 P3/P chg%3\nFVC [L] 3.94 3.66 92.8 3.91 99.2 6.80 4.01 102 9.70 4.07 103 11.26 %\nFEV 1 [L] 3.24 1.57 48.3 1.92 "
+    },
+    {
+      "chunk_id": "1bd592b819513875",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 221,
+      "content": "中南大学湘雅医院\n常规通气报告\n科室：\n一\n姓名：\nID号：\n0011488791\n测试号：\n20240820033\n年龄：\n47岁\n身高：\n165cm\n体重：\n82kg\n性别：\n男\n出生日期：\n1977-2-08\n操作员：\n一\nVol [L]\n10\n1.0\n0.5\n0.0\n0.5\n1.0\n1.5\nTime [s]\n0\n2\n4\n6\n8\n10\n12\nFlow [L/s]\nF/V ex\n10\n5\n0\n6\n10\nF/V in\nPred\nBest % (Best\nAct1\nAct2\nAct3\nAct4\nAct5\nAct6\nVT\n[L]\n0.59\nIC\n[L]\n2.87\nMV\n[L/min]\n11.71"
+    },
+    {
+      "chunk_id": "b130ce3c04af5635",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 40,
+      "content": "楚济堂大药房汇都店\n收银员：112706\n日期：2024-05-21 09:24:35\n流水号：2405213663028506\n品名\n数量*单价\n实收金额\n厂家\n批号\n规格\n布地奈德福莫特罗吸入粉雾剂\n1*302.00 302.00\nAstraZeneca\nH20160447\n320μg*9μg*60吸\n合计数量：\n1.\n原价总计(RMB)：\n302.00\n优惠额总计：\n0.\n应收金额(RMB)：\n302.00\n找赎现金(RMB)：\n0.00\n实收顾客(微支付)：\n302.00\n会员：801137047\n积分：726.24\n姓名：\n本次积分：302.00\n累计积分查询：可在门店直接查询\n或拨"
+    },
+    {
+      "chunk_id": "a74e436b28dcf234",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 40,
+      "content": "楚济堂大药房汇都店\n收银员：112706\n日期：2024-06-19 10:15:27\n流水号：2406193663034752\n品名\n数量*单价\n实收金额\n厂家\n批号\n规格\n布地奈德福莫特罗吸入粉雾剂\n1*302.00 302.00\nAstraZeneca\nH20160447\n320μg*9μg*60吸\n合计数量：\n1.\n原价总计(RMB)：\n302.00\n优惠额总计：\n0.\n应收金额(RMB)：\n302.00\n找赎现金(RMB)：\n0.00\n实收顾客(微支付)：\n302.00\n会员：801137047\n积分：1253.51\n姓名\n本次积分：302.00\n累计积分查询:可在门店直接查询\n或拨"
+    },
+    {
+      "chunk_id": "2d7979512d9cefb0",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 40,
+      "content": "楚济堂大药房汇都店\n收银员：112706\n日期：2024-07-18 11:24:17\n流水号：2407183663042561\n品名\n数量*单价\n实收金额\n厂家\n批号\n规格\n布地奈德福莫特罗吸入粉雾剂\n1*302.00 302.00\nAstraZeneca\nH20160447\n320μg*9μg*60吸\n合计数量：\n1.\n原价总计(RMB)：\n302.00\n优惠额总计：\n0.\n应收金额(RMB)：\n302.00\n找赎现金(RMB)：\n0.00\n实收顾客(微支付)：\n302.00\n会员：801137047\n积分：1637.35\n姓名：\n本次积分：302.00\n累计积分查询：可在门店直接查询\n或"
+    },
+    {
+      "chunk_id": "2061b6f5c14d05e6",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 44,
+      "content": "长沙市雨花区高桥街道社区卫生服务中心\n门诊病历\n科室\n门诊全科\n就诊日期\n2024-05-21\n就诊时间\n08:34:36\n姓名\n性别\n男\n年龄\n47岁\n联系电话\n身份证\n详细地址\n湖南省长沙市雨花区高桥街道锦湘国际\n主诉\n支气管哮喘随访\n现病史\n无不适.\n既往史\n哮喘\n个人史\n体健\n家族史\n无\n过敏史\n无\n体格检查\n体温36.6℃、脉率：80次/分、血压：138/87mmHg、呼吸19次/分，心肺（-），双\n肺少量哮喘音腹平软，无压痛反跳痛，双下肢不肿\n辅助检查\n诊断\n支气管哮喘\n处理意见\n口服药物治疗，不适随诊\n西药处方\n布地奈德福莫特罗吸入粉雾剂（II）（阿斯利康，320ug*60吸*1"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 3,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 3,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n15:07:20: [QwenVL] 5/8 pages done\n\n15:07:21: [QwenVL] 6/8 pages done\n\n15:07:32: [QwenVL] 7/8 pages done\n\n15:07:38: [QwenVL] 8/8 pages done\n\n15:07:38: [QwenVL] Done: 514 sections from 8 pages.\n\n15:07:38: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:07:38: Start SmartSplit"
+}

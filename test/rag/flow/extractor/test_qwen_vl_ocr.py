@@ -11,6 +11,7 @@
 #
 import asyncio
 import json
+import logging
 import os
 import sys
 import types
@@ -261,6 +262,124 @@ def _run_process_table(monkeypatch, coord_calls):
     }
     asyncio.run(qvl.process_table(_FakeExt(), ck, "fake-llm"))
     return ck
+
+
+class _FakeExt2(_FakeExt):
+    """pn=0 页额外提取肌酐：用于验证同页多 item 的索引顺序对应。"""
+
+    async def _generate_async(self, msg):
+        user = next(m["content"] for m in msg if m.get("role") == "user")
+        items = []
+        if "ALB" in user:
+            items.append({"name": "白蛋白", "item_code": "ALB", "value": "38.4",
+                          "unit": "g/L", "reference_range": "40-55", "abnormal": True})
+            items.append({"name": "肌酐", "item_code": None, "value": "62",
+                          "unit": None, "reference_range": None, "abnormal": False})
+        if "TnT & 5" in user:
+            items.append({"name": "肌钙蛋白T", "item_code": "TnT", "value": "5",
+                          "unit": "ng/L", "reference_range": "<14", "abnormal": False})
+        if "WBC" in user:
+            items.append({"name": "*白细胞计数", "item_code": "WBC", "value": "6.18",
+                          "unit": None, "reference_range": "3.5-9.5", "abnormal": False})
+        return json.dumps({"report_date": None, "items": items}, ensure_ascii=False)
+
+
+class TestProcessTableIndexMapping:
+    """Step C 坐标映射：coord 返回与输入 names 顺序一致时按索引直取 bbox。
+
+    YXLA p3 回归：coord text 带括号缩写（"白细胞(WDC)"）与 LLM name
+    （"白细胞"）文本不同，旧实现的 LCS 分数被长 key 稀释到 0.3-0.46
+    （阈值 0.5），导致 5/24 匹配失败填 [0,0,0,0,0]、另有 6 处错配。
+    数量一致时必须按索引直取，不再做文本匹配。
+    """
+
+    def _run(self, monkeypatch, fake_coord, ext=None):
+        monkeypatch.setattr(qvl, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(qvl, "_call_qwen30b_coord", fake_coord)
+        ck = {"doc_id": "doc-x", "text": _make_chunk_text(), "positions": _make_positions()}
+        asyncio.run(qvl.process_table(ext or _FakeExt(), ck, "fake-llm"))
+        return ck
+
+    def test_counts_match_index_mapping_ignores_text_diff(self, monkeypatch):
+        """数量一致时按索引直取：coord text 与 name 不同也必须成功，
+        坐标 = bbox × (page_w/1000, page_h/1000)，按输入顺序一一对应。"""
+
+        def fake_coord(img_bytes, prompt, tag, endpoint_cfg, page_num=0):
+            seg = prompt.split("## 需要定位的检验项目名称\n", 1)[1].split("\n\n", 1)[0]
+            names = seg.split("、")
+            # 返回顺序与输入一致，但 text 带括号缩写（线上 coord 模型行为）
+            return (
+                [{"text": f"{n}(X)", "bbox": [10 + 50 * i, 10, 100 + 50 * i, 20]}
+                 for i, n in enumerate(names)],
+                0.1, "ok",
+            )
+
+        ck = self._run(monkeypatch, fake_coord, ext=_FakeExt2())
+        rows = ck["row_positions"]
+        assert len(rows) == 4
+        # 索引直取：4 行全部拿到真实坐标，无 [0,0,0,0,0] 占位
+        for rp in rows:
+            assert rp[0] != 0, f"按索引直取应全部成功，实际出现全 0: {rows}"
+        # 同组内按输入顺序一一对应：白蛋白 i=0，肌酐 i=1
+        # 坐标 = bbox × (595/1000, 842/1000)
+        assert rows[0][1] == pytest.approx(10 * 595 / 1000.0)    # 白蛋白 left
+        assert rows[1][1] == pytest.approx(60 * 595 / 1000.0)    # 肌酐 left（第 2 个 name）
+        assert rows[0][3] == pytest.approx(10 * 842 / 1000.0)    # top
+
+    def test_count_mismatch_warns_and_looks_up_by_name(self, monkeypatch, caplog):
+        """数量不一致（模型漏检）→ warning + 按名字匹配兜底。"""
+
+        def fake_coord(img_bytes, prompt, tag, endpoint_cfg, page_num=0):
+            seg = prompt.split("## 需要定位的检验项目名称\n", 1)[1].split("\n\n", 1)[0]
+            names = seg.split("、")
+            # 模拟模型漏检：每组只返回第一个 name 的 bbox
+            return [{"text": names[0], "bbox": [10, 10, 100, 20]}], 0.1, "ok"
+
+        with caplog.at_level(logging.WARNING):
+            ck = self._run(monkeypatch, fake_coord, ext=_FakeExt2())
+
+        # 长度不一致时必须记录 warning
+        assert any("coord count mismatch" in r.message for r in caplog.records), \
+            [r.message for r in caplog.records]
+        # 名字兜底：白蛋白精确命中（非 0），肌酐查不到 → 占位 0
+        rows = ck["row_positions"]
+        assert len(rows) == 4
+        assert rows[0][0] != 0, f"白蛋白按名字匹配应成功: {rows}"
+        assert rows[1][0] == 0, f"肌酐查不到应填 0: {rows}"
+
+
+class TestProcessTextCountMismatchWarning:
+    """process_text Step 4：coord 返回数量与文本行数不一致时必须打 warning
+    （与 process_table 的索引直取/名字兜底模式对齐）。"""
+
+    def test_count_mismatch_logs_warning(self, monkeypatch, caplog):
+        def fake_coord(img_bytes, prompt, tag, endpoint_cfg, page_num=0):
+            # 模拟模型漏检：3 行只返回 1 个 bbox（名字互不相同，避免 fuzzy 命中）
+            return [{"text": "alpha", "bbox": [10, 10, 100, 20]}], 0.1, "ok"
+
+        monkeypatch.setattr(qvl, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(qvl, "_call_qwen30b_coord", fake_coord)
+
+        ck = {
+            "doc_id": "doc-x",
+            "text": "alpha\nbeta\ngamma",
+            "positions": [[0, 0, 0, 0, 0]] * 3,
+            "classify_result_tks": json.dumps({"type": "progress_note"}),
+        }
+        with caplog.at_level(logging.WARNING):
+            asyncio.run(qvl.process_text(_FakeExt(), ck, "fake-llm"))
+
+        # 数量不一致必须记录 warning
+        assert any("coord count mismatch" in r.message for r in caplog.records), \
+            [r.message for r in caplog.records]
+        # 前 1 行按索引成功（非 0），多余行名字兜底失败 → 占位 0
+        rows = ck["positions"]
+        assert len(rows) == 3
+        assert rows[0][0] == 0 and rows[0][1] != 0, f"首行应按索引成功: {rows}"
+        assert rows[1] == [0, 0, 0, 0, 0], f"多余行应占位 0: {rows}"
+        assert rows[2] == [0, 0, 0, 0, 0], f"多余行应占位 0: {rows}"
 
 
 class TestProcessTablePageAttribution:

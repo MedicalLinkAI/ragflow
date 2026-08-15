@@ -1,0 +1,104 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "RREE-男-23岁-哮喘.pdf",
+    "size_kb": 3340.9,
+    "pages": null,
+    "doc_id": "c5e85c18872b11f1bb8027103a248952",
+    "patient_id": "PAT-ed3ad40ccbb5"
+  },
+  "doc_id": "c5e85c18872b11f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": true,
+  "process_duration": 602.1118,
+  "begin_at": "2026-08-15T14:35:29",
+  "end_at": "2026-08-15T14:45:33",
+  "elapsed_s": 603.7,
+  "before": {
+    "chunk_count": 4,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 3,
+      "AdmissionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "65b38322672dea8c",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 557,
+      "content": "成都市金牛区人民医院·四川省人民医院金牛医院\n入院记录\n姓名：\n性别：女\n年龄：71岁\n民族：汉族\n婚烟：已婚\n与患者关系：夫妻\n出生地：\n职业：农民\n入院时间：2024年11月22日11时53分\n记录时间：2024年11月22日15时05分\n病史陈述者：患者及家属\n可靠程度：基本可靠\n主诉：胰腺癌术后3月，1周期不全化疗后5日\n现病史：于2024-08，患者无明显诱因出现腹痛、恶心、呕吐，遂于2024-08-06就诊于龙泉驿区第\n一人民医院，行CT示：胰头增大，其内不规则低密度影，边界不清，周围脂肪间隙模糊，与邻近十二指\n肠分界欠清，十二指肠肿胀，主胰管及肝内外胆管扩张，胆囊增大，性质待定？"
+    },
+    {
+      "chunk_id": "7f2d4db97db375cd",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 31,
+      "content": "<table><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>52</td><td>u/l</td><td>0 ~ 35</td><td>True</td></tr><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>62</td><td>u/l</td><td>0 ~ 40</td><td>True</td></tr><tr><td>r-谷氨酰基转移酶</td><td>GGT</td><td>35</td><td>u/l</td><td>7 ~ 45</td><td>False</td></tr><tr><td>碱性磷酸酶</td><td>"
+    },
+    {
+      "chunk_id": "76ae971cfe716ac0",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HBsAg</td><td>0</td><td>IU/mL</td><td>0~0.030</td><td>False</td></tr><tr><td>乙型肝炎病毒表面抗体</td><td>HBsAb</td><td>11.650</td><td>mIU/ml</td><td>0~10.000</td><td>True</td></tr><tr><td>乙型肝炎病毒e抗原</td><td>HBeAg</td><td><0.050</td><td>IU/mL</td><td>0~0.100</td><td>False</td>"
+    },
+    {
+      "chunk_id": "c1cab2f70c7c11cd",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>6.28</td><td>10^9/L</td><td>3.50~9.50</td><td>False</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>76.7</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>20.3</td><td>%</td><td>20.0~50.0</td><td>False</td></tr><tr><td>单核细"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "page_sum": 9,
+    "check": {
+      "covered": 9,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:35:43: [QwenVL] 1/10 pages done\n\n14:35:46: [QwenVL] 2/10 pages done\n\n14:35:51: [QwenVL] 3/10 pages done\n\n14:35:53: [QwenVL] 4/10 pages done\n\n14:35:54: [QwenVL] 5/10 pages done\n\n14:35:57: [QwenVL] 6/10 pages done\n\n14:36:00: [QwenVL] 7/10 pages done\n\n14:36:04: [QwenVL] 8/10 pages done\n\n14:36:05: ["
+}

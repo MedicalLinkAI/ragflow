@@ -1067,6 +1067,41 @@ class TestDedupRepeatedBlocks:
         assert rep == (3, 8, 25)  # repeats = n // cycle = 25 // 3
         assert out == block + tail
 
+    def test_alternating_run_collapsed(self):
+        """真实案例（YXLA p15）："10"/"12" 周期-2 交替刷屏 3836 行，
+        前有 170 行真实肺功能报告，交替段折叠为两个值。"""
+        head = [f"line{i}" for i in range(170)]
+        spam = ["10", "12"] * 1918  # 3836 行
+        out, rep = _dedup_repeated_blocks(head + spam)
+        assert rep == (2, 3836, 4006)
+        assert out == head + ["10", "12"]
+
+    def test_mid_alternation_collapsed_tail_kept(self):
+        """交替段在中间：折叠后保留前后真实内容。"""
+        head = [f"h{i}" for i in range(10)]
+        tail = [f"t{i}" for i in range(10)]
+        spam = ["12", "10"] * 40  # 80 行
+        out, rep = _dedup_repeated_blocks(head + spam + tail)
+        assert rep == (2, 80, 100)
+        assert out == head + ["12", "10"] + tail
+
+    def test_short_alternation_untouched(self):
+        """短交替段（如 20 行男女交替）是真实内容，不得折叠。"""
+        lines = [f"h{i}" for i in range(30)] + ["男", "女"] * 10
+        out, rep = _dedup_repeated_blocks(lines)
+        assert rep is None
+        assert out == lines
+
+    def test_low_uniqueness_ratio_3pct_collapsed(self):
+        """真实案例（YXLA p15 数据形态）：唯一率 3.26%（> 旧阈值 3%），
+        阈值提高至 5% 后应命中唯一率检测。"""
+        head = [f"h{i}" for i in range(50)]
+        cycle = ["b0", "b0"] + [f"b{i}" for i in range(1, 76)]  # 77 长，含 1 对相邻重复
+        lines = head + cycle * 49  # 3823 行，126 唯一，唯一率 3.30%
+        out, rep = _dedup_repeated_blocks(lines)
+        assert rep is not None
+        assert len(out) < len(lines)
+
 
 class TestTextRepetitionRetry:
     def _make_parser(self):

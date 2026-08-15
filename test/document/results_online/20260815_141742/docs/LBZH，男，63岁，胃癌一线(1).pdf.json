@@ -1,0 +1,160 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LBZH，男，63岁，胃癌一线(1).pdf",
+    "size_kb": 27790.0,
+    "pages": null,
+    "doc_id": "f77057f0960c11f1abb555ceeebece40",
+    "patient_id": "PAT-b0dd0531b4d4"
+  },
+  "doc_id": "f77057f0960c11f1abb555ceeebece40",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 897.0087,
+  "begin_at": "2026-08-15T14:17:43",
+  "end_at": "2026-08-15T14:32:44",
+  "elapsed_s": 901.3,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 4,
+      "AdmissionRecord": 1,
+      "LabReport": 1,
+      "OutpatientRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "bd92c59e00db9ab0",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 29,
+      "content": "双侧颈部4区探及数个淋巴结，大者分别约1.7cm×1.2cm（左）、1.6cm×0.7cm（右），边界尚清，形\n态饱满，淋巴结门消失，CDFI示：内部及周边见有血流信号；余颈部未见明显异常肿大淋巴结。\n检查所见\n双侧颈部多发淋巴结肿大（倾向淋巴结转移）\n检查提示\n手术过程\n阳性 阳性\n病理报告\n骨髓报告\n检查申请\n检验申请\n输血申请\n手术申请单\n感染报告\n传染报告\n死亡报告\n浏览超声报告文件\n检查(检验)结果比较\n影像分析处理\n超声报告\n超声影像\n穿刺活检前超声检查（仅对穿刺活检淋巴结描述）：左侧锁骨上见肿大淋巴结，大小约1.8cm×1.1cm，\n边界尚清，内部未见淋巴门回声，CDFI：淋巴结"
+    },
+    {
+      "chunk_id": "51c1b9e686e3f006",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 49,
+      "content": "浏览影像报告文件\n检查(检验)结果比较\n影像分析处理\n检查部位名称\n检查报告\n影像列表\n4.头颅+躯干(颅底至\n检查序号0005140996\n检查日期2026-03-18 14:04:49\n检查类型PETCT\n检查片号P68729\n检查部位头颅+躯干(颅底到大腿中上 检查方式\n报告医师陈炜佳\n报告时间2026-03-18 14 审核医师刘道佳\n审核时间2026-03-18\n影像所见\n是否异常是\n“胃食管连接处癌术后”：吻合口壁未见明显增厚及FDG摄取异常增高。腹膜后见多发肿大淋巴\n结，较大者最大横截面约2.1cm×1.1cm，FDG摄取增高，SUVmax5.0。腹膜稍增厚，FDG摄取未见\n明显"
+    },
+    {
+      "chunk_id": "c0d09f1d9e54f389",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 25,
+      "content": "58 未F\n863 已F\n76 已F\n病例库 病理会诊\n姓名\n性别 男\n住院号\n年龄 61岁\n病区/\n床号 /\n送检单位 连江县晓澳卫 送检科室 /\n送检医生\n收到日期 2024-08-28\n取材医生\n取材日期 2024-08-28\n标本名称 /\n临床诊断\n肉眼所见\n镜下所见\n病理诊断（贲门）腺癌。\n特殊检查\n未发报告原因\n报告医生 力超\n审核医生 力超\n报告日期 2024-09-02"
+    },
+    {
+      "chunk_id": "32ef4c17dba80db7",
+      "pages": [
+        11,
+        12
+      ],
+      "page_count_raw": 35,
+      "content": "报告状态 已审核\n姓名\n性别男\n年龄01岁\n床号\n送检单位本院\n送检科室\n收到日期2024-11-28\n取材医生\n取材日期2024-11-29\n标本名称下段食管+近端胃\n临床诊断\n肉眼所见小弯LN8个，直径0.1-0.5cm；大弯LN未见；\n1LN2个，直径0.5-1.5cm；2LN2个，直径1.5-2cm；3LN未见；4LN2个，直径0.1-0.2cm；\n5LN未见；7LN6个，直径0.5-2.5cm；8LN1个，直径2.5cm；9LN1个，直径1.5cm；10LN2\n个，直径1-1.5cm；11LN1个，直径1.5cm；\n[肉眼诊断]\n下段食管+近端胃切除标本：上切间距3cm，下切间距10"
+    },
+    {
+      "chunk_id": "c8de19bab10da6e9",
+      "pages": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "page_count_raw": 129,
+      "content": "29.11.11.73\n临时用户\n福建省肿瘤医院病历记录\n姓名\n入院记录\n姓\n出生地：福建省福\n性\n别：男\n职业：无职业\n年\n龄：61岁\n病史陈述者：患者本人\n民\n族：汉族\n可靠程度：基本可靠\n婚\n姻：已婚\n入院时间：2024年12月31日08时12分\n过敏史：未发现\n记录时间：2024年12月31日08时36分\n主诉：食管胃连接处腺癌新辅助化免治疗后术后1月余。\n现病史：患者于2024-09-02以\"进行性吞咽困难2个月\"为主诉入院。2024-08-\n23于连江县晓澳卫生院行胃镜示\"贲门肿块浸润性癌；食管下段浸润伴狭窄\"；\n胃镜病理示：（贲门）腺癌。多层螺旋CT平扫+增强扫描+MPR：1.考"
+    },
+    {
+      "chunk_id": "e34a4ce13e792d12",
+      "pages": [
+        18,
+        19,
+        20
+      ],
+      "page_count_raw": 96,
+      "content": "2026-03-24 15:16\n于2024-09-02以'进行性吞咽困难2个月'为主诉入院。2024-08-23于连江县晓澳卫生院行胃镜示'贲门肿块浸润性癌；食管下段浸润伴狭窄'；胃镜病理示：（贲门）腺癌，多层螺旋CT平扫+增强扫描+MPR：1.考虑贲门-胃体癌伴胃周淋巴结肿大\n胃镜及腹部影像学检查；2.双肺多形性支气管纵隔、双肺门淋巴结钙化，尘肺可能，请结合病史；3.双肺上叶、右肺中叶较大肺大泡；4.扫及肝囊肿，请结合腹部影像学检查；病理会诊报告号(H24-03863)：(贲门)腺癌，相关检查未见明显化疗禁忌\n于2024.09.04、2024.09.27、2024.10.25以'奥沙利铂1"
+    },
+    {
+      "chunk_id": "c4f736b570971829",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "page_count_raw": 60,
+      "content": "<table><tr><td>白蛋白</td><td>ALB</td><td>38.4</td><td>g/L</td><td>40.0-55.0</td><td>True</td></tr><tr><td>总胆红素</td><td>TBIL</td><td>9.3</td><td>umol/L</td><td>5.0-21.0</td><td>False</td></tr><tr><td>直接胆红素</td><td>DBIL</td><td>1.9</td><td>umol/L</td><td>0-8.0</td><td>False</td></tr><tr><td>间接胆红素</td><t"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "page_sum": 21,
+    "check": {
+      "covered": 20,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:22:29: [QwenVL] 17/20 pages done\n\n14:22:52: [QwenVL] 18/20 pages done\n\n14:22:56: [QwenVL] 19/20 pages done\n\n14:23:04: [QwenVL] 20/20 pages done\n\n14:23:04: [QwenVL] Done: 521 sections from 20 pages.\n\n14:23:04: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n14:23:04: Start S"
+}

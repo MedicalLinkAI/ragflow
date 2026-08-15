@@ -1,0 +1,178 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\chho-麦济122-哮喘-沈阳-医大四院.pdf",
+    "name": "chho-麦济122-哮喘-沈阳-医大四院.pdf",
+    "size_kb": 8763.4,
+    "pages": 13
+  },
+  "doc_id": "56be42c296ca11f19d3ab1cda0a97c3d",
+  "mode": "existing+reparse",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 12,
+  "orm_synced": true,
+  "process_duration": 519.0181,
+  "begin_at": "2026-08-15T09:39:21",
+  "end_at": "2026-08-15T09:48:04",
+  "elapsed_s": 522.9,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 12
+  },
+  "chunks": [
+    {
+      "chunk_id": "7ae5814c611dd2a4",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 30,
+      "content": "2/4\n沈阳市第四人民医院\nTHE FOURTH PEOPLE'S HOSPITAL OF SHENYANG\n门诊病历\n业：现住址：辽宁省沈阳市皇姑区延河街\n就诊科别：呼吸与危重症医学科门诊\n就诊时间：2024-08-23 16:00\n书写时间：2024-08-23 16:59\n供史者：患者本人\n主诉：支气管哮喘开药\n现病史：患者支气管哮喘，继续巩固治疗：\n沙美特罗替卡松吸入粉雾剂50ug：250ug/泡*60泡/盒，共1盒\n孟鲁司特钠片\n10mg*5片，共10片\n每次10mg，QD\n睡前口服\n查体/专科查体：\n辅助检查：\n诊断：\n支气管哮喘\n处理意见：\n建议患者定期复查肺功能，肺部CT.\n我"
+    },
+    {
+      "chunk_id": "cd5050e7e38332ae",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 41,
+      "content": "中国医科大学沈阳市第四人民医院\n报告单\n出生日期：1983-6-17\n性别：女\n住院号：890730\n年龄：42 Years\n身高：163 cm\n测试号：2025011002\n体重：70 kg\n预计 实1 %(实1/预) 实2 %(实2/预) 变异率\nTime\n14:07:\n14:26:\nFVC [L] 3.24 3.05 94.1 3.34 103.1 9.6\nFEV 1 [L] 2.79 2.12 76.1 2.48 89.0 16.9\nFEV 1 % FVC [%] 69.69 74.33 6.7\nFEV 1 % VC MAX [%] 81.12 63.16 77.9 72.42 89."
+    },
+    {
+      "chunk_id": "3e5584553d8f9200",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 126,
+      "content": "4/4\n中国医科大学沈阳市第四人民医院\n肺功能报告单\n姓名：\n出生日期：\n1983-6-17\n住院号：\n890730\n身高：\n163 cm\n性别：\n女\n年龄：\n42 Years\n测试号：\n2025011002\n体重：\n70 kg\nDate\nTime\n预计\n实测\n%(实/预)\n25-9-02\n14:07:38\nVT\n[L]\n0.50\nBF\n[1/min]\n20.00\nMV\n[L/min]\n10.00\nERV\n[L]\n1.07\nVC MAX\n[L]\n3.31\n3.36\n101.6\nFVC\n[L]\n3.24\n3.05\n94.1\nFEV 1\n[L]\n2.79\n2.12\n76.1\nFEV 1 % FVC"
+    },
+    {
+      "chunk_id": "f63dacc8afec38dd",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 23,
+      "content": "辽宁崇文厚德医院\n门诊病历\n科室：呼吸内一科门诊\n姓名：\n职业：\n就诊日期：2025/11/08 10:11:23\n主诉：反复喘息2年，加重1周\n现病史：3年前开始出现反复喘息，1周前受凉后诱发喘息加重，活动后明显，自用“万\n林”治疗，症状稍有改善，为求进一步诊治来我院就诊。\n既往史：否认。\n过敏史：{无}\n体格检查：血压：128/73mmHg 两肺呼吸音粗，良妃少许喘鸣音，心音有力，律齐。\n辅助检查：肺功能：中度阻塞通气功能障碍；小气道功能障碍；用药后支气管舒张试\n性。\n抽血回报：血常规：白细胞计数:9.13*10^9/L;中性粒细胞:48.90%.\n初步诊断：1、支气管哮喘 急性发作期\n处"
+    },
+    {
+      "chunk_id": "d3bbd55e76baeb0d",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 16,
+      "content": "新药特药大药房总店\n流水单号 10020045213\n结账时间 2025-11-08 15:22:19\n编号 数量 单价 金额 营业员\n甲泼尼龙片（美卓乐）/4mg*30片/Pfizer It\nSr1/库存2\n0310145 2 盒 34.00 68.00\n合计 68.00\n优惠：0.00 微信：0.00\n收银 1002\n银台\n会员\n本次积分 0.00\n累计积分 0.00\n此票为开发票依据，药品为特殊、\n商品，售出概不退还！"
+    },
+    {
+      "chunk_id": "d3f9a8999ddd008b",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 21,
+      "content": "2/4\n25/09/02 14:58\n普通\n科\n室:呼吸与危重症一门诊\n诊断:(J45.900x001)支气管哮喘\nRp\n沙美特罗替卡松吸入粉雾剂【(小)舒利迭】乙\n【50ug:250ug/泡*60泡/(193.60元/盒)\n1盒\n用法用量:每次300ug,吸入,每天二次\n孟鲁司特钠片【舒宁安】乙\n超量说明:\n【10mg*5片】\n(4.96元/盒)\n3盒\n用法用量:每次10mg,睡前口服,每天一次\n医师:杨沂发药:修泉涌配药:沈瑶\nvivo X80 · ZEISS\n计:208.48/208.48\n第1页/共1页"
+    },
+    {
+      "chunk_id": "384cdf288b97d44c",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 17,
+      "content": "2025/09/19 18:04\n新药特药大药房总店\n流水单号 10020044912\n结账时间 2025-10-14 08:34:01\n编号 数量 单价 金额 营业员\n沙美特罗替卡松吸入粉雾剂(舒利迭)/50ug:250ug\n泡/葛兰素史克(集团)/库存1\n0200127 1 盒 199.00 199.00\n合计 199.00\n优惠:0.00 微信:0.00\n收银 1002\n银台\n会员\n本次积分 0.00\n累计积分 0.00\n此票为开发票依据,药品为特殊、\n商品,售出概不退还!"
+    },
+    {
+      "chunk_id": "182269b750cd14ef",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 19,
+      "content": "1/1\nNO:25004949727\n4号窗口\n25/11/03 16:39\n普通\n病志号:55161248\n科\n室:呼吸与危重症一门诊\n诊断:(J45.900x001)支气管哮喘\nRp\n沙美特罗替卡松吸入粉雾剂【(小)舒利迭】乙\n【50ug:250ug/泡*60泡/(193.60元/盒)\n1盒\n用法用量:每次300ug,吸入,每天二次\n医师:杨昕发药:沈瑶配药:巴艺洁\nvivo X80 · ZEISS\n金额合计:193.6/193.6\n第1页/共1页\n2025/11/05 14:51"
+    },
+    {
+      "chunk_id": "d88386878537d36f",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 18,
+      "content": "沈阳市第四人民医院\n处方笺\n医疗类别:市医保\nNO:25005558582\n4号窗口\n25/12/08 14:00\n普通\n病志号:55161248\n诊断:(J45.900x001)支气管哮喘\nRp\n沙美特罗替卡松吸入粉雾剂【(小)舒利迭】乙\n【50ug:250ug/泡*60泡/(193.60元/盒)\n1盒\n用法用量:每次300ug,吸入,每天二次\nvivo X80 · ZEISS\n医师:杨昕发药:李琳配药:巴艺洁\n2025/12/31 18:28金额合计:193.6/193.6\n第1页/共1页"
+    },
+    {
+      "chunk_id": "0bd58802af68c8b5",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 16,
+      "content": "新药特药大药房总店\n流水单号 10020046503\n结账时间 2026-01-02 18:12:29\n编号 数量 单价 金额 营业员\n沙美特罗替卡松吸入粉雾剂(舒利迭)/50ug:\n泡/葛兰素史克(集团)/库存1\n0200127 1 盒 199.00 199.00\n合计 199.00\n优惠:0.00 微信:0.00\n收银 1002\n银台\n会员\n本次积分 0.00\n累计积分 0.00\n此票为开发票依据,药品为特殊、\n商品,售出概不退还!"
+    },
+    {
+      "chunk_id": "aa62bd91fbb19580",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 16,
+      "content": "沈阳市第四人民医院\n处方笺\n医疗类别:市医保\nNO:26000513029\n3号窗口\n26/01/30 13:26\n普通\n科 室:呼吸与危重症一门诊\n诊断:(J45.900x001)支气管哮喘\nRp\n沙美特罗替卡松吸入粉雾剂【(小)舒利迭】 乙\n【50ug:250ug/泡*60泡/(193.60元/盒) 1盒\n用法用量:每次300ug,吸入,每天二次\n医师:杨昕发药:李琳 配药:乔军\n金额合计:193.6/193.6\n第1页/共1页"
+    },
+    {
+      "chunk_id": "ac113f49e48a5a67",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 34,
+      "content": "<table><tr><td>白细胞</td><td>None</td><td>8.40</td><td>10^9/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>红细胞</td><td>None</td><td>4.94</td><td>10^12/L</td><td>3.8--5.1</td><td>False</td></tr><tr><td>血红蛋白</td><td>None</td><td>138</td><td>g/L</td><td>115--150</td><td>False</td></tr><tr><td>血小板</td>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 13,
+      "total": 13,
+      "coverage_pct": 100.0,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "[SmartSplitter:MedLink]:\n09:43:26: Start SmartSplitter: semantic split + classify.\n\n09:43:26: Loaded 1463 OCR bboxes.\n\n09:43:26: Full document: 26011 chars, 1463 bboxes.\n\n09:43:26: Calling LLM for semantic splitting...\n\n09:43:46: LLM responded. Parsing segments...\n\n09:43:46: LLM returned 12 segments"
+}

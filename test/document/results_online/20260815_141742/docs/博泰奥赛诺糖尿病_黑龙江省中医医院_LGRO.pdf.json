@@ -1,0 +1,118 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "博泰奥赛诺糖尿病 黑龙江省中医医院 LGRO.pdf",
+    "size_kb": 1489.2,
+    "pages": null,
+    "doc_id": "d9a240fa78f011f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-6db3cff9ee61"
+  },
+  "doc_id": "d9a240fa78f011f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 6,
+  "orm_synced": true,
+  "process_duration": 62.96616,
+  "begin_at": "2026-08-15T16:36:11",
+  "end_at": "2026-08-15T16:37:24",
+  "elapsed_s": 73.1,
+  "before": {
+    "chunk_count": 6,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 2,
+      "LabReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "1d498ee9987cbc00",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 21,
+      "content": "哈尔滨市第四医院\n门诊病历\n姓名：\n病人ID：1023031039\n性别：女\n年龄：67\n科室：内分泌科\n日期：2025-02-11 15:12\n主诉：糖尿病复查糖化\n现病史：患者2型糖尿病史5年余，口服二甲双胍治疗，要求复查糖化血红蛋\n白及空腹血糖\n既往史：体健\n药物过敏史：无\n查体：\n辅助检查：糖化血红蛋白：7.9%；空腹血糖：9.56mmol/L\n印象诊断：2型糖尿病\n处置：1，糖尿病饮食\n2，盐酸二甲双胍缓释片0.5g，一日三次口服\n备注：如您的病情没有好转或出现病情变化，请随时到医院复诊\n医生签名：李媛红\n第1页/共1页"
+    },
+    {
+      "chunk_id": "7c155f9f499013bb",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 17,
+      "content": "哈尔滨三多大药房\n有限公司\n会员名\n会员号：001020\n1D2410448 盐酸二甲双胍缓释片\n(齐佶)\n规格：0.5g*30片\n¥8.60\n8盒\n68.80\n应收：¥68.80\n实收：¥68.80\n注：凭此票取货，当日有效\n售出药品无质量问题不予退换\n地址：\n请于购买之日起三十日内索取\n销售时间：2025.02.11"
+    },
+    {
+      "chunk_id": "d9b5d95e18571b3b",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 36,
+      "content": "电子发票(普通发票)\n发票号码：25232000000019614197\n开票日期：2025年04月14日\n黑龙江省税务局\n购买方信息\n名称\n统一社会信用代码/纳税人识别号：230103195703196020\n销售方信息\n名称：哈尔滨三多大药房有限公司\n统一社会信用代码/纳税人识别号：91230102696849861N\n项目名称\n规格型号\n单位\n数量\n单价\n金额\n税率/征收率\n税额\n*化学药品制剂*盐酸二甲\n0.5g*30片\n盒\n88.5148514851485\n68.12\n1%\n0.68\n双胍缓释片\n合计\n￥68.12\n￥0.68\n价税合计（大写）\n陆拾捌圆捌角整\n(小写)￥68.80\n"
+    },
+    {
+      "chunk_id": "4cefbb90d983f529",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>葡萄糖</td><td>GLU</td><td>9.56</td><td>mmol/L</td><td>3.6—6.1</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "44d4d0ec77991d6c",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>*糖化血红蛋白 A1</td><td>HBA1C</td><td>7.9</td><td>%</td><td>4—6</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "0a1b2cd94d5d0944",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白 A1</td><td>HBA1C</td><td>8.3</td><td>%</td><td>4—6</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "page_sum": 6,
+    "check": {
+      "covered": 6,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 0,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n16:36:14: [QwenVL] Processing 6 pages...\n\n16:36:22: [QwenVL] 1/6 pages done\n\n16:36:22: [QwenVL] 2/6 pages done\n\n16:36:22: [QwenVL] 3/6 pages done\n\n16:36:23: [QwenVL] 4/6 pages done\n\n16:36:24: [QwenVL] 5/6 pages done\n\n16:36:25: [QwenVL] 6/6 pages done\n\n16:36:25: [QwenVL] Done: 104 sections from 6 pa"
+}

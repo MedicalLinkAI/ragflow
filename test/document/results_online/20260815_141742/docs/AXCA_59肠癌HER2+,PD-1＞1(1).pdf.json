@@ -1,0 +1,74 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "AXCA 59肠癌HER2+,PD-1＞1(1).pdf",
+    "size_kb": 14570.6,
+    "pages": null,
+    "doc_id": "72a8cb7879e311f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-f5c9aeaee276"
+  },
+  "doc_id": "72a8cb7879e311f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 813.6407,
+  "begin_at": "2026-08-15T16:04:32",
+  "end_at": "2026-08-15T16:19:01",
+  "elapsed_s": 869.2,
+  "before": {
+    "chunk_count": 30,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 13,
+      "LabReport": 11,
+      "AdmissionRecord": 1,
+      "DischargeRecord": 1,
+      "OutpatientRecord": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "DischargeRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 13,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 11,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 3,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n16:04:35 Task has been received.\n\n-------------------------------------\n[File]:\n16:04:35: File fetched.\n\n16:04:35: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n16:04:35: Start to work on a PDF.\n\n16:04:47: [QwenVL] Processing 39 pages...\n\n16:06:16: [QwenVL] 1/39 pag"
+}

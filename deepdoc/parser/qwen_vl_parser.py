@@ -246,8 +246,9 @@ _SYMBOL_ONLY_RE = re.compile(r'^[+\-*=#|~_·•\s]+$')
 
 _MIN_ROW_RUN = 5
 _MIN_TEXT_RUN = 5
-_MAX_UNIQUENESS_RATIO = 0.03
+_MAX_UNIQUENESS_RATIO = 0.05
 _MIN_EMPTY_RUN = 20
+_MIN_ALT_RUN = 50  # period-2 alternation (A B A B ...) longer than this = spam
 
 # A run of N consecutive "" elements: "","",... separated only by commas
 _EMPTY_RUN_RE = re.compile(r'""(?:\s*,\s*""){%d,}' % (_MIN_EMPTY_RUN - 1))
@@ -286,7 +287,7 @@ def _dedup_repeated_blocks(
 ) -> tuple[list[str], Optional[tuple[int, int, int]]]:
     """Detect and truncate repeated content (model hallucination).
 
-    Covers three shapes, applied iteratively until the output is clean
+    Covers four shapes, applied iteratively until the output is clean
     (a single response may contain several spam segments):
     1. prefix block cycle: consecutive repetitions of lines[0:cycle]
        (cycle >= 3), collapsed to a single occurrence while keeping the
@@ -296,10 +297,15 @@ def _dedup_repeated_blocks(
     2. identical-row run at any position: one line repeated >= _MIN_TEXT_RUN
        times in a row (e.g. a trailing "病理诊断：" spam filling the token
        budget), collapsed to a single occurrence
-    3. degenerate uniqueness: huge output with almost no distinct lines
+    3. two-value alternation (A B A B ...) at any position: a long run of
+       period-2 repeats (e.g. YXLA p15 emitted "10"/"12" for 3800+ lines),
+       collapsed to one occurrence of each value
+    4. degenerate uniqueness: huge output with almost no distinct lines
 
     Returns (lines, rep_info); rep_info=(cycle, repeats, n) describes the
-    first pattern detected, None when the input is clean.
+    first pattern detected, None when the input is clean. cycle=2 marks the
+    two-value alternation shape, cycle=1 single-line run / uniqueness, and
+    cycle>=3 a prefix block cycle.
     """
     if len(lines) <= 20:
         return lines, None
@@ -331,7 +337,28 @@ def _dedup_repeated_blocks(
                     detected = ((1, j - i, n), lines[: i + 1] + lines[j:])
                     break
                 i = j
-        # 3) degenerate uniqueness ratio
+        # 3) two-value alternation (A B A B ...) at any position: long
+        #    period-2 runs are never legitimate medical content (a real form
+        #    would need to alternate the same two values 50+ times), while
+        #    chart-axis spam emits exactly this (YXLA p15: "10"/"12" x3836)
+        if not detected:
+            start = 0
+            while start < n - 1:
+                a, b = lines[start], lines[start + 1]
+                if a == b:
+                    start += 1
+                    continue
+                end = start + 2
+                while end < n and lines[end] == lines[end - 2]:
+                    end += 1
+                if end - start >= _MIN_ALT_RUN:
+                    detected = (
+                        (2, end - start, n),
+                        lines[:start] + [a, b] + lines[end:],
+                    )
+                    break
+                start = end - 1
+        # 4) degenerate uniqueness ratio
         if not detected and n >= 100 and len(set(lines)) <= _MAX_UNIQUENESS_RATIO * n:
             uniq: list[str] = []
             for t in lines:

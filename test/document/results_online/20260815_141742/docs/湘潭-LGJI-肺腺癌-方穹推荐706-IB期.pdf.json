@@ -1,0 +1,95 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "湘潭-LGJI-肺腺癌-方穹推荐706-IB期.pdf",
+    "size_kb": 2015.3,
+    "pages": null,
+    "doc_id": "7a4fd96c7eb011f1af97e3985ba7f8da",
+    "patient_id": "PAT-817b8f0d4dae"
+  },
+  "doc_id": "7a4fd96c7eb011f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 3,
+  "orm_synced": false,
+  "process_duration": 313.63455,
+  "begin_at": "2026-08-15T15:02:55",
+  "end_at": "2026-08-15T15:08:10",
+  "elapsed_s": 315.2,
+  "before": {
+    "chunk_count": 3,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 2,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "752e171c013681df",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 193,
+      "content": "金域医学\nKngMed Diagnostics\n病理诊断报告书\n1/1\n标本条码\n医院\n病人姓名\n科室\n病理号\n性别\n男\n房/床号\n住院/门诊号\n年龄\n49岁\n接收时间\n2026-03-04 15:21:00\n申请医生\n采样时间\n2026-03-03 15:05:43\n患者电话\n送检材料\n项目名称\n免疫组化10项\n临床诊断\n大体描述:\n灰红碎组织一堆，大小1*0.8*0.5cm。取1盒全\n镜下所见:\n诊断意见:\n(左肺穿刺活检)低分化腺癌。\n1号蜡块免疫组化: CK (+++)、CK5/6 (-)、P40 (-)、CK7 (+++)、TTF-1 (+++)、NapsinA (灶+)、Syn ("
+    },
+    {
+      "chunk_id": "b5ba39a52ebf5c05",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 30,
+      "content": "长沙益康肿瘤医院\n出院记录\n性别 男 年龄 49岁 病区\n号\n入院时间：2026-03-02\n出院时间：2026-03-09\n住院天数：7天\n入院诊断：1.左肺占位性质待查\n入院时情况：患者，男，49岁，因咳嗽2月余，发现肺部占位4天入院，目前症见：时有咳嗽，\n夜间咳甚，咳吐黄白痰，时有痰中夹带血丝，食纳可，无恶心呕吐、恶寒发热、腹痛腹胀等不适，夜寐一\n般，二便可，近期体重无减轻。查体：浅表淋巴结未扪及，胸廓对称无畸形，胸骨无压痛，两侧呼吸运动\n正常，无胸膜摩擦感，双侧语颤正常，叩诊呈清音，未闻及明显干湿啰音，未闻及胸膜摩擦音。辅助检\n查：（2026年1月26日 长沙市第四医院）胸部CT：1."
+    },
+    {
+      "chunk_id": "b845b421843a52ea",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 32,
+      "content": "长沙市第四医院（长沙市中西医结合医院）\n湖南HR\nCT 诊断报告单\n姓名：\n性别：男\n年龄：49 岁\n门诊号：20260126\n科室：\n水新城)\n床号：\n住院号：\n摄片、\n检查日期：2026/1/26 19:56:46\n报告日期：2026-01-26 20:14:00\n检查项目：(CT)平扫一薄层扫描（加收）,(CT)平扫-胸部\n检查方法：\n影像表现：\n双侧胸廓对称。双肺支气管-血管束稍增多。双肺见散在囊状透亮影，大者位于左肺上叶大小约29×25mm。右肺中\n叶内侧段可见斑点状、条索状高密度影，边界清晰。双肺下垂部见斑片状稍高密度影，边界模糊。左肺上叶尖后段-下\n叶背段见肿块影，大小约80×4"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "[Parser_0]:\n15:02:59: Start to work on a PDF.\n\n15:02:59: [QwenVL] Processing 9 pages...\n\n15:03:10: [QwenVL] 1/9 pages done\n\n15:03:10: [QwenVL] 2/9 pages done\n\n15:03:14: [QwenVL] 3/9 pages done\n\n15:03:15: [QwenVL] 4/9 pages done\n\n15:03:15: [QwenVL] 5/9 pages done\n\n15:03:32: [QwenVL] 6/9 pages done\n\n1"
+}

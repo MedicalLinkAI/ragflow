@@ -1,0 +1,124 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "RRUU-男-23岁-哮喘.pdf",
+    "size_kb": 4859.8,
+    "pages": null,
+    "doc_id": "31a5cfb2873111f1bb8027103a248952",
+    "patient_id": "PAT-8a1c9e6d50b0"
+  },
+  "doc_id": "31a5cfb2873111f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 6,
+  "orm_synced": true,
+  "process_duration": 196.19025,
+  "begin_at": "2026-08-15T14:32:50",
+  "end_at": "2026-08-15T14:36:07",
+  "elapsed_s": 197.1,
+  "before": {
+    "chunk_count": 6,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 4,
+      "ExaminationReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "bc6dcff5d706f541",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 94,
+      "content": "PASS (省集1)注射用七...\n科室:肿瘤科、血液科病历号:\n费别:职工\n成都市金牛区人民医院·四川省人民医院金牛医院\n入院记录\n姓名:\n科别:肿瘤科、血液科\n床号:+3\n病历号:\n姓名:\n性别:男\n出生地:绵阳市三台县\n性别:男\n职业:农民\n年龄:57岁\n入院时间:2024年11月26日16时44分\n民族:汉族\n记录时间:2024年11月26日17时30分\n婚姻:已婚\n病史陈述者:吴万江\n与患者关系:本人\n可靠程度:基本可靠\n主诉:肺恶性肿瘤放化疗后\n现病史:2024.02下旬患者发现颈部包块,偶咳嗽、咳痰,2024.03遂至成都中医药大学附属医院就\n诊,2024.03.12颈部淋巴结彩"
+    },
+    {
+      "chunk_id": "7660404ff4e32125",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 25,
+      "content": "PASS (省集1)注射用七...\n科室:肿瘤科、血液科病历号:\n费别:职工\n定位报告 Q\n报告内容\n金牛区人民医院CT报告单\nCT CT601971\n姓名: 性别: 男 年龄: 57岁0 住院号: 2024032208\n科别: 肿瘤科 病区: 肿瘤科病区 床号: +3 临床诊断: 肺恶性肿瘤\n申请医师: 检查日期: 2024/11/27 设备: CT-2\n检查医师: 严嘉军\n检查项目 颅脑(平扫+增强)\n颈部(咽、喉、甲状腺)平扫+增强扫描\n胸部平扫\n单次多层CT增强扫描(胸部)\n上下腹部+盆腔(平扫+增强)\n检查部位 单次多层CT增强扫描(胸部);颅脑(平扫+增强)+三维重建;颈部(咽、喉"
+    },
+    {
+      "chunk_id": "3c2a2199f44d9ffd",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>5.39</td><td>10^9/L</td><td>3.50~9.50</td><td>False</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>92.6</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>3.0</td><td>%</td><td>20.0~50.0</td><td>True</td></tr><tr><td>单核细胞比"
+    },
+    {
+      "chunk_id": "e5176d3df65cf754",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HBsAg</td><td>0</td><td>IU/mL</td><td>0~0.030</td><td>False</td></tr><tr><td>乙型肝炎病毒表面抗体</td><td>HBsAb</td><td>251.240</td><td>mIU/ml</td><td>0~10.000</td><td>True</td></tr><tr><td>乙型肝炎病毒e抗原</td><td>HBeAg</td><td><0.050</td><td>IU/mL</td><td>0~0.100</td><td>False</td"
+    },
+    {
+      "chunk_id": "63b1de4b4fadac93",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>白细胞白介素-1β</td><td>None</td><td>1.64</td><td>pg/ml</td><td>0~6.00</td><td>False</td></tr><tr><td>白细胞白介素-6</td><td>None</td><td>40.27</td><td>pg/ml</td><td>0~7.00</td><td>True</td></tr><tr><td>白细胞白介素-8</td><td>None</td><td>19.69</td><td>pg/ml</td><td>0~65.00</td><td>False</td></tr><tr><"
+    },
+    {
+      "chunk_id": "6429fc9aab7fbe47",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>天门冬氨酸氨基转氨酶</td><td>AST</td><td>23</td><td>u/l</td><td>0 ~ 40</td><td>False</td></tr><tr><td>丙氨酸氨基转氨酶</td><td>ALT</td><td>20</td><td>u/l</td><td>0 ~ 50</td><td>False</td></tr><tr><td>r-谷氨酰基转酞酶</td><td>GGT</td><td>40</td><td>u/l</td><td>10 ~ 60</td><td>False</td></tr><tr><td>碱性磷酸酶</td><"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "page_sum": 9,
+    "check": {
+      "covered": 9,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:33:08: [QwenVL] 3/9 pages done\n\n14:33:09: [QwenVL] 4/9 pages done\n\n14:33:10: [QwenVL] 5/9 pages done\n\n14:33:13: [QwenVL] 6/9 pages done\n\n14:33:14: [QwenVL] 7/9 pages done\n\n14:33:15: [QwenVL] 8/9 pages done\n\n14:33:19: [QwenVL] 9/9 pages done\n\n14:33:19: [QwenVL] Done: 213 sections from 9 pages.\n\n1"
+}

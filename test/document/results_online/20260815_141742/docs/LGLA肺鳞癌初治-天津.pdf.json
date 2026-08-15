@@ -1,0 +1,195 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LGLA肺鳞癌初治-天津.pdf",
+    "size_kb": 10247.0,
+    "pages": null,
+    "doc_id": "ab9e1adc7b9111f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-1d85f9f9d2ce"
+  },
+  "doc_id": "ab9e1adc7b9111f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 13,
+  "orm_synced": true,
+  "process_duration": 349.81934,
+  "begin_at": "2026-08-15T15:42:49",
+  "end_at": "2026-08-15T15:48:41",
+  "elapsed_s": 352.2,
+  "before": {
+    "chunk_count": 11,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 7,
+      "ExaminationReport": 2,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "d4db1329d007a180",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 24,
+      "content": "华北理工大学附属医院\n病理检查报告单\n姓名：\n性别：男\n年龄：\n申请科室：肿瘤放化疗科三科一组病区\n住院：\n送检日期：2025年12月22日\n病理号：\n床号：155\n送检材料：右肺上叶肿物*1\n临床诊断：胸腺恶性肿瘤\n大体所见：\n灰白线状组织3条，长0.3cm-0.5cm，直径均0.1cm，质中等。\n光镜所见（附图）：\n病理诊断：\n(右肺上叶肿物)\n非角化鳞状细胞癌\n免疫组化：CK(+)、TTF-1(-)、NapsinA(-)、P40(+)、P63(+)、CD117(-)、CD5(-)、CR(-)、MC(-)、Her\n-2(0)、Trop-2(3+，30%；2+，70%)\n报告医师：常艳国\n审"
+    },
+    {
+      "chunk_id": "87f431a0f43ee31f",
+      "pages": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 140,
+      "content": "华北理工大学附属医院\nNORTH CHINA UNIVERSITY OF SCIENCE AND TECHNOLOGY AFFILIATED HOSPITAL\n入院记录\n*来\n性别：男\n年龄：71岁\n性别：男\n年龄：71岁\n婚姻：已婚\n入院时间：2025-12-08 15:42\n民族：汉族\n记录时间：2025-12-08 18:13\n职业：退休人员\n病史叙述者：\n主诉：发现纵隔肿物10年余，胸腺瘤术后7年余。\n现病史：患者10年余前因行肾肿瘤切除术，行胸部CT发现纵隔肿物，未予处理，\n定期复查，7年余前复查胸部CT发现前纵隔肿物较前增大，遂就诊唐山人民医\n院，行相关检查后考虑为胸腺瘤，于201"
+    },
+    {
+      "chunk_id": "1ffece8fa770c7aa",
+      "pages": [
+        7,
+        8
+      ],
+      "page_count_raw": 80,
+      "content": "华北理工大学附属医院\nNORTH CHINA UNIVERSITY OF SCIENCE AND TECHNOLOGY AFFILIATED HOSPITAL\n出院记录\n姓名：\n性别：男\n年龄：71岁\n病案号\n入院日期：2025-12-08 15:42\n出院日期：2025-12-23 10:00\n共住院15天\n入院当时情况：患者主因发现纵隔肿物10年余，胸腺瘤术后7年余入院。查体：\n体温：36.6℃ 脉搏：94次/分 呼吸：18次/分 血压：125/78mmHg。神清语利，\n表情自如。浅表淋巴结未触及肿大。双肺呼吸音清，未闻及干湿啰音，心律律齐，\n各瓣膜听诊区未闻及杂音。腹软，腹部无压痛、反跳"
+    },
+    {
+      "chunk_id": "591ec1ea067513af",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 38,
+      "content": "姓名\n性别：男\n年龄：71岁\n检查日期：2025-12-10\n申请科室：肿瘤放化疗科三科一组病区\n床号：178\n住院号\n检查部位：CT增强-薄层扫描（加收），胸部CT增强，CT增强-能量成像（加收）\n检查所见：\n复查并与2025-12-06日对比显示：\n薄层增强及血管能里成像显示：右肺多发肿块较前未见明显改变，较大者位于右肺上叶\n前段（IM105），大小约为5.8cm×5.7cm，结节可见分叶，呈明显均匀强化，部分病变周围可\n见片状稍高密度影较前减少，边界模糊。右侧胸壁多发类圆形软组织密度影，较大者直径约\n1.3cm，呈明显均匀强化；右侧胸腔不规则形低密度影，局部致密影，横截面约10.3cm×"
+    },
+    {
+      "chunk_id": "724cca1d164bced1",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 17,
+      "content": "\\begin{tabular}{llll}\n报告时间: 2025-12-09\n\\hline\n心血管危险分层 & 低密度脂蛋白胆固醇目标值(LDL-C) & 常见人群(下述条件满足其一) \\\\\n\\hline\n低危人群 & <3.4mmol/L & 健康人群 \\\\\n\\hline\n中、高危人群 & <2.6mmol/L & ①低密度脂蛋白胆固醇$\\geqslant$4.9mmol/L, 无其他危险因素②40岁以上糖尿病 \\\\\n& & ③慢性肾脏病3-4期 \\\\\n\\hline\n极高危人群 & 小于1.8mmol/L且降幅大于50\\% & ①冠心病(含支架/球囊/搭桥术等)②缺血性脑卒中③症状性颅内、外"
+    },
+    {
+      "chunk_id": "c48bca19c62f883b",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>总T细胞(CD3+)百分比</td><td>CD3+</td><td>31.52</td><td>%</td><td>53.33-81.22</td><td>True</td></tr><tr><td>辅助/诱导T细胞(CD3+CD4+)百分比</td><td>CD3+CD4+</td><td>16.74</td><td>%</td><td>24.01-49.05</td><td>True</td></tr><tr><td>抑制/细胞毒T细胞(CD3+CD8+)百分比</td><td>CD3+CD8+</td><td>12.65</td><td>%</td><td"
+    },
+    {
+      "chunk_id": "7a7548946db7dde3",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>血浆凝血酶原时间</td><td>PT</td><td>12.7</td><td>s</td><td>11-15.5</td><td>False</td></tr><tr><td>PT-INR</td><td>PT-INR</td><td>0.95</td><td>None</td><td>0.76-1.2</td><td>False</td></tr><tr><td>PT%</td><td>PT%</td><td>111</td><td>%</td><td>70-150</td><td>False</td></tr><tr><td>活化部分凝血活酶时间</td>"
+    },
+    {
+      "chunk_id": "2b050a2f44e0358a",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>总蛋白</td><td>TP</td><td>76.5</td><td>g/L</td><td>65.0-85.0</td><td>False</td></tr><tr><td>白蛋白(溴甲酚绿法)</td><td>ALB</td><td>48.2</td><td>g/L</td><td>40.0-55.0</td><td>False</td></tr><tr><td>球蛋白</td><td>GLB</td><td>28.3</td><td>g/L</td><td>20.0-40.0</td><td>False</td></tr><tr><td>白蛋白/球蛋白</"
+    },
+    {
+      "chunk_id": "414f3c64a2828736",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HBsAg</td><td>0.00</td><td>IU/mL</td><td>0-0.08</td><td>False</td></tr><tr><td>乙型肝炎病毒表面抗体</td><td>Anti-HBs</td><td>0.00</td><td>mIU/mL</td><td>0-10</td><td>False</td></tr><tr><td>乙型肝炎病毒e抗原</td><td>HBeAg</td><td>0.00</td><td>PEIU/mL</td><td>0-0.1</td><td>False</td></"
+    },
+    {
+      "chunk_id": "dbb0e80c57e81f7a",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>人免疫缺陷病毒(1+2)抗体[CLIA]</td><td>HIV</td><td>0.018</td><td>S/CO</td><td>0-1</td><td>False</td></tr><tr><td>梅毒螺旋体抗体[CLIA]</td><td>TP</td><td>0.016</td><td>S/CO</td><td>0-1</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "4ed8b9ff42a05e6f",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>总胆固醇</td><td>CHOL</td><td>3.03</td><td>mmol/L</td><td>适宜<5.20; 边缘升高5.20-6.20; 升高>6.20</td><td>False</td></tr><tr><td>甘油三酯</td><td>TG</td><td>1.25</td><td>mmol/L</td><td>适宜<1.70; 边缘升高1.70-2.30; 升高>2.30</td><td>False</td></tr><tr><td>高密度脂蛋白胆固醇</td><td>HDLC</td><td>1.02</td><td>mmol/L</t"
+    },
+    {
+      "chunk_id": "b41b4c3dc09718df",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>6.5</td><td>10⁹/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>5.58</td><td>10¹²/L</td><td>4.30-5.80</td><td>False</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>163</td><td>g/L</td><td>130-175</td><td>False</td></tr><tr><td>红细胞压积</td><td>H"
+    },
+    {
+      "chunk_id": "f11419a9f21706ef",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>癌胚抗原</td><td>CEA</td><td>2.860</td><td>ng/mL</td><td>0-3.4</td><td>False</td></tr><tr><td>甲胎蛋白</td><td>AFP</td><td>2.820</td><td>ng/mL</td><td>0-7</td><td>False</td></tr><tr><td>总前列腺抗原</td><td>TPSA</td><td>1.490</td><td>ng/mL</td><td>0-4</td><td>False</td></tr><tr><td>糖基类抗原199</td><td"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "page_sum": 18,
+    "check": {
+      "covered": 16,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 9,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "-------------------------------------\n[SmartSplitter:MedLink]:\n15:44:09: Start SmartSplitter: semantic split + classify.\n\n15:44:09: Loaded 415 OCR bboxes.\n\n15:44:09: Full document: 16098 chars, 415 bboxes.\n\n15:44:09: Calling LLM for semantic splitting...\n\n15:44:26: LLM responded. Parsing segments..."
+}

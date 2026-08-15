@@ -1,0 +1,139 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "糖尿病-潍坊-WYLI.pdf",
+    "size_kb": 7573.9,
+    "pages": null,
+    "doc_id": "246392427c3e11f18d62dd81525255fa",
+    "patient_id": "PAT-2aeaadbd871d"
+  },
+  "doc_id": "246392427c3e11f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 240.8525,
+  "begin_at": "2026-08-15T15:35:48",
+  "end_at": "2026-08-15T15:39:51",
+  "elapsed_s": 243.1,
+  "before": {
+    "chunk_count": 9,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 2,
+      "PrescriptionRecord": 1,
+      "MedicationRecord": 1,
+      "LabReport": 4
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "4fa5edd748111872",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 16,
+      "content": "门诊病历\n姓名\n性别：女 年龄：64岁 卡号\n2024-12-18 14:20 内分泌科\n主诉：糖尿病10余年\n现病史：患者10余年确诊为“2型糖尿病”，长期使用药物治疗，门诊取药。\n既往史：否认高血压病史。有糖尿病史10年。否认心脏病病史。否认手术外伤\n史。否认吸烟史。\n药物过敏史：\n查体：体温：36.5℃ 脉搏：72次/分 呼吸：18次/分 血压：130/80mmHg 身高：\n体重：体格检查：一般情况可。\n辅助检查（与本次疾病相关）：\n诊断：2型糖尿病\n处理：\n处方：1. [甲]盐酸二甲双胍缓释片0.5g*60片/瓶1g 每日两次 口服\n2. [甲]瑞格列奈片1mg*30片/盒1mg 每日"
+    },
+    {
+      "chunk_id": "cf4698be3c2de098",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 20,
+      "content": "门诊病历\n姓名\n性别：女\n年龄：65岁\n卡号\n2025-02-14 11:24\n内分泌科\n主诉：糖尿病10年，门诊复诊取药。\n现病史：患者10年确诊为“糖尿病”，长期使用药物治疗，门诊复查取药。\n既往史：否认高血压病史。否认心脏病病史。否认手术外伤史。否认吸烟史。\n药物过敏史：\n查体：体温：脉搏：72次/分呼吸：18次/分血压：130/80mmHg身高：体重：\n体格检查：一般情况可。一般情况可。\n辅助检查（与本次疾病相关）：\n诊断：2型糖尿病\n处理：\n处方：1.[甲]盐酸二甲双胍缓释片0.5g*60片/瓶1g 每日两次 口服\n2.[甲]格列吡嗪片5mg*50片/盒10mg 每日三次 口服\n草药"
+    },
+    {
+      "chunk_id": "0442c578bdf38a97",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 8,
+      "content": "方明细\n全部 西成药 中草药 项目 检验 检查 显示无库存 显示控制或停用药品\n组 名称 规格 剂量 剂量单位 用法 天数 数量 单位\n病： 康复楼药房 已缴费 2025-02-14 11:24:32\n[甲]盐酸二甲双胍缓释片 0.5g*60片/瓶 1 g 口服 30 2 瓶\n[甲]格列吡嗪片 5mg*50片/盒 10 mg 口服 30 3 盒\nRp:1 张黛 特病： 内分泌科 已缴费 2025-02-14 11:25:34\n1 [甲]一般诊疗费(基层医疗机构)(非注射型) 人次 1 1 1 人次"
+    },
+    {
+      "chunk_id": "c487f564c6e0f841",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 11,
+      "content": "Rp: 康复楼药房 已缴费 2025-03-23 09:18:49\n2 [甲]盐酸二甲双胍缓释片 0.5g*60片/瓶 1 g 口服 30 2\n[甲]格列吡嗪片 5mg*50片/盒 10 mg 口服 30 3\nRp:3 康复楼药房 已缴费 2025-03-23 09:19:51\n3 [甲]硝苯地平缓释片(II) 1片*50片/盒 1 片 口服 30 1\nRp:4 病: 康复楼药房 已缴费 2025-03-23 09:20:36\n4 [甲]奥美拉唑胶囊 20mg*28粒/瓶 20 mg 口服 7 1\nRp:1 季 特病: 内分泌科 已缴费 2025-03-23 09:21:11\n1 [甲]一般诊"
+    },
+    {
+      "chunk_id": "229fa6ea15477c6d",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 12,
+      "content": "历史处方明细\nRp 组 名称 规格 剂量 剂量单位 用法\nRp:2 特病： 内分泌科 已缴费 2025-04-28 13:54:57\n2 [甲]糖化血红蛋白测定ks(色谱法)(门诊) 项 1\nRp:1 康复楼药房 已缴费 2025-04-28 14:06:35\n1 [甲]盐酸二甲双胍缓释片 0.5g*60片/瓶 1 g 口服\n[甲]格列吡嗪片 5mg*50片/盒 10 mg 口服\nRp:2 康复楼药房 已缴费 2025-04-28 14:06:54\n2 [甲]缬沙坦氢氯噻嗪片 80mg:12.5mg*80 mg 口服\nRp:1 检验科 已收费 2025-04-28 08:55:57\n1 糖化血"
+    },
+    {
+      "chunk_id": "e8e434410ed2c4f8",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 16,
+      "content": "姓名：\n性别：女\n年龄：65岁\n收款员：3013\n打印时间：2025-04-28 14:11:07\n药品费：16.13\n检查费：0\n治疗费：24\n其他费：0\n合计（人民币）：40.13元\n医保支付金额：18.99\n个人支付金额：21.14优惠：0.00\n温馨提示：\n西药房在一楼C区；检验科在二楼D区；\n彩超室在三楼北侧；放射科在一楼D区\n如需取药请到药房扫描上方二维码"
+    },
+    {
+      "chunk_id": "0f1b79b982fc0ccf",
+      "pages": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "page_count_raw": 34,
+      "content": "<table><tr><td>尿隐血(尿干化学)</td><td>BLD</td><td>+ - P</td><td>None</td><td>None</td><td>True</td></tr><tr><td>尿胆原(尿干化学)</td><td>UBG</td><td></td><td>None</td><td>None</td><td>False</td></tr><tr><td>亚硝酸盐(尿干化学)</td><td>NIT</td><td></td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿蛋白(尿干化学)</td><t"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 10,
+    "check": {
+      "covered": 10,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "PrescriptionRecord": {
+      "splitter": 3,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n15:36:45: [QwenVL] 8/11 pages done\n\n15:36:46: [QwenVL] 9/11 pages done\n\n15:36:48: [QwenVL] 10/11 pages done\n\n15:36:57: [QwenVL] 11/11 pages done\n\n15:36:57: [QwenVL] Done: 183 sections from 11 pages.\n\n15:36:57: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:36:57: Start Sma"
+}

@@ -1,0 +1,76 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "糖尿病-淮安DHJU.pdf",
+    "size_kb": 3200.7,
+    "pages": null,
+    "doc_id": "492688ba7a7b11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-1945aacbafe3"
+  },
+  "doc_id": "492688ba7a7b11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 2,
+  "orm_synced": true,
+  "process_duration": 142.2114,
+  "begin_at": "2026-08-15T16:02:07",
+  "end_at": "2026-08-15T16:04:32",
+  "elapsed_s": 145.1,
+  "before": {
+    "chunk_count": 2,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "LabReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "904f9bf4046aa18a",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 19,
+      "content": "五河县人民医院\n门诊病历\n姓名：\n性别：男\n年龄：64岁\n门诊号：25011262025\n2025-02-26 08:35:09\n就诊科室：内科\n主 诉：血糖升高1月余，今日来我院复测血糖\n现病史：患者主诉1月前出现多饮多尿症状，多次测空腹血糖＞7mmol/L，诊断为2型糖尿病，无视物模\n糊及肢体末梢麻木等不适\n既往史：既往体健，无高血压，无其他重大疾病史，无传染病史，无手术史\n查 体：心率齐，双肺听诊阴性，腹平软无压痛，双下肢不肿\n辅助检查：BP:122/80mmHg P:78次/分 测指尖血糖10.6mmol/L\n初步诊断：2型糖尿病\n诊疗意见：\n1.患者要求饮食控制、暂不用药，建议配合适"
+    },
+    {
+      "chunk_id": "ecdf3a53b450b02e",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1C</td><td>10.20</td><td>%</td><td>3.6--6.0</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2
+    ],
+    "page_sum": 2,
+    "check": {
+      "covered": 2,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n16:02:10 Task has been received.\n\n-------------------------------------\n[File]:\n16:02:10: File fetched.\n\n16:02:10: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n16:02:10: Start to work on a PDF.\n\n16:02:11: [QwenVL] Processing 2 pages...\n\n16:02:39: [QwenVL] 1/2 pages"
+}

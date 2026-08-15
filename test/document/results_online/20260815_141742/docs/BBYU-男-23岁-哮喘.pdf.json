@@ -1,0 +1,148 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "BBYU-男-23岁-哮喘.pdf",
+    "size_kb": 9808.0,
+    "pages": null,
+    "doc_id": "4413853e923211f19f644920a769b91a",
+    "patient_id": "PAT-a0c2dcabdab2"
+  },
+  "doc_id": "4413853e923211f19f644920a769b91a",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 8,
+  "orm_synced": true,
+  "process_duration": 429.11646,
+  "begin_at": "2026-08-15T14:25:33",
+  "end_at": "2026-08-15T14:32:48",
+  "elapsed_s": 434.0,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "ExaminationReport": 1,
+      "LabReport": 6
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "6752ebe7097dd66c",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 214,
+      "content": "322195509214595 科室:肿瘤科、血液科 病历号:\n费别:异地医保\n痕迹\n成都市金牛区人民医院*四川省人民医院金牛医院\n入院记录\n姓名:\n科别:肿瘤科、血液科\n床号:51\n病历号:\n姓名:\n出生地:\n性别:男\n职业:退(离)休人员\n年龄:69岁\n入院时间:2024年11月07日10时52分\n民族:汉族\n记录时间:2024年11月07日14时36分\n婚姻:已婚\n病史陈述者:患者及家属\n与患者关系:父女\n可靠程度:基本可靠\n主诉:左肺小细胞肺癌化疗后进展1周期化疗后13日\n现病史:2024-06月前患者无明显诱因出现咳嗽、咳痰,无胸闷、气紧,无恶心、呕吐,无畏寒、\n发热等特殊不适,自行"
+    },
+    {
+      "chunk_id": "a0c984b771a441fb",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 51,
+      "content": "肿瘤科、血液科 病历号:\n费别: 异地医保\n报告\n报告内容\n金牛区人民医院CT报告单\nCT\nCT594819\n名:\n性 别: 男\n年 龄: 69岁0\n住院号:\n别: 肿瘤科\n病 区: 肿瘤科病区\n床 号: 51\n临床诊断: 左肺恶性肿瘤\n请医师:\n检查日期: 2024/11/7\n设 备: CT-2\n查医师: 何传勇\n检查项目\n颅脑(平扫+增强)\n胸部(平扫+增强)\n上下腹部+盆腔(平扫+增强)\n检查部位\n单次多层CT增强扫描(胸部);颅脑(平扫+增强)+三维重建;胸部平扫;上下腹部+盆腔(平扫+增强)\n检查所见\n双侧大脑半球对称,灰白质分界清晰,左额叶见大片低密度灶,CT值约10HU,边界清晰"
+    },
+    {
+      "chunk_id": "65b56b24733cd8ec",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>2.64</td><td>10^9/L</td><td>3.50~9.50</td><td>True</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>81.9</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>14.2</td><td>%</td><td>20.0~50.0</td><td>True</td></tr><tr><td>单核细胞比"
+    },
+    {
+      "chunk_id": "9e98ac8f28ffb23d",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 14,
+      "content": "<table><tr><td>神经元特异性烯醇化酶</td><td>NSE</td><td>13.430</td><td>ng/ml</td><td>0~16.500</td><td>False</td></tr><tr><td>细胞角蛋白19片段</td><td>CYFRA21-1</td><td>1.87</td><td>ng/ml</td><td>0~3.30</td><td>False</td></tr><tr><td>胃泌素释放前体</td><td>ProGRP</td><td>191.291</td><td>pg/ml</td><td>0~78.62</td><td>True</t"
+    },
+    {
+      "chunk_id": "73a6e4d69b4c5e2a",
+      "pages": [
+        0,
+        12
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>肌钙蛋白I</td><td>cTnI</td><td>6.77</td><td>pg/ml</td><td>0~40.00</td><td>False</td></tr><tr><td>肌酸激酶同工酶质量</td><td>CK-MB</td><td>1.00</td><td>ng/mL</td><td>0~6.36</td><td>False</td></tr><tr><td>肌红蛋白</td><td>MYO</td><td>14.83</td><td>ng/mL</td><td>0~80.00</td><td>False</td></tr><tr><td>B型脑"
+    },
+    {
+      "chunk_id": "3c8ace9ffeb1a66e",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>天门冬氨酸氨基转氨酶</td><td>AST</td><td>17</td><td>u/l</td><td>0~40</td><td>False</td></tr><tr><td>丙氨酸氨基转氨酶</td><td>ALT</td><td>24</td><td>u/l</td><td>0~50</td><td>False</td></tr><tr><td>r-谷氨酰基转酞酶</td><td>GGT</td><td>120</td><td>u/l</td><td>10~60</td><td>True</td></tr><tr><td>碱性磷酸酶</td><td>ALP"
+    },
+    {
+      "chunk_id": "0fd476a6831e34ca",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 29,
+      "content": "<table><tr><td>r-谷氨酰基转酞酶</td><td>GGT</td><td>120</td><td>u/l</td><td>10~60</td><td>True</td></tr><tr><td>碱性磷酸酶</td><td>ALP</td><td>87</td><td>u/l</td><td>45~125</td><td>False</td></tr><tr><td>胆碱酯酶</td><td>CHE</td><td>3454</td><td>u/l</td><td>4620~11500</td><td>True</td></tr><tr><td>乳酸脱氢酶</td><td>LDH"
+    },
+    {
+      "chunk_id": "facb29e85a811f67",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>1.97</td><td>10^9/L</td><td>3.50 ~ 9.50</td><td>True</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>56.8</td><td>%</td><td>40.0 ~ 75.0</td><td>False</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>36.0</td><td>%</td><td>20.0 ~ 50.0</td><td>False</td></tr><tr><"
+    }
+  ],
+  "pages": {
+    "union": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 14,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 6,
+      "clinical": 6,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:26:26: [QwenVL] 10/13 pages done\n\n14:26:30: [QwenVL] 11/13 pages done\n\n14:26:31: [QwenVL] 12/13 pages done\n\n14:26:35: [QwenVL] 13/13 pages done\n\n14:26:35: [QwenVL] Done: 427 sections from 13 pages.\n\n14:26:35: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n14:26:35: Start S"
+}

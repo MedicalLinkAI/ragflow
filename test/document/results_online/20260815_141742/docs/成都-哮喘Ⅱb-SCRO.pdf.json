@@ -1,0 +1,79 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "成都-哮喘Ⅱb-SCRO.pdf",
+    "size_kb": 1155.3,
+    "pages": null,
+    "doc_id": "664e29dc84af11f1af97e3985ba7f8da",
+    "patient_id": "PAT-111d6c6c3299"
+  },
+  "doc_id": "664e29dc84af11f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 2,
+  "orm_synced": true,
+  "process_duration": 231.6044,
+  "begin_at": "2026-08-15T14:54:47",
+  "end_at": "2026-08-15T14:58:40",
+  "elapsed_s": 233.2,
+  "before": {
+    "chunk_count": 1,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "b9efeab2b78718b9",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 96,
+      "content": "0179405 科室: 呼吸与危重症医学科门诊\n病历 x\nGCP门诊病历\n民医院服务号\n就诊日期:2025年02月07日 科别:呼吸与危重症医学科门诊 门诊号:990500000179405+\n姓名: 性别:女 年龄:52岁 民族:汉族 婚姻状况:已婚 职业:其他\n工作单位或住址:四川省巴中市巴州区新市街146号\n主诉:参加LOGOS(D5982C00008)项目安全性电话访视\n现病史:今日研究医生兰文艺对受试者余春蓉(电话号码:13550467998)行安全性电话随访,询问受试者及查询HIS,\n上次访视至今无新增AE,SAE,受试者在研期间未出现哮喘急性发作,因受试者2024年07月12日发"
+    },
+    {
+      "chunk_id": "e1e5c77a089fc4a0",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>红细胞分布宽度</td><td>None</td><td>42.00</td><td>fl</td><td>35.1-46.3</td><td>False</td></tr><tr><td>红细胞分布宽度变异系数</td><td>None</td><td>13.10</td><td>%</td><td>11.7-14.4</td><td>False</td></tr><tr><td>大型血小板比例</td><td>None</td><td>29.80</td><td>%</td><td>26-42</td><td>False</td></tr><tr><td>有核"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "page_sum": 4,
+    "check": {
+      "covered": 4,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:54:50 Task has been received.\n\n-------------------------------------\n[File]:\n14:54:51: File fetched.\n\n14:54:51: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n14:54:51: Start to work on a PDF.\n\n14:54:51: [QwenVL] Processing 4 pages...\n\n14:55:04: [QwenVL] 1/4 pages"
+}

@@ -1,0 +1,100 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LYLN.pdf",
+    "size_kb": 1147.2,
+    "pages": null,
+    "doc_id": "856d5b6c75b911f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-b885550f3504"
+  },
+  "doc_id": "856d5b6c75b911f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": true,
+  "process_duration": 50.2406,
+  "begin_at": "2026-08-15T16:38:18",
+  "end_at": "2026-08-15T16:39:10",
+  "elapsed_s": 52.6,
+  "before": {
+    "chunk_count": 4,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "LabReport": 2,
+      "MedicationRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "c0c469f7580f8b69",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 21,
+      "content": "长春新\n院 门诊病历\n门诊号：1\n姓名：\n性别：女 年龄：40岁\n科 别： 内科 费 别： 自费 日期： 2025年01月07日\n主诉：\n多饮多尿多食，伴乏力消瘦。\n现病史：\n患者糖尿病病史1年，近期出现明显口渴，多饮多尿症状，前来就诊。\n查体：\n体温 36.3℃ 血压 125/78 mmHg\n心率 82 次/分 无药物过敏史\n辅助检查：空腹血糖：9.28mmol/L，糖化血红蛋白：8.40%\n诊断：\nⅡ型糖尿病\n处置：\n1.二甲双胍 0.5g 一日三次 随餐服用。\n2.糖尿病饮食，规律运动，不适随诊。\n医 师：\n第 1 页 共 1 页"
+    },
+    {
+      "chunk_id": "162a42d12a348fe1",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 16,
+      "content": "元康大药房\n时间：2026-01-12 13:09:18\n单号：1002026011200024\n会员名：\n会员号：00002117\n本次积分：468分\n总积分：936分\n品名 规格 厂家\n数量 售价 合计\n盐酸二甲双胍片（格华止）\n0 5g*10片*6板\n山东新华制药股份有限公司\n6 78.00 468.00\n方式：微信 合计：468.00\n实收：468.00 找零：0.00\n药品系特殊商品非质量问题概不退换"
+    },
+    {
+      "chunk_id": "5b432275744c1b03",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>8.40</td><td>%</td><td>4-6</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "39b5c0ef31dd2c65",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>None</td><td>10.0</td><td>%</td><td>4 - 6</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "page_sum": 4,
+    "check": {
+      "covered": 4,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n16:38:21: Start to work on a PDF.\n\n16:38:22: [QwenVL] Processing 5 pages...\n\n16:38:30: [QwenVL] 1/5 pages done\n\n16:38:31: [QwenVL] 2/5 pages done\n\n16:38:32: [QwenVL] 3/5 pages done\n\n16:38:32: [QwenVL] 4/5 pages done\n\n16:38:33:"
+}

@@ -1,0 +1,111 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "WCLI-糖尿病(1).pdf",
+    "size_kb": 1678.2,
+    "pages": null,
+    "doc_id": "1411c4bc78f211f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-42e8816aee20"
+  },
+  "doc_id": "1411c4bc78f211f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 5,
+  "orm_synced": true,
+  "process_duration": 214.94766,
+  "begin_at": "2026-08-15T16:32:34",
+  "end_at": "2026-08-15T16:36:11",
+  "elapsed_s": 217.0,
+  "before": {
+    "chunk_count": 5,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 2,
+      "MedicationRecord": 1,
+      "LabReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "2f05ffe814e22ee1",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 18,
+      "content": "郑州市北下街社区卫生服务中心\n诊断证明书\n姓名\n性别：女\n年龄：60\n科别：\n门诊号\n住院号：\n电话：\n住址：\n身份证号：\n初步诊断：2型糖尿病。\n治疗经过及处理意见：\n①盐酸二甲双胍缓释片1g 3/日 口服\n② 糖尿病饮食,运动,定期复诊\n医师签\n2025年1月22日\n(不盖公章无效)"
+    },
+    {
+      "chunk_id": "b0bdfddd2c29b990",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 20,
+      "content": "郑州市第三人民医院门诊病历\n日期：2025/04/01\nID：2023836531\n姓名\n性别：女\n年龄：60\n体重：\nKG 血压：收缩压 132 舒张压 74\n主诉：发现血糖升高8年\n过敏史：无\n病史：发现血糖升高8年，现二甲双胍缓释片 1g bid po，阿托伐他汀 10mg qd po，空腹血糖\n8mmol/L。近半年尿中泡沫增多\n家族史：-\n过去史：无\n体检：-\n诊断：2型糖尿病\n建议：严格控制饮食，加强运动，监测血糖，必要时调整治疗\n处理：查尿常规示葡萄糖3+，血糖8.22mmol/L、糖化血红蛋白9.5%、肾功能未见异常\n科室：内分泌科门诊\n医师"
+    },
+    {
+      "chunk_id": "459c9dbdaf031c88",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 52,
+      "content": "郑州康元堂大药房有限公司\n-30.50\n当前状态\n支付成功\n支付时间\n2025年2月10日 13:32:33\n商品\n大参林大药房\n商户全称\n郑州康元堂大药房有限公司\n收单机构\n拉卡拉支付股份有限公司\n由中国银联股份有限公司提供收\n款清算服务\n支付方式\n零钱\n交易单号\n42000026152025021054694690\n93\n商户单号\n可在支持的商户扫码退款\n7895226496596522\nCS 扫描全能王\n3亿人都在用的扫描App\n郑州康元堂大药房有限公司\n80849店郑州康元堂/2000080849\n流水号：2205409917 收款员：530044\n电话：\n日期：2025-02 10\n"
+    },
+    {
+      "chunk_id": "3a6e9eb52105a619",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1C</td><td>9.50</td><td>%</td><td>3.8--5.8%</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "b178dc5d264fc804",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 9,
+      "content": "<table><tr><td>谷丙转氨酶</td><td>ALT</td><td>14</td><td>U/L</td><td>0--40</td><td>False</td></tr><tr><td>谷草转氨酶</td><td>AST</td><td>18</td><td>U/L</td><td>0--40</td><td>False</td></tr><tr><td>谷草/谷丙</td><td>AST/ALT</td><td>1.29</td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿素</td><td>Urea</td><"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "page_sum": 6,
+    "check": {
+      "covered": 6,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "16:32:38: Start to work on a PDF.\n\n16:32:43: [QwenVL] Processing 6 pages...\n\n16:33:46: [QwenVL] 1/6 pages done\n\n16:33:47: [QwenVL] 2/6 pages done\n\n16:33:48: [QwenVL] 3/6 pages done\n\n16:33:48: [QwenVL] 4/6 pages done\n\n16:33:49: [QwenVL] 5/6 pages done\n\n16:33:50: [QwenVL] 6/6 pages done\n\n16:33:50: [Qw"
+}

@@ -1,0 +1,74 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "07-毓璜顶-FJPI，后线肺癌，方穹招募推荐.pdf",
+    "size_kb": 4701.3,
+    "pages": null,
+    "doc_id": "8d4d44747c5c11f18d62dd81525255fa",
+    "patient_id": "PAT-2f9d76cd1e34"
+  },
+  "doc_id": "8d4d44747c5c11f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 384.1734,
+  "begin_at": "2026-08-15T15:21:18",
+  "end_at": "2026-08-15T15:28:36",
+  "elapsed_s": 438.2,
+  "before": {
+    "chunk_count": 15,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 8,
+      "AdmissionRecord": 1,
+      "LabReport": 3,
+      "DischargeRecord": 1,
+      "OutpatientRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "DischargeRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 8,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 3,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n15:21:21 Task has been received.\n\n-------------------------------------\n[File]:\n15:21:21: File fetched.\n\n15:21:21: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:21:21: Start to work on a PDF.\n\n15:21:24: [QwenVL] Processing 27 pages...\n\n15:21:33: [QwenVL] 1/27 pag"
+}

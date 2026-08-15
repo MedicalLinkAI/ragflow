@@ -10,19 +10,28 @@
      日志的类型个数，与 clinical 接口 encounters 各类型记录个数比对是否匹配
 
 重复文件处理（upload_file 返回 409）：
-- 默认：略过上传，复用 existing_doc_id，调 /upload（doc_id 模式）更新病案字段并重新解析
+- 默认：略过上传，复用已有 doc_id，调 /{doc_id}/parse 直接重新解析（不更新病案字段）
 - --reupload：先 DELETE 再重新上传（重新解析）
 - --stats-only：不上传、不触发解析，只对已有文档做统计
 - --reparse-list：取 GET /api/v1/documents 列表返回的文档（默认 20 个），
   调 /{doc_id}/parse 直接触发重新解析并统计，完全不涉及上传、不改病案字段
 
+增强能力：
+- 每次测试前快照 pipeline DSL（GET /api/v1/pipeline/agents/<agent_id>/dsl）到输出目录
+  pipeline_dsl.json，便于事后比对是否提示词变更导致结果差异
+- --concurrency：并发解析病例数（默认 4）
+- 重解析前若该文档无基线结果，先保存"重解析前"快照（before：chunk 数 + clinical 类型记录数）
+- --compare-with：与基线结果目录（summary.json）按文件名比对 chunks 数与类型一致性
+
 用法:
-    python benchmark_online.py                        # 默认：已上传则略过上传只重新解析
+    python benchmark_online.py                        # 默认：已上传则略过上传直接重新解析
     python benchmark_online.py --reupload             # 409 重复时删除后重传
     python benchmark_online.py --stats-only           # 只统计，不触发任何解析
     python benchmark_online.py --reparse-list         # 取文档列表前 20 个，只重解析+统计
     python benchmark_online.py --only 哮喘            # 只处理文件名含"哮喘"的
     python benchmark_online.py --dataset-id <id>      # 手动指定 dataset（默认自动探测）
+    python benchmark_online.py --concurrency 4        # 并发解析病例数（默认 4）
+    python benchmark_online.py --compare-with <dir>   # 与历史结果目录对比（默认 20260814_095003）
 """
 
 from __future__ import annotations
@@ -34,6 +43,7 @@ import random
 import re
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -77,6 +87,13 @@ DEFAULT_RAGFLOW_BASE = "http://10.16.3.16:39480/api/v1"
 DEFAULT_RAGFLOW_KEY = "ragflow-ZihvOw9xL9fS9nKMWPrAHe3Qxeb9E2eo6VzXyIcIyq4"
 DEFAULT_DATASET_ID = "fb850778372011f195bd2a5fbb884e34"  # MedLinkAI-v7.0
 
+# pipeline DSL 快照的 agent id（dataflow）
+DEFAULT_AGENT_ID = "3be6fcd058ce11f1ab13b5606b24de97"
+
+# 默认基线结果目录（--compare-with），空字符串=不对比
+DEFAULT_BASELINE_DIR = str(
+    Path(__file__).resolve().parent / "results_online" / "20260814_095003")
+
 # RAGFlow run 状态（status 接口返回字符串）
 TERMINAL_RUNS = {"CANCEL", "DONE", "FAIL"}
 
@@ -119,10 +136,20 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--reparse-list", action="store_true",
                    help="不上传：取 GET /api/v1/documents 列表返回的文档，"
                         "调 /{doc_id}/parse 触发重新解析并统计")
-    p.add_argument("--list-count", type=int, default=20,
-                   help="--reparse-list 模式：从文档列表取多少个文档")
+    p.add_argument("--list-count", type=int, default=0,
+                   help="--reparse-list 模式：从文档列表取多少个文档（0=分页拉取全部）")
+    p.add_argument("--exclude-file", default="",
+                   help="--reparse-list 模式：每行一个文件名，列表中的文档跳过不重解析")
     p.add_argument("--max-wait", type=int, default=1800, help="单文档进度等待上限（秒）")
     p.add_argument("--poll-interval", type=int, default=5, help="进度轮询间隔（秒）")
+    p.add_argument("--concurrency", type=int, default=4,
+                   help="并发解析的病例数（每批同时跑多少个文档）")
+    p.add_argument("--agent-id", default=_env("MLA_AGENT_ID", DEFAULT_AGENT_ID),
+                   help="pipeline agent ID（测试前快照该 pipeline 的 DSL）")
+    p.add_argument("--no-dsl-snapshot", action="store_true",
+                   help="跳过 pipeline DSL 快照")
+    p.add_argument("--compare-with", default=DEFAULT_BASELINE_DIR,
+                   help="基线结果目录（按文件名与 summary.json 对比；空字符串=不对比）")
     p.add_argument("--page-size", type=int, default=100, help="文档列表分页大小")
     p.add_argument("--api-key", default=_env("MLA_API_KEY", ""),
                    help="可选：MedLinkAI X-Api-Key（白名单 key 可不传 dataset_id）")
@@ -300,6 +327,46 @@ def compare_type_counts(splitter: dict[str, int], clinical: dict[str, int]) -> d
         c = int(clinical.get(dtype, 0))
         result[dtype] = {"splitter": s, "clinical": c, "match": s == c}
     return result
+
+
+def snapshot_pipeline_dsl(base: str, agent_id: str, out_dir: Path) -> Path | None:
+    """测试前快照当前 pipeline DSL 到 out_dir/pipeline_dsl.json（便于比对提示词变更）。"""
+    url = f"{base.rstrip('/')}/api/v1/pipeline/agents/{agent_id}/dsl"
+    try:
+        resp = requests.get(url, timeout=30)
+        resp.raise_for_status()
+        try:
+            text = json.dumps(resp.json(), ensure_ascii=False, indent=2)
+        except ValueError:
+            text = resp.text
+        path = out_dir / "pipeline_dsl.json"
+        path.write_text(text, encoding="utf-8")
+        return path
+    except Exception as e:
+        print(f"[warn] pipeline DSL 快照失败: {e}")
+        return None
+
+
+def load_baseline(compare_with: str) -> tuple[dict[str, dict], str]:
+    """加载基线结果目录的 summary.json，返回 (文件名→报告 映射, 目录名)。"""
+    if not compare_with:
+        return {}, ""
+    base_dir = Path(compare_with)
+    sj = base_dir / "summary.json"
+    if not sj.is_file():
+        print(f"[warn] 基线目录缺少 summary.json，跳过对比: {sj}")
+        return {}, ""
+    try:
+        reps = json.loads(sj.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"[warn] 基线 summary.json 读取失败: {e}")
+        return {}, ""
+    out: dict[str, dict] = {}
+    for rep in reps:
+        name = (rep.get("pdf") or {}).get("name")
+        if name:
+            out[name] = rep
+    return out, base_dir.name
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -584,6 +651,13 @@ def render_doc_md(pdf: dict, rep: dict) -> str:
                  f"脚本耗时：{rep.get('elapsed_s')}s")
     if rep.get("note"):
         lines.append(f"- 备注：{rep.get('note')}")
+    if rep.get("before"):
+        b = rep["before"]
+        lines.append(f"- 重解析前快照（无基线结果）：chunk_count={b.get('chunk_count')} "
+                     f"run={b.get('run')} clinical 类型记录数={b.get('type_counts')}")
+    if rep.get("baseline"):
+        lines.append(f"- 基线对比（{rep['baseline']['dir']}）：基线 chunks={rep['baseline']['chunks']} "
+                     f"→ 本次 chunks={len(rep.get('chunks') or [])}")
     lines.append("")
     lines.append("## 1. 页面覆盖率")
     lines.append("")
@@ -647,6 +721,249 @@ def collect_pdfs(pdf_dir: Path, only: str) -> list[dict]:
     return pdfs
 
 
+def process_one(args: argparse.Namespace, idx: int, total: int, pdf: dict,
+                dataset_id: str, illness_case: dict, baseline_map: dict[str, dict],
+                baseline_label: str, docs_dir: Path) -> dict:
+    """单文档处理（可并发）：复用/上传 → 重解析前快照 → 触发解析 → 进度轮询 → 覆盖率与类型统计。"""
+    name = pdf["name"]
+    tag = f"[{idx}/{total} {name}]"
+    # 每任务独立客户端，避免跨线程共享 requests.Session
+    mla = MedlinkaiClient(args.medlinkai_base, dataset_id, args.page_size,
+                          api_key=args.api_key, basic_auth=args.basic_auth)
+    rf = RagflowClient(args.ragflow_base, args.ragflow_api_key)
+    brep = baseline_map.get(name)
+
+    if args.reparse_list:
+        print(f"{tag} （doc_id={pdf.get('doc_id')}）")
+        case: dict[str, Any] = {}
+    else:
+        case = {
+            "name_abbr": args.name_abbr or extract_name_abbr(name, idx),
+            "gender": args.gender or random.choice(["man", "woman"]),
+            "age": args.age or random.randint(18, 80),
+            **illness_case,
+        }
+        print(f"{tag} （PDF 页数: {pdf['pages']}）"
+              f" 病案: {case['name_abbr']}/{case['gender']}/{case['age']}岁")
+    rep: dict[str, Any] = {
+        "pdf": pdf,
+        "doc_id": None,
+        "mode": "-",
+        "run": None,
+        "progress": None,
+        "chunk_count_api": None,
+        "orm_synced": None,
+        "process_duration": None,
+        "begin_at": datetime.now().isoformat(timespec="seconds"),
+        "end_at": None,
+        "elapsed_s": None,
+        "before": None,
+        "baseline": {"dir": baseline_label,
+                     "chunks": len(brep.get("chunks") or [])} if brep else None,
+        "chunks": [],
+        "pages": {},
+        "type_match": {},
+        "note": "",
+    }
+
+    t0 = time.time()
+    doc_id: str | None = None
+    patient_id = ""
+    triggered = False  # 本次是否已触发（重新）解析
+
+    # ── 上传 / 复用阶段（不立即触发解析，先留给"重解析前快照"）──
+    if args.reparse_list:
+        doc_id = pdf.get("doc_id")
+        patient_id = pdf.get("patient_id") or ""
+        rep["mode"] = "reparse-list"
+    elif args.stats_only:
+        doc_id, patient_id = mla.find_existing(name)
+        rep["mode"] = "stats-only"
+        if doc_id:
+            print(f"{tag} stats-only：找到已有文档 doc_id={doc_id}")
+        else:
+            rep["note"] += "stats-only 模式下未找到同名已有文档。 "
+            print(f"{tag} [warn] 未找到同名已有文档，跳过")
+    elif args.reupload:
+        try:
+            up = mla.upload_file(pdf["path"])
+            if up.get("duplicate") and up.get("doc_id"):
+                print(f"{tag} 409 重复 doc_id={up['doc_id']} → 删除后重传")
+                mla.delete_document(up["doc_id"])
+                time.sleep(2)
+                up = mla.upload_file(pdf["path"])
+            doc_id = up.get("doc_id")
+            if doc_id:
+                mla.upload(doc_id, case)
+                triggered = True
+                rep["mode"] = "reupload+upload" if up.get("duplicate") else "upload_file+upload"
+                print(f"{tag} 上传并触发解析 OK → doc_id={doc_id}")
+        except Exception as e:
+            rep["note"] += f"上传失败: {e} "
+            print(f"{tag} [error] 上传失败: {e}")
+    else:
+        # 默认：先查已有文档（略过上传）→ 直接重新解析；没有再上传
+        doc_id, patient_id = mla.find_existing(name)
+        if doc_id:
+            rep["mode"] = "existing+reparse"
+            print(f"{tag} 已上传，略过上传 → doc_id={doc_id}")
+        else:
+            try:
+                up = mla.upload_file(pdf["path"])
+                if up.get("duplicate"):
+                    # 列表里没匹配到（可能名字被改过），复用 409 返回的 doc_id
+                    doc_id = up.get("doc_id")
+                    rep["mode"] = "duplicate+reparse"
+                    rep["note"] += f"409 重复：{up.get('message')} "
+                    print(f"{tag} 409 重复：复用 doc_id={doc_id}")
+                else:
+                    doc_id = up.get("doc_id")
+                    rep["mode"] = "upload_file+upload"
+                    print(f"{tag} upload_file OK → doc_id={doc_id}")
+                if doc_id:
+                    mla.upload(doc_id, case)
+                    triggered = True
+                    if rep["mode"] != "duplicate+reparse":
+                        print(f"{tag} upload OK（已触发解析）")
+            except Exception as e:
+                rep["note"] += f"上传失败: {e} "
+                print(f"{tag} [error] 上传失败: {e}")
+
+    if not doc_id:
+        rep["end_at"] = datetime.now().isoformat(timespec="seconds")
+        rep["elapsed_s"] = round(time.time() - t0, 1)
+        return rep
+    rep["doc_id"] = doc_id
+
+    # ── 重解析前快照：无基线结果时保存旧 chunk 数/记录数，便于前后对比 ──
+    if not triggered and not args.stats_only and brep is None:
+        try:
+            st0 = mla.get_status(doc_id) or {}
+            before_types: dict[str, int] = {}
+            if patient_id:
+                try:
+                    clinical0 = mla.get_clinical(patient_id, doc_id)
+                    before_types = count_clinical_types(clinical0.get("encounters") or [])
+                except Exception:
+                    pass
+            rep["before"] = {"chunk_count": st0.get("chunk_count"),
+                             "run": st0.get("run"),
+                             "type_counts": before_types}
+            print(f"{tag} 无基线结果，已保存重解析前快照: chunks={st0.get('chunk_count')} "
+                  f"type_counts={before_types}")
+        except Exception as e:
+            rep["note"] += f"重解析前快照失败: {e} "
+
+    # ── 触发重新解析（不上传、不改病案字段）──
+    if not triggered and not args.stats_only:
+        try:
+            mla.trigger_parse(doc_id)
+            triggered = True
+            print(f"{tag} 已触发重新解析 → doc_id={doc_id}")
+        except Exception as e:
+            rep["note"] += f"触发重新解析失败: {e} "
+            print(f"{tag} [error] 触发重新解析失败: {e}")
+
+    # ── 进度监控（status 接口）──
+    full_progress_msg = ""
+    try:
+        status, wait_note = mla.wait_status(doc_id, args.max_wait, args.poll_interval,
+                                            wait_running=triggered)
+        rep["note"] += wait_note
+        if status:
+            rep["run"] = status.get("run")
+            rep["progress"] = status.get("progress")
+            rep["chunk_count_api"] = status.get("chunk_count")
+            rep["orm_synced"] = status.get("orm_synced")
+            rep["process_duration"] = status.get("process_duration")
+            full_progress_msg = str(status.get("progress_msg") or "")
+            if full_progress_msg:
+                rep["progress_msg"] = full_progress_msg[:300]
+            print(f"{tag} run={rep['run']} progress={rep['progress']} "
+                  f"chunk_count={rep.get('chunk_count_api')} orm_synced={rep.get('orm_synced')}")
+    except Exception as e:
+        rep["note"] += f"状态查询失败: {e} "
+        print(f"{tag} [error] 状态查询失败: {e}")
+
+    # ── 覆盖率统计（chunks positions；终态后 ES 近实时延迟，为空时重试）──
+    chunks: list[dict] = []
+    try:
+        for attempt in range(1, 7):
+            chunks, _doc_info = rf.list_chunks(dataset_id, doc_id)
+            if chunks or attempt == 6:
+                break
+            if attempt == 1:
+                print(f"{tag} chunks 暂为 0（ES 近实时延迟），重试中…")
+            time.sleep(10)
+        rep["chunks"] = []
+        union: set[int] = set()
+        page_sum = 0
+        for c in chunks:
+            pg = chunk_pages(c.get("positions"))
+            if not pg:
+                # 部分 chunk（如表格型检验报告）positions 为空，但 row_position_int 有坐标
+                pg = chunk_pages(c.get("row_position_int"))
+            pg_set = set(pg)
+            rep["chunks"].append({
+                "chunk_id": c.get("id", ""),
+                "pages": sorted(pg_set),
+                "page_count_raw": len(pg),
+                "content": (c.get("content") or "")[:300],
+            })
+            union.update(pg_set)
+            page_sum += len(pg_set)
+        total_pages = pdf.get("pages")
+        check = build_page_check(union, total_pages)
+        missing = check["missing"]
+        covered = check["covered"]
+        coverage_pct = check["coverage_pct"]
+        rep["pages"] = {
+            "union": sorted(union),
+            "page_sum": page_sum,
+            "check": check,
+        }
+        print(f"{tag} chunks={len(chunks)} 覆盖页数={covered}/{total_pages}"
+              f"（{coverage_pct}%） 缺失={missing}")
+    except Exception as e:
+        rep["note"] += f"chunks 查询失败: {e} "
+        print(f"{tag} [error] chunks 查询失败: {e}")
+
+    # ── 类型一致性统计（SmartSplitter 日志 vs clinical encounters）──
+    try:
+        splitter_types = parse_smart_splitter_types(full_progress_msg)
+        if not splitter_types:
+            rep["note"] += "progress_msg 未找到 SmartSplitter 类型日志。 "
+        if not patient_id:
+            _doc_id2, patient_id = mla.find_existing(name)
+        clinical_types: dict[str, int] = {}
+        if patient_id:
+            clinical = mla.get_clinical(patient_id, doc_id)
+            clinical_types = count_clinical_types(clinical.get("encounters") or [])
+        else:
+            rep["note"] += "未获取到 patient_id，跳过 clinical 比对。 "
+        rep["type_match"] = compare_type_counts(splitter_types, clinical_types)
+        bad = [f"{t}({v['splitter']}/{v['clinical']})"
+               for t, v in rep["type_match"].items() if not v["match"]]
+        if bad:
+            print(f"{tag} 类型不匹配: {', '.join(bad)}")
+        else:
+            print(f"{tag} 类型匹配 ✅ {len(rep['type_match'])} 类，"
+                  f"共 {sum(v['splitter'] for v in rep['type_match'].values())} chunks")
+    except Exception as e:
+        rep["note"] += f"类型一致性统计失败: {e} "
+        print(f"{tag} [error] 类型一致性统计失败: {e}")
+
+    rep["end_at"] = datetime.now().isoformat(timespec="seconds")
+    rep["elapsed_s"] = round(time.time() - t0, 1)
+
+    # ── 写结果文件 ──
+    base = safe_name(name)
+    (docs_dir / f"{base}.md").write_text(render_doc_md(pdf, rep), encoding="utf-8")
+    (docs_dir / f"{base}.json").write_text(
+        json.dumps(rep, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+    return rep
+
+
 def run() -> int:
     args = parse_args()
     pdf_dir = Path(args.pdf_dir)
@@ -660,6 +977,12 @@ def run() -> int:
     out = out_root / stamp
     docs_dir = out / "docs"
     docs_dir.mkdir(parents=True, exist_ok=True)
+
+    # 测试前快照 pipeline DSL + 加载基线结果（便于事后比对是否提示词变更）
+    dsl_path = None
+    if not args.no_dsl_snapshot:
+        dsl_path = snapshot_pipeline_dsl(args.medlinkai_base, args.agent_id, out)
+    baseline_map, baseline_label = load_baseline(args.compare_with)
 
     # 疾病三级分类：优先从文件夹名匹配字典推导，失败回退命令行默认（--reparse-list 不改病案字段，跳过）
     if args.reparse_list:
@@ -685,7 +1008,7 @@ def run() -> int:
     mode_desc = ("取文档列表只重解析+统计，不上传" if args.reparse_list
                  else "只统计，不触发解析" if args.stats_only
                  else "重复时删除重传" if args.reupload
-                 else "重复时略过上传，只重新解析（默认）")
+                 else "重复时略过上传，只重新解析（默认，不改病案字段）")
 
     print("=" * 72)
     print("线上测试环境病案上传解析批量统计")
@@ -700,18 +1023,39 @@ def run() -> int:
         print(f"病案字段   : name_abbr/gender/age 每文档自动生成；疾病=文件夹「{pdf_dir.name}」推导 → "
               f"{illness_case['illness_label_l3']}({illness_case['illness_code_l3']})")
     print(f"重复处理   : {mode_desc}")
+    print(f"并发数    : {args.concurrency}")
+    print(f"DSL 快照  : {dsl_path or '失败/跳过'}")
+    print(f"基线对比  : {baseline_label or '无'}")
     print(f"输出目录   : {out}")
     print("=" * 72)
 
     mla = MedlinkaiClient(args.medlinkai_base, dataset_id, args.page_size,
                           api_key=args.api_key, basic_auth=args.basic_auth)
-    rf = RagflowClient(args.ragflow_base, args.ragflow_api_key)
 
     if args.reparse_list:
-        # 从文档列表取已有文档（不上传）；pages 未知（服务端不返回页数），覆盖率按未知处理
-        docs = mla.list_docs(page=1, page_size=args.list_count)
+        # 从文档列表取已有文档（不上传）；分页拉取全部，--list-count 限制条数
+        docs: list[dict] = []
+        page = 1
+        while True:
+            batch = mla.list_docs(page=page, page_size=args.page_size)
+            docs.extend(batch)
+            if len(batch) < args.page_size:
+                break
+            if args.list_count > 0 and len(docs) >= args.list_count:
+                break
+            page += 1
+        if args.list_count > 0:
+            docs = docs[:args.list_count]
+        exclude: set[str] = set()
+        if args.exclude_file:
+            ep = Path(args.exclude_file)
+            if ep.is_file():
+                exclude = {ln.strip() for ln in ep.read_text(encoding="utf-8").splitlines()
+                           if ln.strip()}
         if args.only:
             docs = [d for d in docs if args.only in d["name"]]
+        if exclude:
+            docs = [d for d in docs if d["name"] not in exclude]
         pdfs: list[dict] = [
             {"path": None, "name": d["name"], "size_kb": d["size_kb"], "pages": None,
              "doc_id": d["doc_id"], "patient_id": d["patient_id"]}
@@ -720,7 +1064,8 @@ def run() -> int:
         if not pdfs:
             print("[error] 文档列表为空")
             return 1
-        print(f"从文档列表取 {len(pdfs)} 个文档")
+        print(f"从文档列表取 {len(pdfs)} 个文档"
+              + (f"（排除清单 {len(exclude)} 个）" if exclude else ""))
     else:
         pdfs = collect_pdfs(pdf_dir, args.only)
         if not pdfs:
@@ -728,228 +1073,39 @@ def run() -> int:
             return 1
         print(f"发现 {len(pdfs)} 个 PDF")
 
-    all_reports: list[dict] = []
-
-    for idx, pdf in enumerate(pdfs, 1):
-        if args.reparse_list:
-            print(f"\n[{idx}/{len(pdfs)}] {pdf['name']} （doc_id={pdf.get('doc_id')}）")
-            case: dict[str, Any] = {}
-        else:
-            case = {
-                "name_abbr": args.name_abbr or extract_name_abbr(pdf["name"], idx),
-                "gender": args.gender or random.choice(["man", "woman"]),
-                "age": args.age or random.randint(18, 80),
-                **illness_case,
-            }
-            print(f"\n[{idx}/{len(pdfs)}] {pdf['name']} （PDF 页数: {pdf['pages']}）"
-                  f" 病案: {case['name_abbr']}/{case['gender']}/{case['age']}岁")
-        rep: dict[str, Any] = {
-            "pdf": pdf,
-            "doc_id": None,
-            "mode": "-",
-            "run": None,
-            "progress": None,
-            "chunk_count_api": None,
-            "orm_synced": None,
-            "process_duration": None,
-            "begin_at": datetime.now().isoformat(timespec="seconds"),
-            "end_at": None,
-            "elapsed_s": None,
-            "chunks": [],
-            "pages": {},
-            "type_match": {},
-            "note": "",
+    # ── 并发处理（--concurrency 个病例同时跑）──
+    all_reports = [None] * len(pdfs)
+    with ThreadPoolExecutor(max_workers=max(1, args.concurrency)) as ex:
+        futures = {
+            ex.submit(process_one, args, i, len(pdfs), pdf, dataset_id,
+                      illness_case, baseline_map, baseline_label, docs_dir): i
+            for i, pdf in enumerate(pdfs, 1)
         }
-
-        t0 = time.time()
-        doc_id: str | None = None
-        patient_id = ""
-        triggered = False  # 本次是否触发了（重新）解析
-
-        # ── 上传 / 复用阶段 ──
-        if args.reparse_list:
-            doc_id = pdf.get("doc_id")
-            patient_id = pdf.get("patient_id") or ""
-            rep["mode"] = "reparse-list"
+        for fut in as_completed(futures):
+            i = futures[fut]
             try:
-                mla.trigger_parse(doc_id)
-                triggered = True
-                print(f"  已触发重新解析 → doc_id={doc_id}")
+                all_reports[i - 1] = fut.result()
             except Exception as e:
-                rep["note"] += f"触发重新解析失败: {e} "
-                print(f"  [error] 触发重新解析失败: {e}")
-        elif args.stats_only:
-            doc_id, patient_id = mla.find_existing(pdf["name"])
-            rep["mode"] = "stats-only"
-            if doc_id:
-                print(f"  stats-only：找到已有文档 doc_id={doc_id}")
-            else:
-                rep["note"] += "stats-only 模式下未找到同名已有文档。 "
-                print("  [warn] 未找到同名已有文档，跳过")
-        elif args.reupload:
-            try:
-                up = mla.upload_file(pdf["path"])
-                if up.get("duplicate") and up.get("doc_id"):
-                    print(f"  409 重复 doc_id={up['doc_id']} → 删除后重传")
-                    mla.delete_document(up["doc_id"])
-                    time.sleep(2)
-                    up = mla.upload_file(pdf["path"])
-                doc_id = up.get("doc_id")
-                if doc_id:
-                    mla.upload(doc_id, case)
-                    triggered = True
-                    rep["mode"] = "reupload+upload" if up.get("duplicate") else "upload_file+upload"
-                    print(f"  上传并触发解析 OK → doc_id={doc_id}")
-            except Exception as e:
-                rep["note"] += f"上传失败: {e} "
-                print(f"  [error] 上传失败: {e}")
-        else:
-            # 默认：先查已有文档（略过上传），没有再上传
-            doc_id, patient_id = mla.find_existing(pdf["name"])
-            if doc_id:
-                rep["mode"] = "existing+reparse"
-                print(f"  已上传，略过上传 → doc_id={doc_id}，触发重新解析")
-                try:
-                    mla.upload(doc_id, case)  # doc_id 模式：更新病案字段 + 触发解析
-                    triggered = True
-                except Exception as e:
-                    rep["note"] += f"触发重新解析失败: {e} "
-                    print(f"  [error] 触发重新解析失败: {e}")
-            else:
-                try:
-                    up = mla.upload_file(pdf["path"])
-                    if up.get("duplicate"):
-                        # 列表里没匹配到（可能名字被改过），复用 409 返回的 doc_id
-                        doc_id = up.get("doc_id")
-                        rep["mode"] = "duplicate+reparse"
-                        rep["note"] += f"409 重复：{up.get('message')} "
-                        print(f"  409 重复：复用 doc_id={doc_id}，触发重新解析")
-                    else:
-                        doc_id = up.get("doc_id")
-                        rep["mode"] = "upload_file+upload"
-                        print(f"  upload_file OK → doc_id={doc_id}")
-                    if doc_id:
-                        mla.upload(doc_id, case)
-                        triggered = True
-                        if rep["mode"] != "duplicate+reparse":
-                            print("  upload OK（已触发解析）")
-                except Exception as e:
-                    rep["note"] += f"上传失败: {e} "
-                    print(f"  [error] 上传失败: {e}")
-
-        if not doc_id:
-            rep["end_at"] = datetime.now().isoformat(timespec="seconds")
-            rep["elapsed_s"] = round(time.time() - t0, 1)
-            all_reports.append(rep)
-            continue
-        rep["doc_id"] = doc_id
-
-        # ── 进度监控（status 接口）──
-        full_progress_msg = ""
-        try:
-            status, wait_note = mla.wait_status(doc_id, args.max_wait, args.poll_interval,
-                                                wait_running=triggered)
-            rep["note"] += wait_note
-            if status:
-                rep["run"] = status.get("run")
-                rep["progress"] = status.get("progress")
-                rep["chunk_count_api"] = status.get("chunk_count")
-                rep["orm_synced"] = status.get("orm_synced")
-                rep["process_duration"] = status.get("process_duration")
-                full_progress_msg = str(status.get("progress_msg") or "")
-                if full_progress_msg:
-                    rep["progress_msg"] = full_progress_msg[:300]
-                print(f"  run={rep['run']} progress={rep['progress']} "
-                      f"chunk_count={rep.get('chunk_count_api')} orm_synced={rep.get('orm_synced')}")
-        except Exception as e:
-            rep["note"] += f"状态查询失败: {e} "
-            print(f"  [error] 状态查询失败: {e}")
-
-        # ── 覆盖率统计（chunks positions；终态后 ES 近实时延迟，为空时重试）──
-        chunks: list[dict] = []
-        try:
-            for attempt in range(1, 7):
-                chunks, _doc_info = rf.list_chunks(dataset_id, doc_id)
-                if chunks or attempt == 6:
-                    break
-                if attempt == 1:
-                    print("  chunks 暂为 0（ES 近实时延迟），重试中…")
-                time.sleep(10)
-            rep["chunks"] = []
-            union: set[int] = set()
-            page_sum = 0
-            for c in chunks:
-                pg = chunk_pages(c.get("positions"))
-                if not pg:
-                    # 部分 chunk（如表格型检验报告）positions 为空，但 row_position_int 有坐标
-                    pg = chunk_pages(c.get("row_position_int"))
-                pg_set = set(pg)
-                rep["chunks"].append({
-                    "chunk_id": c.get("id", ""),
-                    "pages": sorted(pg_set),
-                    "page_count_raw": len(pg),
-                    "content": (c.get("content") or "")[:300],
-                })
-                union.update(pg_set)
-                page_sum += len(pg_set)
-            total_pages = pdf.get("pages")
-            check = build_page_check(union, total_pages)
-            missing = check["missing"]
-            covered = check["covered"]
-            coverage_pct = check["coverage_pct"]
-            verdict = check["verdict"]
-            rep["pages"] = {
-                "union": sorted(union),
-                "page_sum": page_sum,
-                "check": check,
-            }
-            print(f"  chunks={len(chunks)} 覆盖页数={covered}/{total_pages}"
-                  f"（{coverage_pct}%） 缺失={missing}")
-        except Exception as e:
-            rep["note"] += f"chunks 查询失败: {e} "
-            print(f"  [error] chunks 查询失败: {e}")
-
-        # ── 类型一致性统计（SmartSplitter 日志 vs clinical encounters）──
-        try:
-            splitter_types = parse_smart_splitter_types(full_progress_msg)
-            if not splitter_types:
-                rep["note"] += "progress_msg 未找到 SmartSplitter 类型日志。 "
-            if not patient_id:
-                _doc_id2, patient_id = mla.find_existing(pdf["name"])
-            clinical_types: dict[str, int] = {}
-            if patient_id:
-                clinical = mla.get_clinical(patient_id, doc_id)
-                clinical_types = count_clinical_types(clinical.get("encounters") or [])
-            else:
-                rep["note"] += "未获取到 patient_id，跳过 clinical 比对。 "
-            rep["type_match"] = compare_type_counts(splitter_types, clinical_types)
-            bad = [f"{t}({v['splitter']}/{v['clinical']})"
-                   for t, v in rep["type_match"].items() if not v["match"]]
-            if bad:
-                print(f"  类型不匹配: {', '.join(bad)}")
-            else:
-                print(f"  类型匹配 ✅ {len(rep['type_match'])} 类，"
-                      f"共 {sum(v['splitter'] for v in rep['type_match'].values())} chunks")
-        except Exception as e:
-            rep["note"] += f"类型一致性统计失败: {e} "
-            print(f"  [error] 类型一致性统计失败: {e}")
-
-        rep["end_at"] = datetime.now().isoformat(timespec="seconds")
-        rep["elapsed_s"] = round(time.time() - t0, 1)
-
-        # ── 写结果文件 ──
-        base = safe_name(pdf["name"])
-        (docs_dir / f"{base}.md").write_text(render_doc_md(pdf, rep), encoding="utf-8")
-        (docs_dir / f"{base}.json").write_text(
-            json.dumps(rep, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
-        all_reports.append(rep)
+                print(f"[error] {pdfs[i - 1]['name']} 处理异常: {e}")
+                all_reports[i - 1] = {
+                    "pdf": pdfs[i - 1], "doc_id": None, "mode": "-", "run": None,
+                    "progress": None, "chunk_count_api": None, "orm_synced": None,
+                    "process_duration": None, "begin_at": None, "end_at": None,
+                    "elapsed_s": None, "before": None, "baseline": None,
+                    "chunks": [], "pages": {}, "type_match": {},
+                    "note": f"处理异常: {e} ",
+                }
+    all_reports = [r for r in all_reports if r is not None]
 
     # ── 汇总 ──
     type_cols = list(DOC_TYPE_LABELS.values())
     summary_md = ["# 线上批量统计汇总", "",
                   f"- 时间：{stamp}", f"- PDF 目录：{pdf_dir}", f"- dataset_id：{dataset_id}",
                   f"- MedLinkAI：{args.medlinkai_base}  RAGFlow：{args.ragflow_base}",
-                  f"- 重复处理：{mode_desc}", f"- 文档数：{len(all_reports)}", "",
+                  f"- 重复处理：{mode_desc}", f"- 文档数：{len(all_reports)}",
+                  f"- 并发数：{args.concurrency}；DSL 快照："
+                  f"{'pipeline_dsl.json' if dsl_path else '失败/跳过'}",
+                  f"- 基线对比：{baseline_label or '无'}", "",
                   "| 文件 | PDF页数 | doc_id | run | chunks | 覆盖页 | 覆盖率% | 缺失页 "
                   + "".join(f"| {lb}" for lb in type_cols) + " |",
                   "|------|---------|--------|-----|--------|--------|---------|--------"
@@ -988,6 +1144,34 @@ def run() -> int:
         "-=两侧均无该类型记录",
         "",
     ]
+
+    # ── 与基线结果对比 ──
+    if baseline_map:
+        summary_md += [f"## 与基线 {baseline_label} 对比", "",
+                       "| 文件 | 基线 chunks | 新 chunks | Δ | 类型变化（类型: 旧 splitter/clinical → 新） |",
+                       "|------|------------|-----------|---|--------------------------------------------|"]
+        for rep in all_reports:
+            bname = rep["pdf"]["name"]
+            brep = baseline_map.get(bname)
+            new_n = len(rep.get("chunks") or [])
+            if not brep:
+                bef = rep.get("before") or {}
+                summary_md.append(f"| {bname} | - | {new_n} | - "
+                                  f"| 无基线（重解析前 chunks={bef.get('chunk_count')}） |")
+                continue
+            old_n = len(brep.get("chunks") or [])
+            otm = brep.get("type_match") or {}
+            ntm = rep.get("type_match") or {}
+            changes = []
+            for t in sorted(set(otm) | set(ntm)):
+                o_s = f"{otm[t]['splitter']}/{otm[t]['clinical']}" if t in otm else "-"
+                n_s = f"{ntm[t]['splitter']}/{ntm[t]['clinical']}" if t in ntm else "-"
+                if o_s != n_s:
+                    changes.append(f"{DOC_TYPE_LABELS.get(t, t)} {o_s}→{n_s}")
+            summary_md.append(f"| {bname} | {old_n} | {new_n} | {new_n - old_n:+d} "
+                              f"| {'; '.join(changes) or '无'} |")
+        summary_md.append("")
+
     (out / "summary.md").write_text("\n".join(summary_md), encoding="utf-8")
     (out / "summary.json").write_text(
         json.dumps(all_reports, ensure_ascii=False, indent=2, default=str), encoding="utf-8")

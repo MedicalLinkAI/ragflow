@@ -561,16 +561,33 @@ async def process_table(ext, ck: dict, llm_name: str):
             if coord_status == "ok" and ocr_items:
                 scale_x = page_w / 1000.0
                 scale_y = page_h / 1000.0
-                coord_lookup = {}
-                for ocr_item in ocr_items:
-                    coord_lookup[ocr_item["text"]] = ocr_item["bbox"]
+
+                # Direct index mapping: coord model returns bboxes in the same
+                # order as input names.  Avoid fragile text-matching (whitespace,
+                # punctuation differences break exact/fuzzy lookup).
+                raw_bboxes: list[list | None] = []
+                if len(ocr_items) == len(names):
+                    for item in ocr_items:
+                        raw_bboxes.append(list(item["bbox"]))
+                else:
+                    logging.warning(
+                        f"{TAG} page={pn} coord count mismatch: "
+                        f"names={len(names)}, items={len(ocr_items)}, "
+                        f"fallback to name lookup"
+                    )
+                    coord_lookup = {
+                        it["text"]: it["bbox"] for it in ocr_items
+                    }
+                    for name in names:
+                        bbox = (
+                            coord_lookup.get(name)
+                            or _fuzzy_lookup_bbox(name, coord_lookup)
+                        )
+                        raw_bboxes.append(list(bbox) if bbox else None)
 
                 matched = 0
-                for name in names:
-                    bbox = coord_lookup.get(name)
-                    if not bbox:
-                        bbox = _fuzzy_lookup_bbox(name, coord_lookup)
-                    if bbox:
+                for bbox in raw_bboxes:
+                    if bbox is not None:
                         left = bbox[0] * scale_x
                         right = bbox[2] * scale_x
                         top = bbox[1] * scale_y
@@ -816,7 +833,12 @@ async def process_text(ext, ck: dict, llm_name: str):
                 for item in ocr_items:
                     raw_bboxes.append(list(item["bbox"]))
             else:
-                # Counts differ — fall back to lookup for robustness
+                # Counts differ — warn and fall back to name lookup
+                logging.warning(
+                    f"{TAG} page={pn} coord count mismatch: "
+                    f"lines={len(lines)}, items={len(ocr_items)}, "
+                    f"fallback to name lookup"
+                )
                 coord_lookup = {
                     it["text"]: it["bbox"] for it in ocr_items
                 }

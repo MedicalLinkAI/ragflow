@@ -1,0 +1,210 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "CRFE,男，74，肺鳞癌.pdf",
+    "size_kb": 13614.6,
+    "pages": null,
+    "doc_id": "ec00f8867b8e11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-68075c889423"
+  },
+  "doc_id": "ec00f8867b8e11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 16,
+  "orm_synced": true,
+  "process_duration": 484.71155,
+  "begin_at": "2026-08-15T15:48:41",
+  "end_at": "2026-08-15T15:56:51",
+  "elapsed_s": 490.1,
+  "before": {
+    "chunk_count": 15,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 9,
+      "ExaminationReport": 5
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "9c7710a4fc545b50",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 74,
+      "content": "门诊号:\n性别：男性 年龄：74岁 科\n性别：男性\n年龄：74岁\n民族：汉族\n婚姻：丧偶\n过敏史：未发现\n出生地：福建省莆田市仙游县\n职业：农民\n入院时间：2026-02-24 10:28\n记录时间：2026-02-24 10:43\n病史陈述者：患者本人及家属\n主诉：体检发现肺不张20余天。\n现病史：20余天前因“右侧胸痛”就诊仙游县总医院，查“肺部CT平扫（2026.01.28）：左肺上叶体积缩小并肺\n不张（左肺上叶支气管截断），双肺微小结节，左侧胸膜肥厚、纵隔多发肿大淋巴结、双肺散在炎性病变或\n纤维化”，无胸闷、心悸，无头晕、头痛，无畏冷、发热，偶有咳嗽、咳白色粘液痰，予“克拉霉素抗感\n染"
+    },
+    {
+      "chunk_id": "ae105857d1d65c04",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 5,
+      "content": "病理诊断：（左上叶口肿物活检组织）鳞状上皮乳头瘤样增生伴高级别上皮内瘤变；另见游离坏死退变组织及多量\n曲霉菌菌团。\n免疫组化结果：CK5/6（+），P40（+），Ki-67（+，70%），TTF-1（-），NapsinA（-）。\n报告医生：张丽娜\n审核医生：陈丽红"
+    },
+    {
+      "chunk_id": "004c32330b4f3482",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 28,
+      "content": "（胸部、全腹部CT平扫+增强+薄层）左肺上叶肺门旁见一结节状软组织密度影，大小约\n2.9cm×2.0cm（12img76），局部边界欠清，呈较明显强化，相应前段支气管截断，远端肺组织体\n积缩小，呈片状实变影，内见空气支气管征。纵隔内、右侧锁骨区见多发肿大淋巴结影，部分融\n合，大者大小约4.0cm×3.5cm（12img80），呈环形强化。\n骨性胸廓完整，气管纵隔居中；双肺透光度增高，见多发薄壁囊样透亮影，大者位于右肺上\n叶，径约1.3cm；双肺支气管血管束增粗；双肺散在斑片索条状密度增高影，部分边缘欠清，右肺\n为著。气管及各级支气管通畅。双侧胸膜未见增厚；右侧胸腔见少量积液影，左侧胸腔未见积\n"
+    },
+    {
+      "chunk_id": "8c0e959fb70492a6",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 67,
+      "content": "心率(60-100)：\n3.34 cm\nLA(2.7-3.8)：\n3.11 cm\nLVDd(3.5-5.3)：\n4.42 cm\nLVDs：\n2.86 cm\nIVST(0.6-1.1)：\n0.79 cm\nLVPWT(0.6-1.1)：\n0.82 cm\nLVWd：\n88.5 ml\nLVVs：\n31.1 ml\nSV：\n57.5 ml\nCO：\n4.2 L/min\nCI：\n2.6 L/min.m³\nFS(>=25)：\n35.2 %\nLVEF(>=50)：\n64.9 %\nLVM：\n111.1 g\nLVMl：\n69.4 g/m³\nMVA(0.2-0.7)：\n0.55 m/s\nNVE(0.6-1.3)：\n0."
+    },
+    {
+      "chunk_id": "2e93a2d3223b9dcb",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 111,
+      "content": "Vol [L]\nVol%VCmax\nVCmax\nTime [s]\nFlow [L/s]V ex\nVol [L]\nF/V In\nVol [L]\nTime [s]\nPred\n11\n11/Pred\nVC MAX\n[L]\n3.40\n2.08\n61.0\nVT\n[L]\n0.39\n0.81\n206.0\nBF\n[1/min]\n20.00\n43.89\n219.4\nMV\n[L/min]\n7.86\n35.52\n452.1\nERV\n[L]\n0.89\n1.12\n126.1\nFVC\n[L]\n3.30\n1.97\n59.8\nFEV 1\n[L]\n2.50\n1.53\n61.2\nFEV 3\n[L]\n1.97\nFEV6\n[L]\nFE"
+    },
+    {
+      "chunk_id": "c18c1806873917a6",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 10,
+      "content": "检查\n临床诊断：肺不张\n呼吸内科/内分泌\n床号：25\n检查设备：ACUSON Sequoia-1\n超声所见：\n双侧腋窝各见一肿大淋巴结回声，大小分别约1.04cm×0.66cm（左）、2.13cm×0.94cm（右），\n界清，皮质菲薄，厚度分别约0.10cm（左）、0.17cm（右），CDFI其内及周边未见明显血流信号。\n超声提示：\n双侧腋窝淋巴结肿大（考虑反应性）。"
+    },
+    {
+      "chunk_id": "dda75eaa1b820b61",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 12,
+      "content": "病理检查报告单\n年龄：14岁\n收到日期：2026-02-26\n送检医生：史逸娴\n床号：25\n门诊号：\n标本名称：隆突下淋巴结1活检组织\n临床诊断：肺不张 肺肿瘤待排\n肉眼所见：（隆突下淋巴结1活检组织）针尖样碎组织一堆，和约大小总直径0.2cm，全取。\n（共取材1个蜡块）\n病理诊断：（隆突下淋巴结1活检组织）活检少量碎组织，髓下在坏死背景中查见退变的异型鳞状上皮散在分布，转移性鳞状细胞癌不能排除。\n免疫组化结果：CK5/6（+），P40（+）。"
+    },
+    {
+      "chunk_id": "3a4279fcf385f42a",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 37,
+      "content": "<table><tr><td>总蛋白</td><td>None</td><td>60.5</td><td>g/L</td><td>65-85</td><td>True</td></tr><tr><td>白蛋白</td><td>None</td><td>34.8</td><td>g/L</td><td>40-55</td><td>True</td></tr><tr><td>球蛋白</td><td>None</td><td>25.7</td><td>g/L</td><td>20-40</td><td>False</td></tr><tr><td>白球比例</td><td>None</td><td>"
+    },
+    {
+      "chunk_id": "dede089933000256",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>14.10</td><td>秒</td><td>11.0-14.5</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>85.00</td><td>%</td><td>80.0-130.0</td><td>False</td></tr><tr><td>凝血酶原国际比值</td><td>None</td><td>1.09</td><td>None</td><td>0.72-1.20</td><td>False</td></tr><tr><td>"
+    },
+    {
+      "chunk_id": "eece945f7cddf00e",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>红细胞沉降率</td><td>None</td><td>65.00</td><td>mm/H</td><td>0-15</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "31660359d12c5098",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 12,
+      "content": "<table><tr><td>游离三碘甲状腺原氨酸</td><td>FT3</td><td>3.87</td><td>pmol/L</td><td>3.10-6.80</td><td>False</td></tr><tr><td>游离甲状腺素</td><td>FT4</td><td>16.30</td><td>pmol/L</td><td>12.00-22.00</td><td>False</td></tr><tr><td>促甲状腺激素</td><td>TSH</td><td>2.37</td><td>mIU/L</td><td>0.27-4.20</td><td>False</td></tr"
+    },
+    {
+      "chunk_id": "d1ce9603f89c2536",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>乙肝表面抗原</td><td>None</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙肝表面抗体</td><td>None</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙肝e抗原</td><td>None</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙肝e抗体</td><td>None</td><td>阴"
+    },
+    {
+      "chunk_id": "d96c658fbe2367ca",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>丙型肝炎抗体测定</td><td>None</td><td>0.03(阴性)</td><td>COI</td><td>0-1</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "b4600833af79d161",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>C反应蛋白</td><td>None</td><td>104.56</td><td>mg/L</td><td>0-8</td><td>True</td></tr><tr><td>白细胞计数</td><td>None</td><td>5.60</td><td>10^9/L</td><td>3.50-9.50</td><td>False</td></tr><tr><td>中性粒细胞比率</td><td>None</td><td>65.80</td><td>%</td><td>40-75</td><td>False</td></tr><tr><td>淋巴细胞比率</td"
+    },
+    {
+      "chunk_id": "27aef59696ece910",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>肌钙蛋白I</td><td>None</td><td><0.010</td><td>ng/mL</td><td>0-0.026</td><td>False</td></tr><tr><td>B-型尿钠肽</td><td>None</td><td>20.00</td><td>pg/ml</td><td>0-100</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "d431709865e5014b",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>*人免疫缺陷病毒抗原/抗体检测</td><td>None</td><td>0.01(阴性)</td><td>S/CO</td><td>0-1</td><td>False</td></tr><tr><td>*抗梅毒螺旋体抗体</td><td>None</td><td>0.01(阴性)</td><td>S/CO</td><td>0-1</td><td>False</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "page_sum": 17,
+    "check": {
+      "covered": 17,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 6,
+      "clinical": 0,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 9,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n15:51:16: Loaded 447 OCR bboxes.\n\n15:51:16: Full document: 15506 chars, 447 bboxes.\n\n15:51:16: Calling LLM for semantic splitting...\n\n15:51:33: LLM responded. Parsing segments...\n\n15:51:33: LLM returned 16 segments. Cutting text...\n\n15:51:33: All 16 segments used bbox_id slicing. Saving images...\n\n"
+}

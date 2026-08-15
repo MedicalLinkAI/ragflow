@@ -1,0 +1,256 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "QCQI  男 60岁 肺腺癌初治 山西省肿.pdf",
+    "size_kb": 16509.7,
+    "pages": null,
+    "doc_id": "5350b6447b8e11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-18245fdc5986"
+  },
+  "doc_id": "5350b6447b8e11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 20,
+  "orm_synced": true,
+  "process_duration": 932.39325,
+  "begin_at": "2026-08-15T15:59:25",
+  "end_at": "2026-08-15T16:14:58",
+  "elapsed_s": 933.5,
+  "before": {
+    "chunk_count": 20,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 14,
+      "AdmissionRecord": 1,
+      "ExaminationReport": 4,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "b990cab1b02b4437",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 119,
+      "content": "入院记录\n女\n姓名：\n出生地：山西省临汾市尧都区\n性别：男\n职业：其他\n年龄：60岁\n入院时间：2026-03-17 15:38\n民族：汉族\n记录时间：2026-03-17 16:40\n婚姻状况：已婚\n病史陈述者：患者本人及家属\n主诉：间断咳嗽、咳痰1月，痰中带血10天。\n现病史：患者约于1月前呼吸道感染后出现咳嗽、咳痰，咳少量黄痰，无咳血、胸\n憋、气短、胸痛、心前区不适、声音嘶哑、发热、盗汗、乏力、关节疼痛等不适，口\n服止咳化痰对症治疗后症状缓解，10天前出现痰中带血，以晨起第一口痰为主，就诊\n于临汾新立医院，行胸部CT提示左肺上叶占位，建议增强CT，就诊临汾市第二人民医\n院，给予抗炎对症治"
+    },
+    {
+      "chunk_id": "3d418b31722cff29",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 35,
+      "content": "出院记录\n姓名：\n性别：男\n年龄：60岁\n职业：其他\n入院日期：2026年03月17日\n出院日期：2026年03月25日\n入院情况：\n1.病史：间断咳嗽、咳痰1月，痰中带血10天。\n2.症状：咳嗽、咳痰，咳少量黄痰，痰中带血，以晨起第一口痰为主无胸憋、气\n短、胸痛、心前区不适、声音嘶哑、发热、盗汗、乏力、关节疼痛等不适\n3.体征：体温36.2、脉搏84次/分、呼吸22次/分钟、血压153mmHg/78mmHg。全身\n皮肤黏膜无黄染，浅表淋巴结未触及肿大。胸部：胸廓对称无畸形，未见局部膨隆，\n未见胸壁静脉曲张，肋间隙无增宽及变窄，胸骨无压痛。肺脏：视诊：双侧呼吸运动\n一致，呼吸节律规整。触诊：双"
+    },
+    {
+      "chunk_id": "d41dc0ff068510df",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 69,
+      "content": "病理检查报告单\nS202603702\n病理号: S202603702\n姓名: 男\n性别: 男\n年龄: 60岁\n收到日期: 2026-03-19\n送检医院: 本院\n送检科室: 胸外科N\n送检医生: 刘瑞\n门诊号: 1908050444\n住院号: 462111\n床号: 4\n蜡块总数: 2\n肉眼所见:\n灰白条形组织4条,长0.2-0.5cm,直径均0.1cm。\n镜下所见:\n病理诊断:\n(左肺上叶穿刺标本)少量肺组织,肺泡上皮异型增生,间质内淋巴细胞浸润,需免\n疫组化辅助诊断。\n报告医生: 李风\n审核医生: 牛小芳\n注:此报告临床如有疑问请与病理科联系。\n报告日期: 2026-03-20\n第1页/共1"
+    },
+    {
+      "chunk_id": "4d91e713f926d005",
+      "pages": [
+        12,
+        13
+      ],
+      "page_count_raw": 63,
+      "content": "核医学科 PET/CT 检查报告\n检查号： 189551371\n姓 名：\n性 别： 男\n年 龄： 60 岁\n门 诊 号： 462111\n住院号： 462111\n检查项目： PET/CT（新）\n显 像 剂： 18F-FDG\n剂 量： 9.27mCi\n检查日期： 2026-03-23\n临床诊断： 肺占位性病变\n简要病史：患者咳嗽、咳痰，伴痰中带血半月余，于临汾新立医院，行胸部 CT 提示左肺\n上叶占位，建议增强 CT，就诊临汾市第二人民医院，给予抗炎对症治疗后症状改善，完善增\n强 CT 检查提示左肺上叶占位、双肺多发实性结节，考虑转移，肺门及纵隔多发淋巴结转移。\n2026-03-20 我院（左肺上"
+    },
+    {
+      "chunk_id": "9f211dfc8d5cea4e",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 15,
+      "content": "<table><tr><td>白蛋白</td><td>ALB</td><td>44.6</td><td>g/L</td><td>40.0--55.0</td><td>False</td></tr><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>36.4</td><td>U/L</td><td>9.0--50.0</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>33.6</td><td>U/L</td><td>15.0--40.0</td><td>False</td></tr><tr><td>天"
+    },
+    {
+      "chunk_id": "8859b5f2f7412689",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>【全国HR】梅毒螺旋体抗体</td><td>TP-Ab</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>人类免疫缺陷病毒抗体</td><td>HIV-Ab</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>【全国HR】丙型肝炎病毒抗体</td><td>HCV-AB</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "c4c1be0089962d02",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>5.6</td><td>10^9/L</td><td>3.5—9.5</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>4.97</td><td>10^12/L</td><td>4.3—5.8</td><td>False</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>157</td><td>g/L</td><td>130—175</td><td>False</td></tr><tr><td>血小板</td><td>PLT"
+    },
+    {
+      "chunk_id": "5ce5320cffd72f30",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 13,
+      "content": "<table><tr><td>淋巴细胞数</td><td>L#</td><td>1872</td><td>个/μL</td><td>1100—3200</td><td>False</td></tr><tr><td>Th细胞含量</td><td>CD3+CD4+</td><td>963</td><td>个/μL</td><td>368—1632</td><td>False</td></tr><tr><td>Ts细胞含量</td><td>CD3+CD8+</td><td>308</td><td>个/μL</td><td>201—931</td><td>False</td></tr><tr><td>"
+    },
+    {
+      "chunk_id": "5abf42ef58b353cb",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>结核抗体</td><td>None</td><td>弱阳性 (+-)</td><td>None</td><td>阴性</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "60276f97a5708006",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>三碘甲状腺原氨酸</td><td>T3</td><td>1.12</td><td>ng/ml</td><td>0.78-2.05</td><td>False</td></tr><tr><td>甲状腺素</td><td>T4</td><td>77.79</td><td>ng/ml</td><td>47.50-128</td><td>False</td></tr><tr><td>游离三碘甲状腺原氨酸</td><td>FT3</td><td>3.71</td><td>pmol/L</td><td>3.05-6.85</td><td>False</td></tr><tr>"
+    },
+    {
+      "chunk_id": "7cb29c23f5b2c86d",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>癌胚抗原</td><td>CEA</td><td>4.59</td><td>ng/ml</td><td>0-5</td><td>False</td></tr><tr><td>甲胎蛋白</td><td>AFP</td><td>4.13</td><td>ng/ml</td><td>0-7</td><td>False</td></tr><tr><td>糖类抗原125</td><td>CA125</td><td>10.06</td><td>U/ml</td><td>0-24</td><td>False</td></tr><tr><td>糖类抗原19-9</td><td>C"
+    },
+    {
+      "chunk_id": "a3eead61c7150a1d",
+      "pages": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "page_count_raw": 29,
+      "content": "<table><tr><td>BIM</td><td>None</td><td>2903bp 缺失</td><td>None</td><td>None</td><td>True</td></tr><tr><td>PDGFRA</td><td>None</td><td>exon20,c.2741_2742delinsTT,p.R914L (12.00%)</td><td>None</td><td>None</td><td>True</td></tr><tr><td>PDGFRA</td><td>None</td><td>exon20,c.2741_2742delinsTT,p.R914L</td"
+    },
+    {
+      "chunk_id": "2f3993c9f1ef01fe",
+      "pages": [
+        19
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>淋巴细胞培养+干扰素（基础水平N）</td><td>None</td><td>4.00</td><td>pg/ml</td><td>None</td><td>False</td></tr><tr><td>淋巴细胞培养+干扰素（刺激水平T）</td><td>None</td><td>4.97</td><td>pg/ml</td><td>None</td><td>False</td></tr><tr><td>淋巴细胞培养+干扰素（对照水平P）</td><td>None</td><td>900.00</td><td>pg/ml</td><td>None</td><td>"
+    },
+    {
+      "chunk_id": "f8e39ee13202fe88",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>抗凝血酶III活性测定</td><td>AT</td><td>84</td><td>%</td><td>83--128</td><td>False</td></tr><tr><td>凝血酶时间</td><td>TT</td><td>13.5</td><td>s</td><td>10.3--16.6</td><td>False</td></tr><tr><td>凝血酶原时间</td><td>PT</td><td>10.4</td><td>s</td><td>9.4--12.5</td><td>False</td></tr><tr><td>凝血酶原活动度</td><t"
+    },
+    {
+      "chunk_id": "fc1523e47155098c",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>乙肝表面抗原</td><td>HBsAg</td><td>0.01</td><td>IU/ml</td><td>0--0.05</td><td>False</td></tr><tr><td>乙肝表面抗体</td><td>HBsAb</td><td>350.11</td><td>mIU/ml</td><td>0--10</td><td>True</td></tr><tr><td>乙肝e抗原</td><td>HBeAg</td><td>0.01</td><td>IU/ml</td><td>0--0.1</td><td>False</td></tr><tr><td>乙肝"
+    },
+    {
+      "chunk_id": "787c457275059b0b",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>糖类抗原199</td><td>CA199</td><td>0.32</td><td>U/ml</td><td>0—35</td><td>False</td></tr><tr><td>神经元特异性烯醇化酶</td><td>NSE</td><td>9.49</td><td>ng/ml</td><td>0—13</td><td>False</td></tr><tr><td>细胞角蛋白19片段</td><td>CYFRA21-1</td><td>2.29</td><td>ng/ml</td><td>0—3.3</td><td>False</td></tr><tr><td"
+    },
+    {
+      "chunk_id": "ec722ff9516d8804",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>便潜血</td><td>None</td><td>阴性</td><td>None</td><td>None</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "b47bfa877b556342",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>脂蛋白(a)</td><td>LPa</td><td>36.24</td><td>mg/L</td><td>0-300</td><td>False</td></tr><tr><td>碱性磷酸酶</td><td>ALP</td><td>79.71</td><td>U/L</td><td>30-120</td><td>False</td></tr><tr><td>葡萄糖(空腹)</td><td>GLU</td><td>6.23</td><td>mmol/L</td><td>3.9-6.1</td><td>True</td></tr><tr><td>载脂蛋白(a)</t"
+    },
+    {
+      "chunk_id": "bf6cfddaa79a55f9",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>肌酸激酶同工酶</td><td>CK-MB</td><td>7.85</td><td>U/L</td><td>0-24</td><td>False</td></tr><tr><td>肌酸激酶</td><td>CK</td><td>136.00</td><td>U/L</td><td>24-195</td><td>False</td></tr><tr><td>乳酸脱氢酶</td><td>LDH</td><td>140.61</td><td>U/L</td><td>109-245</td><td>False</td></tr><tr><td>羟丁酸脱氢酶</td><t"
+    },
+    {
+      "chunk_id": "59e7c46e9a21b7ed",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>PD-L1 免疫组化</td><td>None</td><td>TPS < 1%</td><td>None</td><td>None</td><td>False</td></tr><tr><td>PD-L1 免疫组化</td><td>None</td><td>CPS 约 2</td><td>None</td><td>None</td><td>False</td></tr><tr><td>肿瘤细胞含量</td><td>None</td><td>60%</td><td>None</td><td>None</td><td>False</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "page_sum": 27,
+    "check": {
+      "covered": 19,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 16,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n16:01:59: LLM returned 20 segments. Cutting text...\n\n16:01:59: All 20 segments used bbox_id slicing. Saving images...\n\n16:01:59: SmartSplitter done: 20 chunks from 20 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'DischargeRecord': 1, 'ExaminationReport': 2, 'LabReport': 16}\n\n16:01:59: "
+}

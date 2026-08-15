@@ -1,0 +1,77 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "西安-糖尿病-CXMI.pdf",
+    "size_kb": 292.4,
+    "pages": null,
+    "doc_id": "bf316d7278f011f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-365aa07e29e3"
+  },
+  "doc_id": "bf316d7278f011f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 2,
+  "orm_synced": true,
+  "process_duration": 62.892227,
+  "begin_at": "2026-08-15T16:36:25",
+  "end_at": "2026-08-15T16:37:38",
+  "elapsed_s": 73.3,
+  "before": {
+    "chunk_count": 3,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 1,
+      "LabReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "39d8b4e91b629a81",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 54,
+      "content": "电子发票(普通发票)\n发票号码:25612000000033680358\n开票日期:2025年02月03日\n陕西省税务局\n共1页第1页\n购买方信息\n名称:\n统一社会信用代码/纳税人识别号:\n销售方信息\n名称:陕西秦唐大药房有限责任公司西安武警路店\n统一社会信用代码/纳税人识别号:916111056786435957\n项目名称\n规格型号\n单位\n数量\n单价\n金额\n税率/征收率\n税额\n*化学药品制剂*格华止\n盒\n12\n23.56\n282.77\n1%\n2.83\n合计\n¥282.77\n¥2.83\n价税合计(大写)\n贰佰捌拾伍圆陆角\n(小写)¥285.60\n备注\n开票人:乔诗凯\n秦唐大药房(武警路店)\n-"
+    },
+    {
+      "chunk_id": "6ec57f0ca541b3d1",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>GLU</td><td>GLU</td><td>12.10</td><td>mmol/L</td><td>3.9-6.1</td><td>True</td></tr><tr><td>HbA1C</td><td>HbA1C</td><td>8.5</td><td>%</td><td>3-6</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2
+    ],
+    "page_sum": 2,
+    "check": {
+      "covered": 2,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n16:36:28 Task has been received.\n\n-------------------------------------\n[File]:\n16:36:28: File fetched.\n\n16:36:28: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n16:36:28: Start to work on a PDF.\n\n16:36:28: [QwenVL] Processing 2 pages...\n\n16:36:32: [QwenVL] 1/2 pages"
+}

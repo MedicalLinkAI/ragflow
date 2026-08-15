@@ -1,0 +1,158 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "WKQI+63岁男+肺鳞癌.pdf",
+    "size_kb": 4021.3,
+    "pages": null,
+    "doc_id": "c99014da7b8e11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-2b5abc4150c1"
+  },
+  "doc_id": "c99014da7b8e11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 10,
+  "orm_synced": true,
+  "process_duration": 315.7959,
+  "begin_at": "2026-08-15T15:54:04",
+  "end_at": "2026-08-15T15:59:25",
+  "elapsed_s": 320.3,
+  "before": {
+    "chunk_count": 10,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 2,
+      "AdmissionRecord": 1,
+      "LabReport": 7
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "4446f0a1a68f5f95",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 66,
+      "content": "过敏史：无\n肿瘤科一病区T第1次入院记录\n主 诉：咳嗽、咳痰2年余，确诊肺癌3月余\n现病史：2年余前无明显诱因出现咳嗽伴咳痰，咳黄浓痰，伴胸闷、气短、呼吸困难,伴乏力、后背疼痛，无发热，无恶心、呕吐等其他不适症状。当地医院给予对症治疗，效差，病情未见明显缓解。3月余前出现咳嗽、咯痰，伴痰中带血，遂于2025.12.15至沈丘县人民医院行CT：1.左肺下叶占位，倾向恶性，周围支气管粘液嵌塞可能。病理（2025.12.22沈丘县人民医院）：(左肺下叶穿刺组织活检)结合免疫组化支持鳞癌；免疫组化结果:P40(+), CK5/6(+), Syn(-), CK7(-), Napsin A(-), TTF"
+    },
+    {
+      "chunk_id": "50062c019bd18ef5",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 16,
+      "content": "沈丘县人民医院\n病理检查报告单\n病理号：B20257205\n姓名：王克强 性别：男 年龄：63岁 送检日期：2025-12-17\n送检科室：呼吸与危重症床号：76 送检医师：杨振 门诊号：\n临床诊断：咯血 住院号：25065123\n标本名称：左肺下叶基底段\n光镜所见：\n病理诊断：\n补充报告：\n（左肺下叶穿刺组织活检）结合免疫组化支持鳞癌：\n免疫组化结果：P40(+), CK5/6(+), Syn(-), CK7(-), Napsin A(-), TTF-1(部分弱+), Ki-6\n7(60%+)。\n诊断医师：孙凤丽 复核医师：毛新闻 报告日期：2025-12-22\n此报告经病理医生签字有效，该"
+    },
+    {
+      "chunk_id": "9b13da4a8c6ba8cb",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 29,
+      "content": "沈丘县人民医院\nCT诊断报告单\n微信扫一扫获取电子胶片和报告\n病人号P01853726\n检查号CT00589299\n病人姓名\n性别男\n年龄63岁\n床号\n科别中医科\n门诊号26\n住院号\n检查设备GE750HD\n检查项目CT平扫-薄层扫描（加收）,胸部CT平扫\n影像学表现:\n肺窗示两肺纹理增多，左肺下叶后基底段（IM174）见肿块，大小约为61mm×\n53mm，Lung-RADS 4B级，相应支气管变杂，邻近肺血管增粗，周围可见条索影。\n纵隔窗显示两肺门无增大，气管、支气管通畅，纵隔内未见肿大淋巴结。双侧胸\n腔无积液，双侧胸膜不厚；\n影像学诊断:\n1.肺CA病史，左下肺占位：请结合临床及前片\n2."
+    },
+    {
+      "chunk_id": "879978e81d01f247",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>三碘甲状腺原氨酸</td><td>TOTT3</td><td>1.07</td><td>nmol/L</td><td>0.92-2.38</td><td>False</td></tr><tr><td>甲状腺素</td><td>TOTT4</td><td>136.43</td><td>nmol/L</td><td>69.71-163.95</td><td>False</td></tr><tr><td>游离三碘甲状腺原氨酸</td><td>FT3</td><td>3.69</td><td>pmol/L</td><td>3.53-7.37</td><td>False</"
+    },
+    {
+      "chunk_id": "b654bd47d3272a18",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 35,
+      "content": "<table><tr><td>钾</td><td>K</td><td>4.57</td><td>mmol/L</td><td>3.5-5.5</td><td>False</td></tr><tr><td>钠</td><td>NA</td><td>135.2</td><td>mmol/L</td><td>135-153</td><td>False</td></tr><tr><td>氯</td><td>CL</td><td>99.8</td><td>mmol/L</td><td>90-110</td><td>False</td></tr><tr><td>钙</td><td>CA</td><td>2"
+    },
+    {
+      "chunk_id": "951a72a4d7ac9be5",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>尿胆原</td><td>UBG</td><td>正常</td><td>None</td><td>正常</td><td>False</td></tr><tr><td>胆红素</td><td>BIL</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>亚硝酸盐</td><td>NIT</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>酮体</td><td>KET</td><td>阴性</td><td>None"
+    },
+    {
+      "chunk_id": "75115863b4954bd2",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>肿瘤相关抗原72-4</td><td>CA72-4</td><td>3.52</td><td>U/mL</td><td>0-6.9</td><td>False</td></tr><tr><td>神经元特异性烯醇化酶</td><td>NSE</td><td>30.70</td><td>ng/mL</td><td>0-25</td><td>True</td></tr><tr><td>甲胎蛋白</td><td>AFP</td><td>3.11</td><td>ng/mL</td><td>0-10</td><td>False</td></tr><tr><td>癌胚抗原</"
+    },
+    {
+      "chunk_id": "8ed600b9109261c6",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>降钙素原</td><td>PCT</td><td>0.040</td><td>ng/mL</td><td>0-0.046</td><td>False</td></tr><tr><td>C反应蛋白</td><td>CRP</td><td>8.13</td><td>mg/L</td><td>0-5</td><td>True</td></tr><tr><td>白介素6</td><td>IL-6</td><td>10.10</td><td>pg/mL</td><td>0-7</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "3f118a69a17d1f4a",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>10.40</td><td>s</td><td>8.8--13.6</td><td>False</td></tr><tr><td>凝血酶原时间活动度</td><td>PT%</td><td>109.00</td><td>%</td><td>70--150</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>0.95</td><td>None</td><td>0.8--1.6</td><td>False</td></tr><tr><td>活化部分凝血"
+    },
+    {
+      "chunk_id": "3235828d01f40d3a",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>*★白细胞计数</td><td>WBC</td><td>9.71</td><td>10^9/L</td><td>3.5-9.5</td><td>True</td></tr><tr><td>*★红细胞计数</td><td>RBC</td><td>4.37</td><td>10^{12}/L</td><td>4.3-5.8</td><td>False</td></tr><tr><td>*★血红蛋白</td><td>Hb</td><td>133.0</td><td>g/L</td><td>130-175</td><td>False</td></tr><tr><td>*★"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "page_sum": 12,
+    "check": {
+      "covered": 12,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 7,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n15:55:26: [QwenVL] 11/12 pages done\n\n15:55:29: [QwenVL] 12/12 pages done\n\n15:55:29: [QwenVL] Done: 246 sections from 12 pages.\n\n15:55:29: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:55:29: Start SmartSplitter: semantic split + classify.\n\n15:55:29: Loaded 246 OCR bboxes."
+}

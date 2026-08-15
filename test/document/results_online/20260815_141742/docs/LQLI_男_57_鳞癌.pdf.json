@@ -1,0 +1,158 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LQLI 男 57 鳞癌.pdf",
+    "size_kb": 10228.9,
+    "pages": null,
+    "doc_id": "695fc5f679b811f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-68605ac66239"
+  },
+  "doc_id": "695fc5f679b811f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 10,
+  "orm_synced": true,
+  "process_duration": 300.1148,
+  "begin_at": "2026-08-15T16:14:58",
+  "end_at": "2026-08-15T16:20:04",
+  "elapsed_s": 305.7,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 4,
+      "LabReport": 3,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "69cf1cab061846e3",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 25,
+      "content": "病理检查补充报告单\n病理号:\n姓名:\n性别:\n出生日期:\n送检单位:\n病区:\n病人编号:\n送检日期: 2026-04-17 10:50\n住院号:\n床号: 48\n特征图像:\n补充病理诊断:\n（新生物(左上叶支气管开口、左下叶支气管开口)）非角化性鳞癌，建议行基因检测以指导后续治疗。\n免疫组化结果: CK5/6 (+), P63 (+), P40 (+), BRAF V600E (-), HER2 (2+, 建议基因检测), TTF-1 (-), NapsinA (-), Ki67 (80+), EBER(原位杂交)(-).\n报告日期: 2026-04-20\n报告医生: 李丽玲\n审核医生: 李丽玲"
+    },
+    {
+      "chunk_id": "0217df4a69739bb3",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 38,
+      "content": "检查\n检查日期：2026年04月17日 10:11:39\n姓名：\n性别：\n年龄：57岁\n科室：\n地址：湖南省湘乡市\n临床诊断：\n吸烟史：>400\nCT表现：1.左肺门占位：中央型肺癌可能性大，并纵主诉：咳嗽1月\n隆突\n左主下段\n左上叶开口\n左下叶开口\n左主下段（活检、治疗后）\n左上叶（活检、治疗后）\n检查所见：\n全麻经喉罩进入支气管镜。气管、隆突：未见异常。\n左肺：左侧支气管见少许脓性分泌物附着，予冲洗、抽吸清除后，见左上叶支气管开口被新生物完全堵塞，表面白色坏死物附着；先行钳夹活检、止血等，获取组织标本满意；再行电凝、冷冻、止血等镜下治疗清除部分腔内肿瘤后，见左上叶固有支开口。\n舌支开口暴露"
+    },
+    {
+      "chunk_id": "0ebb5a0a53edee86",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 33,
+      "content": "及纵隔）薄层平扫增强报告单\n临床诊断：肺病变\n检查方法：\nCT胸部（肺及纵隔）薄层平扫增强\n检查所见：\n（一）主要病变：\n1 部位：左肺门。\n2 基本病变：肿块，肺窗测量大小约39mm×32mm。\n3 强化特征：平扫CT值约48HU，增强后中度不均匀强化，静脉期CT值约63HU，动脉\n期CT值约73HU。\n4 形态特征（可复选）：所属支气管偏心性狭窄，远端阻塞性肺炎。\n5 纵隔窗短径≥10mm淋巴结（可复选）：左下气管旁（4L：主肺动脉窗），短径约\n10mm。\n6 可疑转移灶：未见。\n7 重要结构受累（可复选）：左肺上叶尖后段见一实性结节（Se201/Img70），大小约\n8mm×5mm；左肺"
+    },
+    {
+      "chunk_id": "06f10e228f01664a",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 27,
+      "content": "病人i\n住院号\n床位号\n科\n姓名\n性别：男\n年龄：57岁\n心率：70 bpm\nP-R间期：166 ms\nQRS时间：92 ms\nQT/QTC：364/384 ms\nP-R-T：77/65/69 度\nRV5/SV1：1.99/0.72 mV\n诊断：正常心电图\n检查时间：2026-04-10 17:11:47\nI\naVR\nV1\nV4\nII\naVL\nV2\nV5\nIII\naVF\nV3\nV6"
+    },
+    {
+      "chunk_id": "648eb0abd9097d10",
+      "pages": [
+        5,
+        6,
+        7
+      ],
+      "page_count_raw": 98,
+      "content": "出院记录\n姓名：\n出生日期：1968-07-15\n病人\n科室：\n床号：48\n住院号\n2:5\n入院时间：2026-04-17 08:06\n出院时间：2026-04-20 09:17\n住院天数：3天\n入院诊断：\n1、肺占位性病变（左肺门Ca并纵隔淋巴结肿大可能）\n2、双肺结节\n入院时情况：中年男性，57岁，病程1月余。临床表现：咳嗽1月余。既往：既往体\n质一般。否认“糖尿病”、“冠心病”、“高血压病”等慢性病史，否认“肝炎”、“结\n核”、“伤寒”等传染病史。无手术、外伤史。否认输血史。否认食物、药物过敏史。预\n防接种史不详。体查：体温37.1℃ 脉搏75次/分 呼吸20次/分 血压115/75mm"
+    },
+    {
+      "chunk_id": "859d2f7e1b83444a",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 24,
+      "content": "项目：PD-L1免疫组化检测\n技术：免疫组化\n试剂：Dako 22C3\n结果\n质控项\n质控结果\n总体质量评估\n合格\nHE染色评估\n合格\nL1检测样本病理质控要求≥100个活的肿瘤细胞。\n所见\n胞排列呈团巢状，细胞核大深染，异型性明显，浸润性生长。\n结果\n检测项目\n抗体型号\n检测方法\n检测结果\n1免疫组化\n22C3\nIHC\nPD-L1 TPS 25%,\nCPS 28\nPD-L1 IHC,第1页,共3页"
+    },
+    {
+      "chunk_id": "6bb6d95d8966113d",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>HIV抗原/抗体联合检测</td><td>6522</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "3f42b018d7968c70",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>凝血酶原百分率</td><td>77</td><td>117.40</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>*凝血酶原时间</td><td>34</td><td>9.90</td><td>秒</td><td>9.0-14.0</td><td>False</td></tr><tr><td>活化部分凝血活酶时间</td><td>35</td><td>29.90</td><td>秒</td><td>22.3-32.5</td><td>False</td></tr><tr><td>纤维蛋白原</td>"
+    },
+    {
+      "chunk_id": "e7e664946c295b0a",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>尿素</td><td>None</td><td>3.37</td><td>mmol/L</td><td>3.10-8.00</td><td>False</td></tr><tr><td>肌酐</td><td>None</td><td>82.3</td><td>μmol/L</td><td>41.0-111.0</td><td>False</td></tr><tr><td>尿酸</td><td>None</td><td>279.5</td><td>μmol/L</td><td>208.0-428.0</td><td>False</td></tr><tr><td>乳酸"
+    },
+    {
+      "chunk_id": "b52fddcb5075ebfd",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>中性粒细胞分类计数</td><td>5009</td><td>2.7</td><td>10^9/L</td><td>1.8-6.3</td><td>False</td></tr><tr><td>中性粒细胞百分比</td><td>5016</td><td>58.2</td><td>%</td><td>40.0-75.0</td><td>False</td></tr><tr><td>嗜酸粒细胞分类计数</td><td>5011</td><td>0.15</td><td>10^9/L</td><td>0.02-0.52</td><td>False</td></tr><t"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "page_sum": 12,
+    "check": {
+      "covered": 12,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 0,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 0,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n16:15:42: [QwenVL] 11/12 pages done\n\n16:15:50: [QwenVL] 12/12 pages done\n\n16:15:50: [QwenVL] Done: 337 sections from 12 pages.\n\n16:15:50: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n16:15:50: Start SmartSplitter: semantic split + classify.\n\n16:15:50: Loaded 337 OCR bboxes."
+}

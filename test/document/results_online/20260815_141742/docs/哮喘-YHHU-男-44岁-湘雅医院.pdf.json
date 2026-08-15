@@ -1,0 +1,62 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "哮喘-YHHU-男-44岁-湘雅医院.pdf",
+    "size_kb": 4816.7,
+    "pages": null,
+    "doc_id": "0ff4c94e7ea911f1af97e3985ba7f8da",
+    "patient_id": "PAT-2326f05a47bc"
+  },
+  "doc_id": "0ff4c94e7ea911f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 343.24274,
+  "begin_at": "2026-08-15T15:08:10",
+  "end_at": "2026-08-15T15:14:47",
+  "elapsed_s": 396.4,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 3,
+      "PrescriptionRecord": 2,
+      "ExaminationReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 3,
+      "match": false
+    },
+    "PrescriptionRecord": {
+      "splitter": 0,
+      "clinical": 2,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n15:08:13 Task has been received.\n\n-------------------------------------\n[File]:\n15:08:13: File fetched.\n\n15:08:13: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:08:14: Start to work on a PDF.\n\n15:08:17: [QwenVL] Processing 10 pages...\n\n15:09:25: [QwenVL] 1/10 pag"
+}

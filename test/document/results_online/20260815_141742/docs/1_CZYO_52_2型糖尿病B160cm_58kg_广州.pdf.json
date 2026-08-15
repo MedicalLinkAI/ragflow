@@ -1,0 +1,95 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "1_CZYO 52 2型糖尿病B160cm 58kg 广州.pdf",
+    "size_kb": 1132.4,
+    "pages": null,
+    "doc_id": "8e42bc5c78f011f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-37bcb7b0a1e1"
+  },
+  "doc_id": "8e42bc5c78f011f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": true,
+  "process_duration": 54.80087,
+  "begin_at": "2026-08-15T16:37:20",
+  "end_at": "2026-08-15T16:38:18",
+  "elapsed_s": 57.6,
+  "before": {
+    "chunk_count": 4,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 2,
+      "LabReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "9b85f29de7f9d2d2",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 23,
+      "content": "乐\n52.1\n病历内容\n就诊医院：\n就诊科室：\n时间：2023年12月1日 时 分\n诉：体格发烫血物升商一周\n认史：一周前体格发烫血物升之\n元多尿.多饮.多食.之消瘦.之视力\n下降.胸闷等不适.此以处院完善\n检查以出工要物求和.靠收食.\n运动控制.没吃药\n经史：颈纹史.结核病史\n过敏史：否认花粉食物过敏史\n体格：T36.5℃.身高160cm.体\n重58.5g BmE22.67.四长120mm\n脉率65次/心率65次.其他：神\n清.一般情况可.心肺未问及异常\n车程：2023.11.外院糖化血红蛋白\n9.7%\n门诊诊断：2型米地局和\n临床：封上收医位检查(数\n2023.12.1"
+    },
+    {
+      "chunk_id": "7deb036e1f70e79e",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 17,
+      "content": "就诊医院：\n就诊科室：\n时间： 年 月 日 时 分\n服务中心\n门诊疾病诊断证明书 NO 0000709\n姓名\n性别 女\n年龄 52岁\n职业\n单位或地址\n初步诊断：\n乙型肝炎\n靠饮食运动控制3.\n没吃药.\n建议：药物治疗\n诊断医师\n2019年3月28日"
+    },
+    {
+      "chunk_id": "594efadb77535045",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>9.40</td><td>%</td><td>4.00~6.00</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "ff2f6eecbfe6bc76",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>葡萄糖</td><td>GLU</td><td>9.77</td><td>mmol/L</td><td>3.9~6.1</td><td>True</td></tr><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>10.10</td><td>%</td><td>4.00~6.00</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 4,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 0,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n-------------------------------------\n[File]:\n16:37:23: File fetched.\n\n16:37:23: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n16:37:23: Start to work on a PDF.\n\n16:37:24: [QwenVL] Processing 4 pages...\n\n16:37:28: [QwenVL] 1/4 pages done\n\n16:37:28: [QwenVL] 2/4 page"
+}

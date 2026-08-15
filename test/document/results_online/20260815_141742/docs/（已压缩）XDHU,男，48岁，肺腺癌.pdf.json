@@ -1,0 +1,62 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "（已压缩）XDHU,男，48岁，肺腺癌.pdf",
+    "size_kb": 12291.8,
+    "pages": null,
+    "doc_id": "8b8ebe7679b711f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-07adc51dd75c"
+  },
+  "doc_id": "8b8ebe7679b711f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 363.07248,
+  "begin_at": "2026-08-15T16:16:06",
+  "end_at": "2026-08-15T16:23:04",
+  "elapsed_s": 417.7,
+  "before": {
+    "chunk_count": 12,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 8,
+      "ExaminationReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 2,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 8,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n16:16:09 Task has been received.\n\n-------------------------------------\n[File]:\n16:16:10: File fetched.\n\n16:16:10: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n16:16:10: Start to work on a PDF.\n\n16:16:15: [QwenVL] Processing 18 pages...\n\n16:16:29: [QwenVL] 1/18 pag"
+}

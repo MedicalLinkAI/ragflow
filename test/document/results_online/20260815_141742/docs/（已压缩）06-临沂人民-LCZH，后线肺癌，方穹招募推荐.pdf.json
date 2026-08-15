@@ -1,0 +1,68 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "（已压缩）06-临沂人民-LCZH，后线肺癌，方穹招募推荐.pdf",
+    "size_kb": 13469.2,
+    "pages": null,
+    "doc_id": "a86c41f67e6e11f1af97e3985ba7f8da",
+    "patient_id": "PAT-64b2a08ac2ab"
+  },
+  "doc_id": "a86c41f67e6e11f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 338.68658,
+  "begin_at": "2026-08-15T15:14:47",
+  "end_at": "2026-08-15T15:21:18",
+  "elapsed_s": 391.5,
+  "before": {
+    "chunk_count": 10,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "ExaminationReport": 2,
+      "OutpatientRecord": 3,
+      "LabReport": 4
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 2,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 4,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 3,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n15:14:49 Task has been received.\n\n-------------------------------------\n[File]:\n15:14:50: File fetched.\n\n15:14:50: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:14:50: Start to work on a PDF.\n\n15:14:57: [QwenVL] Processing 18 pages...\n\n15:15:13: [QwenVL] 1/18 pag"
+}

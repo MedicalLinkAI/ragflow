@@ -1,0 +1,175 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "大连-SZRU-食管癌-方穹推荐706-I期（IA期）.pdf",
+    "size_kb": 1822.4,
+    "pages": null,
+    "doc_id": "a94970ae75b711f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-9be8a0c57799"
+  },
+  "doc_id": "a94970ae75b711f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 11,
+  "orm_synced": true,
+  "process_duration": 255.86252,
+  "begin_at": "2026-08-15T16:39:44",
+  "end_at": "2026-08-15T16:44:03",
+  "elapsed_s": 258.8,
+  "before": {
+    "chunk_count": 12,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 5,
+      "AdmissionRecord": 1,
+      "LabReport": 5,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "ffe38ec88618aa74",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 90,
+      "content": "身高169厘米，体重65公斤，没有基础疾病及合并用药，自愿放弃标准治疗\n鞍山市肿瘤医院\n住院病历\n(放疗科)\n姓名:\n年龄:55岁\n入院日期:2026年2月3日15时20分\n婚姻:已婚\n职业:无业人员\n可靠程度:可靠\n工作单位:-\n性别:女性\n民族:汉族\n籍贯:鞍山市\n病史叙述者:家属\n家庭住址:辽宁鞍山市\n住院号:\n记录时间:2026年2月3日15时42分\n病史\n主诉:食管恶性肿瘤1月余\n现病史:患者1月前因时有进食哽噎感在当地医院型肺部CT:提示食管中下段增厚,北京解放军总医院第一医学中心\n就诊行食管镜距门齿28-35CM见平坦隆起性病变,局部呈隆溃病性改变,质脆易出血,取病理提示食管中分"
+    },
+    {
+      "chunk_id": "6653be958cae4891",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 35,
+      "content": "鞍山市肿瘤医院\n出院记录\n姓名：\n性别：女性\n年龄：55岁\n科室：\n床号：8\n住院号\n入院时间：2026年2月3日15时20分\n出院时间：2026年2月11日08时00分\n住院天数：8天\n入院诊断：食管癌\n住院经过（主要病史、体征、重要检验及检查、主要病情变化、手术、主要治疗及用药、转归）：\n入院时情况：患者因“食管恶性肿瘤1月余”为主诉入院。入院查体：体温：36.3℃，P：82次/分，R：17次/\n分，BP：158/86mmHg。专科情况：一般状况可，浅表淋巴结未及肿大，双肺呼吸音清，心音纯，节律齐，腹平软，无压痛、\n反跳痛及肌紧张，生理反射对称，病理反射未引出。北京解放军总医院第一医学中心"
+    },
+    {
+      "chunk_id": "1610a5562bf65faf",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 25,
+      "content": "解放军总医院第一医学中心\nPLAGH\n病理标本检查报告单\n姓名：\n性别：女\n年龄：55岁\n病理号：B1909416\n出生地：\n送检医生：\n门诊号：V1138445\n送检科室：消化内科医学内镜中心\n送检日期：2025-12-31\n住院号：\n检查所见：\n(食管)灰白色碎组织一堆，总大小0.4x0.3x0.2cm，质软。\n病理诊断：\n(食管)中分化鳞状细胞癌。\n签\n名：袁静\n11502\n赵国菊\n诊断日期：2026-01-06 21:34\n复诊医生：袁静\n初诊医生：魁国菊\n取材医生：魁国菊"
+    },
+    {
+      "chunk_id": "1fdc840f854a2abc",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 22,
+      "content": "解放军总医院第一医学中心消化内科医学部\n内镜报告单\n姓名：\n性别：女\n检查年龄：55\n联系电话：13941259119\n内镜号：20251225361\n门诊号：V1138445\n住院号：\n送检科室：消化内科医学部门诊\n联系地址：北京\n检查所见：\n距门齿28-35cm可见平坦隆起性病变，局部呈隆溃疡性改变，覆黄白苔，活检1瓶，质脆易出血，\n余食管黏膜光滑，呈粉红色，未见糜烂、溃疡及静脉曲张，贲门开闭正常，齿状线清楚。胃底、\n胃窦散在点状红斑。余胃未见异常。幽门黏膜光滑，未见充血水肿。幽门圆，开放好；球腔无畸\n形，未见溃疡，降段未见异常。\n检查诊断：\n食管占位性病变：CA可能性大\n慢性胃炎\n报告医"
+    },
+    {
+      "chunk_id": "34539a74354d18a6",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 29,
+      "content": "鞍山市肿瘤医院\n彩色超声诊断报告单\n姓名：\n性别：女\n年龄：55岁\n住院号：\n申请科室：十二区\n申请医生：曹燚\n检查号：U260204084\n检查项目：[腹部彩超检查][浅表淋巴结彩超检查]\n超声描述：\n肝脏大小属正常范围，肝实质回声粗糙增强，肝右前叶可见大小约0.9x0.5cm结节，边界欠\n清，内呈略低回声。门静脉主干直径约0.8cm。肝内外胆管未见扩张。胆囊大小约6.2x3.9cm，壁厚\n约0.2cm。囊内可见多个较大直径约0.9cm强回声光团，声影(+)，移动(+)。脾肋间厚约4.0cm，肋\n间长11.9cm。胰腺大小，形态正常，轮廓清晰，主胰管未见扩张，胰区未见明显占位性病变。\n右锁骨"
+    },
+    {
+      "chunk_id": "8aea5ecfc58e215d",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 30,
+      "content": "鞍山HR\n鞍山市肿瘤医院\n医学影像学CT诊断报告书\n云影像\n患者姓名\n性别：女\n年龄：55岁\n申请医生：曹燚\n患者类别\n检查号：CT260203261 床号：\n申请科室：十二区\n患者ID号\n检查时间：2026-02-05\n检查部位：[胸部平扫+增强（CT）]\n影像表现：\n扫描显示胸廓对称，左肺内见多发不规则小结节影，最大者直径约7mm。右侧肺野\n清晰。各级支气管通畅，无扩张与狭窄。双侧肺门不大，纵隔居中，其内未见肿\n大淋巴结，增强后未见异常强化。心脏大小正常，胸壁软组织未见异常。食管中\n下段局部管壁增厚，管腔变窄。左侧肾上腺区见多发软组织密度结节影。\n诊断提示：\n左肺多发小结节，请随诊。\n食管"
+    },
+    {
+      "chunk_id": "a6057d1c91ad8bd6",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 33,
+      "content": "中国医科大学附属第一医院鞍山医院\n鞍山HR\nCT检查报告单\n病人编号：P0000472698\n检查号：CT202603050178\n住院号：\n姓名：\n性别：女\n年龄：55岁\n门诊号：2198793001\n申请科室：肿瘤/血液内科门诊\n申请医生：高军\n床号：\n检查项目：（CT）上腹部、下腹部、盆腔-平扫（薄层扫描）\n影像所见\n肝脏表面欠光整，肝裂增宽，肝实质内未见异常密度影。肝内外胆管无扩张。胆囊不大，\n壁略厚，内见小结节状致密影。脾大，实质内未见异常密度灶。胰腺大小形态密度未见异\n常。双肾未见异常密度影。双侧输尿管无扩张，内未见异常密度影。左肾静脉膨隆增粗，\n较宽处宽径约2.8cm。膀胱充盈尚"
+    },
+    {
+      "chunk_id": "0ebdda9bec4226aa",
+      "pages": [
+        10,
+        11
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>癌胚抗原</td><td>None</td><td>30.88</td><td>ng/ml</td><td>0-5</td><td>True</td></tr><tr><td>鳞状细胞癌相关抗原</td><td>None</td><td>3.47</td><td>ng/ml</td><td>0-2.7</td><td>True</td></tr><tr><td>细胞角蛋白19片段</td><td>None</td><td>4.39</td><td>ng/mL</td><td>0-3.3</td><td>True</td></tr><tr><td>总胆红素</td>"
+    },
+    {
+      "chunk_id": "a87c76caeebdbeb7",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>红细胞分布宽度SD</td><td>RDW-SD</td><td>47.40</td><td>fl</td><td>37--50</td><td>False</td></tr><tr><td>红细胞分布宽度CV</td><td>RDW-CV</td><td>13.70</td><td>%</td><td>11--16</td><td>False</td></tr><tr><td>血小板计数</td><td>Plt</td><td>107</td><td>10^9/L</td><td>125--350</td><td>True</td></tr><tr><td>血小"
+    },
+    {
+      "chunk_id": "7aaa8577f95ace11",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>谷丙转氨酶</td><td>ALT</td><td>8.3</td><td>U/L</td><td>7--40</td><td>False</td></tr><tr><td>碱性磷酸酶</td><td>ALP</td><td>134.0</td><td>U/L</td><td>50--135</td><td>False</td></tr><tr><td>r-谷氨酰转肽酶</td><td>GGT</td><td>35.5</td><td>U/L</td><td>7--45</td><td>False</td></tr><tr><td>总胆红素</td><td>TBI"
+    },
+    {
+      "chunk_id": "85eed28f95a43a9b",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 17,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>5.07</td><td>10^9/L</td><td>3.5—9.5</td><td>False</td></tr><tr><td>淋巴细胞计数</td><td>LYM#</td><td>1.45</td><td>10^9/L</td><td>1.1—3.2</td><td>False</td></tr><tr><td>中性细胞计数</td><td>NEU#</td><td>2.94</td><td>10^9/L</td><td>1.8—6.3</td><td>False</td></tr><tr><td>单核"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 14,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n16:40:32: [QwenVL] Done: 356 sections from 14 pages.\n\n16:40:32: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n16:40:32: Start SmartSplitter: semantic split + classify.\n\n16:40:32: Loaded 356 OCR bboxes.\n\n16:40:32: Full document: 12916 chars, 356 bboxes.\n\n16:40:32: Calling LLM"
+}

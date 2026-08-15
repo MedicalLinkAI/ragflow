@@ -1,0 +1,90 @@
+{
+  "pdf": {
+    "path": "D:\\futureCode\\三月病历\\麦济哮喘\\1_GWYA-女-35岁222.pdf",
+    "name": "1_GWYA-女-35岁222.pdf",
+    "size_kb": 1177.0,
+    "pages": 5
+  },
+  "doc_id": "bb8ca2d096c911f19d3ab1cda0a97c3d",
+  "mode": "existing+reparse",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": false,
+  "process_duration": 292.77002,
+  "begin_at": "2026-08-15T09:39:21",
+  "end_at": "2026-08-15T09:44:18",
+  "elapsed_s": 296.9,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 4
+  },
+  "chunks": [
+    {
+      "chunk_id": "cf89707cd070eea1",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 97,
+      "content": "长葛市华健医院\n入院记录\n姓名\n科室:呼吸内科\n床\n住院\n姓名\n性别:女\n年龄:34岁\n床号:\n住院号\n职业:农民\n民族:汉\n婚姻:已婚\n身份证\n籍贯:河南省许昌市\n联系\n住址:\n入院时间:2024-02-14 11:14\n工作单位:\n病历采集时间:2024-02-14 11:27\n联系人\n与患者关系:本人\n联系电话:1515\n病史陈述人:本人及家属\n过敏史:布洛芬、青霉素\n呼吸内科第(4)次住院\n主诉:间断咳嗽、咳痰伴胸闷8年余,加重伴发热5天。\n现病史:8余年前受凉后出现咳嗽、咳痰,咳嗽呈间断性,不剧烈,咳痰初期为黄痰,后\n期白粘痰,量较大,可咳出,遇冷及刺激性气味咳嗽加重,伴有气喘,闻刺"
+    },
+    {
+      "chunk_id": "7461055ad0886b95",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 23,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女\n年龄: 35 住院(门诊)\n科别: 内\n25年12月20日\n费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛市老城\nR\nP:\n本地奈德倍美舒特写粉吸入剂160ug×60μ×2\nSy: 320ug 吸入每天二次\n华健医院\n收费专用章\n4110820322963\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    },
+    {
+      "chunk_id": "16dfbab19f006f52",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 20,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门诊)\n科别: 内 26年 1月 24日 费别: 自 职 农\n临床诊断: 支气管哮喘 床号/地址 郑州志城\nRp:\n布地奈德福莫特罗粉吸入剂 160ug×60s×2支\n甲泼尼龙片\n5y: 320ug 吸入 每天三次\n4mg×24片×1盒\n5y: 8mg 吸入 每天二次\n华健医院\n收费专用章\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    },
+    {
+      "chunk_id": "aa9d2c12e36cb2ae",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 18,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门\n科别: 内 26年2月20日 费别: 自 职 农\n临床诊断: 支气管哮喘 床号/地址 长葛市志诚\nRp:\n布地奈德福莫特罗粉吸入剂160ug×60μg×7\nSg: 320ug吸入每天二次\n华健\n医院\n收费专用章\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": 5,
+      "coverage_pct": 100.0,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "✅ 完全覆盖：chunk 页码并集 = PDF 总页数"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "09:39:24: File fetched.\n\n09:39:24: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n09:39:24: Start to work on a PDF.\n\n09:39:28: [QwenVL] Processing 5 pages...\n\n09:40:27: [QwenVL] 1/5 pages done\n\n09:40:27: [QwenVL] 2/5 pages done\n\n09:40:28: [QwenVL] 3/5 pages done\n\n09:4"
+}

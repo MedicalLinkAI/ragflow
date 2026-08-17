@@ -29,6 +29,12 @@ from api.db.joint_services.tenant_model_service import get_model_config_by_type_
 from agent.component.base import ComponentBase, ComponentParamBase
 from common.connection_utils import timeout
 from rag.prompts.generator import tool_call_summary, message_fit_in, citation_prompt, structured_output_prompt
+# 日志归因（common.log_tag 零依赖模块，与 extractor 侧同一实现）：多 task_executor
+# 共享进程日志流，LLM 调用日志需 doc/task/case 才能归属到真实文档。
+# 注意：不得从 rag.flow.extractor.qwen_vl_ocr 导入——会触发 rag/flow/__init__
+# walk-import 与 extractor.py 回导 LLMParam 形成循环导入，导致
+# ExtractorParam 等组件注册失败（2026-08-17 worker 事故）
+from common.log_tag import build_log_tag as _build_log_tag
 
 
 class LLMParam(ComponentParamBase):
@@ -272,12 +278,12 @@ class LLM(ComponentBase):
     async def _generate_async(self, msg: list[dict], **kwargs) -> str:
         component = self.component_name
         llm_id = self._param.llm_id
-        logging.info(f"[LLM] {component} call: llm_id={llm_id}")
+        logging.info(_build_log_tag(self, f"[LLM] {component} call: llm_id={llm_id}"))
         if not self.imgs:
             resp = await self.chat_mdl.async_chat(msg[0]["content"], msg[1:], self._param.gen_conf(), **kwargs)
         else:
             resp = await self.chat_mdl.async_chat(msg[0]["content"], msg[1:], self._param.gen_conf(), images=self.imgs, **kwargs)
-        logging.info(f"[LLM] {component} response: llm_id={llm_id}")
+        logging.info(_build_log_tag(self, f"[LLM] {component} response: llm_id={llm_id}"))
         return resp
 
     async def _generate_streamly(self, msg: list[dict], **kwargs) -> AsyncGenerator[str, None]:

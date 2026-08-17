@@ -1,0 +1,101 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "麦济ZHGL.pdf",
+    "size_kb": 4723.3,
+    "pages": null,
+    "doc_id": "daac0b0e96e411f19d3ab1cda0a97c3d",
+    "patient_id": "PAT-cbdead1a4a41"
+  },
+  "doc_id": "daac0b0e96e411f19d3ab1cda0a97c3d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 5,
+  "orm_synced": true,
+  "process_duration": 104.778625,
+  "begin_at": "2026-08-15T22:17:09",
+  "end_at": "2026-08-15T22:18:58",
+  "elapsed_s": 109.0,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 5
+  },
+  "chunks": [
+    {
+      "chunk_id": "55276bce34058482",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 35,
+      "content": "电子发票(普通发票)\n发票号码：25152000000077385777\n开票日期：2025年12月24日\n购买方信息\n统一社会信用代码/纳税人识别号\n销售方信息\n名称：国药控股国大药房内蒙古有限公司第三百七十三分公司\n统一社会信用代码/纳税人识别号：91150121MACGJJ2Q46\n项目名称\n规格型号\n单位\n数量\n单价\n金额\n税率/征收率\n税额\n*化学药品制剂*布地奈德\n320ug:9ug*60吸\n盒\n1\n306.930693069307\n306.93\n1%\n3.07\n福莫特罗吸入粉雾剂\n合计\n￥306.93\n￥3.07\n价税合计(大写)\n叁佰壹拾圆整\n(小写)￥310.00\n收款人：马"
+    },
+    {
+      "chunk_id": "05fe4f96a9d65cb8",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 33,
+      "content": "内蒙古医科大学附属医院门诊病历\n姓名：\n年龄：51岁\n诊疗号：0011072747\n民族：汉族\n性别：女性\n内科门诊\n联系电话：\n身份证：\n病情：\n就诊状态：\n就诊时间：2020-02-13 09:12\n生命体征（需要时）：\n体温：℃ 脉搏：次/分 呼吸：次/分 血压：/mmHg\n主诉：哮喘史，近几日咳嗽、胸闷气短症状加重\n现病史：哮喘史，近几日咳嗽、胸闷气短症状加重\n既往史：患者平素身体健康，高血压无，糖尿病无，心脏病无，肺结核无，鼻炎\n无，吸烟史无，无过敏史。\n体格检查：发育正常，营养良好，体型正力，双肺呼吸音清，双肺未闻及啰\n音，双下肢无水肿，体重kg。\n辅助检查：心肺\n过敏史：不详\n初"
+    },
+    {
+      "chunk_id": "cd9f1f0438b0c7c3",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 52,
+      "content": "内蒙古医科大学附属医院门诊病历\n姓名：\n年龄：51岁\n诊疗号：0011072747\n民族：汉族\n性别：女性\n呼吸内科门诊\n联系电话：\n身份证：\n病情：\n就诊状态：\n就诊时间：2026-02-09 07:39\n生命体征（需要时）：\n体温：℃ 脉搏：次/分 呼吸：次/分 血压：/mmHg\n主诉：本次为V16访视\n现病史：今患者按约回院，受试者自上次访视至今，哮喘症状控制平稳，无哮\n喘急性恶化，无哮喘急性发作，无AE，无SAE，无新增合并用药或非\n药物治疗。检查并回收发放的日记卡1本，版本号/版本日期\n(V2.0/20250916)，受试者日记卡填写正确，发放新的日记卡1本，\n指导受试者填写。患者诉"
+    },
+    {
+      "chunk_id": "3db2eada04116b53",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 23,
+      "content": "欣源药业\nNO:2026011900323\n商品名称\n单价\n数量\n小计\n布地奈德福莫特罗吸入粉雾剂320ug:\n9ug*60吸/盒\n309.00\n2\n618.00\n阿斯利康\n批号: PKGF\n效期:2027-03 规格:1支/盒\n总计:\n2.00\n618.00\n会员卡号:800310\n会员姓名:\n本次积分:618.00\n累计积分:2518.10\n收银员004营业员004\n日期26-01-1910:53:22"
+    },
+    {
+      "chunk_id": "b07d330697862524",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 20,
+      "content": "内蒙古医科大学附属医院\n门诊缴费凭证\n诊疗号：0011072747\n姓名：\n收费项目\n西药\n总额(元\n301.53\n(取药窗口：门诊二楼西药房3号窗口)\n开单科室：呼吸内科门诊\n结算类型：自费\n总金额：301.53元\n实付金额：301.53元\n机器编号：zzj217\n缴费时间：2026-02-13 10:13:31\n支付方式：微信\n交易订单号：39N6260213101311FYAzzj217D4230\n温馨提示：\n如需发票，请关注我院微信公众号获取\n电子发票"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "page_sum": 6,
+    "check": {
+      "covered": 6,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "MedicationRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "[Parser_0]:\n22:17:13: Start to work on a PDF.\n\n22:17:14: [QwenVL] Processing 6 pages...\n\n22:17:22: [QwenVL] 1/6 pages done\n\n22:17:23: [QwenVL] 2/6 pages done\n\n22:17:23: [QwenVL] 3/6 pages done\n\n22:17:24: [QwenVL] 4/6 pages done\n\n22:17:25: [QwenVL] 5/6 pages done\n\n22:17:28: [QwenVL] 6/6 pages done\n\n2"
+}

@@ -60,7 +60,7 @@ _fds_mod.File2DocumentService = _File2DocumentService
 sys.modules["api.db.services.file2document_service"] = _fds_mod
 
 # common.settings with STORAGE_IMPL
-_common_mod = _fake_pkg("common")
+_common_mod = _fake_pkg("common", os.path.join(project_root, "common"))
 _settings_mod = types.ModuleType("common.settings")
 
 
@@ -380,6 +380,97 @@ class TestProcessTextCountMismatchWarning:
         assert rows[0][0] == 0 and rows[0][1] != 0, f"首行应按索引成功: {rows}"
         assert rows[1] == [0, 0, 0, 0, 0], f"多余行应占位 0: {rows}"
         assert rows[2] == [0, 0, 0, 0, 0], f"多余行应占位 0: {rows}"
+
+
+class TestBuildLogTag:
+    """日志 TAG 归因：多 executor 共享同一进程日志流，coord 调用日志必须带
+    doc/task/case 标识，否则超时无法归属（LBZH page 21/23 误归因教训）。"""
+
+    DOC_ID = "dbef275894d711f1bd9827cf206dfa2d"
+    TASK_ID = "c3fe5538998211f18e23b137b0b8cefc"
+    CASE_NAME = "LBZH，男，63岁，胃癌一线(1).pdf"
+
+    def _ext_with_canvas(self):
+        return types.SimpleNamespace(_canvas=types.SimpleNamespace(
+            _doc_id=self.DOC_ID, task_id=self.TASK_ID, _doc_name=self.CASE_NAME))
+
+    def test_tag_contains_doc_task_case(self):
+        tag = qvl._build_log_tag(self._ext_with_canvas(), "[qwen-vl-text]")
+        assert tag.startswith("[qwen-vl-text]")
+        assert "doc=dbef2758" in tag      # 截前 8 位
+        assert "task=c3fe5538" in tag
+        assert f"case={self.CASE_NAME}" in tag
+
+    def test_missing_canvas_attrs_degrade_to_dash(self):
+        ext = types.SimpleNamespace()  # 无 _canvas
+        tag = qvl._build_log_tag(ext, "[qwen-vl-table]")
+        assert tag.startswith("[qwen-vl-table]")
+        assert "doc=-" in tag
+        assert "task=-" in tag
+        assert "case=" not in tag
+
+    def test_process_text_passes_attribution_tag_to_coord(self, monkeypatch):
+        """process_text 传给 coord 的 tag 必须携带 doc/task/case 归因信息。"""
+        captured = {}
+
+        def fake_coord(img_bytes, prompt, tag, endpoint_cfg, page_num=0):
+            captured["tag"] = tag
+            return [{"text": "alpha", "bbox": [10, 10, 100, 20]}], 0.1, "ok"
+
+        monkeypatch.setattr(qvl, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(qvl, "_call_qwen30b_coord", fake_coord)
+
+        ext = _FakeExt()
+        ext._canvas = types.SimpleNamespace(
+            get_tenant_id=lambda: "tenant-x",
+            _doc_id=self.DOC_ID,
+            task_id=self.TASK_ID,
+            _doc_name=self.CASE_NAME,
+        )
+        ext._sys_prompt_and_msg = lambda history, args: (
+            [{"role": "user", "content": args.get("text", "")}], "SYS")
+        async def _gen(msg):
+            return json.dumps({"report_date": None, "items": []}, ensure_ascii=False)
+        ext._generate_async = _gen
+
+        ck = {
+            "doc_id": "doc-x",
+            "text": "alpha",
+            "positions": [[0, 0, 0, 0, 0]],
+            "classify_result_tks": json.dumps({"type": "progress_note"}),
+        }
+        asyncio.run(qvl.process_text(ext, ck, "fake-llm"))
+
+        tag = captured.get("tag", "")
+        assert "doc=dbef2758" in tag, f"coord tag 缺 doc 归因: {tag}"
+        assert "task=c3fe5538" in tag, f"coord tag 缺 task 归因: {tag}"
+        assert f"case={self.CASE_NAME}" in tag, f"coord tag 缺 case 归因: {tag}"
+
+
+class TestCoordLogDedup:
+    """日志理清：coord raw response 全文已包含全部 items 的 text/bbox，
+    逐条 coord item[i] 日志与之完全重复；汇总行（raw/valid 计数）保留。
+    不截断任何全文，仅去重复。"""
+
+    def test_coord_items_not_logged_per_item(self, monkeypatch, caplog):
+        fake_resp = types.SimpleNamespace(status_code=200)
+        fake_resp.json = lambda: {"choices": [{"message": {"content": json.dumps([
+            {"text": "白蛋白", "bbox": [10, 10, 100, 20]},
+            {"text": "肌酥", "bbox": [10, 30, 100, 40]},
+        ])}}]}
+        monkeypatch.setattr(qvl.requests, "post", lambda *a, **k: fake_resp)
+
+        with caplog.at_level(logging.INFO):
+            items, _elapsed, status = qvl._call_qwen30b_coord(
+                b"img", "prompt", "[qwen-vl-table]", ("http://fake/v1", "m", "key"))
+
+        assert status == "ok" and len(items) == 2
+        msgs = [r.getMessage() for r in caplog.records]
+        assert any("raw_items=2" in m and "valid_items=2" in m for m in msgs), \
+            f"coord 汇总行应保留: {msgs}"
+        assert not any("coord item[" in m for m in msgs), \
+            "逐条 item 日志与 raw response 全文重复"
 
 
 class TestProcessTablePageAttribution:

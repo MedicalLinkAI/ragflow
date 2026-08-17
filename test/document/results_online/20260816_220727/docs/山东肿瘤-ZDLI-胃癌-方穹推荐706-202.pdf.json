@@ -1,0 +1,149 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "山东肿瘤-ZDLI-胃癌-方穹推荐706-202.pdf",
+    "size_kb": 10644.2,
+    "pages": null,
+    "doc_id": "f4c79be694d911f1bd9827cf206dfa2d",
+    "patient_id": "PAT-ed59b92c1719"
+  },
+  "doc_id": "f4c79be694d911f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 407.17706,
+  "begin_at": "2026-08-16T22:54:49",
+  "end_at": "2026-08-16T23:01:47",
+  "elapsed_s": 418.5,
+  "before": {
+    "chunk_count": 9,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "ExaminationReport": 4,
+      "LabReport": 4
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "a513fe4600a5a949",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 77,
+      "content": "山东第一医科大学附属肿瘤医院(山东省肿瘤医院)\n2次入院记录\n出生地：山东省泰安市宁阳县\n性别：男\n职业：农民\n年龄：69岁\n入院时间：2026-03-16 14:08\n民族：汉族\n记录时间：2026-03-16 15:24\n婚姻：已婚\n病史陈述者：患者本人及家属\n主诉：诊食管胃连接处癌6天。\n现病史：患者于2026-3-11至东莒市人民医院行电子胃镜示：进镜37cm见占位病变、狭窄。病变\n延续到贲门、胃底上段。于病变上段活检，胃底上段见巨大溃疡，无合适活检部位。诊断：慢性萎缩性\n胃炎(C-2)贲门占位?并狭窄溃疡形成，病理：(食道下段)腺癌。(病理号2026-04058)2026-3-13C"
+    },
+    {
+      "chunk_id": "28dd66969032e89f",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 28,
+      "content": "山东省肿瘤医院\n临床报告调阅\n男\n年龄:\n69岁\n患\n2026/03/17\n床号\n临床诊断:\n1.胃癌\n检查名称: 上腹部MR平扫+增强+磁共振动态增强成像\n影像表现:\n扫及下段食管及胃底贲门壁示不均匀增厚,外膜面毛糙,周围脂肪间隙欠清,弥散受限,\n增强扫描呈不均匀强化。肝脏大小形态可,实质内见多发结节状异常信号,呈长T1WI长\nT2WI信号,压脂序列呈高信号,大者截面约2.5cm,增强扫描呈边缘强化。肝内外胆管未\n见扩张。胆囊充盈,壁不厚,胆囊内未见明显异常信号影。余扫及腹腔脏器未见明显异\n常。腹腔内1组、2组、3组、7组可见肿大淋巴结,大者短径约1.3cm。腹膜后未见肿大淋\n巴结。\n诊断意"
+    },
+    {
+      "chunk_id": "50ac9cd82ea98932",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 31,
+      "content": "山东省肿瘤医院\n临床报告调阅\n男\n年龄:\n69岁\n患者护\n日期: 2026/03/16\n床号:\n临床诊断: 胃癌\n检查名称: 院外影像学会诊(副主任医师)\n影像表现:\n复阅东营市人民医院胸上腹增强CT 2026.3.13\n胸廓对称,纵隔气管居中,右肺体积减小,右肺中叶支气管截断,局部见高密度吻合器\n影。双肺见少许索条影。双肺见多发小结节,大者位于左肺上叶尖后段,为磨玻璃结节,\n大小约6mmx6mm。左肺见钙化灶。纵隔内未见明显肿大淋巴结。主动脉及冠状动脉壁见斑\n片状致密灶。\n胸下段食管及胃底贲门壁示不均匀增厚,外膜面毛糙,周围脂肪间隙欠清,增强扫描呈不\n均匀强化;肝脏大小形态可,实质内见多发低"
+    },
+    {
+      "chunk_id": "4dfc28c9a1825315",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 36,
+      "content": "山东第一医科大学附属肿瘤医院 (山东省肿瘤医院) 常规心电图报告\n性别:男\n年龄:69岁\nID:000\n住院\nHR : 87bpm [60~100]\nP : 110ms [60~110]\nPR : 164ms [120~200]\nQRS : 88ms [60~120]\nQT/QTc : 335/405ms [320~440/0~450]\nP/QRS/T : 63/18/47deg. [0~75/-30~90/0~75]\nRV5/SV1 : 1.634/0.524mV [0.0~2.5/0.0~2.0]\n诊断结果:\n1.窦性心律\n2.ST改变\n诊\n审核医\n10mm/mV\n25mm/s\nI\nII\n"
+    },
+    {
+      "chunk_id": "ef3c7aa4ef1676d2",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 32,
+      "content": "山东第一医科大学附属肿瘤医院\n(山东省肿瘤医院)\n病理会诊报告单\n病理号\n性别：男\n年龄：69岁\n门\n床号：\n收到口期：2026-03-17\n送检医院：东营市人民医院\n原病理号：2026-04058\n送检材料：HE:2\nIHC:\n蜡块：\n白片：15\n病理诊断：\n(食道下端活检）中分化腺癌。\n(胃窦小弯活检）粘膜慢性炎。\n贲门脉Ca.\n免疫组化：H202603358-2026-04058白片#：CDX2（-）、TTF-1（-）、NapsinA（-）、HER2\n(1+）、MLH1（+）、PMS2（+）、MSH2（+）、MSH6（+）、FGFR2b（-）、C-MET（2+）、TROP2\n(3+）、C"
+    },
+    {
+      "chunk_id": "88856882a7bdaa18",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>*乙肝表面抗原</td><td>None</td><td>0.001</td><td>IU/ml</td><td><0.05</td><td>False</td></tr><tr><td>*乙肝表面抗体</td><td>None</td><td>21.145</td><td>mIU/ml</td><td><10</td><td>True</td></tr><tr><td>*乙肝e抗原</td><td>None</td><td>0.050</td><td>PEIU/ml</td><td><0.1</td><td>False</td></tr><tr><td>*乙肝e"
+    },
+    {
+      "chunk_id": "01271e1b168a4ad3",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 49,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>None</td><td>9.2</td><td>U/L</td><td>9--50</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>None</td><td>12.1</td><td>U/L</td><td>15--40</td><td>True</td></tr><tr><td>S/L</td><td>None</td><td>1.32</td><td>None</td><td>0.8--1.5</td><td>False</td></tr><tr><td>总蛋白</td><"
+    },
+    {
+      "chunk_id": "125f0fa5ae33853f",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>10.00</td><td>秒</td><td>9.4--12.5</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>104</td><td>%</td><td>70--140</td><td>False</td></tr><tr><td>凝血酶原国际标准化比值</td><td>None</td><td>0.97</td><td>None</td><td>0.8--1.2</td><td>False</td></tr><tr><td>活化部"
+    },
+    {
+      "chunk_id": "22bccc1117116ec5",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>4.37</td><td>X10^9/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>淋巴细胞计数</td><td>None</td><td>1.44</td><td>X10^9/L</td><td>1.1--3.2</td><td>False</td></tr><tr><td>淋巴细胞百分比</td><td>None</td><td>33.0</td><td>%</td><td>20--50</td><td>False</td></tr><tr><td>中性"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "page_sum": 11,
+    "check": {
+      "covered": 11,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:56:09: [QwenVL] 9/11 pages done\n\n14:56:11: [QwenVL] 10/11 pages done\n\n14:56:13: [QwenVL] 11/11 pages done\n\n14:56:13: [QwenVL] Done: 318 sections from 11 pages.\n\n14:56:13: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n14:56:13: Start SmartSplitter: semantic split + classif"
+}

@@ -6,6 +6,7 @@
 #
 import base64
 import json
+import logging
 import os
 import sys
 import threading
@@ -1328,3 +1329,83 @@ class TestTextEmptyFloodRetry:
             sections, _ = parser._extract_text_page(b"img", 18, 0)
         assert m.call_count == 1
         assert len(sections) == 75  # 25 行 × 3 非空单元格，空串被过滤
+
+
+# ================================================================
+# 日志 TAG 归因 — 与 extractor 侧对齐（LBZH page 21/23 误归因教训：
+# 多 task_executor 共享日志流，页级日志不带 doc/task 无法归属）
+# ================================================================
+
+class TestLogTagAttribution:
+    DOC_ID = "dbef275894d711f1bd9827cf206dfa2d"
+    TASK_ID = "c3fe5538998211f18e23b137b0b8cefc"
+    CASE_NAME = "LBZH，男，63岁，胃癌一线(1).pdf"
+
+    def test_log_tag_carries_attribution(self):
+        parser = QwenVLParser(
+            api_url="http://mock:8080/v1",
+            doc_id=self.DOC_ID, task_id=self.TASK_ID, doc_name=self.CASE_NAME,
+        )
+        assert parser._log_tag.startswith("[qwen-vl-parser]")
+        assert "doc=dbef2758" in parser._log_tag
+        assert "task=c3fe5538" in parser._log_tag
+        assert f"case={self.CASE_NAME}" in parser._log_tag
+
+    def test_default_init_degrades_to_dash(self):
+        parser = QwenVLParser(api_url="http://mock:8080/v1")
+        assert parser._log_tag.startswith("[qwen-vl-parser]")
+        assert "doc=-" in parser._log_tag
+        assert "task=-" in parser._log_tag
+        assert "case=" not in parser._log_tag
+
+    def test_classify_warning_log_carries_attribution(self, caplog):
+        """实例方法日志必须用归因 tag，而非裸模块级 TAG。"""
+        parser = QwenVLParser(
+            api_url="http://mock:8080/v1",
+            doc_id=self.DOC_ID, task_id=self.TASK_ID, doc_name=self.CASE_NAME,
+        )
+        with patch.object(parser, "_call_vlm", side_effect=RuntimeError("boom")):
+            with caplog.at_level(logging.WARNING):
+                parser._classify_page(b"img")
+        hits = [r.getMessage() for r in caplog.records if "classify failed" in r.getMessage()]
+        assert hits, "classify 失败未打日志"
+        assert "doc=dbef2758" in hits[0], f"classify 失败日志缺 doc 归因: {hits[0]}"
+
+
+class TestNoDuplicateSectionSummary:
+    """日志理清：每页 sections 汇总只在 parse_pdf 层打一次。
+    _extract_text_page/_extract_table_page 尾部的行数/bbox 摘要与
+    parse_pdf 的 sections 摘要（数量）+ 全局 bbox 分配日志（编号段）
+    完全重复，属于冗余日志。不截断任何全文，仅去重复。"""
+
+    def _run(self, parser, caplog, page_type, vlm_response):
+        from PIL import Image
+
+        img = Image.new("RGB", (10, 10), color="white")
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [img]
+            with patch.object(parser, "_classify_page", return_value=(page_type, None)):
+                with patch.object(parser, "_call_vlm", return_value=vlm_response):
+                    with caplog.at_level(logging.INFO):
+                        parser.parse_pdf("dummy.pdf")
+        return [r.getMessage() for r in caplog.records]
+
+    def test_text_page_summary_not_duplicated(self, caplog):
+        parser = QwenVLParser(api_url="http://mock:8080/v1")
+        msgs = self._run(parser, caplog, "text", '["hello world"]')
+        # parse_pdf 层汇总保留
+        assert any("1 sections" in m for m in msgs), msgs
+        # extract 内部不得再重复打行数/bbox 摘要
+        assert not any("lines (bbox" in m for m in msgs), \
+            f"text 页行数摘要与 parse_pdf 汇总重复: {msgs}"
+
+    def test_table_page_summary_not_duplicated(self, caplog):
+        parser = QwenVLParser(api_url="http://mock:8080/v1")
+        latex = (
+            "\\begin{tabular}{|c|c|}\n\\hline\n"
+            "A & B \\\\\n\\hline\n\\end{tabular}"
+        )
+        msgs = self._run(parser, caplog, "table", f"```latex\n{latex}\n```")
+        assert any("sections" in m for m in msgs), msgs
+        assert not any("LaTeX lines (bbox" in m for m in msgs), \
+            f"table 页行数摘要与 parse_pdf 汇总重复: {msgs}"

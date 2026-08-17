@@ -453,7 +453,14 @@ class Parser(ProcessBase):
             from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
 
             api_endpoint, model_name, api_key = resolve_vl_ocr_endpoint(self._canvas.get_tenant_id(), parse_method)
-            pdf_parser = QwenVLParser(api_url=api_endpoint, model=model_name, api_key=api_key)
+            pdf_parser = QwenVLParser(
+                api_url=api_endpoint,
+                model=model_name,
+                api_key=api_key,
+                doc_id=self._canvas._doc_id,
+                task_id=self._canvas.task_id,
+                doc_name=self._canvas._doc_name,
+            )
             lines, tables = pdf_parser.parse_pdf(
                 filepath=name,
                 binary=blob,

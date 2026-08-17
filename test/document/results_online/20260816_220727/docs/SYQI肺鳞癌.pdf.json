@@ -1,0 +1,190 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "SYQI肺鳞癌.pdf",
+    "size_kb": 6541.0,
+    "pages": null,
+    "doc_id": "737f81ac94f211f1bd9827cf206dfa2d",
+    "patient_id": "PAT-ea5d8b38ad30"
+  },
+  "doc_id": "737f81ac94f211f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 15,
+  "orm_synced": true,
+  "process_duration": 383.5659,
+  "begin_at": "2026-08-16T22:07:31",
+  "end_at": "2026-08-16T22:14:04",
+  "elapsed_s": 393.3,
+  "before": {
+    "chunk_count": 15,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 10,
+      "DischargeRecord": 1,
+      "ExaminationReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "c250c2c116ac25e8",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 40,
+      "content": "空军军医大学唐都医院\n查阅电子胶片\nCT检查报告单\nID号：62893718\n检查时间：2026-03-04\n检查号：CT2603030254\n住院\n报告日期：2026-03-04\n影像号：62893718\n姓名\n性别：男\n年龄：55岁\n申请科室：肿瘤科三病区\n床号：\n检查项目：盆腔CT平扫|胸部CT平扫|胸部CT增强|上腹部CT平扫(肝胆胰脾)|下腹部CT平扫\n检查方法：平扫+增强\n影像所见：\n左肺上叶尖后段支气管狭窄，可见不规则团块状软组织密度影，大小约\n4.5×4.0×5.9cm，局部紧贴叶间胸膜，可见“胸膜凹陷征”，平扫CT值约32HU，增\n强扫描呈不均匀强化，两期CT值约33HU、5"
+    },
+    {
+      "chunk_id": "87a09170f5b32276",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 25,
+      "content": "空军军医大学第二附属医院(唐都医院)\n病理图文诊断报告单\n病理号: 2610441\nID号: 62893718\n住院号:\n姓名:\n性别: 男\n年龄: 55\n送检单位: 唐都医院\n科室: 肿瘤科三病区\n床号:\n送检日期: 2026-03-05\n报告时间: 2026-03-06\n肉眼所见:\n支气管镜活检标本。\n光镜所见:\n病理诊断:\n(左肺上叶尖段)鳞状上皮中-重度异型增生并局部癌变(鳞状细胞癌)。\n[注: 此例仅为小组织活检标本, 有一定局限性, 有可能不能代表病变全貌特征]\n初诊医师: 苟晨靓 签名:\n苟晨靓\n主诊医师: 富金 签名:\n富金\n此报告签名医生信息已经过北京CA数字认证, 涂改无效"
+    },
+    {
+      "chunk_id": "85a170aee2bae9a4",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 20,
+      "content": "中国人民解放军联勤保障部队第九八九医院\n出院证\n姓名：\n性别：男\n年龄：55岁\n费别：\nID号：2019131\n住院号：A28146\n入院日期：2026-02-22\n出院日期：2026-03-02\n住院天数：8\n出院科室：肿瘤科病区\n出院诊断：肺占位\n出院情况：一般情况可\n出院医嘱：他院继续治疗\n经治医生：刘佳\n日期：2026-03-02\n费川已核LY-16\n审核人：于德艳\n中国人民解放军联勤保障部队第九八九医院"
+    },
+    {
+      "chunk_id": "854794c6b0e44161",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 29,
+      "content": "姓名:水月强\n病区(科):肿瘤科病区\n床号:11\n出院记录\n姓名:\n性别:男\n年龄:[55岁]\n入院时间:[2026-02-22 08:42]\n出院时间:[2026-03-02]\n住院天数:[8]天\n入院情况:2025年12月无明显诱因出现胸闷,无发热、咳嗽、盗汗不适,未在意。2天前出现咯血,\n色鲜红,量约10ml,2026-2-20至黄河三门峡医院查胸部CT提示:左肺上叶近肺门处占位,纵膈内稍肿大\n淋巴结,双肺肺气肿,胸骨陈旧性骨折。入院当天再次出现咯血,急诊入院。入院查体:神志清楚,精\n神好,双肺呼吸音清,未闻及干湿性罗音,心律齐,心音低钝,各瓣膜听诊区未闻及病理性杂音。\n入院诊断:1、{"
+    },
+    {
+      "chunk_id": "a9657c8fa4598a9c",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT-1</td><td>10.4</td><td>SEC</td><td>9.2-13.9</td><td>False</td></tr><tr><td>PT报告活动度</td><td>PTR-1</td><td>117</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>国际标准化比值（INR）</td><td>INR</td><td>0.88</td><td>None</td><td>0.8-1.2</td><td>False</td></tr><tr><td>活化部分"
+    },
+    {
+      "chunk_id": "3e48fae1862620de",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙肝肝炎病毒表面抗原</td><td>HBsAg</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙肝肝炎病毒表面抗体</td><td>HBsAb</td><td>阳性(+)</td><td>None</td><td>阴性-阳性</td><td>False</td></tr><tr><td>乙肝肝炎病毒e抗原</td><td>HBeAg</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙肝肝炎病毒e"
+    },
+    {
+      "chunk_id": "1def1326bdb873e8",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞计数(8-HR)</td><td>WBC</td><td>11.44</td><td>E+09/L</td><td>3.5-9.5</td><td>True</td></tr><tr><td>淋巴细胞百分率</td><td>LYMPH%</td><td>14.4</td><td>%</td><td>20-50</td><td>True</td></tr><tr><td>单核细胞百分率</td><td>MONO%</td><td>7.4</td><td>%</td><td>3-10</td><td>False</td></tr><tr><td>中性粒细胞百分率"
+    },
+    {
+      "chunk_id": "c6510ee11322831d",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙肝表面抗原</td><td>HBsAg</td><td>0.00</td><td>IU/mL</td><td><0.03</td><td>False</td></tr><tr><td>乙肝表面抗体</td><td>Anti-HBs</td><td>16.90</td><td>mIU/mL</td><td><5.00</td><td>True</td></tr><tr><td>乙肝e抗原</td><td>HBeAg</td><td>0.00</td><td>C.O.I</td><td><1.00</td><td>False</td></tr><tr><td>乙肝e"
+    },
+    {
+      "chunk_id": "fb31275871d29b88",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>游离三碘甲状腺原氨酸(8-HR)</td><td>FT3</td><td>4.31</td><td>pmol/L</td><td>3.85-6.3</td><td>False</td></tr><tr><td>游离甲状腺素(8-HR)</td><td>FT4</td><td>14.90</td><td>pmol/L</td><td>12.8-21.3</td><td>False</td></tr><tr><td>三碘甲状腺原氨酸(8-HR)</td><td>T3</td><td>1.81</td><td>nmol/L</td><td>1.3-2.4</td><td"
+    },
+    {
+      "chunk_id": "77869164667ebffc",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>血糖(空腹)(8-HR)</td><td>GLU</td><td>5.56</td><td>mmol/L</td><td>3.9-6.1</td><td>False</td></tr><tr><td>钾(8-HR)</td><td>K</td><td>4.36</td><td>mmol/L</td><td>3.5-5.3</td><td>False</td></tr><tr><td>钠(8-HR)</td><td>Na</td><td>137.8</td><td>mmol/L</td><td>137-147</td><td>False</td></tr><tr><"
+    },
+    {
+      "chunk_id": "fc961fffd5e12eda",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>9.63</td><td>10^9/L</td><td>3.5-9.5</td><td>True</td></tr><tr><td>红细胞计数</td><td>RBC</td><td>4.36</td><td>10^12/L</td><td>4.3-5.8</td><td>False</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>141</td><td>g/L</td><td>130-175</td><td>False</td></tr><tr><td>红细胞比积</td><"
+    },
+    {
+      "chunk_id": "0315c5f26b12c7c2",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>ABO血型鉴定</td><td>ABO</td><td>O型</td><td>None</td><td>None</td><td>False</td></tr><tr><td>RH(D)血型鉴定</td><td>Rh</td><td>阳性</td><td>None</td><td>None</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "5ff08417d4dff38b",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>肌酸激酶同工酶</td><td>CK-MB</td><td><0.22</td><td>ng/mL</td><td>0-2.37</td><td>False</td></tr><tr><td>肌钙蛋白I</td><td>cTnI</td><td><0.012</td><td>ng/mL</td><td>0-0.034</td><td>False</td></tr><tr><td>肌红蛋白</td><td>MYO</td><td>45.94</td><td>ng/mL</td><td>0-121</td><td>False</td></tr><tr><td>N端脑利"
+    },
+    {
+      "chunk_id": "d4666ac984e40361",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间(陕HR)</td><td>PT</td><td>11.2</td><td>sec</td><td>9.8-12.1</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>PTA</td><td>98.2</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>国际标准化比值(陕HR)</td><td>INR</td><td>0.97</td><td>None</td><td>0.7-1.3</td><td>False</td></tr><tr><td>活化"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 15,
+    "check": {
+      "covered": 13,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 2,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 11,
+      "clinical": 10,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "14:10:23: Start SmartSplitter: semantic split + classify.\n\n14:10:23: Loaded 345 OCR bboxes.\n\n14:10:23: Full document: 16505 chars, 345 bboxes.\n\n14:10:23: Calling LLM for semantic splitting...\n\n14:10:42: LLM responded. Parsing segments...\n\n14:10:42: LLM returned 15 segments. Cutting text...\n\n14:10:42"
+}

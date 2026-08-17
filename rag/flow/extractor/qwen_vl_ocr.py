@@ -132,6 +132,12 @@ def _build_coord_prompt(text_lines: list) -> str:
 
 
 from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
+from rag.flow.extractor.vl_image_prep import downscale_vl_image, vl_image_data_url
+
+
+# 日志归因 TAG 实现已迁至 common.log_tag（零依赖，避免 agent/component/llm.py
+# 经本模块导入时触发 rag.flow 包 walk-import 循环导入）；此处 re-export 保持兼容
+from common.log_tag import build_log_tag as _build_log_tag
 
 
 def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: tuple, page_num: int = 0) -> tuple:
@@ -142,11 +148,13 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: t
             items: list of {"text": ..., "bbox": [x1,y1,x2,y2]}, or None
     """
     api_endpoint, model_name, api_key = endpoint_cfg
-    b64 = base64.b64encode(img_bytes).decode()
+    # 大图预处理：>2MB 或长边>3840 的页面图缩至长边≤3840 JPEG(<1.8MB)，
+    # 降低 vLLM prefill 耗时，规避 120s read timeout；坐标为归一化值不受影响
+    img_bytes = downscale_vl_image(img_bytes)
     payload = {
         "model": model_name,
         "messages": [{"role": "user", "content": [
-            {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+            {"type": "image_url", "image_url": {"url": vl_image_data_url(img_bytes)}},
             {"type": "text", "text": prompt},
         ]}],
         "max_tokens": 8192,
@@ -161,13 +169,19 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: t
         f"model={model_name}, img_bytes={len(img_bytes)}, prompt_len={len(prompt)}\n"
         f"{tag} coord prompt:\n{prompt}"
     )
+    # 进程级 VL 全局限流：防止 chunk 级并发叠加打爆 vLLM prefill
+    from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+
     t0 = time.time()
+    acquire_vl_slot()
     try:
         r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} coord API request failed: {e}")
         return None, elapsed, f"request error: {e}"
+    finally:
+        release_vl_slot()
     elapsed = time.time() - t0
 
     if r.status_code != 200:
@@ -215,8 +229,7 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: t
         f"{tag} coord API: raw_items={len(raw_items)}, valid_items={len(valid_items)}, "
         f"elapsed={elapsed:.1f}s"
     )
-    for i, vi in enumerate(valid_items):
-        logging.info(f"{tag} coord item[{i}]: text={vi['text']}, bbox={vi['bbox']}")
+    # 逐条 item 日志已去重：上方 raw response 全文已含全部 text/bbox
     return valid_items, elapsed, "ok"
 
 
@@ -384,7 +397,7 @@ async def process_table(ext, ck: dict, llm_name: str):
 
     No image cropping (positions last 4 values are 0).
     """
-    TAG = "[qwen-vl-table]"
+    TAG = _build_log_tag(ext, "[qwen-vl-table]")
     try:
         t_start = time.time()
 
@@ -660,7 +673,7 @@ async def process_text(ext, ck: dict, llm_name: str):
 
     No image cropping (positions last 4 values are 0).
     """
-    TAG = "[qwen-vl-text]"
+    TAG = _build_log_tag(ext, "[qwen-vl-text]")
     try:
         t_start = time.time()
 

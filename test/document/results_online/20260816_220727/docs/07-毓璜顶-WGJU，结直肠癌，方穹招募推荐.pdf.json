@@ -1,0 +1,175 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "07-毓璜顶-WGJU，结直肠癌，方穹招募推荐.pdf",
+    "size_kb": 11225.9,
+    "pages": null,
+    "doc_id": "a646f41e94e611f1bd9827cf206dfa2d",
+    "patient_id": "PAT-c65698ae4d86"
+  },
+  "doc_id": "a646f41e94e611f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 12,
+  "orm_synced": true,
+  "process_duration": 324.1941,
+  "begin_at": "2026-08-16T22:28:22",
+  "end_at": "2026-08-16T22:34:04",
+  "elapsed_s": 342.5,
+  "before": {
+    "chunk_count": 11,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 4,
+      "OutpatientRecord": 1,
+      "LabReport": 6
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "0639b6cbcc3541ea",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 37,
+      "content": "康复大学青岛中心医院\n门诊病历\n姓名：\n性别：男\n出生日期：19\n龄：53岁\n门诊号\n科别：肿瘤内一科门诊\n就诊时间：2026-03-02 17:35:26\n主诉：乙状结肠癌术后复发，会阴区疼痛\n现病史：患者2023-11-29于青医附院行“腹腔镜中转乙状结肠癌根治术+直肠部分切除术+预防性回\n肠末端造口术+左侧输尿管支架植入术”，2023-11-30术后病理示：“浸润深度：侵达浆膜，切缘：\n小肠切缘（-），结肠切缘（-），其他：另见绒毛状-管状腺瘤，伴多灶高级别上皮内瘤变（多枚，直\n径0.3-1.5cm）。淋巴结：肠周（4/20）淋巴结内见癌转移；送检小肠系膜（0/3）淋巴结内未见癌转\n移。"
+    },
+    {
+      "chunk_id": "098b57aca9fe4fcd",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 38,
+      "content": "青岛大学附属医院\n市南院区\n病理检查诊断报告\n病理号\n姓名\n性别：男\n年龄：51岁\n送检单位：青岛大学附属医院市 送检科室：胃肠外科\n收到日期：2024-04-11\n送检医生：赵蕊蕊\n病区：胃肠外科病区\n住院号：\n送检材料：肝肿物，造口端回肠，直肠息\n临床诊断：1.乙状结肠恶性肿瘤,2.回肠造口状态\n大体检查:\n肝肿物：肝组织一件，大小4*3*2cm，剖开，距离肝断端0.4cm见一灰白肿物，范围\n0.5*0.4cm，质软，紧邻肝被膜0.5cm，其余肝组织灰红灰黄质软。\n造口组织一件，大小6.5*5*3cm，皮肤范围4*2.5cm，连接肠管两段，长分别为\n3cm、3.5cm，直径分别为1.5cm"
+    },
+    {
+      "chunk_id": "d126485c7af5c394",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 36,
+      "content": "青岛大学附属医院\n市南院区\n病理检查诊断报告\n病理号.\n姓  夕\n性  别：男\n年  龄：52\n送检单位：青岛大学附属医院市 送检科室：消化内科\n收到日期：\n送检医生：李晓宇\n病  区：\n住院号：\n送检材料：肠镜活检\n临床诊断：直肠多发息肉完成ESD吻合口溃疡\n大体检查:\n直肠息肉ESD：粘膜组织一件，大小3.5*2.5*0.8cm，距一侧切缘0.1cm，距另一侧\n切缘0.4cm，粘膜表面见一隆起，范围3*2.3cm，切面灰白质脆，基底涂墨。\n直肠吻合口：粘膜组织三块，合计直径0.4cm。\n病理诊断:\n1.标本类型：直肠息肉ESD\n标本数量：1件\n病变数量：1灶\n病变范围：3*2.3cm\n组织"
+    },
+    {
+      "chunk_id": "9f3762f330d976d6",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 173,
+      "content": "青岛市中心医疗集团\n2.检测结果总览\n本检测基于MGI（DNBSeq T7）测序平台对样本进行高通量测序。覆盖肿瘤相关的566个基因，检测内容包含目标基\n因覆盖范围内的单核苷酸变异、小片段插入/缺失、拷贝数变异、重排（融合），以及微卫星不稳定性（MSI）分析、肿瘤\n突变负荷（TMB）分析等。\n检测类别\n检测结果\n基因变异1\n体系\nI类（具有明确临床意义的变异）：KRAS p.G12D, KRAS p.A146V\nII类（具有潜在临床意义的变异）：TP53 p.G245D, FBXW7 p.R367*\nIII类（临床意义不确定的变异）：RBM10 p.R97*, MUC16 p.A7208T, "
+    },
+    {
+      "chunk_id": "c22c14b2d070b4f4",
+      "pages": [
+        7,
+        8
+      ],
+      "page_count_raw": 67,
+      "content": "19:08\n41\n×\n报告单详情\nwww.jkqd.org.cn\n20260307检\n查\n1.双肺多发结节，较前2025-12-26部分缩\n小，考虑转移；/>右肺门区及纵隔内多发肿\n大淋巴结，考虑转移2.直肠术后，吻合区软\n组织影，考虑肿瘤复发，与前列腺分界不\n清，大致同前（2025-10-16）；/>直肠周\n围、右腹膜后、骶前区多发淋巴结转移，部\n分较前略缩小，建议复查3.肝内多发转移\n瘤，较前（2025-10-16）进展4.肝囊肿5.\n膀胱内气体，建议结合临床\n诊断意见\n骨性胸廓对称，纵隔气管居中。双肺支气管\n血管束增多。双肺见弥漫多发类圆形实性结\n节影，大者位于右肺下叶内基底段（薄层\nI"
+    },
+    {
+      "chunk_id": "abbe06f7a2406e55",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>粪便颜色</td><td>Colour</td><td>黄色</td><td>None</td><td>棕黄</td><td>False</td></tr><tr><td>粪便性状</td><td>Stool-type</td><td>软</td><td>None</td><td>软</td><td>False</td></tr><tr><td>白细胞</td><td>WBC</td><td>未见</td><td>/HPF</td><td>0-3/阴性</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>未"
+    },
+    {
+      "chunk_id": "e32aa26959135b80",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>红细胞计数</td><td>RBC</td><td>43.00</td><td>个/ul</td><td>0.00-17.00</td><td>True</td></tr><tr><td>白细胞计数</td><td>WBC</td><td>3117.00</td><td>个/ul</td><td>0.00-28.00</td><td>True</td></tr><tr><td>白细胞团</td><td>WBCC</td><td>180.00</td><td>个/ul</td><td>0.00-2.00</td><td>True</td></tr><tr><td>鳞"
+    },
+    {
+      "chunk_id": "8f73a2e9674e6a44",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HBsAg</td><td><0.05 阴性反应(-)</td><td>IU/ml</td><td><0.08</td><td>False</td></tr><tr><td>丙型肝炎病毒抗体</td><td>HCV</td><td>0.060 阴性反应(-)</td><td>None</td><td><1</td><td>False</td></tr><tr><td>梅毒螺旋体抗体</td><td>antiTP</td><td>0.0 阴性反应(-)</td><td>None</td><td>0.000-1.000</td><"
+    },
+    {
+      "chunk_id": "bf9b0f1315205a10",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>唾液酸</td><td>SA</td><td>969</td><td>mg/L</td><td>456-754</td><td>True</td></tr><tr><td>补体Clq</td><td>Clq</td><td>16.5</td><td>mg/dl</td><td>15.7-23.7</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "c00c9cd99637d7ed",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>14.4</td><td>秒</td><td>10.70--14.80</td><td>False</td></tr><tr><td>凝血酶原时间活动度</td><td>PT%</td><td>85.00</td><td>%</td><td>70.00--150.00</td><td>False</td></tr><tr><td>凝血酶原时间比值</td><td>PT. R</td><td>1.08</td><td>None</td><td>0.82--1.15</td><td>False</td></tr><t"
+    },
+    {
+      "chunk_id": "215a41304be7abfd",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>3.96</td><td>*10^9/L</td><td>3.50--9.50</td><td>False</td></tr><tr><td>中性粒细胞计数</td><td>NEUT#</td><td>2.89</td><td>*10^9/L</td><td>1.80--6.30</td><td>False</td></tr><tr><td>淋巴细胞计数</td><td>LYMPH#</td><td>0.65</td><td>*10^9/L</td><td>1.10--3.20</td><td>True</td>"
+    },
+    {
+      "chunk_id": "07f427128722bd8f",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>12</td><td>U/L</td><td>9-50</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>30</td><td>U/L</td><td>15-40</td><td>False</td></tr><tr><td>AST/ALT</td><td>AST/ALT</td><td>2.50</td><td>None</td><td>0.10-3.00</td><td>False</td></tr><tr><td>总胆红素</t"
+    }
+  ],
+  "pages": {
+    "union": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 13,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 7,
+      "clinical": 7,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:29:16: [QwenVL] Done: 524 sections from 14 pages.\n\n14:29:16: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n14:29:16: Start SmartSplitter: semantic split + classify.\n\n14:29:16: Loaded 524 OCR bboxes.\n\n14:29:16: Full document: 19177 chars, 524 bboxes.\n\n14:29:16: Calling LLM"
+}

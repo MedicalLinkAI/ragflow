@@ -10,9 +10,15 @@ from __future__ import annotations
 import base64
 import json
 import logging
+import types
 
 TAG = "[qwen-vl-parser]"
 _logger = logging.getLogger("qwen_vl_parser")
+
+# 类方法内页级日志用实例归因 tag self._log_tag（__init__ 构造）；
+# 模块级纯函数的退化防御日志无实例上下文，继续用模块级 TAG。
+# 归因实现统一在 common.log_tag（零依赖），不再经 qwen_vl_ocr 导入
+from common.log_tag import build_log_tag as _build_log_tag
 
 import os
 import re
@@ -481,6 +487,9 @@ class QwenVLParser(RAGFlowPdfParser):
         *,
         api_key: Optional[str] = None,
         request_timeout: int = 300,
+        doc_id: Optional[str] = None,
+        task_id: Optional[str] = None,
+        doc_name: Optional[str] = None,
     ):
         super().__init__()
 
@@ -490,6 +499,19 @@ class QwenVLParser(RAGFlowPdfParser):
         self.model = model
         self.api_key = api_key or ""
         self.request_timeout = request_timeout
+        # 日志归因：多 task_executor 共享进程日志流，页级日志需 doc/task/case
+        # 才能把超时/失败归属到真实文档（与 extractor 侧 _build_log_tag 口径
+        # 一致）；调用方未传（如 naive 路径）时降级 doc=- task=-
+        self._log_tag = _build_log_tag(
+            types.SimpleNamespace(
+                _canvas=types.SimpleNamespace(
+                    _doc_id=doc_id or "",
+                    task_id=task_id or "",
+                    _doc_name=doc_name or "",
+                )
+            ),
+            TAG,
+        )
         self.logger = logging.getLogger(self.__class__.__name__)
         # Ensure propagation to root logger
         self.logger.setLevel(logging.INFO)
@@ -521,7 +543,7 @@ class QwenVLParser(RAGFlowPdfParser):
         try:
             self._render_page_images(input_source)
         except Exception as e:
-            logging.warning(f"{TAG} Failed to render page images: {e}")
+            logging.warning(f"{self._log_tag} Failed to render page images: {e}")
             self.page_images = []
 
         if not self.page_images:
@@ -533,7 +555,7 @@ class QwenVLParser(RAGFlowPdfParser):
         if callback:
             callback(0.1, f"[QwenVL] Processing {total_pages} pages...")
 
-        logging.info(f"{TAG} parse_pdf start, total_pages={total_pages}")
+        logging.info(f"{self._log_tag} parse_pdf start, total_pages={total_pages}")
 
         sections: list[SectionTuple] = []
         bbox_idx = 0  # global BBOX counter
@@ -552,7 +574,7 @@ class QwenVLParser(RAGFlowPdfParser):
 
             # Step 1: Classify page
             page_type, report_date = self._classify_page(img_bytes)
-            logging.info(f"{TAG} page={page_1based} classify={page_type} report_date={report_date}")
+            logging.info(f"{self._log_tag} page={page_1based} classify={page_type} report_date={report_date}")
 
             # Step 2: Extract content based on type.
             # 传入 bbox_idx=0 做页内局部编号；全局编号在结果按页序
@@ -567,7 +589,7 @@ class QwenVLParser(RAGFlowPdfParser):
                 )
 
             logging.info(
-                f"{TAG} page={page_1based} {page_type}: {len(page_sections)} sections"
+                f"{self._log_tag} page={page_1based} {page_type}: {len(page_sections)} sections"
             )
             return page_idx, page_type, page_sections
 
@@ -597,11 +619,11 @@ class QwenVLParser(RAGFlowPdfParser):
                 start = bbox_idx
                 bbox_idx += len(page_sections)
                 logging.info(
-                    f"{TAG} page={page_idx + 1} assigned global bbox {start}-{bbox_idx - 1}"
+                    f"{self._log_tag} page={page_idx + 1} assigned global bbox {start}-{bbox_idx - 1}"
                 )
             sections.extend(page_sections)
 
-        logging.info(f"{TAG} parse_pdf done: {len(sections)} sections from {total_pages} pages.")
+        logging.info(f"{self._log_tag} parse_pdf done: {len(sections)} sections from {total_pages} pages.")
 
         if callback:
             callback(0.95, f"[QwenVL] Done: {len(sections)} sections from {total_pages} pages.")
@@ -628,7 +650,7 @@ class QwenVLParser(RAGFlowPdfParser):
                 self.page_images.append(img)
             pdf_doc.close()
         except Exception as e:
-            logging.error(f"{TAG} render_page_images failed: {e}")
+            logging.error(f"{self._log_tag} render_page_images failed: {e}")
             raise
 
     def _classify_page(self, img_bytes: bytes) -> tuple[str, Optional[str]]:
@@ -660,7 +682,7 @@ class QwenVLParser(RAGFlowPdfParser):
                 return "text", None
 
         except Exception as e:
-            logging.warning(f"{TAG} classify failed: {e}, defaulting to text")
+            logging.warning(f"{self._log_tag} classify failed: {e}, defaulting to text")
             return "text", None
 
     def _extract_text_page(
@@ -676,7 +698,7 @@ class QwenVLParser(RAGFlowPdfParser):
         # (empty-element count, missing ']'), independent of size.
         if _is_empty_flood(raw) or _is_truncated_array(raw):
             logging.warning(
-                f"{TAG} page={page_1based} text output degenerated into "
+                f"{self._log_tag} page={page_1based} text output degenerated into "
                 f"empty-string flood/truncated array, retrying with repetition_penalty"
             )
             raw2 = self._call_vlm(
@@ -689,7 +711,7 @@ class QwenVLParser(RAGFlowPdfParser):
             # retry still flooded/unparseable: keep the original salvage
 
         if not lines:
-            logging.warning(f"{TAG} page={page_1based} text extraction returned no lines")
+            logging.warning(f"{self._log_tag} page={page_1based} text extraction returned no lines")
             return [], bbox_idx
 
         # Filter: keep only string elements, skip pure symbol lines (e.g. "++", "--", "+")
@@ -700,7 +722,7 @@ class QwenVLParser(RAGFlowPdfParser):
         if rep:
             cycle, repeats, n = rep
             logging.warning(
-                f"{TAG} page={page_1based} detected repetition "
+                f"{self._log_tag} page={page_1based} detected repetition "
                 f"(cycle={cycle}, repeats={repeats}x), collapsing {n}→{len(lines)} lines"
             )
             # Retry once with repetition_penalty: if the model looped early,
@@ -720,12 +742,12 @@ class QwenVLParser(RAGFlowPdfParser):
                 # silently drop content the collapse already salvaged.
                 if lines2 and not rep2 and len(lines2) > len(lines):
                     logging.info(
-                        f"{TAG} page={page_1based} retry recovered {len(lines2)} lines"
+                        f"{self._log_tag} page={page_1based} retry recovered {len(lines2)} lines"
                     )
                     lines = lines2
 
         if not lines:
-            logging.warning(f"{TAG} page={page_1based} text extraction returned no lines after filtering")
+            logging.warning(f"{self._log_tag} page={page_1based} text extraction returned no lines after filtering")
             return [], bbox_idx
 
         sections: list[SectionTuple] = []
@@ -737,10 +759,7 @@ class QwenVLParser(RAGFlowPdfParser):
             sections.append((text, page_1based - 1))  # store 0-based, consistent with PaddleOCR-VL
             bbox_idx += 1
 
-        logging.info(
-            f"{TAG} page={page_1based} text: {len(sections)} lines "
-            f"(bbox {bbox_idx - len(sections)}-{bbox_idx - 1})"
-        )
+        # 行数/bbox 段摘要已去重：parse_pdf 层 sections 汇总 + 全局 bbox 分配日志已覆盖
         return sections, bbox_idx
 
     def _extract_table_page(
@@ -756,7 +775,7 @@ class QwenVLParser(RAGFlowPdfParser):
         latex = _strip_fence(raw) if raw else ""
 
         if not latex:
-            logging.warning(f"{TAG} page={page_1based} table extraction returned empty")
+            logging.warning(f"{self._log_tag} page={page_1based} table extraction returned empty")
             return [], bbox_idx
 
         # Colspec-run defense: the greedy loop can sit inside the tabular
@@ -768,7 +787,7 @@ class QwenVLParser(RAGFlowPdfParser):
         if colspec_rep:
             unit, count = colspec_rep
             logging.warning(
-                f"{TAG} page={page_1based} table colspec '{unit}' repeated {count}x, "
+                f"{self._log_tag} page={page_1based} table colspec '{unit}' repeated {count}x, "
                 f"retrying with repetition_penalty"
             )
             raw2 = self._call_vlm(
@@ -785,7 +804,7 @@ class QwenVLParser(RAGFlowPdfParser):
         # if the retry also loops, salvage the valid prefix.
         if _has_repetition_loop(latex):
             logging.warning(
-                f"{TAG} page={page_1based} table output degenerated into "
+                f"{self._log_tag} page={page_1based} table output degenerated into "
                 f"repetition loop, retrying with repetition_penalty"
             )
             raw2 = self._call_vlm(
@@ -804,7 +823,7 @@ class QwenVLParser(RAGFlowPdfParser):
         if row_rep:
             preview, repeats = row_rep
             logging.warning(
-                f"{TAG} page={page_1based} table row repeated {repeats}x "
+                f"{self._log_tag} page={page_1based} table row repeated {repeats}x "
                 f"({preview}...), retrying with repetition_penalty"
             )
             raw2 = self._call_vlm(
@@ -839,10 +858,7 @@ class QwenVLParser(RAGFlowPdfParser):
             sections.append((line, page_1based - 1))  # store 0-based, consistent with PaddleOCR-VL
             bbox_idx += 1
 
-        logging.info(
-            f"{TAG} page={page_1based} table: {len(sections)} LaTeX lines "
-            f"(bbox {bbox_idx - len(sections)}-{bbox_idx - 1})"
-        )
+        # LaTeX 行数/bbox 段摘要已去重：parse_pdf 层 sections 汇总 + 全局 bbox 分配日志已覆盖
         return sections, bbox_idx
 
     def _call_vlm(
@@ -852,7 +868,11 @@ class QwenVLParser(RAGFlowPdfParser):
         extra_params: Optional[dict] = None,
     ) -> Optional[str]:
         """Call Qwen3-VL API with image + prompt."""
-        b64 = base64.b64encode(img_bytes).decode("ascii")
+        # 大图预处理：>2MB 或长边>3840 的页面图缩至长边≤3840 JPEG(<1.8MB)，
+        # 降低 vLLM prefill 耗时，规避 300s read timeout
+        from rag.flow.extractor.vl_image_prep import downscale_vl_image, vl_image_data_url
+
+        img_bytes = downscale_vl_image(img_bytes)
         prompt_tag = "classify" if "table" in prompt.lower() or "text" in prompt.lower() and len(prompt) < 100 else ("table" if "LaTeX" in prompt else "text")
         payload = {
             "model": self.model,
@@ -862,7 +882,7 @@ class QwenVLParser(RAGFlowPdfParser):
                     "content": [
                         {
                             "type": "image_url",
-                            "image_url": {"url": f"data:image/png;base64,{b64}"},
+                            "image_url": {"url": vl_image_data_url(img_bytes)},
                         },
                         {"type": "text", "text": prompt},
                     ],
@@ -879,8 +899,12 @@ class QwenVLParser(RAGFlowPdfParser):
         if api_key:
             headers["Authorization"] = f"Bearer {api_key}"
 
-        logging.info(f"{TAG} {prompt_tag} API call start, endpoint={self.api_url}, model={self.model}, img_bytes={len(img_bytes)}, prompt_len={len(prompt)}")
+        logging.info(f"{self._log_tag} {prompt_tag} API call start, endpoint={self.api_url}, model={self.model}, img_bytes={len(img_bytes)}, prompt_len={len(prompt)}")
 
+        # 进程级 VL 全局限流：页级并发叠加时防止打爆 vLLM prefill
+        from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+
+        acquire_vl_slot()
         try:
             resp = requests.post(
                 self.api_url,
@@ -890,11 +914,13 @@ class QwenVLParser(RAGFlowPdfParser):
             )
             resp.raise_for_status()
             content = resp.json()["choices"][0]["message"]["content"]
-            logging.info(f"{TAG} {prompt_tag} API response (len={len(content)}):\n{content}")
+            logging.info(f"{self._log_tag} {prompt_tag} API response (len={len(content)}):\n{content}")
             return content
         except Exception as e:
-            logging.error(f"{TAG} {prompt_tag} API call failed: {e}")
+            logging.error(f"{self._log_tag} {prompt_tag} API call failed: {e}")
             raise
+        finally:
+            release_vl_slot()
 
     # ── Compat methods (for crop() in downstream) ─────────────────
 
@@ -913,7 +939,7 @@ class QwenVLParser(RAGFlowPdfParser):
                 ]
         except Exception as e:
             self.page_images = []
-            logging.exception(f"{TAG} __images__ failed: {e}")
+            logging.exception(f"{self._log_tag} __images__ failed: {e}")
 
     @staticmethod
     def extract_positions(txt: str) -> list:

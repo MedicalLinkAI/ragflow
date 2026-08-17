@@ -1,0 +1,179 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "06-临沂人民-ZJBO，直肠癌，方穹招募推荐.pdf",
+    "size_kb": 3274.2,
+    "pages": null,
+    "doc_id": "df229e1a94e011f1bd9827cf206dfa2d",
+    "patient_id": "PAT-0040741b973c"
+  },
+  "doc_id": "df229e1a94e011f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 11,
+  "orm_synced": true,
+  "process_duration": 422.55524,
+  "begin_at": "2026-08-16T19:08:15",
+  "end_at": "2026-08-16T19:15:37",
+  "elapsed_s": 442.8,
+  "before": {
+    "chunk_count": 11,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 6,
+      "AdmissionRecord": 1,
+      "DischargeRecord": 1,
+      "OutpatientRecord": 1,
+      "LabReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "954a8011d220cedd",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 77,
+      "content": "20200113根治术\n术后XELOX 6周期\n20240510复发\n20240601~20240828 7周贝伐+伊利替康+5FU\n20240925贝伐+卡培维持 门诊持续使用，末次25.10\n20251119确诊转移\n20251210参加HLN601脂质体项目，末次20260107行第三周期，进展出组\n性别：男\n婚姻：丧偶\n年龄：64岁\n入院日期：2026-01-07 09:03\n民族：汉族\n记录日期：2026-01-07 09:25\n职业：离退休人员\n病史陈述者：患者本人及亲属\n主诉：直肠癌术后5年余，左肾上腺转移1年余。\n现病史：患者因“查体发现直肠肿物3天”于2020-01-06第一"
+    },
+    {
+      "chunk_id": "60764c5e1d321ce4",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 15,
+      "content": "性别：男\n年龄：64岁\n出院日期：2026-01-07 17:10\n住院天数：1天\n入院情况：因直肠癌术后5年余，左肾上腺转移1年余入院。查体：ECOG 1分。胸壁、腹部可见手术瘢痕，愈合可。\n入院诊断：1.直肠中分化腺癌术后（pT2N1bM0 IIIA→IV期） 左锁骨区、纵膈、右侧肺门区淋巴结转移 左肾上腺转移 双肺转移 2.2型糖尿病伴多个并发症 2型糖尿病性周围血管病变 2型糖尿病性肾病 3.高血压病3级（极高危） 4.右肺错构瘤术后\n诊疗经过：入院后经患者及其家属同意，无禁忌，于2026-01-07行第3周期治疗：注射用HLN601脂质体20.2mg静脉输液。治疗结束，准予出院。\n治"
+    },
+    {
+      "chunk_id": "f0f475dc0f5c2194",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 33,
+      "content": "【检查描述】：心搏次数：97(60~100)bpm，PR间隔：144ms，QRS间隔：88ms，QT间隔：342ms，QTc\n间隔：434ms，P轴：34°，QRS轴：-30°，T轴：15°\n【检查诊断】：窦性心律\nQRS电轴左偏\n【检查时间】：2026/2/3 8:21:15\n【报告时间】：2026/2/3 8:22:02\n检查时间\n心率\n2026-02-03 08:19:19\nPR\n97 bpm\nQRS\n144 ms\nQT/QTc\n88 ms\nP/QRS/T\n342 / 434 ms\nRV5/SV1\n34 / -30 / 15 -\nRV5+SV1\n振幅\n/\nmV\n0.000 mV\nAVR\n"
+    },
+    {
+      "chunk_id": "a5f8e5f694cd4fc2",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 21,
+      "content": "【手术信息】：肿瘤位于直肠上段\n【取材部位】：1:直肠×1\n【取材描述】：#:肿物×1\n1:肿物×1\n2:肿物×1\n3:标记上切缘×2\n4:标记下切缘×1\n5:环周切缘×1\n6:肠周淋巴结×5\n7:肠周淋巴结×5\n8:肠周淋巴结×4\n【大体描述】：直肠肠管一段，长12cm，周径5-7cm，距上切缘8.5cm，下切缘3cm，见一隆起型\n肿物，范围1.4*1cm，高出粘膜面0.6cm，肿物切面灰白质硬，侵达浅肌层。\n【病理所见】：直肠肠管一段，长12cm，周径5-7cm，距上切缘8.5cm，下切缘3cm，见一隆起型\n肿物，范围1.4*1cm，高出粘膜面0.6cm，肿物切面灰白质硬，侵达浅肌层。\n【"
+    },
+    {
+      "chunk_id": "d77721cd055a4334",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 9,
+      "content": "【手术信息】：纵隔淋巴结肿大\n【取材部位】：1:EBUS组织×1 2:EBUS刷片×1\n【取材描述】：1:EBUS组织×多\n【大体描述】：灰红碎组织少许，总体积0.4*0.3*0.1cm。\n【病理所见】：灰红碎组织少许，总体积0.4*0.3*0.1cm。\n【病理诊断】：EBUS组织：送检组织内见腺癌，伴大片坏死，结合患者病史，首先考虑肠癌转移。（EBUS\n刷片）查见肿瘤细胞。\n【审核医师】：\n【报告时间】：2025/11/20 11:02:00"
+    },
+    {
+      "chunk_id": "96421b1b6c8985e2",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 13,
+      "content": "【检查日期】：2026/1/16 8:18:01\n【检查所见】：右肺术后改变，术区可见条索影斑片影，相应支气管截断。双侧胸廓对称，纵隔居中。双\n肺见多发实性结节影，边界清，大者位于右肺下叶（薄层img259），大小约1.2*1.0cm，增强扫描可见不均\n匀强化。双肺见索条状影；双肺背侧胸膜下见条片影。气管支气管通畅，管壁无增厚，无局限性狭窄和扩张\n。纵隔及右肺门区见增大淋巴结影，大者直径约2.4cm，增强扫描可见不均匀强化。心脏大小、形态正常，\n主动脉及冠状动脉管壁见钙化影。右侧胸膜局部略厚，双侧胸腔未见液体密度影。\n【检查诊断】：对比2025-11-28CT：\n1.符合右肺上叶术后改变，术区"
+    },
+    {
+      "chunk_id": "49ada3f9d7a6ea85",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 13,
+      "content": "【检查日期】：2025/11/18 14:25:00\n【检查所见】：右肺术后改变，术区可见条索影斑片影，相应支气管截断。双侧胸廓对称，纵隔居中。双\n肺见多发实性结节影，边界清，大者位于左肺斜裂处（薄层img168），大小约1.2*0.8cm，增强扫描可见不\n均匀强化。双肺见索条状影；双肺背侧胸膜下见条片影。气管支气管通畅，管壁无增厚，无局限性狭窄和扩\n张。纵隔及右肺门区见增大淋巴结影，大者直径约2.3cm，增强扫描可见不均匀强化。心脏大小、形态正常\n，主动脉及冠状动脉管壁见钙化影。右侧胸膜局部略厚，双侧胸腔未见液体密度影。左侧肾上腺见一\n4.1*2.9cm软组织密度结节，不均匀强化。\n【检查诊"
+    },
+    {
+      "chunk_id": "a912e15585f9fa27",
+      "pages": [
+        10,
+        11
+      ],
+      "page_count_raw": 44,
+      "content": "2026-02-03 10:41\n主 诉：本次访视为评价注射用HLN601脂质体在晚期实体瘤患者中的安全性、耐受性及药代动力\n学特征和初步疗效的多中心、开放性的I期临床试验项目安全性随访。\n病 史：同前\n审阅受试者日志卡：不适用\n试验用药品/医疗器械使用的依从性：不适用\n合并用药/合并非药物治疗：\n(1) 合并用药：\n同前\n(2) 合并非药物治疗：\n无\n体格、专科检查以及辅助检查：\n(1) 体格、专科检查：\n2026年2月3日 早 8:36 测 生命体征 ：T:36.5℃ P:78次/分 R:19次/分 BP:137/83 mmHg，体\n重：84.7Kg，体格检查同筛选期，ECOG评分1分\n("
+    },
+    {
+      "chunk_id": "b437058fd935bf6e",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>KRAS Exon-2 (G12S,G12D)</td><td>None</td><td>阴性</td><td>None</td><td>None</td><td>False</td></tr><tr><td>KRAS Exon-2 (G12C,G12R,G12V,G12A,G13C)</td><td>None</td><td>阴性</td><td>None</td><td>None</td><td>False</td></tr><tr><td>KRAS Exon-2 (G13D)</td><td>None</td><td>阴性</td><td>None</td>"
+    },
+    {
+      "chunk_id": "a52d30af7d633cb1",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>红细胞</td><td>None</td><td>4.20</td><td>x10^12/L</td><td>4.30-5.80</td><td>True</td></tr><tr><td>白细胞</td><td>None</td><td>4.59</td><td>×10^9/L</td><td>3.50-9.50</td><td>False</td></tr><tr><td>血红蛋白</td><td>None</td><td>145</td><td>g/L</td><td>130-175</td><td>False</td></tr><tr><td>中性粒细胞百"
+    },
+    {
+      "chunk_id": "f759c1d34326b9aa",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 38,
+      "content": "<table><tr><td>总蛋白</td><td>TP</td><td>75.96</td><td>g/L</td><td>65.00-85.00</td><td>False</td></tr><tr><td>白蛋白(溴甲酚绿法)</td><td>ALB</td><td>44.42</td><td>g/L</td><td>40.00-55.00</td><td>False</td></tr><tr><td>球蛋白</td><td>GLO</td><td>31.54</td><td>g/L</td><td>20.00-40.00</td><td>False</td></tr><tr><td>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "page_sum": 15,
+    "check": {
+      "covered": 11,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n11:10:35: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n11:10:35: Start SmartSplitter: semantic split + classify.\n\n11:10:35: Loaded 460 OCR bboxes.\n\n11:10:35: Full document: 16710 chars, 460 bboxes.\n\n11:10:35: Calling LLM for semantic splitting...\n\n11:10:48: LLM responded. P"
+}

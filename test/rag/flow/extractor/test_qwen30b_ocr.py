@@ -10,6 +10,7 @@
 #
 import asyncio
 import json
+import logging
 import os
 import sys
 import types
@@ -56,7 +57,7 @@ _fds_mod.File2DocumentService = _File2DocumentService
 sys.modules["api.db.services.file2document_service"] = _fds_mod
 
 # common.settings with STORAGE_IMPL
-_common_mod = _fake_pkg("common")
+_common_mod = _fake_pkg("common", os.path.join(project_root, "common"))
 _settings_mod = types.ModuleType("common.settings")
 
 
@@ -377,3 +378,191 @@ class TestTextCycleDefense:
         out, rep = q30b._dedup_repeated_blocks(lines)
         assert out == lines
         assert rep is None
+
+
+# ================================================================
+# 日志 TAG 归因 — 与 qwen_vl_ocr 对齐（LBZH page 21/23 误归因教训）
+# ================================================================
+
+class TestBuildLogTagQwen30b:
+    """qwen30b 路径的 [qwen30b-text]/[qwen30b-table] TAG 必须携带
+    doc/task/case 归因（复用 qwen_vl_ocr._build_log_tag 单一实现）。"""
+
+    DOC_ID = "dbef275894d711f1bd9827cf206dfa2d"
+    TASK_ID = "c3fe5538998211f18e23b137b0b8cefc"
+    CASE_NAME = "LBZH，男，63岁，胃癌一线(1).pdf"
+
+    def test_reuses_shared_build_log_tag(self):
+        ext = types.SimpleNamespace(_canvas=types.SimpleNamespace(
+            _doc_id=self.DOC_ID, task_id=self.TASK_ID, _doc_name=self.CASE_NAME))
+        tag = q30b._build_log_tag(ext, "[qwen30b-text]")
+        assert tag.startswith("[qwen30b-text]")
+        assert "doc=dbef2758" in tag
+        assert "task=c3fe5538" in tag
+        assert f"case={self.CASE_NAME}" in tag
+
+    def _ext_with_attribution(self):
+        ext = _FakeExt()
+        ext._canvas = types.SimpleNamespace(
+            get_tenant_id=lambda: "tenant-x",
+            _doc_id=self.DOC_ID,
+            task_id=self.TASK_ID,
+            _doc_name=self.CASE_NAME,
+        )
+        return ext
+
+    def test_process_table_coord_tag_has_attribution(self, monkeypatch):
+        captured = {}
+
+        def fake_coord(img_bytes, prompt, tag, endpoint_cfg):
+            captured["tag"] = tag
+            return [{"text": "肌钙蛋白T", "bbox": [10, 10, 100, 20]}], 0.1, "ok"
+
+        monkeypatch.setattr(q30b, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_latex_only",
+                            lambda img, prompt, tag, cfg, system_msg=None, extra_params=None: (
+                                "\\begin{tabular}{ccccc}肌钙蛋白T & TnT & 5 \\\\ \\end{tabular}",
+                                0.1, "ok"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_to_coord", fake_coord)
+
+        ck = {"doc_id": "doc-x", "positions": [[0, 0.0, 0.0, 0.0, 0.0]]}
+        asyncio.run(q30b.process_table(self._ext_with_attribution(), ck, "fake-llm"))
+
+        tag = captured.get("tag", "")
+        assert "[qwen30b-table]" in tag, tag
+        assert "doc=dbef2758" in tag, f"coord tag 缺 doc 归因: {tag}"
+        assert "task=c3fe5538" in tag, f"coord tag 缺 task 归因: {tag}"
+        assert f"case={self.CASE_NAME}" in tag, f"coord tag 缺 case 归因: {tag}"
+
+    def test_process_text_coord_tag_has_attribution(self, monkeypatch):
+        captured = {}
+
+        def fake_coord(img_bytes, prompt, tag, endpoint_cfg):
+            captured["tag"] = tag
+            return [{"text": "alpha", "bbox": [10, 10, 100, 20]}], 0.1, "ok"
+
+        monkeypatch.setattr(q30b, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_text_only",
+                            lambda img, prompt, tag, cfg: (["alpha"], 0.1, "ok"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_to_coord", fake_coord)
+
+        ext = self._ext_with_attribution()
+        ext._sys_prompt_and_msg = lambda history, args: (
+            [{"role": "user", "content": args.get("text", "")}], "SYS")
+
+        async def _gen(msg):
+            return json.dumps({"report_date": None, "items": []}, ensure_ascii=False)
+        ext._generate_async = _gen
+
+        ck = {
+            "doc_id": "doc-x",
+            "positions": [[0, 0.0, 0.0, 0.0, 0.0]],
+            "classify_result_tks": json.dumps({"type": "progress_note"}),
+        }
+        asyncio.run(q30b.process_text(ext, ck, "fake-llm"))
+
+        tag = captured.get("tag", "")
+        assert "[qwen30b-text]" in tag, tag
+        assert "doc=dbef2758" in tag, f"coord tag 缺 doc 归因: {tag}"
+        assert "task=c3fe5538" in tag, f"coord tag 缺 task 归因: {tag}"
+        assert f"case={self.CASE_NAME}" in tag, f"coord tag 缺 case 归因: {tag}"
+
+
+# ================================================================
+# 日志理清 — 去重复（不截断全文、不改代码逻辑）
+# ================================================================
+
+class TestLogDedupQwen30b:
+    """qwen30b 路径重复日志守卫：
+    - StepB page_items dump 与 StepB JSON 全文重复（同一数据的原文与解析结果）
+    - Step4 preview 全文与 Step5 msg[i] content 全文重复
+    - Step7 "positions stored" 与 ═══ DONE ═══ 的 positions 计数重复
+    - StepA LaTeX 与 time 字符串粘连（拼接缺分隔符，日志文本 bug）
+    保留的汇总日志（raw response 全文、Assembled 计数、DONE）不受影响。"""
+
+    DOC_ID = "dbef275894d711f1bd9827cf206dfa2d"
+    TASK_ID = "c3fe5538998211f18e23b137b0b8cefc"
+    CASE_NAME = "LBZH，男，63岁，胃癌一线(1).pdf"
+
+    def _ext_with_attribution(self):
+        ext = _FakeExt()
+        ext._canvas = types.SimpleNamespace(
+            get_tenant_id=lambda: "tenant-x",
+            _doc_id=self.DOC_ID,
+            task_id=self.TASK_ID,
+            _doc_name=self.CASE_NAME,
+        )
+        return ext
+
+    def _patch_table(self, monkeypatch):
+        monkeypatch.setattr(q30b, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_latex_only",
+                            lambda img, prompt, tag, cfg, system_msg=None, extra_params=None: (
+                                "\\begin{tabular}{ccccc}肌钙蛋白T & TnT & 5 \\\\ \\end{tabular}",
+                                0.1, "ok"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_to_coord",
+                            lambda img, prompt, tag, cfg: (
+                                [{"text": "肌钙蛋白T", "bbox": [10, 10, 100, 20]}], 0.1, "ok"))
+
+    def test_process_table_no_page_items_dump(self, monkeypatch, caplog):
+        """StepB JSON 全文已含 items 原文，page_items dump 重复。"""
+        self._patch_table(monkeypatch)
+        ck = {"doc_id": "doc-x", "positions": [[0, 0.0, 0.0, 0.0, 0.0]]}
+        with caplog.at_level(logging.INFO):
+            asyncio.run(q30b.process_table(self._ext_with_attribution(), ck, "fake-llm"))
+        msgs = [r.getMessage() for r in caplog.records]
+        # JSON 全文保留
+        assert any("StepB: page=" in m and "JSON" in m for m in msgs), msgs
+        # page_items dump（含 names=）与 JSON 全文重复，必须去掉
+        assert not any("names=" in m for m in msgs), \
+            f"StepB page_items dump 与 JSON 全文重复: {[m for m in msgs if 'names=' in m]}"
+
+    def test_process_table_stepa_latex_not_glued_with_time(self, monkeypatch, caplog):
+        """StepA LaTeX 与 time 粘连修复：两者之间须有分隔（换行）。"""
+        self._patch_table(monkeypatch)
+        ck = {"doc_id": "doc-x", "positions": [[0, 0.0, 0.0, 0.0, 0.0]]}
+        with caplog.at_level(logging.INFO):
+            asyncio.run(q30b.process_table(self._ext_with_attribution(), ck, "fake-llm"))
+        stepa = [r.getMessage() for r in caplog.records if "StepA: page=" in r.getMessage()]
+        assert stepa, "StepA 日志缺失"
+        for m in stepa:
+            assert "\n" in m or " s" in m or ") " in m, \
+                f"StepA LaTeX 与 time 粘连: {m!r}"
+
+    def test_process_text_no_preview_and_no_positions_stored(self, monkeypatch, caplog):
+        """Step4 preview 与 Step5 msg 全文重复；positions stored 与 DONE 重复。"""
+        monkeypatch.setattr(q30b, "resolve_vl_ocr_endpoint",
+                            lambda tenant, llm: ("http://fake/v1", "fake-model", "key"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_text_only",
+                            lambda img, prompt, tag, cfg: (["alpha"], 0.1, "ok"))
+        monkeypatch.setattr(q30b, "_call_qwen30b_to_coord",
+                            lambda img, prompt, tag, cfg: (
+                                [{"text": "alpha", "bbox": [10, 10, 100, 20]}], 0.1, "ok"))
+
+        ext = self._ext_with_attribution()
+        ext._sys_prompt_and_msg = lambda history, args: (
+            [{"role": "user", "content": args.get("text", "")}], "SYS")
+
+        async def _gen(msg):
+            return json.dumps({"report_date": None, "items": []}, ensure_ascii=False)
+        ext._generate_async = _gen
+
+        ck = {
+            "doc_id": "doc-x",
+            "positions": [[0, 0.0, 0.0, 0.0, 0.0]],
+            "classify_result_tks": json.dumps({"type": "progress_note"}),
+        }
+        with caplog.at_level(logging.INFO):
+            asyncio.run(q30b.process_text(ext, ck, "fake-llm"))
+        msgs = [r.getMessage() for r in caplog.records]
+        # Step5 msg 全文与 DONE 汇总保留
+        assert any("Step5:" in m and "msg[" in m for m in msgs), msgs
+        assert any("═══ DONE ═══" in m for m in msgs), msgs
+        # 重复日志必须去掉
+        assert not any("preview:" in m for m in msgs), \
+            "Step4 preview 与 Step5 msg content 全文重复"
+        assert not any("positions stored" in m for m in msgs), \
+            "Step7 positions stored 与 DONE positions 计数重复"

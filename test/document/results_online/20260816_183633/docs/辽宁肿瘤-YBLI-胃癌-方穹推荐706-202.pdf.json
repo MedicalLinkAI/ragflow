@@ -1,0 +1,147 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "辽宁肿瘤-YBLI-胃癌-方穹推荐706-202.pdf",
+    "size_kb": 10135.4,
+    "pages": null,
+    "doc_id": "5bf6ae0094db11f1bd9827cf206dfa2d",
+    "patient_id": "PAT-50621c738134"
+  },
+  "doc_id": "5bf6ae0094db11f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 218.74026,
+  "begin_at": "2026-08-16T19:22:51",
+  "end_at": "2026-08-16T19:26:41",
+  "elapsed_s": 229.2,
+  "before": {
+    "chunk_count": 9,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 5,
+      "AdmissionRecord": 1,
+      "LabReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "fff2244d75b274d2",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 33,
+      "content": "姓名：\n性别：[男]\n年龄：[62岁]\n民族：[汉族]\n职业：[农民]\n婚姻：[已婚]\n亲属及电话：[女儿]\n主诉：『[呕吐][20][日]』\n现病史：[患者20][日]前无明显诱因出现[恶心、呕吐,每日进食后呕吐,呕吐物均为食物及胃液,伴反酸、烧心,腹胀,无上腹部阵发性隐痛,无放射痛]。[无黑便]。[就诊于抚顺市矿务局医院,行胃镜检查示胃体下段及胃窦见溃疡浸润性病变,病理:腺癌]。[现为求进一步治疗来诊]。食欲[差],饮食[不能进食],二便[正常],睡眠[差],体重明显下降。\n外院诊治情况：\n时间\n地点\n方案\n用量\n副作用\n疗效\n既往史：平素身体[健康]；[否认]传染病史；[按期预防接种]；"
+    },
+    {
+      "chunk_id": "df7cc972592086e7",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 31,
+      "content": "[1.\n大连理工大学附属肿瘤医院\n辽宁省肿瘤医院影像学检查报告单\n辽宁HR\n姓名:\n性别: 男\n年龄: 62\n患者编号:\n检查号: CT260313273\n申请医生: 刘阳\n申请单号: 377324667\n检查项目: [胸部,CT平扫]\n检查所见:\n肺 窗: 双肺野透过度良好, 双肺散在小结节影, 长径范围约4-7mm, 较大者位于\n右肺下叶前基底段(SE2, IM33), 实性结节, 大小约7mm×4mm。右肺上叶见少许磨玻\n璃影。双肺见少许索条影。余肺纹理清晰, 走行正常。大气道通畅。双侧肺门不大。\n纵隔窗: 双侧胸廓对称, 胸壁光滑。纵隔居中, 各层面未见肿大淋巴结。心脏大小\n形态正常。"
+    },
+    {
+      "chunk_id": "2a5b18693532f48f",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 35,
+      "content": "C088\n大连理工大学附属肿瘤医院\n辽宁省肿瘤医院影像学检查报告单\n辽宁HR\n姓名：\n性别：男\n年龄：62\n患者编号：\n检查号：CT280313270\n申请医生：刘阳\n申请单号：\n检查项目：[上腹部+下腹部+盆腔,CT平扫+增强]\n检查所见：\n胃体至胃窦部胃壁弥漫不均匀增厚，外膜毛糙，至胃小弯侧可见凸向腔内生长肿块\n影，肿块长径约35mm，增强扫描强化不均，胃周见多发稍大淋巴结影。肝周见弧线样低\n密度影。\n肝脏体积不大，表面光滑，各叶比例适中，肝裂不宽。肝实质密度均匀。肝内外胆\n管未见扩张，胆囊不大。脾脏不大。胰腺形态密度良好，胰管未见扩张。腹膜后未见明\n显肿大的淋巴结。双肾及双肾上腺未见确切"
+    },
+    {
+      "chunk_id": "7620f5ba0237cf76",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 33,
+      "content": "大连理工大学附属肿瘤医院\n辽宁省肿瘤医院\n电子内镜报告单\n内镜\n姓名：于宝林\n性别：男\n年\n住院号：0007053700\n科室：胃外科二病区\n申请医生：\n检查项目：[电子胃十二指肠检查，常规]\n镜型：\n检查所见：食管通畅，粘膜光滑完整，色泽正常，血管纹理清晰，蠕动扩张度良好。\n齿状线距门齿约40厘米，可见纵行糜烂，周围粘膜充血，贲门可见一息肉样隆起，\n大小约0.5x0.7厘米，表面充血，取病理。可见胃腔减压管留置。\n胃底粘膜光滑，完整。\n胃体上部大弯粘膜皱襞呈脑回状，橘红色，黏液湖清亮，量中等。\n胃窦可见一隆起溃疡浸润性病变，环管腔近一周，底不平，周围粘膜结节样隆起，\n上缘累及胃体小弯距门齿约"
+    },
+    {
+      "chunk_id": "e810df9320e2686e",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 64,
+      "content": "辽宁省肿瘤医院\n采样时间:\n7s\nQTc间期:\n449ms 1 [370-440]\n提示:\n**正常心电图**\n检查时间:2026/03/13 10:21:19\n心率:\n84bpm[60-100]\nP轴:\n61.00° [-30.0-90.0]\n窦性心律\nP时限:\n129ms 1 [60-100]\nQRS轴:\n75.00° [-30.0-90.0]\n龄:62岁\n科室:胃外科二病区\nQRS时限:\n82ms[60-100]\nT轴:\n65.00° [-30.0-90.0]\nT时限:\n201ms[50-250]\nRV5/SV1:\n1.18/0.81mm/mV[0.0-2.5][0.0-1.0]\n病历号"
+    },
+    {
+      "chunk_id": "7de0646595f76fff",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 35,
+      "content": "大连理工大学附属肿瘤医院\nCANCER HOSPITAL OF DALIAN UNIVERSITY OF TECHNOLOGY\n辽宁省肿瘤医院\nLIAONING CANCER HOSPITAL INSTITUTE\n病理检查报告单\n病理号：XC2603740\n姓名：\n性别：男\n年龄：62岁\n住院号：\n床位：\n送检科室：胃外科一病区\n送检医院：\n送检日期：2026-03-13\n送检医师：\n送检标本：贲门1次 胃体小弯1临床诊断：\n大体检查：\n(CPS, MSI, 18.2)\n(A1)贲门，标本一块，直径0.2cm，全取。\n(A2)胃体小弯，标本一块，直径0.1cm，全取。\n(A3)胃窦，标本五块，"
+    },
+    {
+      "chunk_id": "b8ed600aa8e6df8f",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>8.33</td><td>10⁹/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>中性粒细胞数目</td><td>NEUT</td><td>6.66</td><td>10⁹/L</td><td>1.8--6.3</td><td>True</td></tr><tr><td>淋巴细胞数目</td><td>LYMPH</td><td>0.73</td><td>10⁹/L</td><td>1.1--3.2</td><td>True</td></tr><tr><td>单核"
+    },
+    {
+      "chunk_id": "4c02ecbf300b9e0d",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 17,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>7.6</td><td>U/L</td><td>9--50</td><td>True</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>10.90</td><td>U/L</td><td>15--40</td><td>True</td></tr><tr><td>天冬/丙氨</td><td>AST/ALT</td><td>1.43</td><td>None</td><td>0.8--1.5</td><td>False</td></tr><tr><td>总蛋白</t"
+    },
+    {
+      "chunk_id": "3d51e7eb89667fe6",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>糖链抗原125</td><td>CA125</td><td>227</td><td>U/mL</td><td>0--35</td><td>True</td></tr><tr><td>糖链抗原19-9</td><td>CA19-9</td><td>62.2</td><td>U/mL</td><td>0.0--34.0</td><td>True</td></tr><tr><td>糖链抗原72-4</td><td>CA72-4</td><td>49.7</td><td>U/mL</td><td>0--6.9</td><td>True</td></tr><tr><td>癌"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "page_sum": 11,
+    "check": {
+      "covered": 9,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n11:23:45: [QwenVL] 7/9 pages done\n\n11:23:49: [QwenVL] 8/9 pages done\n\n11:23:49: [QwenVL] 9/9 pages done\n\n11:23:49: [QwenVL] Done: 301 sections from 9 pages.\n\n11:23:49: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n11:23:49: Start SmartSplitter: semantic split + classify.\n\n11"
+}

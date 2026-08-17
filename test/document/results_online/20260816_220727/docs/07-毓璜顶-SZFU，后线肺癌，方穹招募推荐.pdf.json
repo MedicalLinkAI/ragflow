@@ -1,0 +1,159 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "07-毓璜顶-SZFU，后线肺癌，方穹招募推荐.pdf",
+    "size_kb": 5688.5,
+    "pages": null,
+    "doc_id": "d60771c094e511f1bd9827cf206dfa2d",
+    "patient_id": "PAT-34b079adec05"
+  },
+  "doc_id": "d60771c094e511f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 10,
+  "orm_synced": true,
+  "process_duration": 354.2565,
+  "begin_at": "2026-08-16T22:32:17",
+  "end_at": "2026-08-16T22:38:26",
+  "elapsed_s": 368.2,
+  "before": {
+    "chunk_count": 10,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 5,
+      "LabReport": 4,
+      "AdmissionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "eb199ef1f0d2019a",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 17,
+      "content": "姓名\n性别：男\n年龄：57\n门诊号：\n科别：\n病区\n床号\n住院号：\n取材部位：左肺\n补充内容：\n快速石蜡病理诊断：\n（左肺活检）非小细胞癌伴坏死，结合免疫组化结果部分区域伴鳞状细胞癌分化，免疫组化\n及特殊染色待补充报告。\n免疫组化结果：CK5/6（-）、TTF-1（-）、NapsinA（-）、P40（部分+）、Villin（-）、CK7\n（+）、CDX2（-）\nALK伴随诊断：\nALK（D5F3）：阴性；（兔单克隆阴性对照：阴性；阳性对照：阳性）"
+    },
+    {
+      "chunk_id": "0dd56dd0aacc24d3",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 14,
+      "content": "性别：男\n年龄：57\n门诊号：\n科别：\n床号\n送检医生\n住院号\n病区\n送检日期：2026-3-6 15:05:29\n取材信息：\n灰白灰红条状碎组织一堆，共计直径0.8cm。\n病理诊断：\n快速石蜡病理诊断：\n（左肺活检）分化差的癌，待免疫组化结果进一步明确分型。"
+    },
+    {
+      "chunk_id": "69f8a61da2fd2e7f",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 24,
+      "content": "病理会诊报告单\n病理号:\n姓名\n性别: 男\n年龄: 54岁\n送检单位\n送检日期: 2023/4/4\n送检医生:\n镜下所见:\n原病理诊断:\n读“青岛市中心医疗集团”报告, 病理号: 2307637, HE×1, IHC*5, 原诊断: (左锁骨上淋\n巴结穿刺活检) 纤维组织内查见分化差的癌, 结合免疫组化及病史, 不除外肺非小细胞癌转\n移。\n免疫组化结果: TTF-1 (-), NapsinA (-), CK7 (+), CK 5/6 (-), P40 (灶+)。\n病理会诊诊断:\n(左锁骨上淋巴结穿刺活检) 纤维组织内查见片状、实体状异型上皮样细胞浸润, 结合临床及\n免疫标记, 考虑低分化癌, "
+    },
+    {
+      "chunk_id": "0a9e8251bba8c13f",
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 104,
+      "content": "35_孙正福_住院\n< > X\n2026-03-04 15:46 入院记录\n性别：男\n职业：其他\n年龄：57岁\n入院时间：2026-03-04 15:38:00\n民族：汉族\n记录时间：2026-03-04 15:46\n婚姻：已婚\n病史陈述者：患者本人及家属\n主诉：确诊左肺癌2年余，双下肢疼痛1周。\n现病史：患者2年余前查体发现左颈部肿物，约豆粒大小，无疼痛，偶有咳嗽、咳痰，无痰中带血丝，活动后偶感胸闷、憋气，无咯血，无胸痛，无发热。后肿物逐渐增大，遂就诊于我院，2023-03-30行\nPET/CT：1，左肺上叶高代谢占位，考虑肺癌（并累及邻近胸膜），（左侧颈部V区、左锁骨上、纵隔、左肺门10区"
+    },
+    {
+      "chunk_id": "c0844e5ba30f0d41",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "出生日期：\n1968/12/4\n年龄\n57年, M\n检查项目：\n胸部磁共振平扫+DWI+动态增强成像\n影像登录号：\nMR10060372\n报告状态：\nCorrection\n原因：\n不可选\n主要位置：\n2328\n检查日期：\n2026/3/9 7:44:30\n顺序 #：\nMR10060372\n影像诊断\n左肺癌复查所见。\n纵隔内多发淋巴结肿大。\n肝脏、左肾多发囊肿。\n影像表现\n左上肺示一截面约99x61mm的团块影，呈等长T1等长T2、DWI等高信号，不均匀强化，左上肺门及纵隔与之紧密相贴。右肺未见明显异常信号影，右肺门未见明显增大。纵隔内隆凸下示多发稍大淋巴结，心影大小形态可。未见明显胸腔积液。肝"
+    },
+    {
+      "chunk_id": "136ca21479ac8ce4",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 5,
+      "content": "检查项目：十二通道 检查名称：十二通道 检查部位：\n□检查所见：\n□检查结论：\n1、窦性心动过速 2、ST段轻度改变\n报告医 审核医生："
+    },
+    {
+      "chunk_id": "17e307dc5fde5ab8",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 37,
+      "content": "<table><tr><td>天门冬氨酸氨基转移...</td><td>None</td><td>19</td><td>U/L</td><td>15-40</td><td>False</td></tr><tr><td>AST/ALT</td><td>None</td><td>1.73</td><td>None</td><td>0.10-3.00</td><td>False</td></tr><tr><td>总胆红素</td><td>None</td><td>6.9</td><td>um</td><td>≤23.0</td><td>False</td></tr><tr><td>直接胆红素</td"
+    },
+    {
+      "chunk_id": "e078d75943ea7376",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 15,
+      "content": "<table><tr><td>游离甲状腺素</td><td>None</td><td>14.70</td><td>None</td><td>12-22</td><td>False</td></tr><tr><td>促甲状腺激素</td><td>None</td><td>1.320</td><td>None</td><td>0.27-4.2</td><td>False</td></tr><tr><td>鳞状细胞癌相关抗原</td><td>None</td><td>0.54</td><td>None</td><td>0-2.5</td><td>False</td></tr><tr><td>糖类抗原"
+    },
+    {
+      "chunk_id": "c095aa1b9563932e",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 10,
+      "content": "<table><tr><td>凝血酶原时间活动度</td><td>None</td><td>84.89</td><td>None</td><td>70.0-130.0</td><td>False</td></tr><tr><td>凝血酶原时间比值</td><td>None</td><td>1.16</td><td>None</td><td>0.82-1.15</td><td>True</td></tr><tr><td>国际标准化比值</td><td>None</td><td>1.17</td><td>None</td><td>1.0-2.0;口服抗凝...</td><td>False</td>"
+    },
+    {
+      "chunk_id": "25ce2cbc2d618b23",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>中性粒细胞计数</td><td>None</td><td>13.55</td><td>*10^9/L</td><td>1.80-6.30</td><td>True</td></tr><tr><td>淋巴细胞计数</td><td>None</td><td>1.86</td><td>*10^9/L</td><td>1.10-3.20</td><td>False</td></tr><tr><td>单核细胞计数</td><td>None</td><td>1.32</td><td>*10^9/L</td><td>0.10-0.60</td><td>True</td></tr"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "page_sum": 13,
+    "check": {
+      "covered": 12,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:33:26: [QwenVL] 12/13 pages done\n\n14:33:31: [QwenVL] 13/13 pages done\n\n14:33:31: [QwenVL] Done: 426 sections from 13 pages.\n\n14:33:31: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n14:33:31: Start SmartSplitter: semantic split + classify.\n\n14:33:31: Loaded 426 OCR bboxes."
+}

@@ -1,0 +1,62 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "广西-KLYY-肺腺癌-方穹推荐706-IB期.pdf",
+    "size_kb": 27147.7,
+    "pages": null,
+    "doc_id": "67c219907eb011f1af97e3985ba7f8da",
+    "patient_id": "PAT-774af0e503ea"
+  },
+  "doc_id": "67c219907eb011f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 321.82306,
+  "begin_at": "2026-08-15T23:08:27",
+  "end_at": "2026-08-15T23:14:43",
+  "elapsed_s": 376.3,
+  "before": {
+    "chunk_count": 0,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 9,
+      "ExaminationReport": 6
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 6,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 9,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n23:08:30 Task has been received.\n\n-------------------------------------\n[File]:\n23:08:31: File fetched.\n\n23:08:31: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n23:08:31: Start to work on a PDF.\n\n23:08:36: [QwenVL] Processing 26 pages...\n\n23:08:46: [QwenVL] 1/26 pag"
+}

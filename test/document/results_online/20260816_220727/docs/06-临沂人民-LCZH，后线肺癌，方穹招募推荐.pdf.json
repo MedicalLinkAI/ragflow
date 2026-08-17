@@ -1,0 +1,169 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "06-临沂人民-LCZH，后线肺癌，方穹招募推荐.pdf",
+    "size_kb": 171676.3,
+    "pages": null,
+    "doc_id": "0486861a94de11f1bd9827cf206dfa2d",
+    "patient_id": "PAT-0db176d884f5"
+  },
+  "doc_id": "0486861a94de11f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 948.3788,
+  "begin_at": "2026-08-16T22:46:01",
+  "end_at": "2026-08-16T23:02:00",
+  "elapsed_s": 958.1,
+  "before": {
+    "chunk_count": 9,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "ExaminationReport": 2,
+      "OutpatientRecord": 2,
+      "LabReport": 4
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "50b32f4a994f048e",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 291,
+      "content": "就诊时间：2026-03-04 18:34\n主诉：诊肺癌1年，靶向治疗后进展。\n现病史：患者因胸闷、憋喘，咳嗽、多为干咳，乏力，头痛、头晕，自诉“心慌”，无恶心、呕吐，\n无前胸后背疼痛，此外无其他特殊不适。\n遂至市单县中心医院住院治疗，2024-9-23行CT：肝内多发低密度能，建议进一步检查。肝内钙\n化灶。双侧肾上腺增植。胃窦接增厚，建议进一步检查。子宫内稍高密度影，子宫肌瘤？建议结合超声。\n左侧附件区低密度影，建议结合超声。2024-9-27颅脑平扫加强MRI：脑内多发异常强化灶，脑转移\n瘤较符合。脑白质多发缺血灶，符合Fazckas 2级能像学表现。左侧上颌窦炎，左侧上颌窦囊肿，于\n09"
+    },
+    {
+      "chunk_id": "6b2b1d95210516cf",
+      "pages": [
+        7,
+        8,
+        9
+      ],
+      "page_count_raw": 215,
+      "content": "2026-03-06 10:12\n患者于2026-03-05来院行EOT检查，今日来院行EOT访视，患者拒绝行超声心动过图检查和眼\n科检查。于2026-3-3Ct示左肺下叶肺癌治疗后，较前片（2026-01-20）片范围增大；左肺下叶结节，\n考虑转移瘤，较前增大；考虑左肺门淋巴结转移；骶骨、右侧髂骨高密度影，考虑转移，范围无著变。\n肿瘤评估进展，患者拒绝行超声心动过图检查。ECOG：1分，无其他相关不适，饮食睡眠可，大小便正\n常，静息5分钟后行生命体征检测详见生命体征表，中年女性，发育正常，营养良好，无异常面容，\n表情自如，自主体位，神志清楚，吉体合作。皮肤黏膜：全身皮肤黏膜无黄染，无皮疹，无"
+    },
+    {
+      "chunk_id": "8fe466941fce7125",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 29,
+      "content": "检查名称：下腹部CT平扫+增强(能量成像)_上腹部CT平扫+增强(能量成像)_胸部CT平扫+增\n强(能量成像)_盆腔CT平扫+增强(能量成像)_颈部CT平扫+增强(能量成像)\n影像表现：\n甲状腺形态可，双侧叶示多发低密度结节，边界清或欠清，呈相对低强化。左上颌窦、筛\n窦示类液性密度影。双颈部未见肿大淋巴结。\n左肺下叶后基底段纵隔旁见不规则结节状实变影，范围约2.7cm×2.1cm，均匀强化；\n左肺下叶外基底段另见类圆形实性结节，边缘毛糙，大者长径约2.1cm，可见强化；余双肺\n可见小结节影，部分为实性，部分为磨玻璃，大者直径约0.6cm。左肺门见多发肿大淋巴\n结，强化不均，大者短径约1.1cm"
+    },
+    {
+      "chunk_id": "7a56a7d25ed0794d",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 12,
+      "content": "检查名称：颅脑MR平扫+增强\n影像表现：\n脑内白质区见多发点片状长T1长T2异常信号，FLAIR呈高信号，增强扫描未见异常强化。脑\n沟、裂、池大小形态正常，脑室对称，中线结构无移位。左侧上颌窦粘膜增厚，其内见囊\n性灶。\n诊断意见：\n1.脑内腔隙性脑梗死及缺血灶\n2.副鼻窦炎\n报告医师：赵晴晴\n审核医师：吴筱东\n报告日期：2026/03/02\n*本报告仅供临床调阅参考用，打印无效"
+    },
+    {
+      "chunk_id": "0880b6b8421d3b71",
+      "pages": [
+        16,
+        17,
+        18
+      ],
+      "page_count_raw": 66,
+      "content": "性别：女\n职业：农民\n年龄：57岁\n入院时间：2025-10-15 14:53\n民族：汉族\n记录时间：2025-10-15 15:02\n婚姻：已婚\n病史陈述者：患者本人及家属\n主诉：诊肺癌1年，靶向治疗后进展。\n现病史：患者因胸闷、憋喘、咳嗽、多为干咳，乏力，头痛、头晕，自诉“心慌”，无恶心、呕吐，\n无前胸后背疼痛，此外无其他特殊不适。至菏泽市单县南城医院行健康查体，行CT：发现肺占位。\n遂至菏泽市单县中心医院住院治疗，2024-9-23行CT：肝内多发低密度能，建议进一步检查。肝内钙\n化灶。双侧肾上腺增植。胃窦接增厚，建议进一步检查。子宫内稍高密度影，子宫肌瘤？建议结合超声。\n左侧附件区低密"
+    },
+    {
+      "chunk_id": "a0fde5e830549adf",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 49,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>None</td><td>14.1</td><td>U/L</td><td>7--40</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>None</td><td>23.8</td><td>U/L</td><td>13--35</td><td>False</td></tr><tr><td>S/L</td><td>None</td><td>1.69</td><td>None</td><td>0.8--1.5</td><td>True</td></tr><tr><td>总蛋白</td>"
+    },
+    {
+      "chunk_id": "712b0a48bdef6f72",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>11.90</td><td>秒</td><td>9.4-12.5</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>91</td><td>%</td><td>70-140</td><td>False</td></tr><tr><td>凝血酶原国际标准化比值</td><td>None</td><td>1.06</td><td>None</td><td>0.8-1.2</td><td>False</td></tr><tr><td>活化部分凝血活"
+    },
+    {
+      "chunk_id": "3e6f19ea37981d0a",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 28,
+      "content": "<table><tr><td>*白细胞</td><td>None</td><td>-</td><td>None</td><td>阴性 (-)</td><td>False</td></tr><tr><td>*尿胆原</td><td>None</td><td>-</td><td>None</td><td>阴性 (-)</td><td>False</td></tr><tr><td>*尿胆红素</td><td>None</td><td>-</td><td>None</td><td>阴性 (-)</td><td>False</td></tr><tr><td>*酮体</td><td>None</td><t"
+    },
+    {
+      "chunk_id": "0e3e276e0faf0bde",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>3.00</td><td>X10^9/L</td><td>3.5--9.5</td><td>True</td></tr><tr><td>淋巴细胞计数</td><td>None</td><td>0.54</td><td>X10^9/L</td><td>1.1--3.2</td><td>True</td></tr><tr><td>淋巴细胞百分比</td><td>None</td><td>17.9</td><td>%</td><td>20--50</td><td>True</td></tr><tr><td>中性粒细胞"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "page_sum": 18,
+    "check": {
+      "covered": 18,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n14:51:27: [QwenVL] 17/18 pages done\n\n14:52:02: [QwenVL] 18/18 pages done\n\n14:52:02: [QwenVL] Done: 726 sections from 18 pages.\n\n14:52:03: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n14:52:03: Start SmartSplitter: semantic split + classify.\n\n14:52:03: Loaded 726 OCR bboxes."
+}

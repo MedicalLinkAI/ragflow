@@ -1,0 +1,184 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "BJCA,男，49，肺鳞癌一线(1).pdf",
+    "size_kb": 14180.7,
+    "pages": null,
+    "doc_id": "14840e4e94f111f1bd9827cf206dfa2d",
+    "patient_id": "PAT-99bf68b77f93"
+  },
+  "doc_id": "14840e4e94f111f1bd9827cf206dfa2d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 13,
+  "orm_synced": true,
+  "process_duration": 677.26575,
+  "begin_at": "2026-08-16T18:36:34",
+  "end_at": "2026-08-16T18:47:59",
+  "elapsed_s": 684.7,
+  "before": {
+    "chunk_count": 13,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 7,
+      "AdmissionRecord": 1,
+      "LabReport": 5
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "7018700d966c79a7",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 82,
+      "content": "姓名\n住址：福建省三明市尤溪县\n性别：男\n工作单位：/\n年龄：49岁\n入院日期：2026.03.16 10:21:29\n婚姻：已婚\n记录时间：2026.03.16 10:21:29\n民族：汉族\n病史陈述者：患者及家属\n出生地：福建省三明市\n病史可靠程度：基本可靠\n职业(工种)：/\n过敏史：未发现\n主诉：确诊左下肺鳞癌4天。\n现病史：缘于2026.03.05以“咳嗽、咳痰1月”就诊于尤溪县总医院，查“2026.03.06胸部\n增强CT：左肺下叶占位，大小约6.1cm×8.8cm；左肺下叶支气管部分闭塞，伴阻塞性肺不张、肺\n炎；双肺结节；左肺门及纵隔数枚淋巴结影，大者径约1cm。”\n于2026.0"
+    },
+    {
+      "chunk_id": "58af481415b44999",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 27,
+      "content": "测量结果:\nLved:46.5 mm Lves:28.9 mm La:26.6 mm Ao:25.7 mm Lvpw:8.5 mm Ivs:9.5 mm\nRv:20.1 mm Ra-L:34.8 mm Ra-M:25.5 mm Pa:17.6 mm E:0.46 m/s A:0.63 m/s\nHr:90 bpm Fb:37.8 % Bf:68.0 %(Teich) EDV:99.8 ml Sv:67.8 ml Co:6.1 L/min\nCi:4.0 L/min.m² H:166 cm W:52.5 kg BSA:1.5 m² LVM:140.2 g LVMI:93.4 g/m²\nB':0.08"
+    },
+    {
+      "chunk_id": "49057c886efcf12c",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 23,
+      "content": "性别：男\n年龄：49岁\n门诊号：\n检查部位：肺部\n检查设备：GE-HD750\n流水号：0013240579\n检查技术：CT\n影像学所见：\n双肺纹理清晰，左肺下叶见团块软组织密度影，病灶内支气管闭塞，较大截面约7.6cm×\n8.3cm，增强扫描不均匀强化，周围散在条索斑片影。右肺散在小结节，大者右肺上叶尖段见一\n实性结节（Se4/Img46），大小约0.4cm×0.2cm。气管、余支气管通畅，纵隔及左肺门可见肿大\n淋巴结，大者短径约1.0cm，左侧胸腔少-中量积液，部分为包裹性。左侧胸膜结节状增厚。\n影像学诊断：\n1.左肺下叶肿块，考虑MT伴周围阻塞性肺炎，请结合临床。\n2.纵隔及左肺门肿大淋巴"
+    },
+    {
+      "chunk_id": "89841050e5e76068",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 71,
+      "content": "门诊号:\n医院:\n申请医生\n申请科室\n检查日期: 2026-03-17 10:58:32\n检查医生\n报告日期: 2026-03-17 11:11:03\n报告医生: 蔡平\n审核日期: 2026-03-17 11:11:03\n审核医生: 蔡平\n电轴(-30~90°): 29\nQRS时限(<120): 100\nP-R间期(120~200): 134\nQ-T间期(0~450): 344\nQTc(0~450): 444\nSV1: 1.26\nRV5(0~2.5): 2.02\nR+S: 3.28\n心率(60~100): 100\n临床诊断: 肺肿物\n描述:\n诊断: 窦性心律 ST段改变\n报告状态 已审核\n检查"
+    },
+    {
+      "chunk_id": "453ee80cd1b9fa05",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 16,
+      "content": "检查部位：头颅\n检查设备：飞利浦MR9 流水号：0013240580\n检查技术：MR\n检查参数：\n影像学所见：\n双侧大脑半球对称，灰白质对比正常，实质内未见明显异常信号，DWI未见异常高信号，SW\nI未见异常低信号，各脑沟、脑池未见增宽、变深，脑室系统未见增宽，中线结构居中，幕下小\n脑、脑干未见异常信号，双侧桥小脑角区未见明显异常。颅骨骨质未见异常信号。增强后未见\n明显强化。\n影像学诊断：\n颅脑MRI平扫及增强未见明显异常。\n报告医生：林佳辉 /林佳辉\n审核医生：陈明宏\n复核医生：\n此报告仅供本院医生参考，不做其它证明用，报告审核签字后生效。\n报告时间：2026-03-19"
+    },
+    {
+      "chunk_id": "23f537d192621d4d",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 43,
+      "content": "病案号:\n11诊号:1K3392539b3\n血\n糖:5.1mmol/l活\n度:7.22mci注射部位:右手背静脉\n显像剂:18F-FDG\n注射/显像间隔时间:54分钟采集方式:断层采集3D厚\n度:3.75mm采集仪器:Discovery MI\n临床诊断:肺部阴影\n简要病史:\n肺部鳞癌基线评估。既往:2025.12肋骨骨折。\n图像所见:\n空腹4hr以上,口服适量温水,静脉注射显像剂,平静休息后行躯干PET及CT断层显像,PET图像行衰减校正及迭代\n法重建,PET、CT图像行多层面、多幅显示,影像清晰。\n颈部PET/CT示眼球、眼眶、鼻咽部、颈面部、喉咽部、甲状腺及颈部其它软组织结构、密度、代谢分"
+    },
+    {
+      "chunk_id": "cd8ef2b86097c41c",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 196,
+      "content": "福建医科大学附属协和医院\n肺功能检查报告单\n姓名：\n年龄：49 Years\n性别：男\n科室：\n病区床号：\n身高：163 cm\n病案号：\n测试号：Z0280275PF20280320\n体重：61 kg\n预计值\n实测值\n实/预\nVC MAX\n[L]\n3.92\n2.48\n63.3\nFVC\n[L]\n3.77\n2.48\n65.8\nFEV 1\n[L]\n3.10\n2.22\n71.8\nFEV1%FVC\n[%]\n81.86\n89.56\n109.4\nPEF\n[L/B]\n8.05\n6.38\n79.3\nFEP25\n[L/B]\n7.01\n6.16\n87.9\nFEP50\n[L/B]\n4.31\n2.76\n64.1\nFEP7"
+    },
+    {
+      "chunk_id": "a35a0e68c99d171c",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 22,
+      "content": "姓\n住院\n性别：男\n年龄：40岁\n送检单位：本院\n送检科室：呼吸与危重症医学科 送检医生：黄世霜\n送检日期：2026-03-10\n临床诊断：肺炎。\n送检材料：左肺下叶粘膜组织\n肉眼所见：\n灰白组织7块，直径0.05-0.2cm。（包全）\n镜下所见：\n病理诊断：\n（左肺下叶粘膜组织）浸润性鳞状细胞癌。\n诊断医师：廖荣娥\n医生签名：廖荣娥\n报告时间：2026年03月12\n备注：\n1 本报告仅作临床医师参考；若发现病理诊断与临床不相符时请立即与我科联系。\n2 此报告需医生签名方有效\n3 本报告仅对本病例负责\n联系电话： 0598-63067"
+    },
+    {
+      "chunk_id": "e973753aa6c98061",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>总胆红素</td><td>TBIL</td><td>10.6</td><td>umol/L</td><td>0.0~23.0</td><td>False</td></tr><tr><td>直接胆红素</td><td>DBIL</td><td>1.4</td><td>umol/L</td><td>0.0~8.0</td><td>False</td></tr><tr><td>间接胆红素</td><td>IBIL</td><td>9.2</td><td>umol/L</td><td>0.0~20.0</td><td>False</td></tr><tr><td>总蛋白<"
+    },
+    {
+      "chunk_id": "5a112d195e848375",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 18,
+      "content": "<table><tr><td>尿素</td><td>UREA</td><td>4.1</td><td>mmol/L</td><td>3.1~7.4</td><td>False</td></tr><tr><td>肌酐</td><td>CREA</td><td>68</td><td>umol/L</td><td>57~97</td><td>False</td></tr><tr><td>UREA/CREA</td><td>None</td><td>0.06</td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿酸</td><td>URIC"
+    },
+    {
+      "chunk_id": "f651f2ea193b012a",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙肝病毒表面抗原</td><td>None</td><td>0.00</td><td>IU/ml</td><td><0.05</td><td>False</td></tr><tr><td>乙肝病毒表面抗体</td><td>None</td><td>47.62</td><td>mIU/ml</td><td><10</td><td>True</td></tr><tr><td>乙肝病毒e抗原</td><td>None</td><td>0.41</td><td>S/CO</td><td><1</td><td>False</td></tr><tr><td>乙肝病毒e抗体</"
+    },
+    {
+      "chunk_id": "082a2e343054a08d",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>6.58</td><td>10^9/L</td><td>4.00~10.00</td><td>False</td></tr><tr><td>中性粒细胞%</td><td>None</td><td>63.90</td><td>%</td><td>50.00~70.00</td><td>False</td></tr><tr><td>淋巴细胞%</td><td>None</td><td>25.60</td><td>%</td><td>20.00~40.00</td><td>False</td></tr><tr><td"
+    },
+    {
+      "chunk_id": "fa1b16ce59984f79",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>14.8</td><td>秒</td><td>11.0~15.0</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>1.18</td><td>None</td><td>None</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>76.0</td><td>%</td><td>70.0~150.0</td><td>False</td></tr><tr><td>活化部分凝血活酶时间<"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 15,
+    "check": {
+      "covered": 14,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 7,
+      "clinical": 7,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n10:43:05: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n10:43:05: Start SmartSplitter: semantic split + classify.\n\n10:43:05: Loaded 627 OCR bboxes.\n\n10:43:05: Full document: 19741 chars, 627 bboxes.\n\n10:43:05: Calling LLM for semantic splitting...\n\n10:43:21: LLM responded. P"
+}

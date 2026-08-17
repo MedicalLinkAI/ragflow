@@ -183,11 +183,13 @@ def _build_coord_prompt(text_lines: list) -> str:
 
 
 from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
+from rag.flow.extractor.vl_image_prep import downscale_vl_image, vl_image_data_url
 
 # LaTeX 转义归一化（复用 qwen_vl_ocr 实现）：Step B 从 LaTeX 提取的 items
 # 常残留 $<14$、$\mu$mol/L 等转义，必须在 Step C 坐标匹配与落库前归一化到
 # Unicode 空间，保证匹配空间与图片纯文本一致
 from rag.flow.extractor.qwen_vl_ocr import _detex_items
+from common.log_tag import build_log_tag as _build_log_tag
 
 
 # ── LaTeX 幻觉防御（与 deepdoc/parser/qwen_vl_parser.py 同款分层防御的轻量副本，
@@ -348,11 +350,12 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg
             status: "ok" or error description.
     """
     api_endpoint, model_name, api_key = endpoint_cfg
-    b64 = base64.b64encode(img_bytes).decode()
+    # 大图预处理：>2MB 或长边>3840 的页面图缩至长边≤3840 JPEG(<1.8MB)
+    img_bytes = downscale_vl_image(img_bytes)
     payload = {
         "model": model_name,
         "messages": [{"role": "user", "content": [
-            {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+            {"type": "image_url", "image_url": {"url": vl_image_data_url(img_bytes)}},
             {"type": "text", "text": prompt},
         ]}],
         "max_tokens": 8192,
@@ -364,13 +367,18 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg
 
     logging.info(f"{tag} API call start, endpoint={api_endpoint}, model={model_name}, img_bytes={len(img_bytes)}")
     
+    from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+
     t0 = time.time()
+    acquire_vl_slot()
     try:
         r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
         return None, elapsed, f"request error: {e}"
+    finally:
+        release_vl_slot()
     elapsed = time.time() - t0
 
     if r.status_code != 200:
@@ -429,11 +437,12 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cf
             data: parsed JSON (list or dict), or None on failure.
     """
     api_endpoint, model_name, api_key = endpoint_cfg
-    b64 = base64.b64encode(img_bytes).decode()
+    # 大图预处理：>2MB 或长边>3840 的页面图缩至长边≤3840 JPEG(<1.8MB)
+    img_bytes = downscale_vl_image(img_bytes)
     payload = {
         "model": model_name,
         "messages": [{"role": "user", "content": [
-            {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+            {"type": "image_url", "image_url": {"url": vl_image_data_url(img_bytes)}},
             {"type": "text", "text": prompt},
         ]}],
         "max_tokens": 16384,
@@ -444,13 +453,18 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cf
         headers["Authorization"] = f"Bearer {api_key}"
 
     logging.info(f"{tag} API call start, endpoint={api_endpoint}, model={model_name}, img_bytes={len(img_bytes)}")
+    from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+
     t0 = time.time()
+    acquire_vl_slot()
     try:
         r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
         return None, elapsed, f"request error: {e}"
+    finally:
+        release_vl_slot()
     elapsed = time.time() - t0
 
     if r.status_code != 200:
@@ -487,9 +501,10 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_c
             content: raw text string, or None on failure.
     """
     api_endpoint, model_name, api_key = endpoint_cfg
-    b64 = base64.b64encode(img_bytes).decode()
+    # 大图预处理：>2MB 或长边>3840 的页面图缩至长边≤3840 JPEG(<1.8MB)
+    img_bytes = downscale_vl_image(img_bytes)
     messages = [{"role": "user", "content": [
-        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+        {"type": "image_url", "image_url": {"url": vl_image_data_url(img_bytes)}},
         {"type": "text", "text": prompt},
     ]}]
     if system_msg:
@@ -507,13 +522,18 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_c
         headers["Authorization"] = f"Bearer {api_key}"
 
     logging.info(f"{tag} API call start (raw), endpoint={api_endpoint}, model={model_name}")
+    from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+
     t0 = time.time()
+    acquire_vl_slot()
     try:
         r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
         return None, elapsed, f"request error: {e}"
+    finally:
+        release_vl_slot()
     elapsed = time.time() - t0
 
     if r.status_code != 200:
@@ -543,7 +563,7 @@ async def process_table(ext, ck: dict, llm_name: str):
     - Build html_table from all items → content_with_weight
     - Save total JSON → extracted_data.items
     """
-    TAG = "[qwen30b-table]"
+    TAG = _build_log_tag(ext, "[qwen30b-table]")
     try:
         t_start = time.time()
 
@@ -715,8 +735,7 @@ async def process_table(ext, ck: dict, llm_name: str):
                 # else: 保留折叠版兑底
 
             logging.info(
-                f"{TAG} StepA: page={pn} — LaTeX: {latex_content}"
-                f"time={latex_elapsed:.1f}s"
+                f"{TAG} StepA: page={pn} — LaTeX (elapsed={latex_elapsed:.1f}s):\n{latex_content}"
             )
 
             # ── Step B: LaTeX → JSON (pipeline LLM prompt) ──
@@ -762,10 +781,7 @@ async def process_table(ext, ck: dict, llm_name: str):
             page_item_names_list = [n for n in page_item_names_list if n]
             page_item_names[pn] = page_item_names_list
 
-            logging.info(
-                f"{TAG} StepB: page={pn} = {page_items}"
-                f"names={page_item_names_list}"
-            )
+            # page_items dump 已去重：上方 StepB JSON 全文即该数据的原文
 
             # 累积 items
             all_items.extend(page_items)
@@ -873,7 +889,7 @@ async def process_text(ext, ck: dict, llm_name: str):
     7. Call qwen3-vl-30b with coord prompt → bbox arrays, assign to positions
     8. Save results
     """
-    TAG = "[qwen30b-text]"
+    TAG = _build_log_tag(ext, "[qwen30b-text]")
     try:
         t_start = time.time()
 
@@ -1023,9 +1039,9 @@ async def process_text(ext, ck: dict, llm_name: str):
         ocr_assembled_text = "\n".join(all_page_texts)
         old_content_len = len(ck.get("content_with_weight", ""))
         logging.info(
-            f"{TAG} Step4: Assembled content ({old_content_len}\u2192{len(ocr_assembled_text)} chars, "
-            f"{len(sorted_pages)} pages)\n"
-            f"{TAG} Step4: preview:\n{ocr_assembled_text}"
+            f"{TAG} Step4: Assembled content ({old_content_len}→{len(ocr_assembled_text)} chars, "
+            f"{len(sorted_pages)} pages)"
+            # preview 全文已去重：Step5 msg[i] content 会再打一遍同样文本
         )
 
         # ── Step 5: LLM extraction with ocr_assembled_text ──
@@ -1146,7 +1162,7 @@ async def process_text(ext, ck: dict, llm_name: str):
         # 保留所有占位，确保与文本行 1:1 对齐
         ck["positions"] = new_positions
         ck["row_positions"] = []
-        logging.info(f"{TAG} Step7: {len(ck['positions'])} positions stored, row_positions=[]")
+        # "positions stored" 日志已去重：下方 DONE 行已含 positions 计数
 
         # ── Step 8: Save extracted_data ──
         ck[ext._param.field_name] = json.dumps(extracted_data, ensure_ascii=False)

@@ -1,0 +1,62 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LXQI222.pdf",
+    "size_kb": 62937.7,
+    "pages": null,
+    "doc_id": "a4816fe696d111f19d3ab1cda0a97c3d",
+    "patient_id": "PAT-6e4c40a8de77"
+  },
+  "doc_id": "a4816fe696d111f19d3ab1cda0a97c3d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": false,
+  "process_duration": 328.34604,
+  "begin_at": "2026-08-17T18:41:36",
+  "end_at": "2026-08-17T18:47:57",
+  "elapsed_s": 381.2,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 4
+  },
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "DischargeRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 2,
+      "match": false
+    },
+    "PrescriptionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n18:41:38 Task has been received.\n\n-------------------------------------\n[File]:\n18:41:39: File fetched.\n\n18:41:39: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n18:41:39: Start to work on a PDF.\n\n18:41:43: [QwenVL] Processing 10 pages...\n\n18:41:55: [QwenVL] 1/10 pag"
+}

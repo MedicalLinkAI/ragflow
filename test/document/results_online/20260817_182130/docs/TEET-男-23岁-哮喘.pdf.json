@@ -1,0 +1,115 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "TEET-男-23岁-哮喘.pdf",
+    "size_kb": 2158.0,
+    "pages": null,
+    "doc_id": "77f36374872411f1bb8027103a248952",
+    "patient_id": "PAT-274f71007bc2"
+  },
+  "doc_id": "77f36374872411f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 5,
+  "orm_synced": true,
+  "process_duration": 314.15317,
+  "begin_at": "2026-08-17T19:13:21",
+  "end_at": "2026-08-17T19:18:36",
+  "elapsed_s": 315.3,
+  "before": {
+    "chunk_count": 5,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 2,
+      "ExaminationReport": 1,
+      "DischargeRecord": 1,
+      "AdmissionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "d805e035c408a0f0",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 49,
+      "content": "批量打印\n新增会诊\n危急值\n主动授权\n批量签名\n归档审核\n(cT2N1Ⅲ1 IV期)\n入院时间:2025-01-08 14:29:35\n过敏史:无\n年龄:58岁\n入院时间:2025-01-0814:29\n民族:汉族\n记录时间:2025-01-0814:55\n婚姻状况:已婚\n病史陈述者:患者本人(可靠)\n现住址:四川省兴文县太平镇青山岩村十二组\n病史陈述者确认签名:病史陈述者签名\n主诉:发现左颈部无痛性包块3+月,左颈部淋巴结继发性恶性肿瘤2+月,确诊胰腺癌2+月\n现病史:入院前3+月,患者无意间发现左侧颈部一鸡蛋样大小无痛性包块,质硬,活动度差,边界清,无明显压痛,\n无乏力盗汗,物畏寒发热,无"
+    },
+    {
+      "chunk_id": "18b4cf124f2ecd0c",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 54,
+      "content": "出院病情证明\n性别：男\n年龄：58岁\n科室：肿瘤科三病区\n床号：46\n住院号：1366622\n患者姓名：\n性别：男\n年龄：58岁\n床号：46\n住址：四川省六X县太平镇青山岩村十二组\n住院号：1366622\n入院日期：2024-12-2415:29\n出院日期：2025-01-04\n出院转归：好转\n出院诊断：1.恶性肿瘤介入治疗2.胰腺癌伴全身广泛转移（cT2N1M1IV期）3.恶性肿瘤维持性化学治疗4.重度癌痛\n5.恶性肿瘤免疫治疗6.营养风险7.严重营养不良\n主要诊治经过：\n患者李学文，男，58岁。因“发现左颈部无痛性包块2+月，左颈部淋巴结继发性恶性肿瘤2月”于2024-12-24\n15:2"
+    },
+    {
+      "chunk_id": "a68994aa6ee382c3",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 38,
+      "content": "申请单号\n15870541\n检查部位\n头部CT\n检查类别\nCT\n检查名称\n胸部CT增强扫描,胸部\n申请科室\n肿瘤科三病区\n申请医生\n李雅茂\n检查医生\n曹雪峰\n审核医生\n曹雪峰\n申请时间\n2024-12-24 15:50:1\n检查时间\n2024-12-26 16:52:0\n审核时间\n2024-12-26 17:32:59\n检查所见\n左侧颈根部、锁骨上/下区、上气管前、纵隔左前上方多发结节、部分融合成片、较大者约71*33mm，增强扫描呈不均匀强化，周围脂肪间隙模糊，软组织肿胀。甲状腺不大。左侧鼻咽顶后壁增厚，口咽部、喉部气道通畅，形态正常。\n胸廓对称。双肺纹理增多；双肺散在片絮影、斑片影；双肺散"
+    },
+    {
+      "chunk_id": "66ee4c745bfc04a3",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 17,
+      "content": "<table><tr><td>血小板平均分</td><td>None</td><td>17.20</td><td>fl</td><td>9-17</td><td>True</td></tr><tr><td>白细胞计数</td><td>WBC</td><td>1.20</td><td>*10~9/L</td><td>3.5-9.5</td><td>True</td></tr><tr><td>红细胞计数</td><td>RBC</td><td>3.20</td><td>*10~12/L</td><td>4.3-5.8</td><td>True</td></tr><tr><td>血红蛋白</td><"
+    },
+    {
+      "chunk_id": "c61f34c2bad505c5",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>中性粒细胞百分比</td><td>None</td><td>80.0</td><td>%</td><td>45-75</td><td>True</td></tr><tr><td>血小板平均分布宽度</td><td>None</td><td>17.20</td><td>fL</td><td>9-17</td><td>True</td></tr><tr><td>红细胞计数</td><td>None</td><td>4.00</td><td>×10^12/L</td><td>4.3-5.8</td><td>True</td></tr><tr><td>血红蛋白</td><"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n19:13:27: [QwenVL] 1/6 pages done\n\n19:14:08: [QwenVL] 2/6 pages done\n\n19:14:09: [QwenVL] 3/6 pages done\n\n19:14:15: [QwenVL] 4/6 pages done\n\n19:14:19: [QwenVL] 5/6 pages done\n\n19:14:23: [QwenVL] 6/6 pages done\n\n19:14:23: [QwenVL] Done: 216 sections from 6 pages.\n\n19:14:23: Done\n\n\n-------------------"
+}

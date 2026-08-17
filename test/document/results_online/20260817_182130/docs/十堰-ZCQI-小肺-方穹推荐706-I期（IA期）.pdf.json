@@ -1,0 +1,151 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "十堰-ZCQI-小肺-方穹推荐706-I期（IA期）.pdf",
+    "size_kb": 10654.1,
+    "pages": null,
+    "doc_id": "8cf614227eb111f1af97e3985ba7f8da",
+    "patient_id": "PAT-becc920261bf"
+  },
+  "doc_id": "8cf614227eb111f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 395.51398,
+  "begin_at": "2026-08-17T19:29:04",
+  "end_at": "2026-08-17T19:35:42",
+  "elapsed_s": 398.4,
+  "before": {
+    "chunk_count": 9,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 5,
+      "DischargeRecord": 1,
+      "LabReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "c6cbbbfbdcc9aff3",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 100,
+      "content": "2025.1 确诊小细胞癌，已行免疫组化协诊\n2025-.2-4给予”EP”化疗联合”特瑞普利单抗”免疫治疗3周期，\n2025-04-22给予”EP”方案化疗联合\n“替雷利珠单抗”免疫治疗1周期，化疗后呕吐反应较重，予以对症支持治疗\n2025.5-8行”特瑞普利单抗”免疫治疗4周期\n2025.8 PD\n2025.8-2026.2“替雷利珠单抗联合安罗替尼”免疫治疗\n信阳市中心医院\n日间化疗出入院记录\n姓名：\n性别：女年龄：65岁\n科别：日间化疗中心[东院床号：04\n登记号：0000\n住院号：25\n区]\n入院时间：2026年03月23日 08:29:00出院时间：2026年03月23日 11:1"
+    },
+    {
+      "chunk_id": "d18365379b6a320b",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 24,
+      "content": "信阳市中心医院\n免疫病理诊断报告\n免疫组化号：M725-\n姓名：\n性别：女\n年龄：64岁\n送检医院：\n病区：肿瘤内科五护理单元[东病理号：D25-01313\n就诊卡号：\n住院号：2\n病区床号：21\n送检标本：肺手术标本\n送检时间：2025-01-24\n临床诊断：\n光镜所见：\n免疫病理诊断：\nCK广谱（点+），CD56（+），Syn（+），INSM1（+），CK5/6（-），P40（-），TTF1（+），\nNapsinA（-），Ki-67（80%+）。\n结合HE及免疫组化结果，（右中间段支气管）肺小细胞神经内分泌癌。\n初诊医师：刘磊\n复诊医师：刘磊\n报告日期：2025-01-26 10:49\n备"
+    },
+    {
+      "chunk_id": "e1d1266b8240fce2",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 22,
+      "content": "信阳市中心医院\n病理检查报告单\n病理号：D25\n姓名：\n性别：女\n年龄：64岁\n送检医院：\n送检科室：呼吸与危重症医学科病送检日期：2025-01-22\n门诊号：9\n住院号：25\n床号：21\n送检医师：周鹏飞\n送检标本：右中间段支气管\n临床诊断：\n巨检：灰白色碎组织最大径0.3厘米。全取\n病理诊断：\n(右中间段支气管)考虑小细胞癌，已行免疫组化协诊。\n初诊医师：刘晶晶\n复诊医师：刘磊\n报告日期：2025-01-23 19:26\n备注1本报告单仅供临床参考2如临床对报告内容有疑问请与报告医生联系。联系电话：0376-6227723(西院区)：0376-6667570(东院区)。\n3此报告必须经过"
+    },
+    {
+      "chunk_id": "ad4e691004e36a0c",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 39,
+      "content": "信阳市中心医院\n影像科CT诊断报告书\n扫描\n取电子胶\n片和报告(试用)\n影像号: 000\n报告日期: 2025-12-22 16:36\n姓名:\n性别: 女\n年龄: 64岁\n检查日期: 2025-12-22\n科别: 日间化疗中心[东院区住院号: 2\n门诊号:/\n检查时间: 09:53:10\n检查方法: 胸部CT平扫,胸部CT增强,上腹部CT平扫,上腹部CT增强,下腹部CT平扫,下腹部CT增强\n技术参数:\n影像学所见:\n双侧胸廓对称,右肺门增大,可见不规则状软组织密度影,密度不均,边\n界不清,强化不均,右肺中下叶支气管稍变窄,双肺可见条索状及结节状高密\n度影,较大病灶位于右肺下叶内基底段见实性结节"
+    },
+    {
+      "chunk_id": "55d902e2883a2d15",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 36,
+      "content": "信阳市中心医院\n影像科CT诊断报告书\n扫描此二维码可\n以电子胶\n片和报告(试用)\n影像号: 0000\n报告日期: 2026-02-25 15:36\n姓名:\n性别: 女\n年龄: 65岁\n检查日期: 2026-02-25\n科别: 肿瘤内科五门诊[东院]\n住院号: /\n门诊号: 1\n6\n检查时间: 08:57:41\n检查方法: 胸部CT平扫加薄层\n技术参数:\n影像学所见:\n双侧胸廓对称, 右肺门增大, 可见不规则状软组织密度影, 密度不均, 边\n界不清, 右肺中下叶支气管稍变窄, 双肺可见条索状及结节状高密度影。右肺\n中叶局限性支扩。气管、支气管通畅, 右肺门见明显肿大淋巴结, 右侧胸膜局\n部稍厚,"
+    },
+    {
+      "chunk_id": "64487cec1697e673",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 44,
+      "content": "信阳市中心医院心电图报告单\n门诊号:\n姓名:\nP波宽度: 141ms\n诊断: 1.窦性心律\n住院号: 0000\n性别: 女\nP-R间期: 181ms\n【120-200】\n2.低电压\n床位号: 04\n年龄: 65岁\nQRS时限: 101ms\n【60-110】\n科室: 日间化疗中心[\n心率: 77bpm\nQT/QTc: 358/406ms\n【360-440】\n东院区]\n【60-100】\n电轴: 60°\n【-30-90】\n2026-03-23 08:43:55\n25mm/s 10mm/mV\nI\nV1\nV3R\nII\nV2\nIII\nV3\nV4R\naVR\nV4\naVL\nV5\nV5R\naVF\nV6\nII\n检"
+    },
+    {
+      "chunk_id": "bce519501d11fd17",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>癌胚抗原</td><td>CEA</td><td>5.03</td><td>ng/mL</td><td>0—5.2</td><td>False</td></tr><tr><td>非小细胞肺癌相关抗原</td><td>CYFRA21-1</td><td>4.60</td><td>ng/ml</td><td>0—3.3</td><td>True</td></tr><tr><td>神经元特异性烯醇化酶测定</td><td>NSE</td><td>10.60</td><td>ng/mL</td><td>0—16.3</td><td>False</td></tr></tab"
+    },
+    {
+      "chunk_id": "86e65b756fff677d",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>谷丙转氨酶</td><td>ALT</td><td>52</td><td>U/L</td><td>7—40</td><td>True</td></tr><tr><td>谷草转氨酶</td><td>AST</td><td>54</td><td>U/L</td><td>13—35</td><td>True</td></tr><tr><td>总蛋白</td><td>TP</td><td>69.8</td><td>g/L</td><td>65—85</td><td>False</td></tr><tr><td>白蛋白</td><td>ALB</td><td>48.5</t"
+    },
+    {
+      "chunk_id": "f36e5eb35bd3b3bf",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>3.62</td><td>10^9/L</td><td>3.5—9.5</td><td>False</td></tr><tr><td>中性粒细胞百分比</td><td>NEUT</td><td>68.80</td><td>%</td><td>40—75</td><td>False</td></tr><tr><td>淋巴细胞百分比</td><td>LYMP</td><td>23.20</td><td>%</td><td>20—50</td><td>False</td></tr><tr><td>单核细胞百分比</td><"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "page_sum": 12,
+    "check": {
+      "covered": 12,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n19:30:57: [QwenVL] 10/12 pages done\n\n19:31:05: [QwenVL] 11/12 pages done\n\n19:31:05: [QwenVL] 12/12 pages done\n\n19:31:05: [QwenVL] Done: 322 sections from 12 pages.\n\n19:31:05: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n19:31:05: Start SmartSplitter: semantic split + classi"
+}

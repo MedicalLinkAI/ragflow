@@ -16,6 +16,7 @@ from io import BytesIO
 from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 
 # ── Bootstrap: mock deepdoc package before importing ────────────────
 project_root = os.path.dirname(
@@ -613,6 +614,78 @@ class TestParsePdf:
 
 
 # ================================================================
+# 9a+. parse_pdf 单页失败隔离（page failure isolation）
+# ================================================================
+
+class TestParsePdfPageFailureIsolation:
+    """单页提取失败（含超时重试耗尽）不应打断整篇：跳过该页继续剩余页。
+
+    背景：8/17 压测 8 个文档因单页 300s 超时导致整篇 chunks=0，
+    已解析的几十页成果全部丢弃；重试耗尽后应降级为跳过该页。
+    """
+
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    def _white_img(self):
+        from PIL import Image
+
+        return Image.new("RGB", (10, 10), color="white")
+
+    def test_failed_text_page_skipped_others_continue(self):
+        parser = self._make_parser()
+        img = self._white_img()
+
+        def fake_extract(img_bytes, page_1based, bbox_idx):
+            if page_1based == 2:
+                raise requests.exceptions.ReadTimeout("Read timed out")
+            return [(f"page{page_1based}", page_1based - 1)], bbox_idx + 1
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [img, img, img]
+            with patch.object(parser, "_classify_page", return_value=("text", None)):
+                with patch.object(parser, "_extract_text_page", side_effect=fake_extract):
+                    sections, tables = parser.parse_pdf("dummy.pdf")
+
+        assert [s[0] for s in sections] == ["page1", "page3"]
+        assert tables == []
+
+    def test_failed_table_page_skipped_others_continue(self):
+        parser = self._make_parser()
+        img = self._white_img()
+
+        def fake_extract(img_bytes, page_1based, bbox_idx, report_date=None):
+            if page_1based == 1:
+                raise requests.exceptions.ReadTimeout("Read timed out")
+            return [(f"tbl{page_1based}", page_1based - 1)], bbox_idx + 1
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [img, img]
+            with patch.object(parser, "_classify_page", return_value=("table", None)):
+                with patch.object(parser, "_extract_table_page", side_effect=fake_extract):
+                    sections, tables = parser.parse_pdf("dummy.pdf")
+
+        assert [s[0] for s in sections] == ["tbl2"]
+
+    def test_all_pages_fail_returns_empty_without_raising(self):
+        parser = self._make_parser()
+        img = self._white_img()
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [img, img]
+            with patch.object(parser, "_classify_page", return_value=("text", None)):
+                with patch.object(
+                    parser,
+                    "_extract_text_page",
+                    side_effect=requests.exceptions.ReadTimeout("Read timed out"),
+                ):
+                    sections, tables = parser.parse_pdf("dummy.pdf")
+
+        assert sections == []
+        assert tables == []
+
+
+# ================================================================
 # 9b. parse_pdf 页级并发（page-level concurrency）
 # ================================================================
 
@@ -631,9 +704,9 @@ class TestParsePdfPageConcurrency:
         return [Image.new("RGB", (10, 10), color="white") for _ in range(n)]
 
     def test_pages_processed_concurrently(self):
-        """6 页必须真正并行： barrier 等待 6 个线程同时到达，串行实现会死锁超时"""
+        """PAGE_CONCURRENCY 页必须真正并行： barrier 等待所有线程同时到达，串行实现会死锁超时"""
         parser = self._make_parser()
-        n = 6
+        n = QwenVLParser.PAGE_CONCURRENCY
         barrier = threading.Barrier(n, timeout=5)
         reached = []
 
@@ -722,8 +795,8 @@ class TestParsePdfPageConcurrency:
         assert "2-2" in ranges[1] and "page=2" in ranges[1]
         assert "3-4" in ranges[2] and "page=3" in ranges[2]
 
-    def test_concurrency_capped_at_six(self):
-        """12 页时同时在飞的页数不超过 6"""
+    def test_concurrency_capped_at_page_concurrency(self):
+        """页数超过上限时同时在飞的页数不超过 PAGE_CONCURRENCY"""
         parser = self._make_parser()
         lock = threading.Lock()
         state = {"current": 0, "peak": 0}
@@ -743,11 +816,15 @@ class TestParsePdfPageConcurrency:
                 with patch.object(parser, "_call_vlm", return_value='["x"]'):
                     parser.parse_pdf("dummy.pdf")
 
-        assert state["peak"] <= 6
+        assert state["peak"] <= QwenVLParser.PAGE_CONCURRENCY
         assert state["peak"] >= 2  # 确保确实并发了，而不是退化成串行
 
-    def test_page_exception_propagates(self):
-        """某页提取失败时，异常应像串行版一样向上抛出"""
+    def test_page_exception_isolated_skips_failed_page(self):
+        """某页提取失败时不再向上抛出打断整篇，而是跳过该页继续剩余页
+
+        （旧行为是异常传播到 parse_pdf 调用方导致整篇 chunks=0，
+        已由单页失败隔离取代，见 TestParsePdfPageFailureIsolation）
+        """
         parser = self._make_parser()
 
         imgs = self._make_images(3)
@@ -757,14 +834,15 @@ class TestParsePdfPageConcurrency:
         def extract_failing(img_bytes, page_1based, bbox_idx):
             if img_bytes == b"1":
                 raise ConnectionError("vlm refused")
-            return [("ok", 0)], bbox_idx + 1
+            return [(f"ok{page_1based}", page_1based - 1)], bbox_idx + 1
 
         with patch.object(parser, "_render_page_images"):
             parser.page_images = imgs
             with patch.object(parser, "_classify_page", return_value=("text", None)):
                 with patch.object(parser, "_extract_text_page", side_effect=extract_failing):
-                    with pytest.raises(ConnectionError):
-                        parser.parse_pdf("dummy.pdf")
+                    sections, _tables = parser.parse_pdf("dummy.pdf")
+
+        assert [s[0] for s in sections] == ["ok1", "ok3"]
 
 
 # ================================================================
@@ -866,6 +944,111 @@ class TestCallVlm:
         assert "data:image/png;base64," in content[0]["image_url"]["url"]
         assert content[1]["type"] == "text"
         assert content[1]["text"] == "my prompt"
+
+
+# ================================================================
+# 11b. _call_vlm 超时重试（TDD：先红灯）
+# ================================================================
+
+
+class TestCallVlmTimeoutRetry:
+    """_call_vlm 对超时/连接类瞬时错误重试，而非一次超时就打死整篇文档。
+
+    背景：8/17 压测 13 次 300s read timeout 导致 8 个文档 chunks=0；
+    vLLM 服务端实际完成了这些请求，客户端应重试而非直接判失败。
+    仅重试 requests.Timeout / requests.ConnectionError 等瞬时网络错误；
+    raise_for_status 的业务错误（HTTPError）不重试。
+    """
+
+    def _ok_response(self, content="ok"):
+        resp = MagicMock()
+        resp.json.return_value = {"choices": [{"message": {"content": content}}]}
+        resp.raise_for_status = MagicMock()
+        return resp
+
+    def test_timeout_then_retry_succeeds(self):
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=0)
+        with patch.object(
+            qwen_vl_mod.requests,
+            "post",
+            side_effect=[
+                requests.exceptions.ReadTimeout("Read timed out"),
+                self._ok_response("recovered"),
+            ],
+        ) as mock_post:
+            result = parser._call_vlm(b"img", "prompt")
+        assert result == "recovered"
+        assert mock_post.call_count == 2
+
+    def test_all_retries_exhausted_raises_timeout(self):
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=0)
+        with patch.object(
+            qwen_vl_mod.requests,
+            "post",
+            side_effect=requests.exceptions.ReadTimeout("Read timed out"),
+        ) as mock_post:
+            with pytest.raises(requests.exceptions.ReadTimeout):
+                parser._call_vlm(b"img", "prompt")
+        # 默认 1 次初始 + 2 次重试 = 3 次尝试
+        assert mock_post.call_count == 3
+
+    def test_requests_connection_error_retried(self):
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=0)
+        with patch.object(
+            qwen_vl_mod.requests,
+            "post",
+            side_effect=[
+                requests.exceptions.ConnectionError("reset"),
+                self._ok_response(),
+            ],
+        ) as mock_post:
+            result = parser._call_vlm(b"img", "prompt")
+        assert result == "ok"
+        assert mock_post.call_count == 2
+
+    def test_http_error_not_retried(self):
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=0)
+        bad = MagicMock()
+        bad.raise_for_status.side_effect = requests.exceptions.HTTPError("500")
+        with patch.object(qwen_vl_mod.requests, "post", return_value=bad) as mock_post:
+            with pytest.raises(requests.exceptions.HTTPError):
+                parser._call_vlm(b"img", "prompt")
+        assert mock_post.call_count == 1
+
+    def test_builtin_connection_error_not_retried(self):
+        # 保持既有行为：Python 内建 ConnectionError 不属于瞬时网络错误，不重试
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=0)
+        with patch.object(
+            qwen_vl_mod.requests, "post", side_effect=ConnectionError("refused")
+        ) as mock_post:
+            with pytest.raises(ConnectionError):
+                parser._call_vlm(b"img", "prompt")
+        assert mock_post.call_count == 1
+
+    def test_max_retries_configurable(self):
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=0, max_retries=1)
+        with patch.object(
+            qwen_vl_mod.requests,
+            "post",
+            side_effect=requests.exceptions.ReadTimeout("Read timed out"),
+        ) as mock_post:
+            with pytest.raises(requests.exceptions.ReadTimeout):
+                parser._call_vlm(b"img", "prompt")
+        assert mock_post.call_count == 2
+
+    def test_backoff_sleep_between_retries(self):
+        parser = QwenVLParser(api_url="http://mock/v1", retry_backoff=3.0)
+        with patch.object(
+            qwen_vl_mod.requests,
+            "post",
+            side_effect=[
+                requests.exceptions.ReadTimeout("Read timed out"),
+                self._ok_response(),
+            ],
+        ):
+            with patch.object(qwen_vl_mod.time, "sleep") as mock_sleep:
+                parser._call_vlm(b"img", "prompt")
+        mock_sleep.assert_called_once_with(3.0)
 
 
 # ================================================================

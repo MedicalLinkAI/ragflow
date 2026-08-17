@@ -1,0 +1,193 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "ZLME 女  54 胃癌初诊.pdf",
+    "size_kb": 56936.4,
+    "pages": null,
+    "doc_id": "51787d0a78f711f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-6e5a48f4a1b5"
+  },
+  "doc_id": "51787d0a78f711f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 14,
+  "orm_synced": true,
+  "process_duration": 402.48843,
+  "begin_at": "2026-08-17T21:08:31",
+  "end_at": "2026-08-17T21:15:20",
+  "elapsed_s": 408.1,
+  "before": {
+    "chunk_count": 12,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "ExaminationReport": 6,
+      "LabReport": 5
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "1b345661e0d71ee2",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 28,
+      "content": "浏阳市人民医院\n病理会诊报告单\n病理号：\n姓名：\n性别：女\n年龄：54岁\n送检医院：本院\n门诊号：\n住院号：0L\n送检科室：胃肠外科一病区\n床号：49\n送检医生：\n送检日期：2026-03-31\n标本名称：长沙金域\n送检材料：切片B2026011610-B，白片14张\n光镜所见：\n病理会诊意见：\n（胃体）HE结合免疫组化本例符合低分化腺癌。\n免疫组化结果（B2026011610-B）：Ki67（+，约60%），P53（+提示突变型），CK7（+），CK20\n(+），CDX-2（+），CerbB2（+/-），P63（+/-），Syn（-），MLH1（+），MSH2（+），MSH6\n(+），PMS"
+    },
+    {
+      "chunk_id": "34c7f40db13e045d",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 176,
+      "content": "常规通气报告\n姓名：\n年龄：54岁\n性别：女\n科室：--\n住址：\n预计值模式：Standard GLI#\n测试号：2026032719\n身高：155 cm\n体重：49.5 kg\n床号：49\n电话：--\n操作员：--\nPred\nBst\nt(Bst/P\nA1\nA2\nA3\nVC\n2.99\n2.81\n93.84\n2.70\n2.81\n2.80\nEV 1\n2.40\n2.28\n95.10\n2.16\n2.26\n2.28\nEV1%F\n80.40\n81.13\n100.92\n79.98\n80.63\n81.42\nEV6\n2.78\n2.70\n2.79\n2.78\nPEF\n5.80\n4.10\n70.76\n3.74\n4.03"
+    },
+    {
+      "chunk_id": "1845ef7c96807a0e",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 19,
+      "content": "彩超报告单\n超声号：CS\n检查设备：住院腹部浅表\n床号：29\n姓名：\n性别：女\n年龄：54岁\n科室：胃肠外科一病区\n查部位：[双侧下肢深静脉,彩超]\n住院号：(\n超声所见：\n双下肢股静脉、股浅静脉、股深静脉、腘静脉、胫后静脉及腓静脉血管\n内径、走行正常，未见明显扭曲，加压变形，血管内膜面光滑，未见明显血\n栓声像。小腿段肌间静脉未见明显扩张，加压变形，未见明显血栓声像。\nCDFI：双下肢深静脉血管血流充填好，未见明显充盈缺损，呼吸相存\n在，未见明显反流。\n超声提示：\n双下肢深静脉所示切面暂未见明显异常声像\n建议结合临床进一步检查、复查"
+    },
+    {
+      "chunk_id": "9338c5de4727c7d4",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 30,
+      "content": "测阳市人民医院\n彩超报告单\n超声号：\n检查设备：住院腹部浅表\n床号：\n名：\n性别：女\n年龄：54岁\n科室：胃\n查部位：[心脏,普通]\n住院号：\n超声所见：\n左心房 29mm\n左心室 43mm\n主动脉 29mm\n右心房 25mm\n右心室 26mm\n肺动脉 20mm\n室间隔 9mm\n左室后壁 9mm\n右室前壁 不厚\n多普勒测值：AOV 1.0m/s, PAV 0.8m/s, E/A<1\n心功能：EF 67% FS 38%\n二维超声：各房室大小正常，主、肺动脉内径正常，室间隔与左室后壁厚度正常，室壁运动协调，各瓣膜成分清晰，开闭正常，心包膜未见明显异常。\nM超：主动脉主波减低，重搏波低平。\nCDFI"
+    },
+    {
+      "chunk_id": "fc38a9b5e62da560",
+      "pages": [
+        5,
+        6,
+        7
+      ],
+      "page_count_raw": 76,
+      "content": "浏 阳 市 人 民 医 院\n姓名：\n科室：[胃肠外科 一病区]\n床号：[49]\n住院号：[\nZY[\n]\n入院记录\n姓 名：\n出生地：[湖南...\n性 别：[女]\n民 族：汉族\n年 龄：[54岁]\n职 业：[农民]\n婚 姻：已婚\n住 址：[湖南省洲\n社\n号]\n入院时间：[2026-03-27 09:53]\n记录时间：[2026-03-27 16:04]\n病史陈述者 本人\n入院方式：步行\n联系电话 12\n主诉：[上腹部疼痛1月余]\n现病史：[患者自诉1月前无明显诱因下出现上腹部持续性胀痛，阵发性加重，程度中等，可忍，无他处放射痛，无明显加重及缓解因素，无恶心呕吐，无便血黑便、无腹泻，无畏寒发热等症"
+    },
+    {
+      "chunk_id": "b6341739f2bfece6",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 15,
+      "content": "\\begin{tabular}{cccccc}\n报告时间: 2026-03-29\n\\hline\n\\multicolumn{1}{c}{\\textbf{示识}} & \\multicolumn{2}{c}{\\textbf{检验项目}} & \\multicolumn{1}{c}{\\textbf{检验时间}} & \\multicolumn{1}{c}{\\textbf{报告时间}} & \\multicolumn{1}{c}{\\textbf{样本类型}} \\\\\n\\hline\n& & 粪便常规+隐血试验 & 2026-3-29 10:40:04 & 2026-3-29 11:43:41 & 粪便 \\\\\n& "
+    },
+    {
+      "chunk_id": "677b3353132a55dd",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 15,
+      "content": "\\begin{tabular}{llllll}\n报告时间: 2026-03-29\n\\hline\n标识 & 检验项目 & 检验时间 & 报告时间 & & \\\\\n\\hline\n住院 & 粪便常规+隐血试验 & 2026-3-29 10:40:04 & 2026-3-29 11:43:41 & 荧 & \\\\\n住院 & 尿液分析 & 2026-3-29 9:38:51 & 2026-3-29 10:00:29 & 尿 & \\\\\n住院 & 输血前常规检查 & 2026-3-28 8:18:36 & 2026-3-28 14:45:56 & 血清 & \\\\\n住院 & 糖类CA19-9抗原测定-化学发光法^"
+    },
+    {
+      "chunk_id": "4e737b22436f1647",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 38,
+      "content": "ID:\n姓名:\n性别:女 年龄:54岁\n科室/床号:胃肠外科一病区19\n门诊/住院号:Z\n检查编号:20260\nHR: 79bpm PR: 150ms\nQRS : 86ms\nQT/QTc : 372ms/428ms\nP/QRS/T : 53/3/7deg\nRV5+SV1 : 0.78+1.10=1.88mV\nRV1+SV5 : 0.00+0.13=0.13mV\n诊断:\n窦性心律;\nT波浅倒或低平\nQs\n1s\n2s\n3s\n4s\n5s\n6s\n7s\n8s\n9s\nI\nII\nIII\naVR\naVL\naVF\nII\nV1\nV2\nV3\nV4\nV5\nV6"
+    },
+    {
+      "chunk_id": "f2b95c2ddbd7384d",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 38,
+      "content": "浏阳市人民医院\n湖南HR\nCT诊断报告\n住院号:0\n影像号:26(\n姓名:...\n性别:女\n病床号:49床\n年龄:54岁\n设备类型:CT\n申请科室:胃肠外科一病区\n检查项目:[*胸部,平扫+增强3D][*上腹部,平扫+增强3D]\n登记时间:2026-03-27 10:49:4\n[*盆腔,平扫+增强3D][*下腹部(肾、肾上腺)]\n检查时间:2026-03-27 16:38:5\n,平扫+增强3D]\n描述:\n右肺下叶后基底段、左肺上叶尖后段见结节,较大者位于右肺下叶后基底段\n(Se4:[M300)为实性结节,大小约为4mm×4mm,平均CT值约为271Hu。余肺未\n见异常实变影,气管通畅,双肺门不"
+    },
+    {
+      "chunk_id": "3e3b76cc85dfa781",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>*白细胞计数</td><td>WBC</td><td>7.56</td><td>None</td><td>None</td><td>False</td></tr><tr><td>中性粒细胞计数</td><td>NEU#</td><td>5.42</td><td>None</td><td>None</td><td>False</td></tr><tr><td>淋巴细胞计数</td><td>LYM#</td><td>0.99</td><td>None</td><td>None</td><td>False</td></tr><tr><td>单核细胞计数</td><td>"
+    },
+    {
+      "chunk_id": "02232f70fa36e0f1",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 19,
+      "content": "<table><tr><td>葡萄糖</td><td>GLU</td><td>4.51</td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿素</td><td>BUN</td><td>3.30</td><td>None</td><td>None</td><td>False</td></tr><tr><td>肌酐</td><td>CREA</td><td>38.9</td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿酸</td><td>UA</td><td>313</t"
+    },
+    {
+      "chunk_id": "c399b5e4274cd893",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>大凝血酶原时间</td><td>PT</td><td>12.8</td><td>秒</td><td>None</td><td>False</td></tr><tr><td>凝血酶原时间活动度(%)</td><td>PT%</td><td>71.0</td><td>%</td><td>None</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>1.13</td><td>None</td><td>None</td><td>False</td></tr><tr><td>大纤维蛋白原</td><td>Fb"
+    },
+    {
+      "chunk_id": "7f73390203ac8b18",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>甲胎蛋白</td><td>AFP</td><td>2.25</td><td>ng/mL</td><td>None</td><td>False</td></tr><tr><td>癌胚抗原</td><td>CEA</td><td>2.61</td><td>ng/mL</td><td>None</td><td>False</td></tr><tr><td>糖链抗原19-9</td><td>CA199</td><td>155</td><td>U/mL</td><td>None</td><td>True</td></tr><tr><td>糖链抗原125</td><td>CA"
+    },
+    {
+      "chunk_id": "72e38173e31ef520",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HBsAg</td><td>阴性(-)</td><td>None</td><td>None</td><td>False</td></tr><tr><td>抗丙型肝炎病毒抗体</td><td>anti-HCV</td><td>阴性(-)</td><td>None</td><td>None</td><td>False</td></tr><tr><td>抗人免疫缺陷病毒抗体</td><td>anti-HIV</td><td>阴性(-)</td><td>None</td><td>None</td><td>False</td></tr>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 17,
+    "check": {
+      "covered": 14,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 6,
+      "clinical": 6,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 7,
+      "clinical": 5,
+      "match": false
+    }
+  },
+  "note": "",
+  "progress_msg": "\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n21:09:15: Start SmartSplitter: semantic split + classify.\n\n21:09:16: Loaded 554 OCR bboxes.\n\n21:09:16: Full document: 16062 chars, 554 bboxes.\n\n21:09:16: Calling LLM for semantic splitting...\n\n21:09:42: LLM responded. Parsing segments."
+}

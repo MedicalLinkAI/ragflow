@@ -1,0 +1,42 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "E2E_test_patient.pdf",
+    "size_kb": 0.4,
+    "pages": null,
+    "doc_id": "31a023268eea11f1b2e52d35c2139d3f",
+    "patient_id": ""
+  },
+  "doc_id": "31a023268eea11f1b2e52d35c2139d3f",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": false,
+  "process_duration": 16.543943,
+  "begin_at": "2026-08-17T19:02:08",
+  "end_at": "2026-08-17T19:03:20",
+  "elapsed_s": 72.0,
+  "before": {
+    "chunk_count": 0,
+    "run": "DONE",
+    "type_counts": {}
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {},
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 未获取到 patient_id，跳过 clinical 比对。 ",
+  "progress_msg": "\n19:02:09 Task has been received.\n\n-------------------------------------\n[File]:\n19:02:10: File fetched.\n\n19:02:10: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n19:02:10: Start to work on a PDF.\n\n19:02:10: [QwenVL] Processing 1 pages...\n\n19:02:11: [QwenVL] 1/1 pages"
+}

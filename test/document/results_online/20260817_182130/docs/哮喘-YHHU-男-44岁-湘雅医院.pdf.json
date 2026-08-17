@@ -1,0 +1,120 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "哮喘-YHHU-男-44岁-湘雅医院.pdf",
+    "size_kb": 4816.7,
+    "pages": null,
+    "doc_id": "0ff4c94e7ea911f1af97e3985ba7f8da",
+    "patient_id": "PAT-5b4f050892a6"
+  },
+  "doc_id": "0ff4c94e7ea911f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 6,
+  "orm_synced": true,
+  "process_duration": 315.49472,
+  "begin_at": "2026-08-17T19:39:15",
+  "end_at": "2026-08-17T19:44:36",
+  "elapsed_s": 320.9,
+  "before": {
+    "chunk_count": 6,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 4,
+      "ExaminationReport": 1,
+      "PrescriptionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "0192b8a97169bab6",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 27,
+      "content": "门(急)诊病历\n年龄:44岁\n性别:男\n登\n就诊科室:呼吸与危重症医学科门诊\n就诊日期:2024年09月06日17时40分\n主诉:哮喘、肺结节复诊\n现病史:吸入治疗后症状好转\n既往史:\n个人史:\n家族史:\n体格检查:肺(-)\n诊断:支气管哮喘\n孤立性肺结节\n治疗:\n检验:\n[检验]\n检查:\n[检查]\n治疗及其他:\n[治疗及其他]\nRx\n1.布地奈德福莫特罗吸入粉雾剂(II)[信必可都保][160ug*60吸*1]X3盒\n用法:每次1吸每隔12小时吸入3个月\n2.孟鲁司特钠片[进口][10mg*30]X2盒\n用法:每次10mg每晚口服2个月\n特别嘱托."
+    },
+    {
+      "chunk_id": "b06674736da44413",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 45,
+      "content": "门诊(急)诊病历\n姓名:\n年龄:44岁\n性别:男\n就诊科室:呼吸与危重症医学科门诊\n就诊日期:2024年06月06日11时37分\n主诉:活动后呼吸困难,咳嗽,咳痰,喘息反复30余年,诊断哮喘,未规范治疗。复发加重5天,咳白色粘痰,无发热。\n现病史:\n既往史:\n个人史:\n家族史:\n检查:双肺散在哮鸣音。\n诊断:支气管哮喘\n治疗:\n检验:\n[检验]\n检查:\n支气管舒张试验(组);呼出气一氧化氮测定;CT肺部平扫加三维成像;\n治疗及其他:\n一次性使用麻醉和呼吸用呼吸系统过滤器[GL-7(口径30)(404039189)]每次\n一次1天1个:\n结果回报:\n呼出气一氧化氮测定检查意见:呼气NO浓度均值:"
+    },
+    {
+      "chunk_id": "01cdf6e9ae910755",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 18,
+      "content": "长沙德雅医院处方笺\n普\n处方编号 8002727 费别\n科别 承收 门诊号\n姓名 于红华 性别 男/女 年龄 44岁 2024年06月07日\n临床诊断：支气管哮喘发作\nR\n0.9%氯化钠 100ml Bid\n盐酸氨溴索 2ml:15mg 静滴 4天\n0.9%氯化钠 100ml Qy\n甲泼尼龙琥珀酸钠 40ml 静滴 4\n医生签名\n肖清华\n计价\n药费 审核员\n注射费 调配员\n收款人 核、发员\n(处方当日有效)"
+    },
+    {
+      "chunk_id": "13eb2d0bfff50256",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 27,
+      "content": "年龄：44岁\n性别：男\n就诊科室：呼吸与危重症医学科门诊\n就诊日期：2024年07月05日 16时58分\n主诉：复诊\n现病史：哮喘复诊。吸入治疗后气促有好转。\n既往史：\n个人史：\n家族史：\n检查：\nCT肺部平扫加三维成像检查意见：双肺结节，LU-RADS2-3类，建议6个月复查。\n诊断：支气管哮喘\n孤立性肺结节\n肺部感染\n治疗：\n检验：\n[检验]\n检查：\n[检查]\n治疗及其他：\n[治疗及其他]\nRx\n1. 苹果酸奈诺沙星胶囊[浙江][250mg*6] X 5盒\n用法：每次500mg 每日1次 口服 15天\n2. 孟鲁司特钠片[杭州民生][10mg*5] X 6盒\n用法：每次10mg 每晚 口服"
+    },
+    {
+      "chunk_id": "4c65408045c61a65",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 178,
+      "content": "中南大学湘雅二医院\n肺功能检查\n试验检查报告\n测试号:\n姓名:\n出生日期:\n1979-10-25\n身高:\n153 cm\n性别:\n男\n年龄:\n44 岁\n体重:\n60 kg\n科别:\n吸烟史:\n联系电话:\n临床印象:\n测试日期\n测试时间\n预计值\n药前\n前%预\n药后\n后%预\n改善率\nIC\n[L]\n2.31\nFVC\n[L]\n3.33\n3.03\n91.0\n3.41\n102.6\n12.8\nFEV 1\n[L]\n2.81\n1.23\n43.8\n1.60\n57.1\n30.4\nFEV 1 % FVC\n[%]\n84.27\n40.65\n48.2\n47.00\n55.8\n15.6\nVC MAX\n[L]\n3.45\n3.03\n8"
+    },
+    {
+      "chunk_id": "243c0559651977cb",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 28,
+      "content": "门(急)诊病历\n姓名\n年龄:44岁\n性别:男\n登记号:0001\n就诊科室:呼吸与危重症医学科门诊\n就诊日期:2024年09月06日 17时40分\n主诉:哮喘、肺结节复诊\n现病史:吸入治疗后症状好转\n既往史:\n个人史:\n家族史:\n体格检查:肺(-)\n诊断:支气管哮喘\n孤立性肺结节\n治疗:\nRx\n1.布地奈德福莫特罗吸入粉雾剂(II)[信必可都保][160ug*60吸*1]X3盒\n用法:每次1吸 每隔12小时吸入 3个月\n2.孟鲁司特钠片[进口][10mg*30]X2盒\n用法:每次10mg 每晚 口服 2个月\n特别嘱托:\n坚持用药,坚持吸入治疗并记录哮喘日记\n3月后复诊,并复查肺CT\n不适随诊\n医"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      10
+    ],
+    "page_sum": 7,
+    "check": {
+      "covered": 7,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n19:39:58: [QwenVL] 5/10 pages done\n\n19:40:18: [QwenVL] 6/10 pages done\n\n19:40:18: [QwenVL] 7/10 pages done\n\n19:40:21: [QwenVL] 8/10 pages done\n\n19:40:21: [QwenVL] 9/10 pages done\n\n19:40:23: [QwenVL] 10/10 pages done\n\n19:40:23: [QwenVL] Done: 422 sections from 10 pages.\n\n19:40:23: Done\n\n\n-----------"
+}

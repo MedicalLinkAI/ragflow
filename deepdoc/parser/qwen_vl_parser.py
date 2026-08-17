@@ -10,6 +10,7 @@ from __future__ import annotations
 import base64
 import json
 import logging
+import time
 import types
 
 TAG = "[qwen-vl-parser]"
@@ -478,7 +479,7 @@ class QwenVLParser(RAGFlowPdfParser):
 
     # 页级并发度：同时在飞的页数上限。实测 vLLM 接 4~6 并发零排队，
     # 超过后单请求速度被摊薄且总吞吐不再增长。
-    PAGE_CONCURRENCY = 6
+    PAGE_CONCURRENCY = 4
 
     def __init__(
         self,
@@ -487,6 +488,8 @@ class QwenVLParser(RAGFlowPdfParser):
         *,
         api_key: Optional[str] = None,
         request_timeout: int = 300,
+        max_retries: int = 2,
+        retry_backoff: float = 3.0,
         doc_id: Optional[str] = None,
         task_id: Optional[str] = None,
         doc_name: Optional[str] = None,
@@ -499,6 +502,10 @@ class QwenVLParser(RAGFlowPdfParser):
         self.model = model
         self.api_key = api_key or ""
         self.request_timeout = request_timeout
+        # 超时重试：8/17 压测实证 300s read timeout 后服务端仍会完成请求，
+        # 洪峰已过时重试大概率成功；仅对瞬时网络错误生效，业务错误不重试
+        self.max_retries = max_retries
+        self.retry_backoff = retry_backoff
         # 日志归因：多 task_executor 共享进程日志流，页级日志需 doc/task/case
         # 才能把超时/失败归属到真实文档（与 extractor 侧 _build_log_tag 口径
         # 一致）；调用方未传（如 naive 路径）时降级 doc=- task=-
@@ -564,34 +571,43 @@ class QwenVLParser(RAGFlowPdfParser):
         from concurrent.futures import ThreadPoolExecutor, as_completed
 
         def _process_page(page_idx: int):
-            page_img = self.page_images[page_idx]
             page_1based = page_idx + 1
+            try:
+                page_img = self.page_images[page_idx]
 
-            # Convert page image to bytes
-            buf = BytesIO()
-            page_img.save(buf, format="PNG")
-            img_bytes = buf.getvalue()
+                # Convert page image to bytes
+                buf = BytesIO()
+                page_img.save(buf, format="PNG")
+                img_bytes = buf.getvalue()
 
-            # Step 1: Classify page
-            page_type, report_date = self._classify_page(img_bytes)
-            logging.info(f"{self._log_tag} page={page_1based} classify={page_type} report_date={report_date}")
+                # Step 1: Classify page
+                page_type, report_date = self._classify_page(img_bytes)
+                logging.info(f"{self._log_tag} page={page_1based} classify={page_type} report_date={report_date}")
 
-            # Step 2: Extract content based on type.
-            # 传入 bbox_idx=0 做页内局部编号；全局编号在结果按页序
-            # 汇总后统一分配，避免乱序。
-            if page_type == "table":
-                page_sections, _ = self._extract_table_page(
-                    img_bytes, page_1based, 0, report_date
+                # Step 2: Extract content based on type.
+                # 传入 bbox_idx=0 做页内局部编号；全局编号在结果按页序
+                # 汇总后统一分配，避免乱序。
+                if page_type == "table":
+                    page_sections, _ = self._extract_table_page(
+                        img_bytes, page_1based, 0, report_date
+                    )
+                else:
+                    page_sections, _ = self._extract_text_page(
+                        img_bytes, page_1based, 0
+                    )
+
+                logging.info(
+                    f"{self._log_tag} page={page_1based} {page_type}: {len(page_sections)} sections"
                 )
-            else:
-                page_sections, _ = self._extract_text_page(
-                    img_bytes, page_1based, 0
+                return page_idx, page_type, page_sections
+            except Exception as e:
+                # 单页提取失败（含超时重试耗尽）：降级为跳过该页继续剩余页，
+                # 不拖死整篇、不丢弃其他页已解析成果（8/17 压测 8 文档
+                # 因单页 300s 超时整篇 chunks=0 的实证教训）
+                logging.error(
+                    f"{self._log_tag} page={page_1based} extraction failed, skipping page: {e}"
                 )
-
-            logging.info(
-                f"{self._log_tag} page={page_1based} {page_type}: {len(page_sections)} sections"
-            )
-            return page_idx, page_type, page_sections
+                return page_idx, "failed", []
 
         executor = ThreadPoolExecutor(
             max_workers=self.PAGE_CONCURRENCY,
@@ -608,8 +624,8 @@ class QwenVLParser(RAGFlowPdfParser):
                 progress = 0.1 + 0.8 * (done_count / total_pages)
                 callback(progress, f"[QwenVL] {done_count}/{total_pages} pages done")
 
-        # 按提交顺序（=页序）收集结果；f.result() 会将页内异常原样抛出，
-        # 与串行版行为一致
+        # 按提交顺序（=页序）收集结果；页内异常已在 _process_page 降级为
+        # 跳过该页，f.result() 不再携带页级异常
         results = [f.result() for f in futures]
         results.sort(key=lambda r: r[0])
 
@@ -904,23 +920,34 @@ class QwenVLParser(RAGFlowPdfParser):
         # 进程级 VL 全局限流：页级并发叠加时防止打爆 vLLM prefill
         from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
 
-        acquire_vl_slot()
-        try:
-            resp = requests.post(
-                self.api_url,
-                json=payload,
-                headers=headers,
-                timeout=self.request_timeout,
-            )
-            resp.raise_for_status()
-            content = resp.json()["choices"][0]["message"]["content"]
-            logging.info(f"{self._log_tag} {prompt_tag} API response (len={len(content)}):\n{content}")
-            return content
-        except Exception as e:
-            logging.error(f"{self._log_tag} {prompt_tag} API call failed: {e}")
-            raise
-        finally:
-            release_vl_slot()
+        max_attempts = self.max_retries + 1
+        last_exc: Optional[Exception] = None
+        for attempt in range(1, max_attempts + 1):
+            acquire_vl_slot()
+            try:
+                resp = requests.post(
+                    self.api_url,
+                    json=payload,
+                    headers=headers,
+                    timeout=self.request_timeout,
+                )
+                resp.raise_for_status()
+                content = resp.json()["choices"][0]["message"]["content"]
+                logging.info(f"{self._log_tag} {prompt_tag} API response (len={len(content)}):\n{content}")
+                return content
+            except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
+                # 瞬时网络错误（含 300s read timeout）：重试而非整篇判失败
+                last_exc = e
+                logging.error(f"{self._log_tag} {prompt_tag} API call failed (attempt {attempt}/{max_attempts}): {e}")
+            except Exception as e:
+                logging.error(f"{self._log_tag} {prompt_tag} API call failed: {e}")
+                raise
+            finally:
+                release_vl_slot()
+            if attempt < max_attempts:
+                logging.warning(f"{self._log_tag} {prompt_tag} retrying in {self.retry_backoff}s")
+                time.sleep(self.retry_backoff)
+        raise last_exc
 
     # ── Compat methods (for crop() in downstream) ─────────────────
 

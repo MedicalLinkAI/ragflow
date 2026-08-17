@@ -1,0 +1,251 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "XFQI 61 男 肺癌初诊.pdf",
+    "size_kb": 1376.0,
+    "pages": null,
+    "doc_id": "89835e9279b811f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-d335216bb8c8"
+  },
+  "doc_id": "89835e9279b811f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 20,
+  "orm_synced": true,
+  "process_duration": 510.12936,
+  "begin_at": "2026-08-17T20:48:55",
+  "end_at": "2026-08-17T20:57:27",
+  "elapsed_s": 511.8,
+  "before": {
+    "chunk_count": 20,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "ExaminationReport": 6,
+      "LabReport": 13
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "421f3e519a91f960",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 8,
+      "content": "图像:\n镜下所见:\n病理诊断:\n常规报告:\n超声空化加快标本：（右侧臀部穿刺组织）见癌，待免疫组化协诊。\n补充报告1：2026/4/23\n（右侧臀部穿刺组织）HE结合免疫组化，符合中分化鳞癌。本院：CK7灶+ CK+ P63+ Ki-67约50%+ P40+ P53突变型\nTTF-1-"
+    },
+    {
+      "chunk_id": "43a58f16b9755c48",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 10,
+      "content": "HONOR 100\n肉眼所见:\n图像:\n镜下所见:\n病理诊断:\n常规报告:\n会诊邵阳市第一人民医院病理切片2.\n1及IHC*8及白片*5意见: (右肺新生物活检)镜检见极少量浅表鳞状上皮\n呈高级别异型增生,倾向浅表癌变,未见明显浸润,活检样本中有效成份极少,请结合临床及影像学等综合考虑。\n外院:P63+ CK5/6+ TTF-1- NapsinA- CD56- EGFR+ P53错义突变 Ki-67约70%+"
+    },
+    {
+      "chunk_id": "e57dff91f44db360",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 6,
+      "content": "HONOR 100\n超声所见：\n右侧臀部皮下软组织内可见一大小约为78x43x47mm低回声肿块，椭圆形，边界欠清，光点粗，分\n布不均匀，CDFI显示其内血流信号不丰富。\n超声意见：\n右侧臀部皮下软组织内低回声肿块，考虑：软组织肿瘤，可试行超声引导下穿刺。"
+    },
+    {
+      "chunk_id": "48d8fea60eb8e43c",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 19,
+      "content": "HONOR 100\n性别：男\n检查号：C\n病区：\n年龄：61岁\n病案号：\n身份证号：\n检查项目：CT平扫+增强（肺高分辨）,CT平扫+增强（上腹部-薄层）,CT平扫+增强（下腹部-薄层）,CT平扫+增强（盆腔-薄层）,CT平扫+增强（颈部）\n检查时间：2026年04月15日 17:09:37\n影像所见：\n右肺门区-右上肺见不规则软组织密度肿块影，与胸膜粘连，与纵隔淋巴结分界不清，最大截面大小约94mm×55mm，增强扫描强化不均，右上肺支气管截断，右上肺动静脉显示欠清，包埋右肺动脉，右上肺见斑片状模糊影及实变影，右上肺小叶间隔增厚。左上肺近肺门处见一肿块，增强扫描强化不均，大小约42mm×43"
+    },
+    {
+      "chunk_id": "10c7a33a87da68ee",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 22,
+      "content": "HONOR 100\n姓名：\n性别：男\n年龄：61岁\n检查号：\n登记号：\n病案号：\n科室：\n病区：\n床号：\n临床诊断：1:肺恶性肿瘤\n检查项目：骨扫描检查—全身\n采集方式：静态采集\n显像剂：TC99m-MDP\n检查所见：\n静脉注射99mTc-MDP 3小时后行全身骨显像前位、后位：全身诸骨显影。右侧第\n见点状放射性异常浓聚影；颅骨，胸骨，双侧肩胛骨，脊柱，骨盆，余肋骨及四肢骨\n放射性分布未见明显异常。双肾显影。\n诊断意见：\n全身骨显像：\n1）未见明显骨转移征象。\n2）右侧第5肋助点状放射性异常浓聚影，考虑骨折："
+    },
+    {
+      "chunk_id": "0169c76e14f7bfbb",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 45,
+      "content": "HONOR 100\nFlow [L/s]\nF/V ex\n6\nVol [L]\n4\nVol%VCmax\n100\nVCmax\n80\n2\n60\n40\n20\n0\n0\nTime [s]\n0\n2\n4\n6\n8\n10\nVol [L]\n4\nVol [L]\n2\n0\n2\n4\nTime [s]\n0\n2\n4\n6\n8\n10\n12\n中-重度混合性通气功能障碍\n肺通气储备功能中度降低\n气道阻力在正常范围\n意见：\n医生签名：\n李璇\n报告审核时间：2026-04-13 19:57"
+    },
+    {
+      "chunk_id": "5114f68b2fa5975c",
+      "pages": [
+        20,
+        21
+      ],
+      "page_count_raw": 67,
+      "content": "入院记录\n第1次入院\n姓名：\n出生地：邵阳市\n性别：男\n民族：汉族\n年龄：61岁\n职业：农民\n婚姻：已婚\n住址：湖南省新宁县\n入院时间：2026-04-13 14:50\n入院方式：步行\n记录时间：2026-04-13 15:13\n现用药史：\n病史陈述者：患者本人\n过敏史：\n主诉：确诊肺鳞癌5天。[时间]\n外院检查：无\n医院名称：邵阳市第一人民医院[医院名称]\n出院30天内重复住院：是\n现病史：患者2026.4.1因“肺部肿块1月余”于邵阳市第一人民医院就诊，完善CT：1.右主支气管\n壁增厚伴右上肺门肿块，考虑中央型肺癌并阻塞性肺炎，右上肺癌性淋巴管炎，侵犯纵隔及邻近血管可\n能性大，纵隔多发淋巴"
+    },
+    {
+      "chunk_id": "308af95e5268374b",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>CEA</td><td>None</td><td>14.17</td><td>NG/ML</td><td>0-1</td><td>True</td></tr><tr><td>CA-125</td><td>None</td><td>77.83</td><td>U/ML</td><td>0-3</td><td>True</td></tr><tr><td>CA-724</td><td>None</td><td>1.03</td><td>U/ML</td><td>0-12</td><td>False</td></tr><tr><td>CYFRA21-</td><td>No"
+    },
+    {
+      "chunk_id": "aa96de545f51331f",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>降钙素原</td><td>PCT</td><td><0.020</td><td>ng/mL</td><td>0-0.05</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "ec52459c1522b084",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>ABO血型</td><td>None</td><td>A型</td><td>None</td><td>None</td><td>False</td></tr><tr><td>Rh(D)</td><td>None</td><td>阳性(+)</td><td>None</td><td>None</td><td>False</td></tr><tr><td>Rh分型</td><td>None</td><td>CCDee</td><td>None</td><td>None</td><td>False</td></tr><tr><td>Rh(C)</td><td>None<"
+    },
+    {
+      "chunk_id": "b44359503ae3a7b9",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>丙型肝炎抗体</td><td>Anti-HCV</td><td>0.08</td><td>None</td><td><1.00</td><td>False</td></tr><tr><td>人免疫缺陷病毒抗体抗原联合测定</td><td>None</td><td>0.08</td><td>None</td><td>0-1.000</td><td>False</td></tr><tr><td>梅毒螺旋体抗体(特异)</td><td>None</td><td>14.03</td><td>None</td><td><1.00</td><td>True</td></tr>"
+    },
+    {
+      "chunk_id": "b5c9d971b78bc4ed",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>游离甲状腺素*</td><td>FT4</td><td>0.985</td><td>NG/DL</td><td>0.62-1.24</td><td>False</td></tr><tr><td>游离三碘甲状腺原氨酸*</td><td>FT3</td><td>3.410</td><td>PG/ML</td><td>2.30-4.80</td><td>False</td></tr><tr><td>甲状腺素*</td><td>TT4</td><td>10.820</td><td>UG/DL</td><td>5.42-12.74</td><td>False</td></t"
+    },
+    {
+      "chunk_id": "21c0206e4bd9060d",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>12.30</td><td>SEC</td><td>11.00-14.50</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>0.93</td><td>None</td><td>0.60-1.20</td><td>False</td></tr><tr><td>活化部分凝血活酶时间</td><td>APTT</td><td>34.20</td><td>SEC</td><td>28.00-43.00</td><td>False</td></tr><t"
+    },
+    {
+      "chunk_id": "a83ca3ea2d5a7e12",
+      "pages": [
+        19
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>WBC</td><td>None</td><td>9.90</td><td>*10~9/L</td><td>4.00-10.00</td><td>False</td></tr><tr><td>NEU%</td><td>None</td><td>68.90</td><td>%</td><td>50-80</td><td>False</td></tr><tr><td>LYM%</td><td>None</td><td>21.10</td><td>%</td><td>20.00-40.00</td><td>False</td></tr><tr><td>MONO%</td"
+    },
+    {
+      "chunk_id": "e62104f3882a1c1d",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>C-反应蛋白</td><td>CRP</td><td>41.40</td><td>mg/L</td><td>0-5.0</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "84f21d36b8b808df",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>总T细胞(CD3+)</td><td>T</td><td>70.18</td><td>%</td><td>61.00-85.00</td><td>False</td></tr><tr><td>CD4+T细胞(CD3+CD4+)</td><td>CD4</td><td>22.63</td><td>%</td><td>28.00-58.00</td><td>True</td></tr><tr><td>CD8+T细胞(CD3+CD8+)</td><td>CD8</td><td>10.58</td><td>%</td><td>19.00-48.00</td><td>Tru"
+    },
+    {
+      "chunk_id": "2e677cf67d99293e",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>hsTNT</td><td>None</td><td><10.00</td><td>pg/mL</td><td>0-14</td><td>False</td></tr><tr><td>氨基末端脑钠肽前体检测</td><td>None</td><td>64.62</td><td>pg/ml</td><td>0-900</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "19cf064189576464",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>*钾</td><td>K</td><td>4.19</td><td>mmol/L</td><td>3.50-5.30</td><td>False</td></tr><tr><td>*钠</td><td>Na</td><td>136.9</td><td>mmol/L</td><td>137.0-147.0</td><td>True</td></tr><tr><td>*氯</td><td>Cl</td><td>101.2</td><td>mmol/L</td><td>99.0-110.0</td><td>False</td></tr><tr><td>*钙</td><t"
+    },
+    {
+      "chunk_id": "5038e1367205635a",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 14,
+      "content": "<table><tr><td>COLOR 颜色</td><td>COLOR</td><td>黄色</td><td>None</td><td>黄色</td><td>False</td></tr><tr><td>XZ 性状</td><td>XZ</td><td>软</td><td>None</td><td>软</td><td>False</td></tr><tr><td>RBC 红细胞</td><td>RBC</td><td>未见</td><td>/HP</td><td>0/HP</td><td>False</td></tr><tr><td>WBC 白细胞</td><td>WBC</td><td>"
+    },
+    {
+      "chunk_id": "6c52b36d161db2cc",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 12,
+      "content": "<table><tr><td>颜色</td><td>COLOR</td><td>黄色</td><td>None</td><td>黄色</td><td>False</td></tr><tr><td>浊度</td><td>CLA</td><td>清亮</td><td>None</td><td>清亮</td><td>False</td></tr><tr><td>PH值</td><td>PH</td><td>6.00</td><td>None</td><td>5.0-8.0</td><td>False</td></tr><tr><td>尿比重</td><td>SG</td><td>1.020</td>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "page_sum": 26,
+    "check": {
+      "covered": 21,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 6,
+      "clinical": 6,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 13,
+      "clinical": 13,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n20:51:50: LLM responded. Parsing segments...\n\n20:51:50: LLM returned 20 segments. Cutting text...\n\n20:51:50: All 20 segments used bbox_id slicing. Saving images...\n\n20:51:50: SmartSplitter done: 20 chunks from 20 LLM segments (all bbox_id). Types: {'ExaminationReport': 6, 'LabReport': 13, 'Admissio"
+}

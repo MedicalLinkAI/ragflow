@@ -1,0 +1,76 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LIJI-女-45岁-类风湿性关节炎.pdf",
+    "size_kb": 235.8,
+    "pages": null,
+    "doc_id": "d8be4928871811f1bb8027103a248952",
+    "patient_id": "PAT-c978da53b885"
+  },
+  "doc_id": "d8be4928871811f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 2,
+  "orm_synced": false,
+  "process_duration": 192.90814,
+  "begin_at": "2026-08-17T19:15:07",
+  "end_at": "2026-08-17T19:18:24",
+  "elapsed_s": 196.8,
+  "before": {
+    "chunk_count": 2,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 1,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "92a818224920cb41",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 43,
+      "content": "徐州矿务集团总医院\n徐州医科大学第二附属医院\n间病房入、出院记录\n：十二病区护理单元 床号：6 住院号：00214234\n工作单位：-\n性别：女\n年龄：49岁\n籍贯：江苏省徐州市泉山区\n民族：汉族\n婚姻：已婚\n职业：职工\n住址：江苏徐州市\n供史者与（患者关系）：本人\n入院日期：2025-04-23 09:05:08\n记录日期：2025年04月25日 08时29分\n主诉：声音嘶哑10余天\n入院情况：患者因“声音嘶哑10余天”入院。查体：会厌无肿胀，杓会厌襞稍充血肿胀，室带无新生物，右侧声\n带边缘息肉样隆起，表面光滑，声门闭合不全。辅助检查：电子喉镜（2025-04-20本院）示：舌扁桃体增生，会"
+    },
+    {
+      "chunk_id": "103e862935bf80cb",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 262,
+      "content": "徐州医科大学附属医院\n肺功能检查报告\n舒张试验\n姓名：\n科别：\n性别：\n身高：158 cm\n号：210254\n/住院号：门诊\n48 岁\n体重：49.6 kg\nFlow [L/s]\nF/V ex\nVolume [L]\nCO [%]\n0.30\n0.25\n0.20\n0.15\n0.10\n0.05\n0.00\n0\n10\n5\n0\n5\n10\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n4"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2
+    ],
+    "page_sum": 2,
+    "check": {
+      "covered": 2,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n19:15:08 Task has been received.\n\n-------------------------------------\n[File]:\n19:15:09: File fetched.\n\n19:15:09: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n19:15:09: Start to work on a PDF.\n\n19:15:09: [QwenVL] Processing 2 pages...\n\n19:15:24: [QwenVL] 1/2 pages"
+}

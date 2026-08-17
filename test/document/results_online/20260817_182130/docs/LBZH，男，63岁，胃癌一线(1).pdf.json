@@ -1,0 +1,68 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LBZH，男，63岁，胃癌一线(1).pdf",
+    "size_kb": 27790.0,
+    "pages": null,
+    "doc_id": "f77057f0960c11f1abb555ceeebece40",
+    "patient_id": "PAT-b0dd0531b4d4"
+  },
+  "doc_id": "f77057f0960c11f1abb555ceeebece40",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 332.50314,
+  "begin_at": "2026-08-17T18:50:09",
+  "end_at": "2026-08-17T18:56:36",
+  "elapsed_s": 386.8,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 4,
+      "DischargeRecord": 1,
+      "LabReport": 1,
+      "OutpatientRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 4,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n18:50:11 Task has been received.\n\n-------------------------------------\n[File]:\n18:50:11: File fetched.\n\n18:50:11: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n18:50:11: Start to work on a PDF.\n\n18:50:22: [QwenVL] Processing 20 pages...\n\n18:50:56: [QwenVL] 1/20 pag"
+}

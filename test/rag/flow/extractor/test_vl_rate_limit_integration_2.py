@@ -54,7 +54,9 @@ class _File2DocumentService:
 _fds_mod.File2DocumentService = _File2DocumentService
 sys.modules["api.db.services.file2document_service"] = _fds_mod
 
-_common_mod = _fake_pkg("common")
+# 挂真实 __path__：qwen_vl_ocr 导入 common.log_tag（TAG 归因），
+# 纯 ModuleType 不是包会导致 ModuleNotFoundError
+_common_mod = _fake_pkg("common", os.path.join(project_root, "common"))
 _settings_mod = types.ModuleType("common.settings")
 
 

@@ -1,0 +1,129 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LYNO 男 62.pdf",
+    "size_kb": 10256.7,
+    "pages": null,
+    "doc_id": "db07974478f811f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-697d8e91e769"
+  },
+  "doc_id": "db07974478f811f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 439.29102,
+  "begin_at": "2026-08-17T20:57:27",
+  "end_at": "2026-08-17T21:04:51",
+  "elapsed_s": 444.0,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 3,
+      "ExaminationReport": 3,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "53905586f00e4f00",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 26,
+      "content": "病理检查补充报告单\n病理号:\n姓\n性别:男\n年龄:62岁\n出生日期:\n送检单\n病区:\n病人编号:\n送检日期:2026-03-13 10:58\n住院号:\n床号:36\n特征图像:\n补充病理诊断:\n(右中间支气管)非角化型鳞癌。免疫组化结果:CK5/6(+),CK7(+),TTP-1(-),\nNapsinA(-),P40(+),PD-L1(E1L3N)(ventana)(TPS=5%),K167(40+),HER2\n(1+).\n报告日期:2026-04-17\n报告医生:\n审核医生:\n备注:如报告单与诊断有重大不符,请及时与我科联系:\n2.如有疑问可扫描二维码进行病理报告相关咨询与解读。进入路径:中南"
+    },
+    {
+      "chunk_id": "bf371cb6d8d13595",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 31,
+      "content": "姓名\n性别：男\n出生日期：1905年11月20日 4:07:04\n申请科室：\n检查项目：CT胸部（肺及纵隔）薄层平扫增强，CT上腹部（肝胆脾胰）薄层平扫增强\n临床诊断：肺占位性病变(右肺门)阻塞性肺炎\n检查方法：\nCT胸部（肺及纵隔）薄层平扫增强,CT上腹部（肝胆脾胰）薄层平扫增强\n检查所见：\n双肺支气管血管束增多增粗，双肺支气管壁增厚；双肺可见多发薄壁及无壁透亮影。\n右肺中下叶支气管狭窄、闭塞；右肺门-纵隔见团块病变，并与周围淋巴结融合，平扫\nCT值约35HU，增强后不均匀强化，右肺可见多发结节状、斑片、片状密度增高灶，动\n脉期及静脉期CT值分别约32-74HU、28-76HU。左肺上叶下舌"
+    },
+    {
+      "chunk_id": "db732d175863ab88",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 31,
+      "content": "性别：\nID号：\n内镜编\n塘电\n临床诊断：位性病变（右肿门）\n吸烟史：有\nCT表现：右肺中下叶病变并相应支气管狭窄、闭塞\n主诉：咳嗽1年余\n隆突\n右上叶\n右中叶\n右下叶\n右中间支气管\n右中间支气管（治疗后）\n检查所见：\n全麻经喉罩进入支气管镜。\n气管、隆突：未见异常。\n左肺：1-4级支气管粘膜充血肿胀，表面光滑，管腔通畅，未见活动性出血及新生物。\n右肺：右中间支气管可见新生物及脓性分泌物完全堵塞管腔，予以抽吸后可见菜花样新生物，周围仅余一缝\n隙，病变向上累及右主支气管，予以高频电治疗（圈套）后冻取新生物大体，可见大量脓性分泌物溢出，予以\n抽吸后可见右中、下叶各级支气管粘膜充血肿胀，管腔通畅，右"
+    },
+    {
+      "chunk_id": "22ae33b924edc83c",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 75,
+      "content": "入院时间：2026-03-12 14:28\n出院时间：2026-03-14 09:01\n住院天数：2天\n入院诊断:\n1、肺占位性病变（右肺门）\n2、阻塞性肺炎\n3、低血氧症\n4、肺气肿\n5、肺大疱\n6、肝囊肿（右后叶上段）\n7、肾囊肿（左）\n入院时情况：患者中老年男性，62岁，病程1年余。因“咳嗽1年余，发现肺占位1周\n”。入院，既往无特殊。体格检查：体温36.5℃ 脉搏83次/分 呼吸19次/分 血压107/65m\nmHg，Sp02 91%，发育正常，营养中等，神清，慢性病容，查体合作，自动体位。全身皮\n肤、巩膜无黄染及出血点，全身浅表淋巴结无肿大。眼睑无水肿，结膜无充血，双侧瞳孔\n等大等圆"
+    },
+    {
+      "chunk_id": "1701e585d456b665",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>NSE</td><td>None</td><td>1.25</td><td>ng/ml</td><td><20</td><td>False</td></tr><tr><td>CEA</td><td>None</td><td>3.02</td><td>ng/ml</td><td><7.5</td><td>False</td></tr><tr><td>Nsdc-21-1</td><td>None</td><td>1.27</td><td>ng/ml</td><td><3</td><td>False</td></tr><tr><td>SCC</td><td>None</"
+    },
+    {
+      "chunk_id": "3ce48129c3efae40",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>血小板计数</td><td>None</td><td>609</td><td>10^9/L</td><td>125-350</td><td>True</td></tr><tr><td>嗜碱粒细胞分类计数</td><td>None</td><td>0.06</td><td>10^9/L</td><td>0.00-0.06</td><td>False</td></tr><tr><td>血小板比容</td><td>None</td><td>0.42</td><td>%</td><td>0.11-0.28</td><td>True</td></tr><tr><td>红细胞"
+    },
+    {
+      "chunk_id": "1add7dba33fe2cb1",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>HIV抗原/抗体联合检测</td><td>None</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n20:57:53: [QwenVL] 4/9 pages done\n\n20:57:53: [QwenVL] 5/9 pages done\n\n20:57:55: [QwenVL] 6/9 pages done\n\n20:57:57: [QwenVL] 7/9 pages done\n\n20:57:59: [QwenVL] 8/9 pages done\n\n20:58:07: [QwenVL] 9/9 pages done\n\n20:58:07: [QwenVL] Done: 237 sections from 9 pages.\n\n20:58:07: Done\n\n\n-------------------"
+}

@@ -1,0 +1,62 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "KLYY-男-70岁-肺癌.pdf",
+    "size_kb": 27144.5,
+    "pages": null,
+    "doc_id": "6d4b67b096fa11f19d3ab1cda0a97c3d",
+    "patient_id": "PAT-605b3e74e048"
+  },
+  "doc_id": "6d4b67b096fa11f19d3ab1cda0a97c3d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 324.81848,
+  "begin_at": "2026-08-17T18:21:31",
+  "end_at": "2026-08-17T18:27:49",
+  "elapsed_s": 378.2,
+  "before": {
+    "chunk_count": 19,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 11,
+      "AdmissionRecord": 1,
+      "ExaminationReport": 7
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 7,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 11,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n18:21:33 Task has been received.\n\n-------------------------------------\n[File]:\n18:21:35: File fetched.\n\n18:21:35: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n18:21:35: Start to work on a PDF.\n\n18:21:40: [QwenVL] Processing 26 pages...\n\n18:21:55: [QwenVL] 1/26 pag"
+}

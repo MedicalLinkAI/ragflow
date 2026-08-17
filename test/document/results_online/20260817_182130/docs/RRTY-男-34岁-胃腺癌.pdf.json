@@ -1,0 +1,147 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "RRTY-男-34岁-胃腺癌.pdf",
+    "size_kb": 10096.9,
+    "pages": null,
+    "doc_id": "5d2374ee872911f1bb8027103a248952",
+    "patient_id": "PAT-433bc41ef572"
+  },
+  "doc_id": "5d2374ee872911f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 849.7789,
+  "begin_at": "2026-08-17T19:07:19",
+  "end_at": "2026-08-17T19:21:31",
+  "elapsed_s": 851.7,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "MedicalOrder": 1,
+      "LabReport": 4,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "d186b46fa5b91ca8",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 91,
+      "content": "2125科室:肿瘤科、血液科病历号:2025004913费别:异地医保\n成都市金牛区人民医院·四川省人民医院金牛医院\n入院记录\n姓名:\n科别:肿瘤科、血液科\n床号:108\n病历号:2025004913\n姓名:\n出生地:\n绵阳市三台县\n性别:\n女\n职业:\n农民\n年龄:\n58岁\n入院时间:\n2025年02月25日14时50分\n民族:\n汉族\n记录时间:\n2025年02月25日15时41分\n婚姻:\n已婚\n病史陈述者:\n与患者关系:\n夫妻\n可靠程度:\n基本可靠\n主诉:确诊卵巢高级别浆液性腺癌1+年,呕吐、乏力1月,发现血红蛋白减少4小时\n现病史:2023年1月,患者无明显诱因感腹胀,就诊于当地医院,考虑"
+    },
+    {
+      "chunk_id": "c7e88411af5ea9de",
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 90,
+      "content": "成都市金牛区人民医院·四川省人民医院金牛医院\n出院证明书\n姓名:\n科别:肿瘤科、血液科\n床号:21\n病历号:2025004913\n姓名:\n性别:\n女\n年龄\n58岁\n科别\n肿瘤科、\n血液科\n住院号\n2025004913\n入院时间\n2025年02月25日\n14时50分\n出院日期\n2025年03月03日\n10时42分\n联系电话\n18880834986\n诊断:\n1.重度贫血2.卵巢恶性肿瘤:双侧卵巢高级别浆液性腺癌(IV期FIGO分期)新辅助化疗后术后靶向\n治疗中3.化疗后骨髓抑制4.细菌性肺炎5.粒细胞缺乏伴发热6.白细胞减少7.血小板减少8.重度营养不良\n伴消瘦9.咳嗽\n扼要病情及治疗经过:\n患者"
+    },
+    {
+      "chunk_id": "52e794611e96e647",
+      "pages": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "page_count_raw": 468,
+      "content": "6住院\n姓名:\n性别:女年龄:58岁身份证号:\n科室:肿瘤科、血液科病历号:2025004913费别:异地医保\n长期\n临时\n草药\n全部□药品□护理□检查□检验□输血□病理□手术□治疗□嘱托医嘱\nDC\n正常\n按医嘱内容文字检索\n1个月\n状态\n开始日期\n医嘱内容\n医生\n审核者\n审核日期\n已执行\n2025.02.25 15:07\n血型\n曹希\n张晓英\n2025.02.25 15:09\n已执行\n2025.02.25 15:30\n(18AA)复方氨基酸注射液(限甲★)500ml静滴st(补临)高危补临\n曹希\n张晓英\n2025.02.25 15:32\n已执行\n2025.02.25 15:30\n(国集5)中/"
+    },
+    {
+      "chunk_id": "05488e80a5d23b95",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>10.35</td><td>10^9/L</td><td>3.50~9.50</td><td>True</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>94.2</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>2.4</td><td>%</td><td>20.0~50.0</td><td>True</td></tr><tr><td>单核细胞比"
+    },
+    {
+      "chunk_id": "0d37258a7476dd21",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>4.85</td><td>10^9/L</td><td>3.50~9.50</td><td>False</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>87.8</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>4.7</td><td>%</td><td>20.0~50.0</td><td>True</td></tr><tr><td>单核细胞比"
+    },
+    {
+      "chunk_id": "a81d566027249af3",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>14.04</td><td>10^9/L</td><td>3.50 ~ 9.50</td><td>True</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>84.9</td><td>%</td><td>40.0 ~ 75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>5.2</td><td>%</td><td>20.0 ~ 50.0</td><td>True</td></tr><tr><td"
+    },
+    {
+      "chunk_id": "674d41bfec0252ea",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>1.54</td><td>10^9/L</td><td>3.50~9.50</td><td>True</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>86.8</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>8.7</td><td>%</td><td>20.0~50.0</td><td>True</td></tr><tr><td>单核细胞比值"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      15
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 14,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "MedicalOrder": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n19:09:37: [QwenVL] 13/16 pages done\n\n19:09:38: [QwenVL] 14/16 pages done\n\n19:09:46: [QwenVL] 15/16 pages done\n\n19:09:49: [QwenVL] 16/16 pages done\n\n19:09:49: [QwenVL] Done: 860 sections from 16 pages.\n\n19:09:49: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n19:09:49: Start S"
+}

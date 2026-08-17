@@ -1,0 +1,154 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "湘潭中心医院-LWPI-38岁(1).pdf",
+    "size_kb": 4697.2,
+    "pages": null,
+    "doc_id": "66d23528859b11f1bb8027103a248952",
+    "patient_id": "PAT-043aadb97fda"
+  },
+  "doc_id": "66d23528859b11f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 10,
+  "orm_synced": true,
+  "process_duration": 410.6864,
+  "begin_at": "2026-08-17T19:22:05",
+  "end_at": "2026-08-17T19:29:00",
+  "elapsed_s": 414.6,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 4,
+      "OutpatientRecord": 1,
+      "PrescriptionRecord": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "b6d66fd5ed52f2a4",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 17,
+      "content": "处方笺\n性别：男 女 年龄：38岁\n地址/电话：\n年9月5日\n诊断：类风湿性关节炎 过敏史：\nR\n1.甲氨蝶呤片 2.5mg×16片×4盒.\n用法：10mg 口服，每周一次\n2.叶酸片 5mg×100片×1盒\n用法：5mg 口服 每周一次\n长期医嘱\n意文医疗点\n宁乡市\n医师：邱童文\n审核(调配)：\n核对(发药)：\n金额：¥"
+    },
+    {
+      "chunk_id": "3b80e2b2c1f33fa8",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 27,
+      "content": "宁乡市坝塘镇保安村邱意文医疗点\n科室：全科\n性别：女\n年龄：39岁\n诊断：类风湿性关节炎\n日期：2023年12月25日\n药品名称\n药品规格\n单位\n数量\n金额\n单量\n用法\n甲氨蝶呤片\n2.5mg*16片\n盒\n2\n42\n10mg\n一次四片，一周一次\n温馨提示：1、卫生部《医疗机构药事管理规定》，为保障患者用药安全，除药品质量原因外，药\n品一经发出，概不退换。2、药品请当面核对点清，以免遗漏。3、请按说明书或医嘱用药。4、\n请按说明书储存药品。5、此单请妥为保存，遗失不予补发\n医生：邱意文\n配药人：\n发药人：\n合计：84"
+    },
+    {
+      "chunk_id": "1d4fdc8d94685c75",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 34,
+      "content": "门诊\n宁乡市坝塘镇保安村邱意文医疗点\n科室：儿科\n性别：女\n年龄：38岁\n诊断：类风湿性关节炎\n日期：2023年9月5日\n药品名称\n药品规格\n单位\n数量\n金额\n单量\n用法\n甲氨蝶呤片\n2.5mg*16片\n盒\n4\n42\n10mg\n一次四片，一周一次\n叶酸片\n5mg*100片\n盒\n1\n12\n5mg\n一次一片，一周一次\n温馨提示：1、卫生部《医疗机构药事管理规定》，为保障患者用药安全，除药品质量原因外，药品一经发出，概不退换。2、药品请当面核对点清，以免遗漏。3、请按说明书或医嘱用药。4、\n请按说明书储存药品。5、此单请妥为保存，遗失不予补发。\n医生：邱意文\n配药人：\n发药人：\n合计：180"
+    },
+    {
+      "chunk_id": "7d2d75c043acc096",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 15,
+      "content": "宁乡市坝塘镇保安村邱意文医疗点\n性别：女 年龄：38 日期：2023年9月5日\n主 诉：类风湿性关节炎确诊三年余\n现 病 史：患者于3年前因全身关节多处疼痛、肿胀，在上级医院确诊类风\n湿性关节炎。予布洛芬以及止痛药治疗，无明显疗效，于2022年年中使用阿\n达木单抗治疗近四个月，疗效不佳，病情反复。\n体 征：全身多处关节疼痛，部分关节肿胀疼痛。\n诊 断：类风湿性关节炎\n处理意见：注意保暖，避免受凉。\n西医处方：1、甲氨蝶呤片 2.5mg*16片*8盒\n用 法：口服 一次10mg，一周一次\n2、叶酸片 5mg*100片*1盒\n用 法：口服 一次5mg，一周一次\n宁乡市坝塘镇保安村邱意文\n医生：邱意"
+    },
+    {
+      "chunk_id": "454afc5ed7d130d5",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>尿素</td><td>None</td><td>8.4</td><td>mmol/L</td><td>2.86-8.2</td><td>True</td></tr><tr><td>尿酸</td><td>None</td><td>293</td><td>umol/L</td><td>150-360</td><td>False</td></tr><tr><td>肌酐</td><td>None</td><td>53</td><td>umol/L</td><td>44-106</td><td>False</td></tr><tr><td>β2-微球蛋白</td><td>N"
+    },
+    {
+      "chunk_id": "1f18316de000e9ca",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>8.06</td><td>10^9/L</td><td>4.0-10.0</td><td>False</td></tr><tr><td>中性粒细胞比例</td><td>NEUT%</td><td>57.70</td><td>%</td><td>50.0-70.0</td><td>False</td></tr><tr><td>淋巴细胞比率</td><td>LYMPH%</td><td>34.00</td><td>%</td><td>20.0-40.0</td><td>False</td></tr><tr><td>单核细"
+    },
+    {
+      "chunk_id": "d3d98a5c00d31b68",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>类风湿因子</td><td>RF</td><td>136</td><td>None</td><td>0-20</td><td>True</td></tr><tr><td>尿素</td><td>Urea</td><td>3.9</td><td>mmol/L</td><td>1.7-8.3</td><td>False</td></tr><tr><td>尿酸</td><td>UA</td><td>211</td><td>umol/L</td><td>150-360</td><td>False</td></tr><tr><td>肌酐</td><td>CREA</td><t"
+    },
+    {
+      "chunk_id": "e3b55a78fefdc21c",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>血沉（仪器法）</td><td>ESR</td><td>31.00</td><td>mm/h</td><td>0-15</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "ff0b2d6ffac86d9b",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>9.36</td><td>10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>中性粒细胞%</td><td>NEU%</td><td>54.5</td><td>%</td><td>40-75</td><td>False</td></tr><tr><td>淋巴细胞%</td><td>LYM%</td><td>37.7</td><td>%</td><td>20-50</td><td>False</td></tr><tr><td>单核细胞%</td><td>MON%<"
+    },
+    {
+      "chunk_id": "9edc7574cb271b85",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>超敏C反应蛋白</td><td>hsCRP</td><td>2.54</td><td>mg/L</td><td>0-1.00</td><td>True</td></tr><tr><td>C反应蛋白</td><td>CRP</td><td><5</td><td>mg/L</td><td>0-10.00</td><td>False</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 10,
+    "check": {
+      "covered": 10,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 6,
+      "clinical": 6,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n19:22:40: [QwenVL] 9/10 pages done\n\n19:26:56: [QwenVL] 10/10 pages done\n\n19:26:56: [QwenVL] Done: 229 sections from 10 pages.\n\n19:26:56: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n19:26:56: Start SmartSplitter: semantic split + classify.\n\n19:26:56: Loaded 229 OCR bboxes.\n"
+}

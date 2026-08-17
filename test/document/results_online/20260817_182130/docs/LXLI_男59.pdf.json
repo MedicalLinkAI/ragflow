@@ -1,0 +1,175 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LXLI 男59.pdf",
+    "size_kb": 12960.6,
+    "pages": null,
+    "doc_id": "1236eaa878f911f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-a808951c6bb2"
+  },
+  "doc_id": "1236eaa878f911f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 12,
+  "orm_synced": true,
+  "process_duration": 450.1643,
+  "begin_at": "2026-08-17T20:56:12",
+  "end_at": "2026-08-17T21:03:47",
+  "elapsed_s": 455.0,
+  "before": {
+    "chunk_count": 12,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 5,
+      "ExaminationReport": 6,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "f162894e01656c47",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 37,
+      "content": "湖南 HR\n姓名\n龄:59岁\n申请科室:\n病人\n检查项目:层平扫增强,CT\n及肾上腺)薄层平扫增强\n临床诊断:肺病变(CA?炎性?)阻塞性肺炎\n检查方法:\nCT胸部(肺及纵隔)薄层平扫增强,CT上腹部(肝胆脾胰)薄层平扫增强,CT下腹部(肾\n及肾上腺)薄层平扫增强\n检查所见:\n(一)主要病变:\n1 部位:右上叶前段。\n2 基本病变:肿块,肺门肿块与肺不张融合无法测量大小。\n3 强化特征:平扫CT值约61HU,增强后轻度不均匀强化,CT值约76HU。\n4 形态特征(可复选):所属支气管截断征,远端阻塞性肺不张、肺炎。\n5 纵隔窗短径≥10mm淋巴结(可复选):右下气管旁(4R:腔气间隙)、右肺门"
+    },
+    {
+      "chunk_id": "7dd7e9a6e30b7e83",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 25,
+      "content": "年龄：59岁\n性别：男\n临床诊断：\n检查项目：全身骨SPECT/CT显像\n采集方式：全身平面+断层\n检查日期：2026年04月09日\n检查所见：\n静脉注射骨显像剂99mTc-MDP约3-4小时后，取前位、后位全身骨骼平面显像\n+胸廓断层融合显像。\n全身平面显像示：上颌骨、右肩峰、右侧第3、4、9肋骨、第5腰椎显像剂分\n布稍增浓区，余肋骨显像剂分布尚均匀；余诸骨骼及骨关节影像未见局限性异常\n显像剂浓聚区或缺损区。\n双肾略显影。\n胸廓SPECT/CT断层融合显像示：右侧第9肋腋前段骨皮质较对侧增厚，骨质密\n度增高，显像剂分布增浓。多发胸椎椎体可见骨质增生，显像剂分布略增高。右\n侧第3、4肋骨未见明"
+    },
+    {
+      "chunk_id": "cc78bfe84848b2ea",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 21,
+      "content": "姓名\n申请\n检查项目：MR颅脑平扫增强+薄层成像\n临床诊断：肺病变（CA? 炎性？） 阻塞性肺炎\n检查方法：\nMR颅脑平扫增强+薄层成像\n检查所见：\n双侧幕上深部脑白质内见少许斑点状长T1长T2信号灶，FLAIR呈高信号。双侧侧脑\n室旁见线样长T1长T2信号灶，FLAIR呈高信号。增强后未见明显异常强化灶。灰白质界\n限清楚，脑室系统大小形态正常，中线结构无移位，脑沟裂稍增宽。左侧上颌窦、双侧\n筛窦粘膜增厚。\n检查提示：\n1.深部脑白质高信号（可能血管源性）Fazekas 1级；脑室旁白质高信号（可能血管源\n性）Fazekas 1级。\n2.左侧上颌窦、双侧筛窦炎症。\n报告医\n报告日期：2026年"
+    },
+    {
+      "chunk_id": "49a47146c61eee8a",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 25,
+      "content": "心电图报告单\n姓名：\n性别：男\n年龄：59岁\n心率：64 bpm\nP-R间期：124 ms\nQRS时间：94 ms\nQT/QTC：388/398 ms\nP-R-T：74/71/64 度\nRV5/SV1：1.85/1.44 mV\n诊断：1、窦性心律\n2、ptf V1负值增大\n检查时间：2026-04-07 09:18\nI\naVR\nV1\nV4\nII\naVL\nV2\nV5\nIII\naVF\nV3\nV6"
+    },
+    {
+      "chunk_id": "768464edc604e87d",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 69,
+      "content": "入院时间：2026-04-03 08:14\n出院时间：2026-04-09 15:18\n住院天数：6天\n入院诊断：\n1、肺病变（CA? 炎性？）\n2、阻塞性肺炎\n入院时情况：患者老年男性，59岁，因“咳嗽1月余”入院，既往：既往身体状况一\n般。否认“糖尿病”、“冠心病”、“高血压病”等慢性病史，否认“肝炎”、“结核”\n、“伤寒”等传染病史。无手术、外伤史。否认输血史。否认食物、药物过敏史。预防接\n种史不详。体查：体温36.5℃ 脉搏75次/分 呼吸20次/分 血压112/83mmHg 神清合作，\n自主体位，营养中等，浅表淋巴结未扪及，胸廓无畸形，双肺呼吸音清，双肺未闻及明显\n干、湿啰音。心率7"
+    },
+    {
+      "chunk_id": "8a00199fec16ee77",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 15,
+      "content": "病\n号 2084303\n送检科室\n信息\n送检单位 本院\n标本名称 EBUS-TBLB组织(8/右上叶前支)\n临床诊断 1、右上叶前支CA? (EBUS探查)\n病理诊断\n(右上叶前支EBUS-TBLB组织) 角化性鳞癌，建议完善PD-L1及基因检测进一步指导治疗。\n免疫组化结果: CK5/6 (+), P63 (+), P40 (+), BRAF V600E (-), HER2 (1+), Ki67 (40%+), TTF-1 (-)。\n审核医生 李丽玲\n复诊医生\n报告医生 李丽玲\n报告时间 2026-04-07\n打印"
+    },
+    {
+      "chunk_id": "c0af94431cb17b6c",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 25,
+      "content": "姓名\n性别 男\n病\n院号\n送检\n信息\n送检单\n本院\n送检医生\n标本名称\nEBUS-TBLB组织(8/右上叶前支)\n临床诊断\n1、右上叶前支CA? (EBUS探查)\n病理诊断\n(右上叶前支EBUS-TBLB组织) 角化性鳞癌。\n免疫组化结果: CK5/6 (+) , P63 (+) , P40 (+) , BRAF V600E (-) , HER2 (1+) , KI67 (40%+) , TTF-1 (-) , PD-\nL1(E1L3N)(ventana) (TPS,小于1%) 。\n审核医生\n李丽玲\n复诊医生\n报告医生\n李丽玲\n报告时间\n2026-04-10\n打印"
+    },
+    {
+      "chunk_id": "7a8bea6c25c9aad6",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 27,
+      "content": "<table><tr><td>总蛋白</td><td>None</td><td>64.5</td><td>g/L</td><td>65.0-85.0</td><td>True</td></tr><tr><td>白蛋白</td><td>None</td><td>35.6</td><td>g/L</td><td>40.0-55.0</td><td>True</td></tr><tr><td>球蛋白</td><td>None</td><td>28.9</td><td>g/L</td><td>20.0-40.0</td><td>False</td></tr><tr><td>白球比值</td><td>N"
+    },
+    {
+      "chunk_id": "42593037a3cc6371",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 10,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>10.50</td><td>秒</td><td>9.0-14.0</td><td>False</td></tr><tr><td>凝血酶原百分率</td><td>None</td><td>107.70</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>国际标准比值</td><td>None</td><td>0.90</td><td>None</td><td>0.8-1.2</td><td>False</td></tr><tr><td>活化部分凝血活酶"
+    },
+    {
+      "chunk_id": "da5a650fd6087ecd",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>真菌培养及鉴定</td><td>None</td><td>培养7天无真菌生长</td><td>None</td><td>None</td><td>False</td></tr><tr><td>实验结果 (γ-干扰素释放试验)</td><td>None</td><td>阴性</td><td>None</td><td>None</td><td>False</td></tr><tr><td>本底水平 (N)</td><td>None</td><td>4.12</td><td>pg/mL</td><td>None</td><td>False</td></tr><tr><t"
+    },
+    {
+      "chunk_id": "7efe07a14741c6cd",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>HBsAg检测(化学发光法)</td><td>None</td><td>0.01</td><td>IU/ml</td><td>None</td><td>False</td></tr><tr><td>TP(化学发光法)</td><td>TP</td><td>0.06</td><td>S/Co</td><td>None</td><td>False</td></tr><tr><td>CV抗体检测(化学发光法)</td><td>None</td><td>0.09</td><td>S/Co</td><td>None</td><td>False</td></tr><tr><t"
+    },
+    {
+      "chunk_id": "18a92f58f790f772",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>6.5</td><td>10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>红细胞计数</td><td>None</td><td>3.73</td><td>10^12/L</td><td>4.30-5.80</td><td>True</td></tr><tr><td>血红蛋白</td><td>None</td><td>120</td><td>g/L</td><td>130-175</td><td>True</td></tr><tr><td>血小板计数</t"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 13,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 6,
+      "clinical": 6,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n20:57:26: [QwenVL] Done: 449 sections from 13 pages.\n\n20:57:27: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n20:57:27: Start SmartSplitter: semantic split + classify.\n\n20:57:27: Loaded 449 OCR bboxes.\n\n20:57:27: Full document: 19343 chars, 449 bboxes.\n\n20:57:27: Calling LLM"
+}

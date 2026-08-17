@@ -1,0 +1,231 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LIQU高血糖郑州.pdf",
+    "size_kb": 9368.0,
+    "pages": null,
+    "doc_id": "39b727fe948e11f18f67cb8e99b562ad",
+    "patient_id": "PAT-84af5bd29328"
+  },
+  "doc_id": "39b727fe948e11f18f67cb8e99b562ad",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 23,
+  "orm_synced": true,
+  "process_duration": 203.85643,
+  "begin_at": "2026-08-17T18:54:15",
+  "end_at": "2026-08-17T18:57:42",
+  "elapsed_s": 207.2,
+  "before": {
+    "chunk_count": 23,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 2,
+      "LabReport": 8,
+      "MedicationRecord": 3,
+      "PrescriptionRecord": 1,
+      "ExaminationReport": 4
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "864e4d9dcdd935ad",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 27,
+      "content": "郑州市金水区国基路沙门社区卫生服务中心门诊电子病历\nNo: 20241116000027\n就诊类型：初诊\n科别：内科\n就诊时间：2024/11/16 8:09:23\n姓名：.\n性别：男\n年龄：27岁\n电话：\n家庭住址：沙门\n药敏史：无\n发病日期：\n诊断：2型糖尿病\n主诉：发现口渴.口干.多饮多尿.3个月余.\n现病史：患者三个月前发现自己口渴.口干.多饮多尿自测空腹血糖\n11.0mmol/L.规律口服二甲双胍每次0.5g每日三次 血糖控\n制不理想.前来就诊\n既往史：否认药物过敏史，否认传染病史。\n体格检查：神清、精神可，查体合作。双肺呼吸音清，未闻及干湿啰音，\n心律齐，各瓣膜未闻及病理性杂音，腹"
+    },
+    {
+      "chunk_id": "eb44c929b574dc4b",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 15,
+      "content": "金水区国基路沙门社区卫生服务中心\nJinshui Gaoji Street Shamen Community Health Services Center\n0001\n姓名：\n条码号：1001241021000001\n流借号：\n胆\n胆囊大小形态正常，壁光滑，囊内未见异常回声。胆总管内径无增\n宽。\n胰\n胰腺形态、大小正常，内部光点均匀，主胰管无扩张。\n脾\n脾脏大小形态正常，实质回声均匀。\n科室小结：\n脂肪肝"
+    },
+    {
+      "chunk_id": "9b70450aa197da55",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 17,
+      "content": "◆泌尿系彩超（男）\n(彩超检查)\n检查医生：高培利\n项目\n结果\n单位\n双肾\n双肾形态大小正常、包膜完整光滑，肾实质回声光点均匀，肾盂肾\n盏未见扩张。\n前列腺\n前列腺形态大小正常，轮廓整齐，实质回声均匀。\n膀胱\n膀胱充盈欠佳，壁光滑，其内未见明显异常回声。\n输尿管\n输尿管未见显示扩张。\n科室小结：\n未见明显异常"
+    },
+    {
+      "chunk_id": "591698132eff2842",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 9,
+      "content": "◆心电图12号 (心电图)\n检查医生：李天柱\n项目\n结果\n单位\n心电图\nT波异常\n科室小结：\nT波异常"
+    },
+    {
+      "chunk_id": "094d49c9c15e2430",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 11,
+      "content": "◆胸部正位检查DR(不出片) (DR拍片)\n检查医生：申静\n项目\n结果\n单位\n胸部正位检查（DR）\n胸廓对称，纵隔及气管居中，未见增宽。肺门形态、大小、位置未\n见异常。两肺纹理走行自然，未见明显异常密度影。心影形态、大\n小未见异常。两膈面光整，两肋膈角锐利。\n科室小结：\n未见明显异常"
+    },
+    {
+      "chunk_id": "b1a9c772a00aabc0",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 16,
+      "content": "越人大药房\n祝您身体健康\n日期：2025-04-02 NO：1.2468223\n会员：  会员卡：1004832\n药品名称 数量 单位 单价 金额\n盐酸二甲双胍 0.25*60 片\n生产厂商：上海信谊\n批号：\n2 5.50 11.00\n应收：11.00 收款：11.00\n找零：0.00 找零：0.00\n付款方式：a 现金 实收：11.00\n收款：刘丽婷 时间：11：06：25\n地址：三全路渠东路东岸尚景\n电话：63222645\n药品无质量问题概不退换！"
+    },
+    {
+      "chunk_id": "cfc9d11ecc28e1e0",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 17,
+      "content": "越人大药房\n祝您身体健康\n日期：2025-02-13 NO：1.2467129\n会员：\n会员卡：1004832\n药品名称 数量 单位 单价 金额\n盐酸二甲双胍 规格：0.25*60片\n生产厂商：上海信宜\n批号：\n5 盒 5.50 27.50\n应收：27.50 收款：27.50\n找零：0.00 折扣：0.00\n付款方式：a 现金 实收：27.50\n收款：刘丽婷 时间：16：27：56\n地址：三全路渠东路东岸尚景\n电话：63222645\n药品无质量问题概不退换！"
+    },
+    {
+      "chunk_id": "587c35675cca115f",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 29,
+      "content": "郑州市金水区国基路沙门社区卫生服务中心门诊电子病历\nNo: 20250417000042\n就诊类型：初诊\n科别：内科\n就诊时间：2025/4/17 8:14:34\n姓名：\n性别：男\n年龄：27岁\n电话：13673657585\n家庭住址：沙门\n药敏史：无\n发病日期：2025-04-17\n诊断：糖尿病\n主诉：患糖尿病1年余\n现病史：患者1年前发现自己口渴，口干，多饮多尿，自测空腹血糖\n11.0mmol/1，规律口服二甲双胍 每次0.5，每日三次，现来复查\n就诊\n既往史：否认药物过敏史，否认传染病史。\n体格检查：神清、精神可，查体合作。双肺呼吸音清，未闻及干湿啰音，\n心律齐，各瓣膜未闻及病理性杂音，"
+    },
+    {
+      "chunk_id": "3244123a2c4b7a0f",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 22,
+      "content": "郑州市金水区国基路沙门社区\n卫生服务中心处方笺\n医保证号:\n费别:自费\n门诊号:20250417000042\n日期:2025-04-17\n姓名:\n性别:男\n年龄:27岁\n科别:内科\n住址:沙门\n临床诊断:糖尿病\nRp:\n1 (基)(集)盐酸二甲双胍缓释片(0.5g*60S)\n2瓶\n用法:每次0.5g口服一天三次*30天\n医师(签字/盖章):李层\n审核、调配:\n核对、发药:\n药费:10.34\n执行科室:西药房\n打印日期:2025/04/17"
+    },
+    {
+      "chunk_id": "6820b8d3a91c4363",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 53,
+      "content": "No 20250417000C\n郑州市金水区国基路沙门社区\n自费及其他\nNo 20250417000062\n2025-04-17\n自费费用:\n西药费\n10.34\n先行自付:\n10.34\n超限价自付:\n医疗救助:\n统筹记账:\n0.00\n大额记账:\n0.00\n公务员记账:\n0.00\n微信: 10.34\n个人账户: 0.00\n(共济支付)\n现金支付: 10.34\n其他支出:\n(大病补充:\n贫困救助:\n政府兜底:)\n壹拾元叁角肆分\n10.34\n总合计: 10.34\n诊间结算 2025-04-17\n诊间结算 2025-04-17\n0\n0.00\n0.00\n10.34\n2025-0\nNo 202504170"
+    },
+    {
+      "chunk_id": "d9d6304147cfaa37",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HBsAg</td><td>阳性</td><td>None</td><td>None</td><td>True</td></tr><tr><td>乙型肝炎病毒表面抗体</td><td>HBsAb</td><td>阴性</td><td>None</td><td>None</td><td>False</td></tr><tr><td>乙型肝炎病毒e抗原</td><td>HBeAg</td><td>阴性</td><td>None</td><td>None</td><td>False</td></tr><tr><td>乙型肝炎病毒e抗"
+    },
+    {
+      "chunk_id": "d014c0b39a7d062f",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>空腹血糖</td><td>None</td><td>16.93</td><td>mmol/L</td><td>3.89-6.11</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "7876693c230de45a",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>None</td><td>9</td><td>%</td><td>4.5~5.9</td><td>True</td></tr><tr><td>葡萄糖</td><td>None</td><td>11.15</td><td>mmol/L</td><td>3.89~6.11</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "5787d4b69a719684",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>2461</td><td>10</td><td>%</td><td>4.5~5.9</td><td>True</td></tr><tr><td>葡萄糖</td><td>1056</td><td>10.60</td><td>mmol/L</td><td>3.89~6.11</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "5974ad268011d9f3",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>红细胞平均分布宽度标准差</td><td>None</td><td>42.6</td><td>fL</td><td>35.0-56.0</td><td>False</td></tr><tr><td>红细胞平均分布宽度变异系数</td><td>None</td><td>11.6</td><td>%</td><td>11.0-16.0</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "2ff03bc4438b19e4",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>尿酸</td><td>None</td><td>254.9</td><td>μmol/L</td><td>202-416</td><td>False</td></tr><tr><td>肌酐</td><td>None</td><td>57.0</td><td>μmol/L</td><td>57-97</td><td>False</td></tr><tr><td>尿素</td><td>None</td><td>3.29</td><td>mmol/L</td><td>3.6-9.5</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "70d25904798d012d",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>None</td><td>43.7</td><td>U/L</td><td>9-50</td><td>False</td></tr><tr><td>门冬氨酸氨基转移酶</td><td>None</td><td>20.5</td><td>U/L</td><td>0-40</td><td>False</td></tr><tr><td>谷氨酰转肽酶</td><td>None</td><td>53.5</td><td>U/L</td><td>11-61</td><td>False</td></tr><tr><td>总蛋白</td><td>"
+    },
+    {
+      "chunk_id": "ddb33272c8af2349",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>酸碱度</td><td>None</td><td>5.5</td><td>None</td><td>5.4-8.4</td><td>False</td></tr><tr><td>亚硝酸盐</td><td>None</td><td>-</td><td>None</td><td>阴性</td><td>False</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "page_sum": 18,
+    "check": {
+      "covered": 11,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 4,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 8,
+      "match": false
+    },
+    "MedicationRecord": {
+      "splitter": 0,
+      "clinical": 3,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 2,
+      "match": false
+    },
+    "PrescriptionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n18:55:31: Done\n\n\n-------------------------------------\n[Router]:\n18:55:31: Routed 23 chunks into 5 groups: {'chunks_Clinical': 2, 'chunks_LabExam': 13, 'chunks_Examination': 4, 'chunks_Medication': 3, 'chunks_Prescription': 1}\n\n18:55:31: Done\n\n\n-------------------------------------\n[LabExam]:\n18:55"
+}

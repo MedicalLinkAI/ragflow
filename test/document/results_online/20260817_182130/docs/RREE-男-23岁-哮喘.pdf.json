@@ -1,0 +1,56 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "RREE-男-23岁-哮喘.pdf",
+    "size_kb": 3340.9,
+    "pages": null,
+    "doc_id": "c5e85c18872b11f1bb8027103a248952",
+    "patient_id": "PAT-ed3ad40ccbb5"
+  },
+  "doc_id": "c5e85c18872b11f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 313.9763,
+  "begin_at": "2026-08-17T19:07:14",
+  "end_at": "2026-08-17T19:13:21",
+  "elapsed_s": 366.8,
+  "before": {
+    "chunk_count": 4,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 3,
+      "AdmissionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [],
+  "pages": {
+    "union": [],
+    "page_sum": 0,
+    "check": {
+      "covered": 0,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "❌ 无任何 chunk（文档级被过滤 / 解析失败）"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 3,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n19:07:16 Task has been received.\n\n-------------------------------------\n[File]:\n19:07:16: File fetched.\n\n19:07:16: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n19:07:16: Start to work on a PDF.\n\n19:07:17: [QwenVL] Processing 10 pages...\n\n19:07:29: [QwenVL] 1/10 pag"
+}

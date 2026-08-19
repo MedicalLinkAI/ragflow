@@ -1,0 +1,53 @@
+15:48:44 ERR unsupported format string passed to NoneType.__format__
+15:49:14 ERR unsupported operand type(s) for -: 'int' and 'NoneType'
+15:49:44 ERR unsupported operand type(s) for -: 'int' and 'NoneType'
+15:50:14 ERR unsupported operand type(s) for -: 'int' and 'NoneType'
+15:50:44 ERR unsupported operand type(s) for -: 'int' and 'NoneType'
+15:50:53 run=30 wait=0 kv=0.480 prompt+0 gen+0 ok+0 fail+0 req_ok=63184 req_fail=- gen_tot=42421665
+15:51:23 run=31 wait=0 kv=0.469 prompt+121646 gen+16485 ok+23 fail+0 req_ok=63207 req_fail=- gen_tot=42438150
+15:51:54 run=29 wait=0 kv=0.438 prompt+119594 gen+13058 ok+26 fail+0 req_ok=63233 req_fail=- gen_tot=42451208
+15:52:24 run=26 wait=0 kv=0.409 prompt+116771 gen+14429 ok+23 fail+0 req_ok=63256 req_fail=- gen_tot=42465637
+15:52:54 run=29 wait=0 kv=0.472 prompt+115208 gen+9380 ok+13 fail+0 req_ok=63269 req_fail=- gen_tot=42475017
+15:53:24 run=18 wait=0 kv=0.372 prompt+75725 gen+15561 ok+19 fail+0 req_ok=63288 req_fail=- gen_tot=42490578
+15:53:54 run=18 wait=4 kv=0.356 prompt+82909 gen+10616 ok+13 fail+0 req_ok=63301 req_fail=- gen_tot=42501194
+15:54:24 run=17 wait=0 kv=0.349 prompt+107378 gen+12809 ok+17 fail+0 req_ok=63318 req_fail=- gen_tot=42514003
+15:54:55 run=9 wait=0 kv=0.191 prompt+32977 gen+11819 ok+14 fail+0 req_ok=63332 req_fail=- gen_tot=42525822
+15:55:25 run=11 wait=0 kv=0.219 prompt+43242 gen+9833 ok+7 fail+0 req_ok=63339 req_fail=- gen_tot=42535655
+15:55:55 run=7 wait=0 kv=0.133 prompt+57560 gen+11468 ok+11 fail+0 req_ok=63350 req_fail=- gen_tot=42547123
+15:56:25 run=4 wait=0 kv=0.082 prompt+34751 gen+10614 ok+11 fail+0 req_ok=63361 req_fail=- gen_tot=42557737
+15:56:55 run=7 wait=0 kv=0.142 prompt+30013 gen+12428 ok+2 fail+0 req_ok=63363 req_fail=- gen_tot=42570165
+15:57:25 run=10 wait=0 kv=0.211 prompt+56752 gen+9666 ok+4 fail+0 req_ok=63367 req_fail=- gen_tot=42579831
+15:57:56 run=6 wait=0 kv=0.136 prompt+20860 gen+11424 ok+7 fail+0 req_ok=63374 req_fail=- gen_tot=42591255
+15:58:26 run=11 wait=0 kv=0.202 prompt+54499 gen+10678 ok+6 fail+0 req_ok=63380 req_fail=- gen_tot=42601933
+15:58:56 run=8 wait=0 kv=0.155 prompt+27158 gen+13685 ok+8 fail+0 req_ok=63388 req_fail=- gen_tot=42615618
+15:59:26 run=11 wait=0 kv=0.181 prompt+62936 gen+10865 ok+10 fail+0 req_ok=63398 req_fail=- gen_tot=42626483
+15:59:56 run=5 wait=0 kv=0.100 prompt+31042 gen+13384 ok+13 fail+0 req_ok=63411 req_fail=- gen_tot=42639867
+16:00:26 run=6 wait=0 kv=0.083 prompt+44993 gen+10226 ok+8 fail+0 req_ok=63419 req_fail=- gen_tot=42650093
+16:00:57 run=3 wait=0 kv=0.050 prompt+30326 gen+10593 ok+10 fail+0 req_ok=63429 req_fail=- gen_tot=42660686
+16:01:27 run=5 wait=0 kv=0.083 prompt+44466 gen+9174 ok+8 fail+0 req_ok=63437 req_fail=- gen_tot=42669860
+16:01:57 run=4 wait=0 kv=0.067 prompt+27944 gen+9838 ok+7 fail+0 req_ok=63444 req_fail=- gen_tot=42679698
+16:02:27 run=9 wait=0 kv=0.146 prompt+37714 gen+10132 ok+3 fail+0 req_ok=63447 req_fail=- gen_tot=42689830
+16:02:58 run=7 wait=0 kv=0.104 prompt+37820 gen+12954 ok+10 fail+0 req_ok=63457 req_fail=- gen_tot=42702784
+16:03:28 run=5 wait=0 kv=0.090 prompt+10106 gen+11630 ok+4 fail+0 req_ok=63461 req_fail=- gen_tot=42714414
+16:03:58 run=4 wait=0 kv=0.054 prompt+24064 gen+9542 ok+6 fail+0 req_ok=63467 req_fail=- gen_tot=42723956
+16:04:28 run=7 wait=0 kv=0.102 prompt+36548 gen+10767 ok+5 fail+0 req_ok=63472 req_fail=- gen_tot=42734723
+16:04:58 run=6 wait=0 kv=0.096 prompt+40697 gen+11413 ok+10 fail+0 req_ok=63482 req_fail=- gen_tot=42746136
+16:05:29 run=3 wait=0 kv=0.045 prompt+18733 gen+9234 ok+7 fail+0 req_ok=63489 req_fail=- gen_tot=42755370
+16:05:59 run=1 wait=0 kv=0.012 prompt+17733 gen+5677 ok+6 fail+0 req_ok=63495 req_fail=- gen_tot=42761047
+16:06:29 run=0 wait=0 kv=0.000 prompt+0 gen+549 ok+1 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:06:59 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:07:30 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:08:00 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:08:30 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:09:00 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:09:30 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:10:01 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:10:31 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:11:01 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:11:31 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:12:02 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:12:32 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:13:02 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:13:32 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:14:02 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596
+16:14:33 run=0 wait=0 kv=0.000 prompt+0 gen+0 ok+0 fail+0 req_ok=63496 req_fail=- gen_tot=42761596

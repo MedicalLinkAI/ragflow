@@ -1,0 +1,222 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "（已压缩）XDHU,男，48岁，肺腺癌.pdf",
+    "size_kb": 12291.8,
+    "pages": null,
+    "doc_id": "8b8ebe7679b711f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-10b713b9d541"
+  },
+  "doc_id": "8b8ebe7679b711f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 17,
+  "orm_synced": true,
+  "process_duration": 1539.5856,
+  "begin_at": "2026-08-18T01:56:25",
+  "end_at": "2026-08-18T02:22:06",
+  "elapsed_s": 1541.0,
+  "before": {
+    "chunk_count": 15,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 3,
+      "AdmissionRecord": 1,
+      "LabReport": 7,
+      "MedicalOrder": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "57db5664d0190dc1",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 586,
+      "content": "全选\n反选\n长期\n临时\n医嘱\n选择类型\n医嘱类别\n医嘱\n开嘱\n开嘱\n热里\n单位\n信息\n医保\n43\n长\n文字医嘱\n51\n24/4 11:40\n1.0\n0.0000\n0\n0\nB\n肺肿瘤穿刺术后护理常规\n医嘱内容\n44\n长\n护理\n52\n1.0日\n50.0000\n0\n0\nB\n1级护理\n邓平洁\n田栋\n45\n长\n文字医嘱\n53\n1.0\n0.0000\n0\n0\nB\n陪护\n46\n长\n膳食\n54\n1.0\n0.0000\n0\n0\nB\n低盐低脂饮食\n47\n临\n治疗\n55\n6.0小时\n3.0000\n0\n0\nB\n氧气吸入6小时\n48\n长\n文字医嘱\n56\n1.0\n0.0000\n0\n0\nB\n接触隔离(乙肝病毒)\n49\n临\n文字"
+    },
+    {
+      "chunk_id": "36731bdc24e2b3d6",
+      "pages": [
+        3,
+        4,
+        5
+      ],
+      "page_count_raw": 61,
+      "content": "科室床位列表 医嘱管理 医嘱目录查询 在院病人查询 医嘱停止/取消\n数字化医院信息系统[H43010400029]湖湘中医肿瘤医院\n三病区[D4301040281]\n报告时间: 2026-04-28\n类型 医嘱类别 医嘱编号 开嘱日期 开嘱时间 数量 单价 金额 停嘱执行次数 医保 医嘱内容\n临 LIS医技 5 23/4 10:04 1.0次 19.0000 19.00 0 自 B 血细胞分析-全血细胞计数+五分类\n临 LIS医技 6 1.0次 27.0000 27.00 0 自 B ABO血型鉴定--微柱法 1次\n临 LIS医技 7 1.0次 9.0000 9.00 0 自 B 尿液分析 1"
+    },
+    {
+      "chunk_id": "416694eae16cc24b",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 39,
+      "content": "姓名：\n申请科室：呼吸内科\n检查项目：CT胸部（肺及纵隔）薄层平扫增强\n临床诊断：声嘶\n病人ID号：00\n7\n检查号：NC20260421-440\n检查方法：\nCT胸部（肺及纵隔）薄层平扫增强\n检查所见：\n（一）主要病变：\n部位：右肺上叶。\n2 基本病变：肿块（结节），肺窗测量大小约57mm×43mm。\n3 强化特征：平扫CT值约39HU，增强后不均匀明显强化，动脉期、静脉期CT值分为\n63HU、70HU。\n4 形态特征（可复选）：所属支气管截断，远端阻塞性肺炎。\n5 纵隔窗短径大于等于1cm的淋巴结淋巴结（可复选）：最上纵隔（1）、右上气管旁\n（2R）、右下气管旁（腔气间隙）（4R）、隆突下"
+    },
+    {
+      "chunk_id": "c85993e0807b2c9e",
+      "pages": [
+        6,
+        7
+      ],
+      "page_count_raw": 16,
+      "content": "门诊病人\n送检日期：2026/4/24 送检医生：邓平浩\n标本名称：肺穿刺组织 临床诊断：肺部占位\n特征图像：\n大体所见：\n肺：组织两条，灰白灰褐，长0.8-1cm，直径0.1cm，包全。\n病理诊断：\n（肺穿刺组织）恶性肿瘤，建议免疫组化协诊。\n免疫组化后补充报告：\n（肺穿刺组织）浸润性腺癌，大致中分化。\n免疫组化：TTF-1（+），NapsinA（+），CK7（+），CK5/6（-），P40（少数+），CD56（-）\n），CgA（-），Syn（-），CK20（-），Villin（-），EGFR（3+），HER2（1+），INI1（+）\n），SMARCA4（+），P53（突变型），Ki67（+"
+    },
+    {
+      "chunk_id": "61ce84488d2b1afd",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 21,
+      "content": "门诊号：\n住院号：49381\n科室：三病区\n病区：\n心率：75bpm\nSV1/RV5：0mv/0.608mv\nP-R间期：155ms\nQRS时限：134ms\nQT/QTc：375/419ms\n电轴：153°\n诊断：\n1.窦性心律\n2.完全性右束支阻滞\n06:25\nV6\nV5\nV4\nV3\nV2\nV1\n25mm/s 10mm/mV"
+    },
+    {
+      "chunk_id": "79722c4d014f9d38",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 8,
+      "content": "\\begin{tabular}{ll}\n报告时间: 2026-04-23\n\\hline\n年龄: 48 岁 & 费别: \\\\\n床号: 2.12床 & 送检医生: 邓平浩 \\\\\n临床诊断: 肺占位性病变 & 备注: \\\\\n\\hline\n\\end{tabular}"
+    },
+    {
+      "chunk_id": "9a2533e79950afa8",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 9,
+      "content": "\\begin{tabular}{ll}\n报告时间: 2026-04-24\n\\hline\n年龄: 48 岁 & 费别: \\\\\n床号: & 送检医生: 邓平浩 \\\\\n2.12床 & 临床诊断: 肺占位性病变 \\\\\n& 备注: \\\\\n\\hline\n\\end{tabular}"
+    },
+    {
+      "chunk_id": "259057125cb664f2",
+      "pages": [
+        17,
+        18
+      ],
+      "page_count_raw": 51,
+      "content": "入院时间：\n2026-04-23 09:35\n病史陈述者： 病史由患者本人自述\n发病节气：谷雨\n记录时间： 2026-04-23 10:06\n入院方式： 步行\n主诉：发现肺部占位1天，咳嗽咳痰3月余。\n现病史：患者2026-01月无明显诱因出现咳嗽咳白痰，自认为是“感冒”，在当地医院予以止\n咳化痰、消炎等对症治疗后症状稍好转，但反复咳嗽咳痰。患者2026-04-22至湘雅医院门诊完善\nCT提示：1.右肺上叶肿块（57mmx43mm），中央型肺癌可能性大；右肺动脉受累，请结合支气管镜\n检查。2.双肺多发结节灶（最大者位于左肺下叶，大小约19mmx12mm），考虑转移。3.纵隔多发肿\n大淋巴结，考"
+    },
+    {
+      "chunk_id": "d984e8e598a9b959",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>ABO正定型</td><td>ABO</td><td>A型</td><td>None</td><td>None</td><td>False</td></tr><tr><td>ABO反定型</td><td>ABO</td><td>A型</td><td>None</td><td>None</td><td>False</td></tr><tr><td>RH血型</td><td>RH</td><td>阳性</td><td>None</td><td>None</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "d527e3b16002676b",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>6.19</td><td>10^9/L</td><td>4--10 10^9/L</td><td>False</td></tr><tr><td>中性粒细胞比例</td><td>Neu%</td><td>65.3</td><td>%</td><td>50--70 %</td><td>False</td></tr><tr><td>淋巴细胞比例</td><td>Lym%</td><td>23.9</td><td>%</td><td>20--40 %</td><td>False</td></tr><tr><td>单核细胞百分"
+    },
+    {
+      "chunk_id": "8b959d503a5f4905",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>乙型肝炎病毒表面抗原</td><td>HbsAg</td><td>35.1531</td><td>IU/ml</td><td><0.05</td><td>True</td></tr><tr><td>人类免疫缺陷病毒</td><td>HIV</td><td>0.056</td><td>S/CO</td><td><1.0</td><td>False</td></tr><tr><td>梅毒螺旋体抗体</td><td>TP</td><td>0.178</td><td>S/CO</td><td><1.0</td><td>False</td></tr><tr><td>丙型肝炎"
+    },
+    {
+      "chunk_id": "17d200d987127208",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT_s</td><td>13.7</td><td>sec</td><td>11--14</td><td>False</td></tr><tr><td>国际化标准比率</td><td>PT_INR</td><td>1.09</td><td>None</td><td>None</td><td>False</td></tr><tr><td>凝血酶原活度</td><td>PT %</td><td>90.62</td><td>%</td><td>80--120</td><td>False</td></tr><tr><td>凝血酶原时间比值</"
+    },
+    {
+      "chunk_id": "671aa7d5d1a048a0",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>颜色</td><td>DB-YS</td><td>黄色便</td><td>None</td><td>None</td><td>False</td></tr><tr><td>硬度</td><td>DB-YD</td><td>软便</td><td>None</td><td>None</td><td>False</td></tr><tr><td>粘液</td><td>DB-ZY</td><td>未见</td><td>None</td><td>None</td><td>False</td></tr><tr><td>红细胞</td><td>DB-RBC</td><td>未见"
+    },
+    {
+      "chunk_id": "f0c268cce8b4650c",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 19,
+      "content": "<table><tr><td>葡萄糖</td><td>None</td><td>-</td><td>None</td><td>-</td><td>False</td></tr><tr><td>潜血</td><td>None</td><td>-</td><td>None</td><td>-</td><td>False</td></tr><tr><td>酮体</td><td>None</td><td>-</td><td>None</td><td>-</td><td>False</td></tr><tr><td>尿蛋白</td><td>None</td><td>-</td><td>None</td>"
+    },
+    {
+      "chunk_id": "c616a7bcbcb09ae0",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>癌胚抗原</td><td>CEA</td><td>4.33</td><td>ng/mL</td><td>0--4.7</td><td>False</td></tr><tr><td>神经元特异性烯醇化酶</td><td>NSE</td><td>12.67</td><td>ng/mL</td><td>0--20.86</td><td>False</td></tr><tr><td>游离三碘甲状腺原氨酸</td><td>FT3</td><td>5.51</td><td>pmol/L</td><td>3.1--6.8</td><td>False</td></tr><tr><"
+    },
+    {
+      "chunk_id": "4ae935628adcfa47",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>65.7</td><td>U/L</td><td>0.1--40</td><td>True</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>39.5</td><td>U/L</td><td>0.1--40</td><td>False</td></tr><tr><td>总蛋白</td><td>TP</td><td>71.7</td><td>g/L</td><td>60--80</td><td>False</td></tr><tr><td>白蛋白</td><td>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "page_sum": 22,
+    "check": {
+      "covered": 18,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 11,
+      "clinical": 8,
+      "match": false
+    },
+    "MedicalOrder": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n02:11:59: Calling LLM for semantic splitting...\n\n02:12:34: LLM responded. Parsing segments...\n\n02:12:34: LLM returned 17 segments. Cutting text...\n\n02:12:34: All 17 segments used bbox_id slicing. Saving images...\n\n02:12:34: SmartSplitter done: 17 chunks from 17 LLM segments (all bbox_id). Types: {'"
+}

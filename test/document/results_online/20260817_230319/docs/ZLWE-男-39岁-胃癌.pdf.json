@@ -1,0 +1,220 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "ZLWE-男-39岁-胃癌.pdf",
+    "size_kb": 22015.6,
+    "pages": null,
+    "doc_id": "ed223ba4955011f18f67cb8e99b562ad",
+    "patient_id": "PAT-a701eba0391a"
+  },
+  "doc_id": "ed223ba4955011f18f67cb8e99b562ad",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 17,
+  "orm_synced": true,
+  "process_duration": 371.75943,
+  "begin_at": "2026-08-17T23:47:35",
+  "end_at": "2026-08-17T23:53:52",
+  "elapsed_s": 376.8,
+  "before": {
+    "chunk_count": 17,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 7,
+      "AdmissionRecord": 1,
+      "LabReport": 9
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "827bd4c9cad61a71",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 18,
+      "content": "检查项目：CT平扫+增强（上腹部-薄层），CT平扫+增强（胸部），CT平扫+增强（下腹部），CT平扫+增\n强（盆腔）\n检查时间：2025年10月18日 11:39:45\n影像所见：\n胃腔充盈可，胃体部小弯侧胃壁增厚，壁最厚处约13mm，增强后强化较明显；肝胃间\n隙见多发肿大淋巴结，大者短径约9mm。右上腹部大网膜见多发类圆形软组织密度灶，大\n者直径约11mm。肝实质密度弥漫性减低，增强后未见异常强化。肝S8段见点状钙化灶。胆\n囊、脾脏、胰腺、双侧肾上腺及双肾未见明显异常。前列腺及双侧精囊腺未见明显异常。\n膀胱充盈可，壁光整。腹膜后及盆腔未见肿大淋巴结。未见腹水征。\n双肺支气管血管束清晰，肺内未"
+    },
+    {
+      "chunk_id": "22dc5e28b2f9ab82",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 20,
+      "content": "超声所见：\n甲状腺轮廓清楚，双侧叶大小正常范围，大小约为44x15x15mm（左）37x16x15mm（右）峡部\n2.8mm，实质光点明显增粗，分布不均匀，呈网格样改变，片状低回声区弥漫性分布，CDFI及CDE内部彩\n色血流信号丰富。\n双侧颈部可见数个淋巴结声像，较大者大小约为11x5mm（右4）、9x4mm（左5b），椭圆形，边界\n清，内未见结门声像，CDFI显示无异常血流信号。\nB型：左心房内径24mm，左心室内径45mm，右心房及右心室内径正常范围，主动脉根部内径28mm，\n肺动脉主干内径约20mm，主、肺动脉位置关系正常。房室间隔连续性无中断，室间隔厚10mm，左心室\n后壁厚9mm，室"
+    },
+    {
+      "chunk_id": "f0c3002215177267",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 11,
+      "content": "肉眼所见:\n图像:\n镜下所见:\n病理诊断:\n常规报告:\n会诊邵阳市第一人民医院病理切片205433*2(1-2)意见: (胃体活检)中-低分化腺癌,建议免疫组化标记协诊(2\n号白片1张)。\n报告医师: 郭慧\n审核医师: 陈晓艳\n报告日期: 2025/10/17\n15:35:04"
+    },
+    {
+      "chunk_id": "1a12e18e44d7ab73",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 5,
+      "content": "签名:\n肺通气功能大致正常\n中心气道阻力增高\n意见：\n报告审核时间：2025-10-17 17:11"
+    },
+    {
+      "chunk_id": "aaff47761cbb1153",
+      "pages": [
+        14,
+        15
+      ],
+      "page_count_raw": 68,
+      "content": "第1次入院\n姓名：\n出生地：邵阳市\n性别：男\n民族：汉族\n年龄：39岁\n职业：职员\n婚姻：已婚\n住址：湖南省邵\n入院时间：2025-10-16 15:23\n入院方式：步行\n记录时间：2025-10-16 15:52\n现用药史：无\n病史陈述者：患者爱人\n过敏史：无\n主诉：上腹部疼痛不适半年，加重2月。\n外院检查：是\n医院名称：邵阳市第一人民医院[医院名称]\n出院31天内重复住院：是\n现病史：患者自诉半年前饮酒后开始出现上腹部阵发性疼痛不适，疼痛能忍受，未予以重视，2月\n前上述症状加重，疼痛不能忍受，夜间及空腹时疼痛加重，夜间无法入睡，无恶心呕吐、畏寒发热、呕\n逆反酸、黑便及鲜血便等不适，患者为求"
+    },
+    {
+      "chunk_id": "cd2515ddcd2cb082",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 26,
+      "content": "邵阳学院附属第一医院\n邵阳市第一人民医院\n电子胃镜图文报告\n内镜号:ES040000\n姓名:\n性别: 男\n年龄: 39岁\n科室: 健康管理中心\n门诊号:\n床号: 检查类型: ES\n7\n临床诊断:\n设备型号:\n镜下所见:\n插镜情况: 顺利\n送达部位: 十二指肠降部\n食管各段形态及粘膜色泽未见异常。贲门开闭好, 齿状线清晰。胃底粘膜充\n血发红, 未见静脉曲张; 粘液湖胃液量中等, 混浊, 胃体腔充气扩张度差,\n前壁、小弯至后壁见巨大溃疡, 底覆污秽苔, 周边粘膜呈结节状隆起, 活检\n质硬, 弹性差。胃窦蠕动可, 粘膜充血发红, 花斑样改变, 未见溃疡及肿\n物。幽门圆形, 开闭好。十二指肠球部及降段"
+    },
+    {
+      "chunk_id": "a8947cdb1b4f9a26",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 35,
+      "content": "邵阳学院附属第一医院\n彩超检查报告单\n超声号：1\n163\n登记时间：2025-10-14 08:49\n姓名：\n性别：男\n年龄：39岁\n检查诊室：彩超一室\n门诊号：2\n）住院号：\n床号：\n送检科室：健康管理中心\n6\n检查项目：腹部+泌尿系彩超（体检用），甲状腺彩超（体检用）\n超声所见：\n肝脏大小形态正常，轮廓清晰，肝脏表面光滑，实质回声细密，近场回声增强，远场回声衰减，肝内胆管行走欠清晰，未见明显扩张。肝内未见明显结石及肿块声像。胆囊旁探及多个低回声结节，之一大小约13x12mm，形态规则边界清。肝s4探及一大小约19x12mm无回声结节。\n门静脉内径约10mm。\n胆囊大小正常，胆囊壁光滑，其内"
+    },
+    {
+      "chunk_id": "ae0df51a0182ef3e",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 20,
+      "content": "邵阳学院附属第一医院\n邵阳市第一人民医院\n病理诊断报告单\n病理号.\n姓名：\n性别：男\n年龄：39岁\n科室：消化内科专家门诊\n住院号：\n病区：\n床号：\n院别：邵阳学院附属第一医院\n门诊号：D\n送检医生：王跃平\n收到日期：2025年10月14日\n送检标本：胃体\n临床诊断：胃溃疡未特指为急性或慢性,不伴有出血或穿孔\n镜见图示：\n病理诊断：\n(胃体活检)低分化腺癌。"
+    },
+    {
+      "chunk_id": "fc56f94f0958b297",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>Anti-HCV 丙型肝炎抗体</td><td>Anti-HCV</td><td>0.01</td><td>None</td><td><1.00</td><td>False</td></tr><tr><td>人免疫缺陷病毒抗体抗原联合测定</td><td>None</td><td>0.02</td><td>None</td><td>0-1.000</td><td>False</td></tr><tr><td>梅毒螺旋体抗体(特异)</td><td>None</td><td>0.01</td><td>None</td><td><1.00</td><td>False<"
+    },
+    {
+      "chunk_id": "44ce886a9bb92b30",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 18,
+      "content": "<table><tr><td>钾</td><td>K</td><td>3.93</td><td>mmol/L</td><td>3.50-5.30</td><td>False</td></tr><tr><td>钠</td><td>Na</td><td>139.4</td><td>mmol/L</td><td>137.0-147.0</td><td>False</td></tr><tr><td>氯</td><td>Cl</td><td>105.9</td><td>mmol/L</td><td>99.0-110.0</td><td>False</td></tr><tr><td>钙</td><td>C"
+    },
+    {
+      "chunk_id": "ec54d6376c1dc796",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>11.60</td><td>SEC</td><td>10.00-13.50</td><td>False</td></tr><tr><td>国际标准化比值</td><td>INR</td><td>1.02</td><td>None</td><td>0.80-1.20</td><td>False</td></tr><tr><td>活化部分凝血活酶时间</td><td>APTT</td><td>27.30</td><td>SEC</td><td>22.3-32.5</td><td>False</td></tr><tr>"
+    },
+    {
+      "chunk_id": "5f2510875f6cc2bd",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血因子(R)</td><td>None</td><td>6.4</td><td>min</td><td>5-10</td><td>False</td></tr><tr><td>纤维蛋白原功能(K)</td><td>None</td><td>1.5</td><td>min</td><td>1-3</td><td>False</td></tr><tr><td>纤维蛋白原功能(Angel)</td><td>None</td><td>68.7</td><td>deg</td><td>53-72</td><td>False</td></tr><tr><td>血小板功能(M"
+    },
+    {
+      "chunk_id": "a477017bab65b5a9",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>7.70</td><td>*10~9/L</td><td>4.00-10.00</td><td>False</td></tr><tr><td>中性粒细胞百分比</td><td>NEU%</td><td>69.10</td><td>%</td><td>50-80</td><td>False</td></tr><tr><td>淋巴细胞百分比</td><td>LYM%</td><td>25.80</td><td>%</td><td>20.00-40.00</td><td>False</td></tr><tr><td>单核细"
+    },
+    {
+      "chunk_id": "bb5288a45b3d1a9a",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>游离甲状腺素*</td><td>FT4</td><td>0.978</td><td>NG/DL</td><td>0.62-1.24</td><td>False</td></tr><tr><td>游离三碘甲状腺原氨酸*</td><td>FT3</td><td>3.210</td><td>PG/ML</td><td>2.30-4.80</td><td>False</td></tr><tr><td>甲状腺素*</td><td>TT4</td><td>12.370</td><td>UG/DL</td><td>5.42-12.74</td><td>False</td></t"
+    },
+    {
+      "chunk_id": "36f06094f1184090",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>甲胎蛋白*</td><td>AFP</td><td>3.69</td><td>NG/ML</td><td>0-10</td><td>False</td></tr><tr><td>癌胚抗原*</td><td>CEA</td><td>2.16</td><td>NG/ML</td><td>0-5</td><td>False</td></tr><tr><td>糖类抗原-125</td><td>CA-125</td><td>22.66</td><td>U/ML</td><td>0-35</td><td>False</td></tr><tr><td>糖类抗原-199</td>"
+    },
+    {
+      "chunk_id": "c6018aca0c49d7a1",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>ABO血型</td><td>None</td><td>AB型</td><td>None</td><td>None</td><td>False</td></tr><tr><td>Rh(D)</td><td>None</td><td>阳性(+)</td><td>None</td><td>None</td><td>False</td></tr><tr><td>Rh分型</td><td>None</td><td>CcDee</td><td>None</td><td>None</td><td>False</td></tr><tr><td>Rh(C)</td><td>None"
+    },
+    {
+      "chunk_id": "acbfdd1f210c128f",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1C</td><td>5.7</td><td>%</td><td>4.0-6.0</td><td>False</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "page_sum": 19,
+    "check": {
+      "covered": 18,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 7,
+      "clinical": 7,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 9,
+      "clinical": 9,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n23:49:16: Loaded 363 OCR bboxes.\n\n23:49:16: Full document: 14380 chars, 363 bboxes.\n\n23:49:16: Calling LLM for semantic splitting...\n\n23:49:53: LLM responded. Parsing segments...\n\n23:49:53: LLM returned 17 segments. Cutting text...\n\n23:49:53: All 17 segments used bbox_id slicing. Saving images...\n\n"
+}

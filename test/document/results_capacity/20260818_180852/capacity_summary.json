@@ -1,0 +1,26 @@
+{
+  "source": "麦济WRNA(2).pdf",
+  "levels": [
+    64
+  ],
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "max_capacity_n": 64,
+  "rounds": [
+    {
+      "n": 64,
+      "makespan_min": 22.01,
+      "done": 64,
+      "total": 64,
+      "starts": 1152,
+      "timeouts": 0,
+      "rate": 0.0,
+      "passed": true,
+      "reason": "通过",
+      "window": [
+        "2026-08-18 18:08",
+        "2026-08-18 18:31"
+      ]
+    }
+  ]
+}

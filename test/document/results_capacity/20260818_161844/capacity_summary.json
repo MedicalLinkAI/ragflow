@@ -1,0 +1,26 @@
+{
+  "source": "山东-ZGLI-小肺-方穹推荐706-I期（IA期.pdf",
+  "levels": [
+    32
+  ],
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "max_capacity_n": 32,
+  "rounds": [
+    {
+      "n": 32,
+      "makespan_min": 27.55,
+      "done": 32,
+      "total": 32,
+      "starts": 1024,
+      "timeouts": 0,
+      "rate": 0.0,
+      "passed": true,
+      "reason": "通过",
+      "window": [
+        "2026-08-18 16:18",
+        "2026-08-18 16:47"
+      ]
+    }
+  ]
+}

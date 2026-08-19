@@ -1,0 +1,253 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "WXYA-腺癌-41岁.pdf",
+    "size_kb": 40182.6,
+    "pages": null,
+    "doc_id": "ca1876627b8f11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-1987e3ab575e"
+  },
+  "doc_id": "ca1876627b8f11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "RUNNING",
+  "progress": 0.76705885,
+  "chunk_count_api": 0,
+  "orm_synced": true,
+  "process_duration": 1796.3961,
+  "begin_at": "2026-08-18T01:30:57",
+  "end_at": "2026-08-18T02:01:11",
+  "elapsed_s": 1814.3,
+  "before": {
+    "chunk_count": 0,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 10,
+      "AdmissionRecord": 1,
+      "LabReport": 8,
+      "MedicalOrder": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "f65be56fc639b2eb",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "page_count_raw": 65,
+      "content": "胸外科二病区 第 2 次住院\n主 诉：间断咳嗽、胸痛1月余，确诊右肺恶性肿瘤10天\n现病史：患者1月余无明显诱因出现间断咳嗽、胸痛，呼吸时胸痛加重，伴有咳痰，胸闷、头疼\n、头晕，无咯血、发热，于2025-12-07就诊“内黄县中医院”，进行CT检查示：1、考虑右肺上叶占\n位性病变，右肺上叶不张。2、右侧叶间胸膜多发结节影；3、右肺下叶多发结节影；4、两肺炎症；\n5、纵隔内稍大淋巴结。6、右侧胸腔积液。糖类抗原CA125 639.703U/ml。糖类抗原CA153 70.746\nU/ml。给予“头孢呋辛钠”抗炎治疗1周，效果欠佳。为行进一步治疗，就诊我院我科，胸部CT：\n2025-12-17 1"
+    },
+    {
+      "chunk_id": "7b19866b91e42e0e",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 28,
+      "content": "CT检查报告单\n检查日期: 2025年12月17日\n姓名:\n性别: 女\n年龄: 41岁\n申请医师:\n登记号: 0016247299\n住院\n床号: 加7床\n科\n检查号.\n检查项目: CT薄层增强(胸部)(胸部)\n影像所见:\n右肺上叶-肺门处可见不规则团块影, 动脉期呈中度不均匀强化, 静脉期强化稍减低, 右肺上\n叶支气管闭塞并肺不张, 右肺叶间裂结节样增厚。双肺见多发实性结节影, 较大者大小约\n7mm×3mm, 位于右肺上叶前段。双肺可见条索影、絮状高密度影。余气管支气管通畅。纵\n隔、右侧肺门肿大淋巴结。双侧胸膜局限性增厚, 右侧胸腔积液并右肺下叶局部膨胀不全。\n诊断意见:\n1、右肺上叶-肺门处"
+    },
+    {
+      "chunk_id": "bc6e73dc487d88b6",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 23,
+      "content": "MRI检查报告单\n检查日期：2025年12月16日\n姓名：\n性别：女\n年龄：41岁\n申请医师\n登记号：0010241299\n住院号：\n床号：加7床\n科\n检查号：\n检查项目：头DWI(头部)(头部(平扫+DWI))\n影像所见：\n双侧大脑半球对称，灰白质对比自然，脑实质内未见异常信号，各脑室、脑池大小形态未见\n异常，中线结构居中。所见垂体稍变薄。双侧筛窦粘膜增厚。DWI未见明显异常信号；\n诊断意见：\n1、部分空泡蝶鞍；\n2、双侧筛窦炎；\n请结合临床和其它检查。\n报告医师：刘瀚霞\n审核医师：魏焕焕\n报告日期：2025年12月17日 15:05:38\n本报告对本次检查负责，供临床医师参考，不作为临床诊"
+    },
+    {
+      "chunk_id": "abb285f7f814a6e3",
+      "pages": [
+        8,
+        9
+      ],
+      "page_count_raw": 41,
+      "content": "本人查看报告及影像：1、扫码：扫描右侧二维码，通过手机号验证（需为就诊卡绑定手机号）登录查询；\n姓名：__\n住院\nQRS(70~110):80ms\n诊断：\n性别：女\n床号：加7床\nQT(320~440)/QTc(320~460)：364ms/438ms\n异位心律：\n年龄：41岁\n病人编号：0016247299\nP(0~75)/QRS(-30~90)/T(30~90)：3/73/2↓deg\n加速性房性心律：\n送检科室\nX\nHR(60~100)：87bpm\nRV5/SV1：1.22/0.50mV\n部分导联T波异常\n申请单号：\nJ01\nPR(120~200)：128ms\nRV5+SV1(<3.5)："
+    },
+    {
+      "chunk_id": "67598715045f60a0",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 47,
+      "content": "院核医学科\nSPECT/CT 显像诊断报告\n电子报告影像\n姓名：\n性别：女\n年龄：41岁\n检查号：F25-1596\n科别：\n登记号：\n住院：\n床号：加7床\n检查项目：18F-FDG 符合探测显像\n注射药物：18F-FDG\n注射剂量：7mCi\n临床诊断：肺占位性病变（性质待查：感染？肿瘤？）\n检查所见：\n静脉注射18F-FDG 50min后行躯干葡萄糖代谢显像。影像所见：\n甲状腺形态可，腺实质内未见异常放射性增高灶。颈部及锁骨上区未见明显异常淋巴结浓\n聚。\n两肺显影清晰，右肺上叶近肺门区团块影，伴右肺上叶阻塞性改变，肿块放射性摄取增高；\n右肺叶间裂多发结节影，未见明显放射性摄取；双肺散在絮片、条"
+    },
+    {
+      "chunk_id": "8c751390fc0d6edd",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 41,
+      "content": "电子气管镜检查报告单\n姓名：\n性别：女\n年龄：41\n申请科室：\n住院号：\n床号：78床\n内镜号：2821138\n内镜型号：BF-1TQ290\n隆突\n左第二分嵴\n右第二分嵴\n右上叶支气管\n右中间干支气管\n活检\n刷检\n右上叶病灶\nEBUS-\nTBNA\n检查所见：患者去枕平卧位，全麻下经喉罩进镜，声门开放良好，经气管镜操作孔道于气道内多部\n位分次给予利多卡因局部滴药后，进行气管镜诊疗操作，气管管腔通畅，粘膜光滑，隆突嵴锐\n利。左、右主支气管及其所属各叶段支气管少量白色泡沫样分泌物，抽吸后右上叶管口粘膜肥\n厚，管口狭窄，镜身不能进入，触之易出血，余各叶段支气管管腔通畅，粘膜光滑。根据胸部CT\n及镜下表"
+    },
+    {
+      "chunk_id": "ece792986e18b6b8",
+      "pages": [
+        12,
+        13
+      ],
+      "page_count_raw": 45,
+      "content": "彩色多普勒超声检查报告单\n姓名\n性别 女\n年龄 41岁\n检查\n来源 住院\n临床科室 微无创诊疗\n住院号\n床号 43床\n中心\n检查设备 (2诊)aplio900-24-253 检查部位 临床操作的彩色多普勒超声引导、经皮穿刺置\n管引流术\n超声所见：\n姓名:王肖艳,性别:女,年龄:41岁,病案号:0003157012,核对患者信息无误。患者因病\n情需要,根据患者病情,为缓解病人症状,于2025年12月23日行“超声引导下行右侧胸腔积\n液穿刺置管术”。操作前已向患者本人及患者授权委托人告知操作目的、风险、可能出现的\n意外情况及医用耗材使用情况,经患者本人及家属同意并签署知情同意书后,术前行超声检\n查"
+    },
+    {
+      "chunk_id": "6d9679f330d0cf1a",
+      "pages": [
+        20
+      ],
+      "page_count_raw": 29,
+      "content": "病理号: 25-127820\n姓\n性\n别: 女\n年\n龄: 41岁\n送检医院: 本院\n科\n别\n疗中心\n住院号\n床\n号: 78床\n送检医\n接收日期: 2025-12-19\n病理大体所见:\n(右上叶支气管管口活检): 灰红碎组织, 直径0.6cm, 全取。\n显微摄影图像:\n病理诊断:\n【右上叶支气管管口活检】支气管黏膜慢性炎。\n本报告只对本次送检标本负责,\n如有疑问, 请速与病理科联系。\nTEL:0371-87160297 (内线7297)\n0371-65580511 (内线2511)\n地址: 河南省人民医院5号楼门诊\n报告医师: 李博豪\n审核医师: 龚智泉\n第1页, 共1页\n报告日期: 2025-"
+    },
+    {
+      "chunk_id": "a6102bffd745ad9f",
+      "pages": [
+        21
+      ],
+      "page_count_raw": 31,
+      "content": "院)报告单\n1\n2\n3\n4\n5\n6\n7\n1\n1\n4\n15\n16\n17\n18\n19\n20\n细胞病理检查报告单\n病理号：C25-15409\n姓名：\n性别：女\n年龄：41岁\n送检医院：本院\n科别：呼吸内镜介入诊疗中心\n住院号\n接收日期：2025-12-19\n报告日期：2025-12-20\n显微摄影图像：\n细胞学诊断：\n(右上叶灌洗液TCT）镜检纤毛柱状上皮细胞、组织细胞、炎细胞，未见明确异型瘤细胞。\n(右上叶刷片）镜检纤毛柱状上皮细胞、炎细胞，未见明确异型瘤细胞。"
+    },
+    {
+      "chunk_id": "8c1e21097da55734",
+      "pages": [
+        22
+      ],
+      "page_count_raw": 27,
+      "content": "病理补充报告单\n病理号：25-127819\n姓\n性\n别：女\n年\n龄：41岁\n送检医院：本院\n科\n别：呼吸内镜介入诊疗中心 住院\n送检日期：2025-12-19\n报告日期\n2025-12-22\n光镜所见：\n病理诊断：\n补充报告1：\n【右上叶病灶 EBUS-TBNA】肺腺癌：\n免疫组化(靶细胞)结果显示：[25-127819.A.1]:CK(AE1/AE3)(+), CK7(+), Ki67(约40%)\n, Napsin A(+), P40(-), TTF-1(+), SYN(-), INSM1(-), SALL4(-), BRG1(+), INI\n-1(+)。\n报告医师：\n李博豪\n审核医师：\n龚"
+    },
+    {
+      "chunk_id": "5c7e593148743b00",
+      "pages": [
+        23,
+        24
+      ],
+      "page_count_raw": 16,
+      "content": "43.31毫米\n68.61毫米\n细胞病理检查报告单\n病理号：C25-15411\n姓名.\n性别：女\n年龄：41岁\n送检医院：本院\n科别：呼吸内镜介入诊疗中心\n住院号\n接收日期：2025-12-19\n报告日期：2025-12-20\n显微摄影图像：\n细胞学诊断：\n(右上叶病灶 EBUS-TBNA TCT)镜检见恶性肿瘤细胞，考虑：癌细胞，非小细胞型。请结合临床\n及活检。"
+    },
+    {
+      "chunk_id": "9881b79bcb28756d",
+      "pages": [
+        25,
+        26,
+        27
+      ],
+      "page_count_raw": 230,
+      "content": "患者全息智能视图\n全选\n1.右肺上叶恶性肿瘤\n2026-01-03\n2026-01-03\n诊断信息\n用药清单(eMAR)\n电子病历\n检查结果\n检验结果\n文档\n医嘱类型：\n长期\n临时\n全部开立科室\n全部药物\n医嘱类型\n医嘱名称\n医嘱状态\n无数据\n每页显示\n25\n条记录\n用药清单(eMAR)\n电子病历 检查结果 检验结果 文档浏览 医嘱信息 手术信息 集成视图 输血记录 共享文档 消毒供应 病理报告(New) 患者示踪 护理病历\n类型：□长期 □临时\n全部开立科室\n全部药物类型\n医嘱类型\n医嘱名称\n医嘱状态\n剂型\n单次剂量\n频次\n用药途径\n临时\n(国采)盐酸利多卡因注射液[5ml:0.1g]\n核实"
+    },
+    {
+      "chunk_id": "e17f75f1077a72ca",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>14.4</td><td>U/L</td><td>7—40U/L</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>16.1</td><td>U/L</td><td>13—35U/L</td><td>False</td></tr><tr><td>总蛋白</td><td>TP</td><td>63.73</td><td>g/L</td><td>65—85g/L</td><td>True</td></tr><tr><td>白蛋白</td>"
+    },
+    {
+      "chunk_id": "db2bba5368e38313",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>颜色</td><td>COL</td><td>稻黄色</td><td>None</td><td>None</td><td>False</td></tr><tr><td>透明度</td><td>TRA</td><td>清亮</td><td>None</td><td>None</td><td>False</td></tr><tr><td>比重</td><td>SG</td><td>1.030</td><td>None</td><td>1.003—1.003</td><td>True</td></tr><tr><td>酸碱度</td><td>PH</td><td>6.0"
+    },
+    {
+      "chunk_id": "beab429828db993a",
+      "pages": [
+        28,
+        29
+      ],
+      "page_count_raw": 17,
+      "content": "<table><tr><td>EGFR突变</td><td>EGFR</td><td>检测范围内未发现基因变异</td><td>None</td><td>None</td><td>False</td></tr><tr><td>KRAS突变</td><td>KRAS</td><td>检测范围内未发现基因变异</td><td>None</td><td>None</td><td>False</td></tr><tr><td>BRAF突变</td><td>BRAF</td><td>检测范围内未发现基因变异</td><td>None</td><td>None</td><td>False</td></tr"
+    },
+    {
+      "chunk_id": "f1c6763ff6bfdb04",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>*肌酸激酶(9-HR)</td><td>CK</td><td>27.6</td><td>U/L</td><td>40--200U/L</td><td>True</td></tr><tr><td>肌酸激酶同功酶</td><td>CK-MB</td><td>12.43</td><td>U/L</td><td>0--25U/L</td><td>False</td></tr><tr><td>*乳酸脱氢酶(9-HR)</td><td>LDH</td><td>166.5</td><td>U/L</td><td>120--250U/L</td><td>False</td></t"
+    },
+    {
+      "chunk_id": "bb3f19440e72c01e",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>乙肝病毒表面抗原</td><td>HBsAg</td><td>阳性(+)</td><td>None</td><td>阴性</td><td>True</td></tr><tr><td>乙肝病毒表面抗体</td><td>HBsAb</td><td>阴性(-)</td><td>None</td><td>阴性\\阳性</td><td>False</td></tr><tr><td>乙肝病毒e抗原</td><td>HBeAg</td><td>阴性(-)</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙肝病毒e抗体<"
+    },
+    {
+      "chunk_id": "0798b8ca2f44ae62",
+      "pages": [
+        19
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>白细胞(9-HR)</td><td>WBC</td><td>6.63</td><td>10^9/L</td><td>3.5—9.5</td><td>False</td></tr><tr><td>中性粒细胞计数</td><td>#NEUT</td><td>4.85</td><td>10^9/L</td><td>1.8—6.3</td><td>False</td></tr><tr><td>中性粒细胞百分比</td><td>%NEUT</td><td>73.2</td><td>%</td><td>40—75</td><td>False</td></tr><tr><td>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "page_sum": 29,
+    "check": {
+      "covered": 28,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 10,
+      "clinical": 10,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 7,
+      "clinical": 6,
+      "match": false
+    },
+    "MedicalOrder": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "进度等待超时（未达终态）。 ",
+  "progress_msg": "\n01:35:32: [QwenVL] 20/30 pages done\n\n01:35:46: [QwenVL] 21/30 pages done\n\n01:36:00: [QwenVL] 22/30 pages done\n\n01:36:22: [QwenVL] 23/30 pages done\n\n01:36:52: [QwenVL] 24/30 pages done\n\n01:37:19: [QwenVL] 25/30 pages done\n\n01:37:26: [QwenVL] 26/30 pages done\n\n01:37:56: [QwenVL] 27/30 pages done\n\n01:"
+}

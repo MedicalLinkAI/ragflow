@@ -1,0 +1,177 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "UUPP-男-12岁-哮喘.pdf",
+    "size_kb": 9080.5,
+    "pages": null,
+    "doc_id": "aae2af00920611f19f644920a769b91a",
+    "patient_id": "PAT-b1626abf41c7"
+  },
+  "doc_id": "aae2af00920611f19f644920a769b91a",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 11,
+  "orm_synced": true,
+  "process_duration": 633.18176,
+  "begin_at": "2026-08-17T23:59:13",
+  "end_at": "2026-08-18T00:09:50",
+  "elapsed_s": 637.1,
+  "before": {
+    "chunk_count": 11,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "MedicalOrder": 3,
+      "ExaminationReport": 4,
+      "LabReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "a5102a9742422379",
+      "pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "page_count_raw": 154,
+      "content": "成都市金牛区人民医院·四川省人民医院金牛医院\n入院记录\n姓名：\n科别：肿瘤科、血液科\n床号：36\n病历号：2025000605\n姓名：\n出生地：\n乐山市峨眉山市\n性别：\n女\n职业：\n退（离）休人员\n年龄：\n77岁\n入院时间：\n2025年01月06日16时38分\n民族：\n汉族\n记录时间：\n2025年01月06日20时27分\n婚姻：\n已婚\n病史陈述者：\n患者及家属\n与患者关系：\n母子\n可靠程度：\n基本可靠\n主诉：胃癌术后1-年，腹胀10天\n现病史：于2023-12，患者出现乏力，于当地医院检查发现贫血，行胃镜检查示胃溃疡。予以服药\n治疗。之后反复出现贫血。于2024-02-19到四川省人民医院就诊"
+    },
+    {
+      "chunk_id": "445d112fd3761cf0",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 22,
+      "content": "姓名:\n性别: 女\n年龄: 77岁0\n住院号: 2025000605\n别: 肿瘤科\n病区: 肿瘤科\n床号: 36\n临床诊断: 胃恶性肿瘤\n申请医师:\n检查日期: 2025/1/9\n设备:\n检查医师: 刘学\n检查项目\n检查部位\n检查所见\n检查结论\n\"腹水\"液基制片+细胞蜡块: 查见上皮样细胞团, 建议行免疫组化进一步诊断 (CK-Pan、CK7、CK20、\nCDX-2、CEA、Villin、MUC-5AC、MUC6、CR、MC、P53、Ki67) 。\n查看图像\n报告解读\n打印\n查看PDF报告单"
+    },
+    {
+      "chunk_id": "c37db6e6a8de734b",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 35,
+      "content": "金牛区人民医院介入超声报告单\n25-01-09 09:08 肿\n影像号 2025823923\n25-01-07 09:15 肿\n姓名: 女\n年龄: 77岁0\n住院号: 2025000605\n25-01-07 09:15 肿\n科别: 肿瘤科\n病区: 肿瘤科\n床号: 36\n临床诊断: 胃恶性肿瘤\n25-01-06 20:54 肿\n申请医师: 曹希\n检查日期: 2025/1/8\n设备: C8_Philips Q5\n25-01-06 20:54 肿\n检查医师: 杨俊玲\n25-01-06 16:54 肿\n检查项目 超声引导下右侧胸腔置管引流术\n25-01-06 16:54 肿\n检查部位 超声引导下右侧胸"
+    },
+    {
+      "chunk_id": "77dd747a6e700c4a",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 32,
+      "content": "金牛区人民医院血管超声报告单\n8 肿\n影像号 2025823713\n8 肿\n姓名: 性别: 女 年龄: 77岁0 住院号: 2025000605\n5 肿\n胃恶性肿瘤: 胃低\n5 肿\n分化腺癌术后\n5 肿\n科别: 肿瘤科 病区: 肿瘤科 床号: 36 临床诊断: (T3N3bM0 IIIC\n5 肿\n期 MSS her-2阴\n5 肿\n性)\n5 肿\n申请医师: 曹希 检查日期: 2025/1/7 设备: C8_Philips Q5\n5 肿\n检查医师: 杨俊玲\n5 肿\n检查项目 彩超 (双侧颈总动脉、双侧颈内动脉、双侧颈外动脉、双侧颈静脉、双侧椎动脉)\n5 肿\n彩超 (双侧颈动脉、双侧颈静脉、双侧椎动"
+    },
+    {
+      "chunk_id": "ffc3555c17c0902a",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 47,
+      "content": "金牛区人民医院心脏超声报告单\n影像号\n2025823648\n姓名:\n性别:\n女\n年龄:\n77岁0\n住院号:\n2025000605\n科别:\n肿瘤科\n病区:\n肿瘤科\n床号:\n36\n临床诊断:\n胃恶性肿瘤\n申请医师:\n曹希\n检查日期:\n2025/1/7\n设备:\nC8_Philips Q5\n检查医师:\n杨俊玲\n检查项目\n室壁运动分析\n心脏彩色多普勒超声\n左心功能测定\n组织多普勒显象(TDI)\n计算机图文报告\n检查部位\n超声计算机图文报告;室壁运动分析;心脏彩色多普勒超声;组织多普勒显像(TDI);左心功能测定\n检查所见\n二维及M型(mm) LA:31 LV:38 RV:18 RA:38*34 IVS:"
+    },
+    {
+      "chunk_id": "9a327786e9e99c52",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 153,
+      "content": "姓名:\n性别:女年龄:77岁身份证号\n科室:肿瘤科、血液科病历号:2025000605费别:异地医保\n白\n欧阳雁玲\n发布了公告通知\n1\n长期\n临时\n草药\n全部\n药品\n护理\n膳食\n治疗\n嘱托医嘱\n今日停\n停止\n有效\n按医嘱内容文字检索\nQ\n1个月\n3个月\n半年\n更多\n状态\n开始日期\n医嘱内容\n医生\n补领\n审核者\n停止日期\n停止者\n执行科室\n执行中\n2025.01.06 16:54\n测血压bid\n曹希\n0\n刘婷\n肿瘤科、血\n执行中\n2025.01.06 16:54\n指脉氧监测tid\n曹希\n0\n刘婷\n肿瘤科、血\n执行中\n2025.01.06 19:30\n•5%葡萄糖注射液(可立袋双阀)(甲)J100"
+    },
+    {
+      "chunk_id": "b5ff3f1675d907ad",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 126,
+      "content": "长期\n临时\n草药\n发布了公告通\n全部□药品□护理□检查□检验□输血□病理□手术□治疗□嘱托医嘱\nDC 正常\n按医嘱内容文字检索\n1个月\n3个月\n半\n状态\n开始日期\n医嘱内容\n医生\n审核者\n审核日期\n执行者\n执行日期\n已执行\n2025.01.11 15:42\n一次性使用静脉留置针 st\n文\n曹希\n李姣\n2025.01.11 15:45\n已执行\n2025.01.11 15:42\n一次性使用静脉留置针 st\n文\n曹希\n李姣\n2025.01.11 15:45\n已执行\n2025.01.11 16:08\n大换药 1 次 st\n曹希\n李姣\n2025.01.11 16:19\n已执行\n2025.01.11 17"
+    },
+    {
+      "chunk_id": "a07fe5586dd4b892",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 141,
+      "content": "长期\n临时\n草药\n欧阳雁玲\n发布了公告通知\n1\n全部\n药品\n护理\n检查\n检验\n输血\n病理\n手术\n治疗\n嘱托医嘱\nDC\n正常\n按医嘱内容文字检索\n1个月\n3个月\n半年\n更多\n状态\n开始日期\n医嘱内容\n医生\n审核者\n审核日期\n执行者\n执行日期\n已执行\n2025.01.09 16:34\n一般物理降温1次st\n曹希\n刘婷\n2025.01.09 16:37\n已执行\n2025.01.09 16:34\n(15ml)布洛芬混悬滴剂(乙)15ml口服st\n曹希\n刘婷\n2025.01.09 16:37\n已执行\n2025.01.09 17:59\n床旁常规心电图检查\n曹希\n张萍\n2025.01.09 17:59\n已执"
+    },
+    {
+      "chunk_id": "31f52a0ccd64418c",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>天门冬氨酸氨基转氨酶</td><td>AST</td><td>38</td><td>u/l</td><td>0~35</td><td>True</td></tr><tr><td>丙氨酸氨基转氨酶</td><td>ALT</td><td>24</td><td>u/l</td><td>0~40</td><td>False</td></tr><tr><td>r-谷氨酰基转酞酶</td><td>GGT</td><td>280</td><td>u/l</td><td>7~45</td><td>True</td></tr><tr><td>碱性磷酸酶</td><td>ALP</"
+    },
+    {
+      "chunk_id": "618b01df952b1f2f",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>18.56</td><td>10^9/L</td><td>3.50~9.50</td><td>True</td></tr><tr><td>中性粒细胞比值</td><td>NEUT%</td><td>90.3</td><td>%</td><td>40.0~75.0</td><td>True</td></tr><tr><td>淋巴细胞比值</td><td>LYMPH%</td><td>2.8</td><td>%</td><td>20.0~50.0</td><td>True</td></tr><tr><td>单核细胞比"
+    },
+    {
+      "chunk_id": "abe82bf67c1636ea",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间</td><td>PT</td><td>10.5</td><td>S</td><td>9.2~13.9</td><td>False</td></tr><tr><td>凝血酶原INR值</td><td>INR</td><td>0.89</td><td>None</td><td>0.80~1.20</td><td>False</td></tr><tr><td>部分凝血活酶时间</td><td>APTT</td><td>37.84</td><td>S</td><td>21.20~34.80</td><td>True</td></tr><tr><td>凝血酶时"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "page_sum": 15,
+    "check": {
+      "covered": 15,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "MedicalOrder": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n00:02:55: [QwenVL] Done: 873 sections from 16 pages.\n\n00:02:56: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n00:02:56: Start SmartSplitter: semantic split + classify.\n\n00:02:56: Loaded 873 OCR bboxes.\n\n00:02:56: Full document: 22785 chars, 873 bboxes.\n\n00:02:56: Calling LLM"
+}

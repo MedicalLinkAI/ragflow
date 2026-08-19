@@ -1,0 +1,26 @@
+{
+  "source": "SCBA--男71岁，大细胞神经内分泌癌.pdf",
+  "levels": [
+    20
+  ],
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "max_capacity_n": 20,
+  "rounds": [
+    {
+      "n": 20,
+      "makespan_min": 24.53,
+      "done": 20,
+      "total": 20,
+      "starts": 1040,
+      "timeouts": 18,
+      "rate": 1.701,
+      "passed": true,
+      "reason": "通过",
+      "window": [
+        "2026-08-18 19:09",
+        "2026-08-18 19:34"
+      ]
+    }
+  ]
+}

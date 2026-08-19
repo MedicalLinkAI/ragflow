@@ -1,0 +1,136 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "博泰奥赛诺 黑龙江省中医医院 LYHO(2)(1).pdf",
+    "size_kb": 2222.7,
+    "pages": null,
+    "doc_id": "a7fe16a078f011f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-b36c3b934910"
+  },
+  "doc_id": "a7fe16a078f011f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 8,
+  "orm_synced": true,
+  "process_duration": 101.41706,
+  "begin_at": "2026-08-18T02:19:34",
+  "end_at": "2026-08-18T02:21:18",
+  "elapsed_s": 104.3,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 4,
+      "LabReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "e17de99b2fd0a724",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 27,
+      "content": "道里区人民医院门诊病历\n姓名：\n就诊号：\n2025-01-14 14:28\n综合内一科门诊\n姓名：\n综合内一科门诊\n年龄：55岁\n性别：\n男\n地址：哈尔滨市南岗区延兴路利兴小区2栋5单元7楼3号\n药物过敏史：无药物过敏史\n主诉：\n复查糖化血红蛋白、空腹血糖\n现病史：\n该患者糖尿病史7年余，要求复测糖化血红蛋白及空腹血糖\n既往史：\n既往健康，无重大疾病\n查体：\n糖化血红蛋白：7.9%；空腹血糖：10.08mmol/L\n诊断：\n2型糖尿病\n处理：\n1盐酸二甲双胍缓释片 0.5g 一日三次 口服\n2糖尿病饮食，适当运动，病情变化随时复诊\n医生签名：张\n第1页"
+    },
+    {
+      "chunk_id": "f058b07372a93ca6",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 16,
+      "content": "哈尔滨市平慧人药房有限\n信誉卡\n销售日期：20250114\n操作员：01\n盐酸_甲双胍缓释片\n圣邦杰 05g*30片\n产品批号：2241228\n¥8.00 8盒 64.00\n应收：¥64.00\n实收：¥64.00\n会员名：\n会员编号：0126\n注：凭此票取货，当日有效\n售出药品无质量问题不予退换\n请于购买之日起三十日内索取发\n票过期作废"
+    },
+    {
+      "chunk_id": "b3c7146c46cd4505",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 34,
+      "content": "电子发票(普通发票)\n发票号码：25232000000020336564\n开票日期：2025年04月16日\n购买方信息\n名称：\n统一社会信用代码/纳税人识别号：\n销售方信息\n名称：哈尔滨市平慧大药房有限公司\n统一社会信用代码/纳税人识别号：91230103MA1CA0Q501\n项目名称\n规格型号\n单位\n数量\n单价\n金额\n税率/征收率\n税额\n*化学药品制剂*片剂盐酸 0.5*30片\n盒\n8 7.9207920792079\n63.37\n1%\n0.63\n二甲双胍缓释片\n合计\n¥63.37\n¥0.63\n价税合计（大写）\n陆拾肆圆整\n(小写)¥64.00\n备注\n开票人：李冬英\nCS 扫描全能王\n3亿人都"
+    },
+    {
+      "chunk_id": "7b4a68a392d0fcf8",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 35,
+      "content": "电子发票(普通发票)\n发票号码：25232000000020580638\n开票日期：2025年04月17日\n黑龙江省税务局\n购买方信息\n名称：刘彦红\n统一社会信用代码/纳税人识别号：\n销售方信息\n名称：哈尔滨市平慧大药房有限公司\n统一社会信用代码/纳税人识别号：91230103MA1CA0Q501\n项目名称\n规格型号\n单位\n数量\n单价\n金额\n税率/征收率\n税额\n*化学药品制剂*片剂盐酸 0.5*30片\n盒\n4 7.9207920792079\n31.68\n1%\n0.32\n二甲双胍缓释片\n合计\n¥31.68\n¥0.32\n价税合计（大写）\n叁拾贰圆整\n(小写)¥32.00\n备注\n开票人：李冬英\nCS"
+    },
+    {
+      "chunk_id": "e6c8231067a6d0d6",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 16,
+      "content": "哈尔滨市平慧大药房有限\n信誉卡\n销售日期：2025.03.20\n操作员：01\n盐酸二甲双胍缓释片\n圣邦杰 0.5g*30片\n产品批号：2241228\n¥8.00 4盒 32.00\n应收：¥32.00\n实收：¥32.00\n会员名：\n会员编号：0126\n注：凭此票取货，当日有效\n售出药品无质量问题不予退换\n请于购买之日起三十日内索取发\n票过期作废"
+    },
+    {
+      "chunk_id": "02addaae00711a37",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1C</td><td>9.30</td><td>%</td><td>4.00-6.00</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "0d5ec589c6c8c7ec",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>7.9</td><td>%</td><td>3.6--6.0</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "7237087b59f5e347",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>葡萄糖</td><td>GLU</td><td>10.08</td><td>mmol/L</td><td>3.57--6.16</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n02:19:46: [QwenVL] 4/8 pages done\n\n02:19:51: [QwenVL] 5/8 pages done\n\n02:19:52: [QwenVL] 6/8 pages done\n\n02:19:52: [QwenVL] 7/8 pages done\n\n02:19:52: [QwenVL] 8/8 pages done\n\n02:19:53: [QwenVL] Done: 169 sections from 8 pages.\n\n02:19:53: Done\n\n\n-------------------------------------\n[SmartSplitter:M"
+}

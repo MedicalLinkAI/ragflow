@@ -1,0 +1,235 @@
+{
+  "mode": "reparse-band",
+  "band": "大>10MB",
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "round": {
+    "band": "大>10MB",
+    "n": 35,
+    "makespan_min": 56.11,
+    "done": 35,
+    "total": 35,
+    "starts": 1393,
+    "timeouts": 33,
+    "rate": 2.314,
+    "passed": false,
+    "reason": "总时长 56.1min 超预算 30.0min；VLM 超时率 2.31% ≥ 阈值 2.0%",
+    "window": [
+      "2026-08-18 23:16",
+      "2026-08-19 00:13"
+    ],
+    "not_done": {},
+    "docs": [
+      {
+        "name": "DAXI-哮喘.pdf",
+        "doc_id": "ea7901d8971e11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "KLYY-男-70岁-肺癌.pdf",
+        "doc_id": "6d4b67b096fa11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "麦济ZHYH.pdf",
+        "doc_id": "3888b5ec96e511f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "麦济WRNA(2).pdf",
+        "doc_id": "de1ebdfa96e311f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "YXLA（支气管哮喘）222.pdf",
+        "doc_id": "c0fe480c96df11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LZQ 64 哮喘 深圳二院.pdf",
+        "doc_id": "e3bcaeee96d811f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LXQI222.pdf",
+        "doc_id": "a4816fe696d111f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "哮喘-HJCH222   2.27.pdf",
+        "doc_id": "e68326d8966211f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZLHU-女-55岁-类风湿关节炎.pdf",
+        "doc_id": "e1503ad2962811f1abb555ceeebece40",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LBZH，男，63岁，胃癌一线(1).pdf",
+        "doc_id": "f77057f0960c11f1abb555ceeebece40",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZLWE-男-39岁-胃癌.pdf",
+        "doc_id": "ed223ba4955011f18f67cb8e99b562ad",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "XALI麦济新乡 2026-03-06 17.04 (1).pdf",
+        "doc_id": "3a1f2278948411f18f67cb8e99b562ad",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "78160cd4ce5fa19c446198bb93da627b94248e7af91539ab4a23e6bcafae50801784721002739.pdf",
+        "doc_id": "84a047e885c311f1bb8027103a248952",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "DJME-女-类风湿-菏泽中心.pdf",
+        "doc_id": "ce7b6052850d11f1bb8027103a248952",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "十堰-ZCQI-小肺-方穹推荐706-I期（IA期）.pdf",
+        "doc_id": "8cf614227eb111f1af97e3985ba7f8da",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "广西-KLYY-肺腺癌-方穹推荐706-IB期.pdf",
+        "doc_id": "67c219907eb011f1af97e3985ba7f8da",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "（已压缩）06-临沂人民-LCZH，后线肺癌，方穹招募推荐.pdf",
+        "doc_id": "a86c41f67e6e11f1af97e3985ba7f8da",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "糖尿病患者FXJI-潍坊.pdf",
+        "doc_id": "ba50175e7e6811f1af97e3985ba7f8da",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "07-毓璜顶-WGJU，结直肠癌，方穹招募推荐.pdf",
+        "doc_id": "c99b75cc7c5c11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "07-毓璜顶-GWZH，后线肺癌，方穹招募推荐.pdf",
+        "doc_id": "ab7d146a7c5c11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZLHU-女-类风湿-安徽省立中心.pdf",
+        "doc_id": "baf3435a7c4e11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LGLA肺鳞癌初治-天津.pdf",
+        "doc_id": "ab9e1adc7b9111f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "SXCH 66 肺鳞癌 推天津.pdf",
+        "doc_id": "f223409c7b8f11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "WXYA-腺癌-41岁.pdf",
+        "doc_id": "ca1876627b8f11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "CRFE,男，74，肺鳞癌.pdf",
+        "doc_id": "ec00f8867b8e11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "QCQI  男 60岁 肺腺癌初治 山西省肿.pdf",
+        "doc_id": "5350b6447b8e11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZHHQ  69 男 肺癌初诊(2).pdf",
+        "doc_id": "1101a3f87a9d11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "AXCA 59肠癌HER2+,PD-1＞1(1).pdf",
+        "doc_id": "72a8cb7879e311f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "（已压缩）XDHU,男，48岁，肺腺癌.pdf",
+        "doc_id": "8b8ebe7679b711f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LXLI 男59.pdf",
+        "doc_id": "1236eaa878f911f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LYNO 男 62.pdf",
+        "doc_id": "db07974478f811f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZHHQ  69 男 肺癌初诊.pdf",
+        "doc_id": "237149fe78f811f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZJFA肺腺癌初治26.4.2.pdf",
+        "doc_id": "e753d7de78f711f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZLME 女  54 胃癌初诊.pdf",
+        "doc_id": "51787d0a78f711f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "山东-ZGLI-小肺-方穹推荐706-I期（IA期.pdf",
+        "doc_id": "e3437d8e756411f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      }
+    ]
+  }
+}

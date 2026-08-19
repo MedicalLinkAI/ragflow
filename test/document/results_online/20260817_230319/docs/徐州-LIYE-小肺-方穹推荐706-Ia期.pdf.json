@@ -1,0 +1,163 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "徐州-LIYE-小肺-方穹推荐706-Ia期.pdf",
+    "size_kb": 2804.8,
+    "pages": null,
+    "doc_id": "14e1a4847eb011f1af97e3985ba7f8da",
+    "patient_id": "PAT-b662c0df5c99"
+  },
+  "doc_id": "14e1a4847eb011f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 559.1923,
+  "begin_at": "2026-08-18T00:38:47",
+  "end_at": "2026-08-18T00:48:07",
+  "elapsed_s": 560.3,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 4,
+      "DischargeRecord": 1,
+      "LabReport": 2,
+      "OutpatientRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "eb9bc3cf33bdaa5b",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 115,
+      "content": "2025.5.21确诊小细胞肺癌\n2025.5.28-2025.7.16 依托泊苷+卡铂+斯鲁利\n2025.8.13-2025.11.7 依托泊苷+斯鲁利\n南京鼓楼医院\n南京大学医学院附属鼓楼医院\n出院记录\n科别（江北）综合肿瘤中心 病区（江北）B7病区床号07床 姓名\n住院号\n姓名：\n性别：女 年龄：75岁 婚姻：已婚 职业：农民\n入院诊断：1. 肺恶性肿瘤（左肺，小细胞癌广泛期）2. 肥 入院日期： 2025年12月03日\n厚型梗阻性心肌病 3. 纵隔淋巴结肿大 4. 肺门\n淋巴结肿大 5. 锁骨上淋巴结肿大（双侧）6. 腋\n下淋巴结肿大（右）7. 心功能III级（NYHA分级）\n8. 甲"
+    },
+    {
+      "chunk_id": "bcfbb0d6902c8b4f",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 23,
+      "content": "河北省人民医院\n病理检查报告单\n病理号\n姓名:\n性别: 女\n年龄: 74岁\n送检单位: 本院\n科别: 胸外二科病区\n住院号\n床号:\n送检日期: 2025-05-23 16:44\n送检材料: 左肺穿刺数条:\n临床诊断: 左肺占位\n图像:\n大体检查:\n(左肺穿刺数条:)穿刺组织3条, 长共3cm, 直径0.1cm。\n病理诊断:\n(左肺)穿刺组织: 浸润性癌, 类型待免疫组化助诊。\n诊断医师:\n郑国卿 王彤彤\n日期: 2025-05-26 14:23\n注:1.此报告仅供临床医师参考, 如有异议请在两日内与诊断医师联系。 电话: (0311)85988183\n2.国家规定小标本(咬检及穿刺组织)3个工"
+    },
+    {
+      "chunk_id": "41e501cec4572916",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 21,
+      "content": "住院病历\n河北省人民医院\n病理检查补充报告单\n病理号:\n姓名:\n性别: 女\n年龄: 74岁\n送检单位: 本院\n科别: 胸外二科病区\n住院号:\n床号:\n送检日期: 2025-05-23 16:44\n送检材料: 左肺穿刺数条:\n临床诊断: 左肺占位\n补充病理诊断:\n(左肺)穿刺组织: 结合免疫组化染色支持小细胞癌。\n免疫组化染色: CKpan (+), Vimentin (-), CK7 (+), TTF-1 (+), NapsinA (-), CK5/6\n(-), P40 (-), P63 (-), CgA (+), Syn (+), CD56 (+), Ki-67 (90%+)。\n诊断医师: "
+    },
+    {
+      "chunk_id": "347e513330213afd",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 50,
+      "content": "南京鼓楼医院云胶片\n◎\n南京鼓楼医院\n南京大学医学院附属鼓楼医院\n影像检查诊断报告\n互联网医院\n电子影像\n检查号:\n患者类型: 住院\n患者编号:\n姓名:\n性别: 女\n年龄: 75岁\n科别: (江北)综合肿瘤中心 病区: (江北)B7病区\n病床:\n检查日期: 2026-03-11 13:39:06\n设备类型: CT\n技师: 王雨晓\n检查项目: [CT平扫+增强(颈部、胸部、上腹部、下腹部、盆腔)]\n检查所见:\n颈部软组织CT平扫+增强:\n【所见咽部】所见咽腔结构对称,未见明显异常密度影。增强后未见明显异常强化。\n【喉部及下咽部】喉腔结构对称,会厌、声带、梨状窝形态及密度未见明显异常。增强后未见\n"
+    },
+    {
+      "chunk_id": "4e7a1c44bee88100",
+      "pages": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "page_count_raw": 129,
+      "content": "南京鼓楼医院云胶片\n女/75岁\n设备类型\nCT\n患者类型\n无\n检查项目\n[CT平扫+增强（颈部、胸部、上腹部、下\n腹部、盆腔）]\nPDF报告\n图像\n分享\n报告\n2025-10-08\n影像描述\n颈部软组织CT平扫+增强：\n【所见咽部】所见咽腔结构对称，未见明显异常\n密度影。增强后未见明显异常强化。\n【喉部及下咽部】喉腔结构对称，会厌、声带、\n梨状窝形态及密度未见明显异常。增强后未见明显\n异常强化。\n【甲状腺及甲状旁腺区】甲状腺左右叶大小、形\n态正常，甲状腺双叶低密度结节；甲状旁腺区未见\n明显占位性病变。\n【唾液腺】双侧腮腺、颌下腺形态密度未见明显\n异常。增强后未见明显异常强化。\n【气管及食管】气"
+    },
+    {
+      "chunk_id": "51101381d7ad1e00",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 28,
+      "content": "南京鼓楼医院\n南京大学医学院附属鼓楼医院\n互联网医院\n门诊病历\n姓名:\n性别:女\n年龄:75岁\nID:\n2026年03月16日15时20分 (江北)心血管内科门诊\n主诉:要求进行心功能分级\n病史:患者平时正常活动不受限。\n过敏史:无吸烟史\n药物过敏史。无流行病学史\n体查:\n诊断:\n1.心功能I级(NYHA分\n级)\n2.高脂血症\n处理:随诊\n1.非诺贝特胶囊(力平之)\n200mg/粒\n用法:1粒\n口服\n一次/日\nx3盒 28天\n医师:\n齐\n第1页"
+    },
+    {
+      "chunk_id": "5cabc9eebe4e846b",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 19,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>4.2</td><td>10^9/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>中性粒细胞百分数</td><td>None</td><td>74.5</td><td>%</td><td>40--75</td><td>False</td></tr><tr><td>淋巴细胞百分数</td><td>None</td><td>16.1</td><td>%</td><td>20--50</td><td>True</td></tr><tr><td>单核细胞百分数</td"
+    },
+    {
+      "chunk_id": "2639d2d36199f537",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 31,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>None</td><td>50.3</td><td>U/L</td><td>7--40</td><td>True</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>None</td><td>35.4</td><td>U/L</td><td>13--35</td><td>True</td></tr><tr><td>碱性磷酸酶</td><td>None</td><td>43.2</td><td>U/L</td><td>50--135</td><td>True</td></tr><tr><td>γ-谷氨酰基转移酶<"
+    },
+    {
+      "chunk_id": "af402a9e58705a86",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>C反应蛋白</td><td>None</td><td>11.2</td><td>mg/L</td><td>0--6</td><td>True</td></tr><tr><td>肌酸激酶</td><td>None</td><td>56</td><td>U/L</td><td>40--200</td><td>False</td></tr><tr><td>肌酸激酶MB同工酶</td><td>None</td><td>11</td><td>U/L</td><td>0--25</td><td>False</td></tr><tr><td>a 羟丁酸脱氢酶</td><td>N"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "page_sum": 16,
+    "check": {
+      "covered": 14,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n00:39:52: [QwenVL] 13/14 pages done\n\n00:40:21: [QwenVL] 14/14 pages done\n\n00:40:21: [QwenVL] Done: 463 sections from 14 pages.\n\n00:40:21: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n00:40:21: Start SmartSplitter: semantic split + classify.\n\n00:40:21: Loaded 463 OCR bboxes."
+}

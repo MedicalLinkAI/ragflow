@@ -1,0 +1,129 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "ZJFA肺腺癌初治26.4.2.pdf",
+    "size_kb": 23117.5,
+    "pages": null,
+    "doc_id": "e753d7de78f711f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-9a2663cfa67a"
+  },
+  "doc_id": "e753d7de78f711f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 6,
+  "orm_synced": true,
+  "process_duration": 474.46927,
+  "begin_at": "2026-08-18T02:06:48",
+  "end_at": "2026-08-18T02:14:48",
+  "elapsed_s": 480.2,
+  "before": {
+    "chunk_count": 6,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 2,
+      "DischargeRecord": 1,
+      "ExaminationReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "7d2477aabd1e34b6",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 57,
+      "content": "姓名：\n性别：男\n年龄：58岁\n住院号：\n姓名：\n性别：男\n年龄：58岁\n民族：汉族\n婚况：已婚\n出生地：山东省聊城市莘县\n职业：农民\n入院时间：2026-03-22 10:38\n记录时间：2026-03-22 12:20\n病史陈述者：患者本人及亲属\n主诉：胸闷、憋喘伴咳嗽1月余。\n现病史：患者1月余前受凉后出现胸闷、憋喘，活动后加重，休息后缓解，伴咳嗽，无痰，无咯血，\n无发热、畏寒、寒战，无头痛、头晕，无鼻塞、流涕，无咽痛，无肌肉酸痛，无心慌，无恶心、呕吐、\n反酸、烧心，开始未予在意，上述症状持续存在，后于当地医院就诊，给予输液治疗9天（具体不\n详），症状未见明显改善。现为进一步诊疗，就诊于"
+    },
+    {
+      "chunk_id": "1906886a49ed11d2",
+      "pages": [
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 54,
+      "content": "2026-4-2\n聊城市人民医院\n出院记录\n姓名：\n性别：男\n年龄：58岁\n住院号：\n姓名：\n性别：男\n年龄：[58岁]\n入院日期：[2026-03-22 10:38]\n出院日期：[2026-03-26 08:14]\n住院天数：[4天]\n入院情况：[胸闷、憋喘伴咳嗽1月余。]。体检：T37.1℃，P86次/分，R22次/分，BP154/\n89mmHg。[神志清，精神可，双肺呼吸音粗，双肺未闻及干湿啰音，未闻及胸膜摩擦音。心前区无隆起，\n心律齐，未闻及心包摩擦音。腹部平软，全腹无压痛及反跳痛，双下肢无水肿。]2026-03-20\n胸部强化CT：左肺上叶占位，考虑肿瘤并阻塞性肺炎，结合临床，双肺小"
+    },
+    {
+      "chunk_id": "f10a36e6bc4f5da4",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 30,
+      "content": "技术参数:\n聊城市人民医院\nCT影像检查报告\n影像号\n姓名\n性别:男\n年龄:58岁\n住院号:\n科 别呼吸与急重症医 病 区呼吸与急重症\n床 号:2\n检查设备:CT扫描4室\n检查项目部位:[上腹部,增强][下腹部,增强]\n影像所见:\n肝形态尚可,肝顶见致密灶,肝内点状低密度灶,肝内外胆管无扩张,胆囊形态尚\n可,壁无增厚,腔内见点状致密灶,胰腺形态、大小、密度未见异常,胰管稍扩张,\n胰周未见渗出,脾形态、大小、密度未见异常,左肾上腺饱满,双肾形态尚可,双肾\n见囊性低密度灶,大者于左肾下极,截面约19×18mm,未见强化,肾盂及输尿管无扩\n张,肠管内容物较多,未见液气平面,未见肿大淋巴结影,未见腹水"
+    },
+    {
+      "chunk_id": "a071c23bc4e287c4",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 24,
+      "content": "院 病理报告\n聊城市人民医院\n病理检查补充报告单\n病理号:\n姓名:\n性别: 男\n年龄: 58 岁\n门诊号:\n送检医院: 本院\n送检科室: 呼吸与危重症医学科\n住院号:\n送检医生:\n床号: 2\n收到日期: 2026-03-24 16:09\n临床诊断: 肺占位性病变\n补充报告:\n(左肺上叶固有支新生物)活检: 低分化癌, 结合免疫组化标记, 符合肺腺癌。\n免疫组化结果: CK7(+), TTF-1(+), Napsin A(-), Ki-67(70%+), P40(局部+),\nSMARCA4_Brg1(未缺失), CK5/6(局灶+), CK(AE1_AE3)(+).\n初诊医生: 胡艳玲\n复诊医生"
+    },
+    {
+      "chunk_id": "0e70e5a0f1e6ead7",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>None</td><td>16.97</td><td>×10^9/L</td><td>3.5--9.5</td><td>True</td></tr><tr><td>红细胞计数</td><td>None</td><td>4.01</td><td>×10^12/L</td><td>4.3--5.8</td><td>True</td></tr><tr><td>血红蛋白</td><td>None</td><td>122</td><td>g/L</td><td>130--175</td><td>True</td></tr><tr><td>红细胞压"
+    },
+    {
+      "chunk_id": "2c6a7c33f811e7fa",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>None</td><td>23</td><td>U/L</td><td>9--50</td><td>False</td></tr><tr><td>天冬氨酸氨基转移酶</td><td>None</td><td>17</td><td>U/L</td><td>15--40</td><td>False</td></tr><tr><td>AST:ALT</td><td>None</td><td>0.74</td><td>None</td><td>None</td><td>False</td></tr><tr><td>r-谷氨酰转肽酶</td"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 9,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "02:08:23: [QwenVL] 3/8 pages done\n\n02:08:23: [QwenVL] 4/8 pages done\n\n02:08:30: [QwenVL] 5/8 pages done\n\n02:08:34: [QwenVL] 6/8 pages done\n\n02:08:56: [QwenVL] 7/8 pages done\n\n02:08:58: [QwenVL] 8/8 pages done\n\n02:08:58: [QwenVL] Done: 225 sections from 8 pages.\n\n02:08:58: Done\n\n\n--------------------"
+}

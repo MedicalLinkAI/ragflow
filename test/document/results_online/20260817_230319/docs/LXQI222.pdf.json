@@ -1,0 +1,120 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LXQI222.pdf",
+    "size_kb": 62937.7,
+    "pages": null,
+    "doc_id": "a4816fe696d111f19d3ab1cda0a97c3d",
+    "patient_id": "PAT-6e4c40a8de77"
+  },
+  "doc_id": "a4816fe696d111f19d3ab1cda0a97c3d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 5,
+  "orm_synced": false,
+  "process_duration": 776.97974,
+  "begin_at": "2026-08-17T23:30:27",
+  "end_at": "2026-08-17T23:43:28",
+  "elapsed_s": 781.0,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 4
+  },
+  "chunks": [
+    {
+      "chunk_id": "4f6853d1f23c54e1",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "page_count_raw": 140,
+      "content": "入院记录\n姓名：\n床号：23-03床\n病历号：0\n科室：呼吸与危重医学科医生\n站\n姓名：\n性别：女\n年龄：72岁\n出生地：贵州省贵阳市\n职业：退休人员\n民族：汉族\n婚姻：已婚\n联系地址：中国贵州省贵阳市\n入院时间：2025-10-30 14:34\n病史陈述者：本人\n主诉：咳嗽、咳痰5年，加重1周\n现病史：5年前患者无明显诱因出现咳嗽咳痰，伴喘息气促，活动后气促症状加重，痰为脓痰，呈黄色，\n不易咳出，无发热、咯血、寒颤、胸闷、胸痛、腹痛、腹胀等不适，曾于外院完善相关检查诊断“支气管\n哮喘”，行对症支持治疗后好转，长期予以“沙罗特罗替卡松”吸入治疗。期间上述症状反复，每于上感\n和天气变化时加重。1"
+    },
+    {
+      "chunk_id": "9d82f41d577e8a1a",
+      "pages": [
+        5,
+        6,
+        7
+      ],
+      "page_count_raw": 95,
+      "content": "出院记录\n姓名：\n床号：23-03床\n病历号：0\n科室：呼吸与危重医学科医生站\n姓名：\n性别：女\n年龄：72岁\n民族：汉族\n病历号：00\n科室：呼吸与危重医学科医生站\n入院日期：2025-10-30 14:34\n住院天数：8\n出院日期：2025-11-07 11:44\n籍贯：贵州省贵阳市\n职业：退休人员\n单位：贵阳供电局\n住址：中国贵州省贵阳\n入院情况：\n李新秋，72岁，女，因“咳嗽、咳痰5年，加重1周”于2025-10-30 14:34:00入院。现病史：5年前患者无\n明显诱因出现咳嗽咳痰，伴喘息气促，活动后气促症状加重，痰为脓痰，呈黄色，不易咳出，无发热、咯\n血、寒颤、胸闷、胸痛、腹痛、腹"
+    },
+    {
+      "chunk_id": "f80180a6cddc4d49",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 172,
+      "content": "肺功能通气阻力检查报告\n姓名：\n性别：女\n身高：151 cm\n病历号：\n年龄：72 Years\n体重：46 kg\nFlow [L/s]\nF/V ex\n10\n5\n0\n2\n4\n6\nF/V in\n8\nVol [L]\n6\n4\n1\nVol%Vcmax\n100\nVcmax\n20\n0\nTime [s]\n0\n1\n2\n3\n4\n5\n6\n2.0\nR [kPa/(L/s)] Normal breathingX [kPa/(L/s)]\n1.5\n1.0\n0.5\n0.0\n0.4\n0.2\n0.2\n0.4\nF [Hz]\n5\n10\n15\n20\n25\n30\n35\n日期\n时间\n预计值\n实测值\n实/预\n25/10/31\n14:29:3"
+    },
+    {
+      "chunk_id": "6e1ebaf467618bce",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 170,
+      "content": "贵州医科大学附属医院\nTHE AFFILIATED HOSPITAL OF GUIZHOU MEDICAL UNIVERSITY\n对比试验\n姓名：\n性别：女\n身高：151 cm\n病历号：\n年龄：72 Years\n体重：46 kg\nFlow [L/s]\nF/V ex\n10\n5\n0\n2\n3\n4\n5\n6\n7\nF/V in\n6\nVol [L]\nTLC\n4\nER\npleth2\nRV\nTime [min]\nPred Act 0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n日期\n时间\n预计值\n前次\n前/预\n后次\n后/预\n改善率\n25/10/31\n14:29:33\n25/10/31\n14:53:10\nVT\n["
+    },
+    {
+      "chunk_id": "d5049342b55afeea",
+      "pages": [
+        9,
+        10
+      ],
+      "page_count_raw": 3,
+      "content": "贵州医科大学附属医院检查报告\n专用电子章\n亦康互联网医院\", \"普通\", \"处方\\u200b\", \"已使用\", \"已使用\", \"已使用\", \"NO.:\", \"联\", \"处方笺\", \"已使月\", \"2025-12-05\", \"已使用\", \"姓名：\", \"性别：女方专用章\", \"年龄：72岁\", \"已便\", \"费别：自费\", \"科别：内科\", \"已使用\", \"临床诊断：支气管哮喘\", \"已使用\", \"Rp:\", \"沙美特罗替卡松吸入粉雾剂\", \"50μg:250μg*60泡\", \"x3盒\", \"用法用量：口腔吸入,一日两次,一次1.0揿;\", \"补充说明：处方超7日为病情需要\", \"医师：邢伟\","
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 11,
+    "check": {
+      "covered": 10,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n23:31:03: [QwenVL] 5/10 pages done\n\n23:31:07: [QwenVL] 6/10 pages done\n\n23:31:12: [QwenVL] 7/10 pages done\n\n23:31:14: [QwenVL] 8/10 pages done\n\n23:31:23: [QwenVL] 9/10 pages done\n\n23:35:30: [QwenVL] 10/10 pages done\n\n23:35:30: [QwenVL] Done: 588 sections from 10 pages.\n\n23:35:30: Done\n\n\n-----------"
+}

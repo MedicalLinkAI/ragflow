@@ -1,0 +1,235 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "MDXU-58-肺鳞癌.pdf",
+    "size_kb": 6142.9,
+    "pages": null,
+    "doc_id": "a0fdc04e7b8e11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-f96e0b0881d7"
+  },
+  "doc_id": "a0fdc04e7b8e11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 19,
+  "orm_synced": true,
+  "process_duration": 362.31393,
+  "begin_at": "2026-08-18T01:38:56",
+  "end_at": "2026-08-18T01:45:09",
+  "elapsed_s": 373.1,
+  "before": {
+    "chunk_count": 20,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 4,
+      "AdmissionRecord": 1,
+      "LabReport": 15
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "974ee5fa2cca141f",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 49,
+      "content": "姓名：\n性别：男\n年龄：58岁\n婚姻：已婚\n入院日期：2026年02月02日 08时20分\n主诉：外院发现肺部占位1年\n现病史：患者家属代诉2025.2.27于湘雅三医院体检时肺部增强ct发现左肺上叶肺门旁见不\n规则软组织密度影，较大截面28*24mm，双下径约38mm，未予特殊诊治，2026.2.1复查示院左肺\n病灶较前增大，大小约51*50*51mm，分叶状，肿块与与左肺门周围淋巴结分界不清，主动脉窗、\n隆突下见数枚增大淋巴结，大者长径17mm，考虑中央性肺癌并阻塞性肺癌的可能性大，为寻求\n进一步诊治，遂来我院就诊，患者近来精神、食欲、睡眠可、大小便正常，体重无明显变化。\n既往史：否认肝炎"
+    },
+    {
+      "chunk_id": "58033af03cf51ab2",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 34,
+      "content": "中南大学湘雅二医院\n病理体视学检查与图像分析诊断报告\n病理号\n姓\n性别：男\n年龄：58\n收到日期：2026-02-03 15:05\n送检医院：中南大学湘雅二医院\n送检科室：肿瘤科二病区\n住院号\n0178470\n床\n原病理号：\nHE×100\nHE×100\nP40×100\n病理诊断：\n超声空化组织处理病理诊断：\n（左上肺固有段）碎组织，共0.4*0.3*0.1cm。\n镜下见部分鳞状上皮中-重度非典型增生，灶性原位鳞癌变。\n特殊染色：AB染色(-)，PAS染色(-)，抗酸染色(-)。\n免疫组化：CK5/6 (+)，P40 (+)，TTF-1 (-)，NapsinA (-)，CK7 (-)，Syn\n("
+    },
+    {
+      "chunk_id": "80456e1fc8a3d9a9",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 48,
+      "content": "中南大学湘雅二医院\nTHE SECOND XIANGYA HOSPITAL OF CENTRAL SOUTH UNIVERSITY\n电子支气管镜诊疗报告单\n检查日期：2026-02-03 10\n姓名：\n性别：男\n年龄：58岁\n检查号：260202564\n住院号\n床\n1\n科室：肺\n设\n备：008\n临床诊断：1.肺占位性病变\n症状：肺占位\nCT表现：肺病变\n住址：\n气管结节\n隆突尖锐\n右上叶开口通畅\n右中下叶开口通畅\n左下叶通畅\n左上叶脓液\n左上叶充血、狭窄\n左上固有段糜烂、狭窄\n检查所见：\n患者行无痛支气管镜检查，麻醉医师：李辉。\n声门、气管、隆突：气管中段前壁见多处僵硬结节，表面粘膜较光滑，沿"
+    },
+    {
+      "chunk_id": "4be6eb1833128a8c",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 40,
+      "content": "中南大学湘雅二医院\n心电图报告\n患者编>\n心室率(60~100):90 bpm\n诊断结论:\n患者处\nPR间期(120~200):146 ms\n窦性心律\n性别:男\nQRS(~110):76 ms\n正常 ECG\n年龄:58岁\nQT/QTc(360~450):358/438 ms\n患者科室:肿瘤科\nRV5/SV1(-4):2.055/0.517mV(R+S:2.572mV)\n床号:641\nP-R-T电轴(-30~90):70/50/55°\naVR\nV1\nV2\nV3\nV4\nV5\nV6\naVL\naVF\nV1\nV2\nV3\nV4\nV5\nV6\n11\n11\n11\n25 mm/s\n10 mm/mV 100 Hz\n"
+    },
+    {
+      "chunk_id": "a3639d33f3f8d2a8",
+      "pages": [
+        20
+      ],
+      "page_count_raw": 48,
+      "content": "xiangya\n中南大学湘雅三医院\nThe Third Xiangya Hospital of Central South University\n急诊CT报告\n姓名：\n性别：男\n年龄：58岁\n患者编号：\n影像号\n检查日期：2026-2-1 16:26:50\n患者类型：门诊\n科别：急诊科\n病区：急诊科\n检查设备：CT-6(UlH)\n临床诊断：肺肿物\n检查方法：[CT肺部薄层平扫+薄层增强]\n影像学表现：\n对比2025-02-27老片，现片示：\n左肺门区软组织密度影较前明显增大，现大小约51×50×51mm，CT值约22-42HU，增强扫\n描可见轻中度强化、CT值约55-69HU，中心可见无强化坏"
+    },
+    {
+      "chunk_id": "4022ecf72effa11d",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>半乳甘露聚糖(GM试验)</td><td>GMSY</td><td>阴性[0.18]</td><td>None</td><td><1.0为阴性</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "c1104cf58425b226",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>结核分枝杆菌复合群DNA</td><td>TB-DNA</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "6871e8a4b3266252",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>乙肝病毒核酸定量</td><td>HBV-DNA</td><td>1.67E+02</td><td>IU/ml</td><td>0</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "3de243e015192787",
+      "pages": [
+        11
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>头孢唑啉</td><td>None</td><td>耐药</td><td>None</td><td>None</td><td>True</td></tr><tr><td>阿米卡星</td><td>None</td><td><=2</td><td>None</td><td>S<=16;R>=64</td><td>False</td></tr><tr><td>妥布霉素</td><td>None</td><td><=1</td><td>None</td><td>S<=1;R>=4</td><td>False</td></tr><tr><td>厄他培南</td><td>N"
+    },
+    {
+      "chunk_id": "69b55f28f11c6a62",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 7,
+      "content": "<table><tr><td>*乙肝表面抗原定量</td><td>HBsAg</td><td>阳性[47.7755] ↑</td><td>IU/ml</td><td>阴性</td><td>True</td></tr><tr><td>*乙肝表面抗体定量</td><td>Anti-HBs</td><td>阴性[0.9000]</td><td>mIU/ml</td><td>阴性</td><td>False</td></tr><tr><td>*乙肝e抗原</td><td>HBeAg</td><td>阴性[0.3500]</td><td>S/CO</td><td>阴性</td><td>False</td"
+    },
+    {
+      "chunk_id": "94401f628b83a90f",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>高敏肌钙蛋白T</td><td>TNTsh</td><td>5.84</td><td>pg/ml</td><td>0.00～14.00</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "4900c1ad08dfe6cd",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 10,
+      "content": "<table><tr><td>纤维蛋白降解产物</td><td>FDP</td><td>1.68</td><td>μg/ml</td><td>0.00sim5.00</td><td>False</td></tr><tr><td>*凝血酶原时间</td><td>PT_sec</td><td>13.2</td><td>s</td><td>10.0sim14.0</td><td>False</td></tr><tr><td>*国际标准化比值</td><td>INR</td><td>0.99</td><td>None</td><td>0.85sim1.20</td><td>False</td></tr"
+    },
+    {
+      "chunk_id": "fb2ded5faf3eb94a",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>镁</td><td>Mg</td><td>0.81</td><td>mmol/L</td><td>0.78~1.27</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "9d2488fd5c73b451",
+      "pages": [
+        19
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>单核细胞比值</td><td>MONO%</td><td>5.4</td><td>%</td><td>3.0～10.0</td><td>False</td></tr><tr><td>红细胞压积</td><td>HCT</td><td>44.3</td><td>%</td><td>40.0～50.0</td><td>False</td></tr><tr><td>平均红细胞体积</td><td>MCV</td><td>98.9</td><td>fl</td><td>82.0～100.0</td><td>False</td></tr><tr><td>平均红细胞血红蛋白量"
+    },
+    {
+      "chunk_id": "5a36cc5ead5e2266",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>抗酸染色(自动细胞离心涂片)</td><td>AFS</td><td>未见抗酸杆菌(-)</td><td>/油镜</td><td>None</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "f651a8fd0d1fc289",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>梅毒螺旋体抗体试验</td><td>Syphilis</td><td>阴性[0.114]</td><td>COI</td><td>阴性</td><td>False</td></tr><tr><td>人免疫缺陷病毒抗体抗原测定</td><td>HIVPT</td><td>阴性[0.199]</td><td>COI</td><td>阴性</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "e3a8e85a3556869f",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 13,
+      "content": "<table><tr><td>前白蛋白</td><td>PAB</td><td>263.0</td><td>mg/L</td><td>200.0~430.0</td><td>False</td></tr><tr><td>乳酸脱氢酶</td><td>LDH-L</td><td>192.0</td><td>U/L</td><td>120.0~250.0</td><td>False</td></tr><tr><td>肌红蛋白</td><td>Mb</td><td>56.7</td><td>μg/L</td><td>≤70.0</td><td>False</td></tr><tr><td>葡萄糖</t"
+    },
+    {
+      "chunk_id": "b7d767b49dc94114",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 13,
+      "content": "<table><tr><td>总胆汁酸</td><td>TBA</td><td><5.0</td><td>μmol/L</td><td>0.0~10.0</td><td>False</td></tr><tr><td>肌酸激酶</td><td>CK</td><td>75.0</td><td>U/L</td><td>50.0~310.0</td><td>False</td></tr><tr><td>肌酸激酶同工酶</td><td>CK-MB</td><td>15.5</td><td>U/L</td><td>0.0~25.0</td><td>False</td></tr><tr><td>尿素</td"
+    },
+    {
+      "chunk_id": "188a4fda83e35759",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 13,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>11.90</td><td>10^9/L</td><td>3.50~9.50</td><td>True</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>143</td><td>g/L</td><td>130~175</td><td>False</td></tr><tr><td>红细胞计数</td><td>RBC</td><td>4.48</td><td>10^12/L</td><td>4.30~5.80</td><td>False</td></tr><tr><td>血小板计数<"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "page_sum": 19,
+    "check": {
+      "covered": 19,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 14,
+      "clinical": 14,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n01:40:54: LLM responded. Parsing segments...\n\n01:40:54: LLM returned 19 segments. Cutting text...\n\n01:40:54: All 19 segments used bbox_id slicing. Saving images...\n\n01:40:54: SmartSplitter done: 19 chunks from 19 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'ExaminationReport': 4, 'Lab"
+}

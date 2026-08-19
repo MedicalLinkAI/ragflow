@@ -1,0 +1,359 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "07-毓璜顶-GWZH，后线肺癌，方穹招募推荐.pdf",
+    "size_kb": 12215.8,
+    "pages": null,
+    "doc_id": "ab7d146a7c5c11f18d62dd81525255fa",
+    "patient_id": "PAT-40c7d1d40261"
+  },
+  "doc_id": "ab7d146a7c5c11f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 30,
+  "orm_synced": true,
+  "process_duration": 846.8792,
+  "begin_at": "2026-08-18T00:59:44",
+  "end_at": "2026-08-18T01:13:53",
+  "elapsed_s": 849.8,
+  "before": {
+    "chunk_count": 30,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 9,
+      "LabReport": 11,
+      "OutpatientRecord": 6,
+      "AdmissionRecord": 1,
+      "ProgressNote": 2,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "ea9772ac99491c07",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 30,
+      "content": "金域医子\n病理诊断报告书\n1/1\n标本条码\n医院\n病人姓名\n科室\n性别\n男\n房/床号\n病理号\n年龄\n61岁\n接收时间\n2024-12-06 10:27:04\n住院门诊号\n项目名称\n手术标本或局部组织活检标本\n申请医生\n送检材料\n左下叶支气管粘膜\n医生电话\n临床诊断\n咯血\n患者电话\n大体描述：\n灰白灰褐色组织三块，共大小0.6*0.4*0.2cm。\n镜下所见：\n诊断意见：\n（左下叶支气管）低分化鳞状细胞癌。"
+    },
+    {
+      "chunk_id": "079cd1dba6bed32f",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 30,
+      "content": "病理诊断报告书\n1/1\n标本条码\n医院\n病人姓名\n科室\n性别\n男\n房/床号\n病理号\n年龄\n61岁\n接收时间\n2024-12-06 10:25:45\n住院/门诊号\n131160\n项目名称\n手术标本或局部组织活检标本\n申请医生\n送检材料\n右上叶支气管粘膜\n医生电话\n临床诊断\n咯血原因\n患者电话\n大体描述:\n灰白灰褐色破碎组织一堆，大小0.5*0.4*0.2cm。\n镜下所见:\n诊断意见:\n(右上叶支气管)低分化鳞状细胞癌。"
+    },
+    {
+      "chunk_id": "a667d0d825cd105d",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 68,
+      "content": "DX-OTP-B319 V1.0\n华大基因\nBGI\n1.检测概览\n1.1 基本信息\n姓名\n样本编号\n送检机构\n性别\n男\n样本类型\n新鲜组织\n送检科室\n年龄\n62\n取样部位\n送检医生\n肿瘤类型\n非小细胞肺癌\n取样时间\n2025-09-09\n病理号\n肿瘤分期\n到样时间\n2025-09-15\n住院号\n诊断信息\n肺鳞癌\n报告日期\n2025-09-20\n个人其他肿瘤史\n家族肿瘤史\n既往基因检测结果\n用药史\n放化疗史:有;靶向药物史:有;\n1.2 检测内容\n该产品采用靶向捕获技术和高通量测序平台 MGISEQ-2000/DNBSEQ-T7, 从 DNA 和 RNA 层面共检测 55 个与非小\n细胞肺癌诊疗"
+    },
+    {
+      "chunk_id": "9ec044dfa446b7bf",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 55,
+      "content": "华大基因\nBGI\n基因科技造福人类\nOmics for All\nDX-PLP-B01 V1.4\n受检者信息\n姓名\n性别\n男\n年龄\n62\n门诊号\n送检科室\n送检医生\n送检单位\n临床诊断\n肺鳞癌\n样本信息\n检测编号\n样本编号\n样本类型\n新鲜组织\n取样部位\n检测项目\nPD-L1 免疫组化\n检测关键试剂\nDako PD-L1(22C3)\n采样日期\n2025-09-09\n接收日期\n2025-09-15\n报告日期\n2025-09-19\n1/9\n样本编号/SampleID: 23906912429R_采集日期/Collection Date: 20250909_报告日期/Report Date: 20250"
+    },
+    {
+      "chunk_id": "a7d428b0a7dc769c",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 36,
+      "content": "门诊病历\n姓名：\n性别：男 出生日期：1963年05月05日 年龄：62岁 门诊号\n科别：科门诊\n就诊时间：2026-03-11 09:29:37\n主诉：肺癌放化疗免疫治疗\n现病史：肺癌放化疗免疫治疗，现回院复查\n体格检查：意识状态：清醒。胸部：外形：正常。肺脏及胸膜：呼吸音：正常；啰音：未闻及；胸膜\n摩擦音：未触及。腹部：外形：正常；压痛：无；反跳痛：无；包块：未触及；肝脏：未触及；表\n面：光滑；肾区叩击痛：无。\n辅助检查结果：待回\n初步诊断：肺恶性肿瘤\n诊疗意见：1.血糖1次立即\n2.肾功能4项1次立即\n3.肝功能15项1次立即\n4.电解质检测1次立即\n5.凝血7项1次立即\n6.血常规1次"
+    },
+    {
+      "chunk_id": "e79ce292448d5301",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 23,
+      "content": "门诊病历\n姓名：\n男\n出生日期：1963年05月05日\n年龄：62岁\n门诊号\n科别：\n就诊时间：2026-03-07 09:56:58\n主诉：肺鳞癌病史1年余，咳嗽伴喘憋半月余\n现病史：患者肺鳞癌病史1年余，半月余前出现咳嗽，咳嗽剧烈，有咳醒，咳痰，不易咳出，伴有活动\n后喘憋，无胸痛咯血等不适，今日门诊就诊。\n既往史：体健\n个人史：过敏史：无，有无饮酒史：无，流行病学史：无\n体格检查：双肺呼吸音低，未闻及啰音\n辅助检查结果：无\n初步诊断：1.阻塞性肺炎\n2.肺肿瘤\n诊疗意见：1.胸部CT平扫1次立即\n2.静脉采血1次立即\n3.C反应蛋白(CRP)1次立即\n4.血常规1次立即\n5.(络盖克)氨酚"
+    },
+    {
+      "chunk_id": "383223fda37f77bc",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 15,
+      "content": "门诊病历\n姓名：\n性别：男\n出生日期：1963年05月05日 年龄：62岁\n门诊号：\n就诊时间：2026-01-12 09:09:26\n主诉：肺癌复诊取药\n现病史：患者为肺癌，阵发性咳嗽，咳少许白痰，轻胸闷憋气，活动加重。无发热盗汗。\n既往史：否认其它疾病史。\n个人史：过敏史：无，饮酒史：无 流行病学史：无\n体格检查：双肺呼吸音粗，未闻及啰音。\n辅助检查结果：无\n初步诊断：肺肿瘤\n诊疗意见：住院\n医生签名："
+    },
+    {
+      "chunk_id": "2bd6358db891cef4",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 38,
+      "content": "门诊病历\n出生日期：1963年05月05日 年龄：62岁\n门诊号\n就诊时间：2025-12-04 13:52:17\n主诉：肺癌放化疗后复发\n现病史：肺癌放化疗后复发，现胸闷憋气，今日来院复查\n体格检查：意识状态：清醒。胸部：外形：正常。肺脏及胸膜：呼吸音：正常；啰音：未闻及；胸膜\n摩擦音：未触及。腹部：外形：正常；压痛：无；反跳痛：无；包块：未触及；肝脏：未触及；表\n面：光滑；肾区叩击痛：无。\n辅助检查结果：待回\n初步诊断：肺恶性肿瘤\n诊疗意见：1.肝功能15项1次立即\n2.肾功能4项1次立即\n3.血常规1次立即\n4.钙磷镁测定1次立即\n5.电解质检测1次立即\n6.凝血7项1次立即\n7.血常规"
+    },
+    {
+      "chunk_id": "16d00620622c430a",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 12,
+      "content": "门诊病历\n出生日期：1963年05月05日 年龄：62岁 门诊\n就诊时间：2025-11-19 13:37:52\n主诉：肺癌放化疗免疫治疗后复发\n现病史：肺癌放化疗免疫治疗后复发，现回院复查\n体格检查：意识状态：清醒。胸部：外形：正常。肺脏及胸膜：呼吸音：正常；啰音：未闻及；胸膜\n摩擦音：未触及。腹部：外形：正常；压痛：无；反跳痛：无；包块：未触及；肝脏：未触及；表\n面：光滑；肾区叩击痛：无。\n辅助检查结果：无\n初步诊断：肺恶性肿瘤\n诊疗意见：收入院\n医生签"
+    },
+    {
+      "chunk_id": "f7f93f5d88dd4c8f",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "page_count_raw": 89,
+      "content": "2025-11-19 11:15 入院记录\n姓\n性别：男\n年龄：62岁\n民族：汉族\n婚姻：已婚\n主诉：肺癌确诊11月余，干咳1周。\n现病史：患者1年前无明显诱因出现咳嗽，咳少量白痰，伴痰中带血丝，偶有胸痛，活动后胸闷、憋气，无心慌，无头晕，无恶心、呕吐，无腹痛、腹泻等不适。2024-07痰中带血较前加重，后就诊于“青岛市公共卫生临床中心”，2024-12-05行支气管镜检查：右上叶支气管、左下叶基底段支气管可见菜花样新生物几完全阻塞管腔，触之易出血，余支气管粘膜无充血、水肿、肥厚及新生物，管腔通畅无狭窄，可见白色炎性分泌物。活检病理：（左下叶支气管）低分化鳞癌。2024-12-11行PET/C"
+    },
+    {
+      "chunk_id": "80181852980c2380",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 23,
+      "content": "性别：男\n年龄：62岁\n就诊时间：2025-11-07 11:14\n主诉：咳嗽、咳痰1年余，肺癌化疗后3周。\n现病史：患者1年前无明显诱因出现咳嗽，咳少量白痰，伴痰中带血丝，偶有胸痛，活动后胸闷、憋气，无心慌，无头晕，无恶心、呕吐，无腹痛、腹泻等不适。2024-07痰中带血较前加重，后就诊于“青岛\n市公共卫生临床中心”，2024-12-05行支气管镜检查：右上叶支气管、左下叶基底段支气管可见菜花样新生物几乎完全阻塞管腔，触之易出血，余支气管黏膜无充血、水肿、肥厚及新生物，管腔通畅无狭窄，可\n见白色炎性分泌物。活检病理：（左下叶支气管）低分化鳞癌。2024-12-11行PET/CT：1.①左下肺"
+    },
+    {
+      "chunk_id": "030f17b0d40d97d9",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 5,
+      "content": "2025-11-21 10:35\n房记录\n今日查房：患者咳嗽较前减轻，无发热，无畏寒、寒战，无咳痰、咳血，无胸闷、憋气，无胸痛，无腹痛、腹胀，无恶心、呕吐，无头痛、头晕，无心慌、心悸。查体：全身浅表淋巴\n肿大，双肺呼吸音粗，未闻及干湿性罗音，未闻及胸膜摩擦音。腹部柔软，腹无压痛、反跳痛，未触及包块，无液波震颤，肝脾肋下未触及，双下肢无水肿。患者现行抗炎、保胃等对症治疗中，续观患者\n动态复查胸部CT。"
+    },
+    {
+      "chunk_id": "7dca3b33324e84ec",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 4,
+      "content": "2025-11-22 10:27 住院医师查房记录\n患者咳嗽较前减轻，无发热，无畏寒、寒战，无胸闷、憋气，无胸痛、咯血，无腹痛、腹胀，无恶心、呕吐，无头痛、头晕，无心慌、心悸。查体：全身浅表淋巴结未触及肿大，双肺呼吸音粗，未闻\n性罗音，未闻及胸膜摩擦音。腹部柔软，腹无压痛、反跳痛，未触及包块，无液波震颤，肝脾肋下未触及，双下肢无水肿。患者症状减轻，明日出院，嘱出院后注意事项，1周门诊复查胸部CT，如有不适及\n诊。"
+    },
+    {
+      "chunk_id": "5982c13bfc962432",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 25,
+      "content": "2025-11-22 19:42 出院记录\n姓名\n性别：男\n年龄：62岁\n入院日期：2025-11-19 10:16:00\n出院日期：2025-11-23 09:00:00\n住院天数：4天\n入院情况：因“肺癌确诊11月余，干咳1周”入院。查体：全身浅表淋巴结未触及肿大，双肺呼吸音粗，未闻及干湿性罗音，未闻及胸膜摩擦音。腹部柔软，腹无压痛、反跳痛，未触及包块，无液波震\n脾肋下未触及，双下肢无水肿。辅助检查：2024-12-05支气管镜检查：右上叶支气管、左下叶基底段支气管可见菜花样新生物几乎完全阻塞管腔，触之易出血，余支气管粘膜无充血、水肿、肥厚及新生物，\n通畅无狭窄，可见白色炎性分泌物。（青\n"
+    },
+    {
+      "chunk_id": "1c5ea3f3288ef90e",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 23,
+      "content": "学报告单\n检查日期：2026-02-07\n住院号\n影像\n姓名\n性别：男 年龄：62岁 科别\n检查部位：胸部\nCT\n检查方法：平扫\n影像所见：\n双侧胸廓对称。左肺下叶支气管变窄，远端肺组织不张，周围见斑片影，右肺上叶部分斑片\n影。右肺上叶（IM17、IM25）见两个实性结节影，长径范围约2-3mm，较大者大小约3mm×3mm，\n位于右肺上叶后段。气管、支气管通畅，心影大血管无异常，纵隔未见肿大淋巴结，心包、胸\n膜无增厚，左侧胸腔见液体密度，右侧胸腔未见积液征象。\n初步印象：\n左肺下叶支气管变窄、远端肺组织不张，并周围阻塞性炎，请结合临床；\n右肺上叶少许渗出，建议治疗后复查；\n左侧胸腔积液。\n补充"
+    },
+    {
+      "chunk_id": "333633645239e203",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 28,
+      "content": "报告单\n检查日期：2025-09-03\n住院号.\n影像号\n姓名：\n性别：男 年龄：62岁 科别\n检查部位：胸部\nCT\n检查方法：平扫\n影像所见：\n双侧胸廓对称。双肺支气管血管束清晰，左肺门-左肺下叶见软组织影，左肺下叶段支气管\n变窄，最大团块处约47mmx33mm，位于左肺下叶后基底段，可见分叶、毛刺、胸膜凹陷、充气支\n气管征象，周围伴模糊影及索条，右肺散在少许模糊影，气管、右支气管通畅，主动脉见高密\n度，纵隔未见肿大淋巴结，心包无增厚，左侧胸膜增厚，左侧胸腔未见积液征象。右3后肋骨变\n形。\n双侧颈部未见肿大淋巴结。双侧上颌窦粘膜增厚，左侧呈囊状低密度。\n初步印象：\n1、左肺门-左肺下叶占位，"
+    },
+    {
+      "chunk_id": "bb2e341d4c63169c",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 23,
+      "content": "报告单\n检查日期：2026-02-07\n住院\n影像\n扫码查看云胶片\n姓名：\n性别：男 年龄：62岁\n检查部位：胸部\nCT\n检查方法：平扫\n影像所见：\n双侧胸廓对称。左肺下叶支气管变窄，远端肺组织不张，周围见斑片影，右肺上叶部分斑片\n影。右肺上叶（IM17、IM25）见两个实性结节影，长径范围约2-3mm，较大者大小约3mm×3mm，\n位于右肺上叶后段。气管、支气管通畅，心影大血管无异常，纵隔未见肿大淋巴结，心包、胸\n膜无增厚，左侧胸腔见液体密度，右侧胸腔未见积液征象。\n初步印象：\n左肺下叶支气管变窄、远端肺组织不张，并周围阻塞性炎，请结合临床；\n右肺上叶少许渗出，建议治疗后复查；\n左侧胸腔积液"
+    },
+    {
+      "chunk_id": "a455b44c00bc4e7d",
+      "pages": [
+        19,
+        20
+      ],
+      "page_count_raw": 96,
+      "content": "胸部CT平扫\n影像所见\n1.左肺下叶肺癌并阻塞性肺不张，较前2025-\n12-26进展2.右肺上叶斑片灶，较前范围增\n大，密度变实，建议复查；/>左肺慢性炎症\n3.主动脉硬化；/>左侧胸腔少量积液，较前\n变化不著；/>左侧胸膜增厚4.扫及肝小囊\n肿；/>肝钙化灶；/>胆囊腺肌症可能，请结\n合超声5.右侧肾上腺增粗，建议复查\n诊断意见\n骨性胸廓对称，气管纵隔向左侧移位。左肺\n门及左肺下叶可见不规则软组织密度影，边\n界不清，与肺不张影分界不清，左肺下叶支\n气管闭塞。左肺见条片影；/>右肺上叶见胸\n膜下斑片影，边缘毛糙；/>双侧肺门及纵隔\n内未见明显肿大淋巴结。心脏不大，主动脉\n壁局部钙化。左侧胸腔"
+    },
+    {
+      "chunk_id": "7cc44cbd8ae6b9d0",
+      "pages": [
+        20,
+        21
+      ],
+      "page_count_raw": 105,
+      "content": "相关设备\n序列 101... soft-201... Lung-20... Soft-20... Lung-20... Soft-30... Soft-30... Dose in...\nH\nQingdao center Hosp,\nGuo Wei Zhi,\n颈部CT增强扫描,胸部CT增强扫描*的患者信息\nA\nd\nat\n文档\n优先级\n来源\n匹配\n描述\n检查日期\n设备\n#影像\n状态\n影像登录#\nR\nsyn-db\n50%\n颈部CT增强扫描,胸\n2025/11/14 8:13:02\nCT\n1521\n诊断完毕\nR\nsyn-db\n50%\n部CT增强扫描\n2025/11/4 16:13:27\nMR\n541\n"
+    },
+    {
+      "chunk_id": "84d0d900a5dd1ff8",
+      "pages": [
+        23
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>12.8</td><td>秒</td><td>10.70-14.80</td><td>False</td></tr><tr><td>凝血酶原时间活动度</td><td>None</td><td>109.00</td><td>%</td><td>70.00-150.00</td><td>False</td></tr><tr><td>凝血酶原时间比值</td><td>None</td><td>0.97</td><td>None</td><td>0.82-1.15</td><td>False</td></tr><t"
+    },
+    {
+      "chunk_id": "668a7ead42c090b7",
+      "pages": [
+        24
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>凝血酶原时间*#</td><td>PT</td><td>12.2秒</td><td>秒</td><td>10.70-14.80</td><td>False</td></tr><tr><td>凝血酶原时间活动度</td><td>PT%</td><td>123%</td><td>%</td><td>70.00-150.00</td><td>False</td></tr><tr><td>凝血酶原时间比值</td><td>PT.R</td><td>0.92</td><td>None</td><td>0.82-1.15</td><td>False</td></tr><tr>"
+    },
+    {
+      "chunk_id": "2b7f1687ee72b775",
+      "pages": [
+        26
+      ],
+      "page_count_raw": 18,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>15</td><td>U/L</td><td>9-50</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>14</td><td>U/L</td><td>15-40</td><td>True</td></tr><tr><td>AST/ALT</td><td>AST/ALT</td><td>0.93</td><td>None</td><td>0.10-3.00</td><td>False</td></tr><tr><td>总胆红素</td"
+    },
+    {
+      "chunk_id": "db6aa32a2276bb8e",
+      "pages": [
+        22
+      ],
+      "page_count_raw": 16,
+      "content": "<table><tr><td>游离三碘甲状腺原氨酸</td><td>FT3</td><td>3.71</td><td>pmol/L</td><td>3.1-6.8</td><td>False</td></tr><tr><td>游离甲状腺素</td><td>FT4</td><td>17.1</td><td>pmol/L</td><td>12-22</td><td>False</td></tr><tr><td>促甲状腺激素</td><td>TSH</td><td>0.763</td><td>uIU/mL</td><td>0.27-4.2</td><td>False</td></tr><tr><td"
+    },
+    {
+      "chunk_id": "eee5e808c5500067",
+      "pages": [
+        25
+      ],
+      "page_count_raw": 17,
+      "content": "<table><tr><td>N端-B型钠尿肽前体*</td><td>NT-PROBNP</td><td>12.89pg/ml</td><td>pg/ml</td><td>阴性:心力衰竭可能性小;NT-proBNP<300pg/ml;灰区:心力衰竭可能性较小,考虑NT-proBNP升高的其他原因22-<</td><td>False</td></tr><tr><td>游离三碘甲状原氨酸*#</td><td>FT3</td><td>4.47pmol/L</td><td>pmol/L</td><td>3.1-6.8</td><td>False</td></tr><tr><td>游离甲状腺素*#</t"
+    },
+    {
+      "chunk_id": "422741fc221e2297",
+      "pages": [
+        27
+      ],
+      "page_count_raw": 25,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>10.81</td><td>*10^9/L</td><td>3.50--9.50</td><td>True</td></tr><tr><td>中性粒细胞计数</td><td>NEUT#</td><td>10.03</td><td>*10^9/L</td><td>1.80--6.30</td><td>True</td></tr><tr><td>淋巴细胞计数</td><td>LYMPH#</td><td>0.40</td><td>*10^9/L</td><td>1.10--3.20</td><td>True</td>"
+    },
+    {
+      "chunk_id": "3bfa09e977b605a1",
+      "pages": [
+        28
+      ],
+      "page_count_raw": 9,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>11.07</td><td>秒</td><td>9.2-15</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>104.58</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>国际标准化比值</td><td>None</td><td>0.93</td><td>None</td><td>0.8-1.25</td><td>False</td></tr><tr><td>纤维蛋白原</t"
+    },
+    {
+      "chunk_id": "cba546e8570a4ccd",
+      "pages": [
+        29
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>白细胞</td><td>VBC</td><td>4.0</td><td>10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>4.83</td><td>10^12/L</td><td>4.3-5.8</td><td>False</td></tr><tr><td>血红蛋白</td><td>None</td><td>143</td><td>g/L</td><td>130-175</td><td>False</td></tr><tr><td>RBC压积</td><td>"
+    },
+    {
+      "chunk_id": "28e84535143f6831",
+      "pages": [
+        30
+      ],
+      "page_count_raw": 6,
+      "content": "<table><tr><td>T Lymphs%of Lymphs(CD8+/CD45+)</td><td>None</td><td>68.99</td><td>%</td><td>55-84</td><td>False</td></tr><tr><td>T Suppressor %of Lymphs(CD8+CD8+/CD45+)</td><td>None</td><td>35.71</td><td>%</td><td>13-41</td><td>False</td></tr><tr><td>T Hel per %of Lymphs(CD8+CD4+/CD45+)</td><td>None<"
+    },
+    {
+      "chunk_id": "87a0dcd49488e22b",
+      "pages": [
+        31
+      ],
+      "page_count_raw": 26,
+      "content": "<table><tr><td>白细胞</td><td>VBC</td><td>5.8</td><td>10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>4.64</td><td>10^12/L</td><td>4.3-5.8</td><td>False</td></tr><tr><td>血红蛋白</td><td>None</td><td>141</td><td>g/L</td><td>130-175</td><td>False</td></tr><tr><td>RBC压积</td><td>"
+    },
+    {
+      "chunk_id": "6638ed602620f5bf",
+      "pages": [
+        32
+      ],
+      "page_count_raw": 9,
+      "content": "<table><tr><td>凝血酶原时间</td><td>None</td><td>10.29</td><td>秒</td><td>9.2-13.9</td><td>False</td></tr><tr><td>凝血酶原活动度</td><td>None</td><td>118.02</td><td>%</td><td>70-130</td><td>False</td></tr><tr><td>国际标准化比值</td><td>None</td><td>0.88</td><td>None</td><td>0.8-1.2</td><td>False</td></tr><tr><td>纤维蛋白原</"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "page_sum": 35,
+    "check": {
+      "covered": 32,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "DischargeRecord": {
+      "splitter": 0,
+      "clinical": 1,
+      "match": false
+    },
+    "ExaminationReport": {
+      "splitter": 0,
+      "clinical": 9,
+      "match": false
+    },
+    "LabReport": {
+      "splitter": 0,
+      "clinical": 11,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 0,
+      "clinical": 6,
+      "match": false
+    },
+    "ProgressNote": {
+      "splitter": 0,
+      "clinical": 2,
+      "match": false
+    }
+  },
+  "note": "progress_msg 未找到 SmartSplitter 类型日志。 ",
+  "progress_msg": "\n01:03:26: Done\n\n\n-------------------------------------\n[LabExam]:\n01:03:26: Start to generate.\n\n01:03:47: [Extractor] 1/11 chunks done\n\n01:03:55: [Extractor] 2/11 chunks done\n\n01:04:03: [Extractor] 3/11 chunks done\n\n01:04:08: [Extractor] 4/11 chunks done\n\n01:04:11: [Extractor] 5/11 chunks done\n\n01:"
+}

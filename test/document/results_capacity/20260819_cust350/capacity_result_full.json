@@ -1,0 +1,854 @@
+{
+  "summary": {
+    "mode": "fresh_upload",
+    "dataset_id": "fb850778372011f195bd2a5fbb884e34",
+    "n_docs": 35,
+    "total_pages": 350,
+    "uploaded": 35,
+    "done": 35,
+    "makespan_poll_s": 1580.3885498046875,
+    "within_30min": true
+  },
+  "results": [
+    {
+      "doc_id": "e0e9a92a9ba011f1b417bf081885db4b",
+      "name": "哮喘-HJCH222   2.27.pdf",
+      "pages": 17,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126728.692426,
+      "process_begin_at": "2026-08-19T15:37:51",
+      "process_duration": 1640.022,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:43:12: [QwenVL] 16/17 pages done\n\n15:43:20: [QwenVL] 17/17 pages done\n\n15:43:20: [QwenVL] Done: 1152 sections from 17 pages.\n\n15:43:20: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:43:20: Start SmartSplitter: semantic split + classify.\n\n15:43:20: Loaded 1152 OCR bboxes.\n\n15:43:20: Full document: 27015 chars, 1152 bboxes.\n\n15:43:20: Calling LLM for semantic splitting...\n\n15:43:52: LLM responded. Parsing segments...\n\n15:43:52: LLM returned 9 segments. Cutting text...\n\n15:43:52: All 9 segments used bbox_id slicing. Saving images...\n\n15:43:52: SmartSplitter done: 9 chunks from 9 LLM segments (all bbox_id). Types: {'ExaminationReport': 2, 'OutpatientRecord': 3, 'DischargeRecord': 1, 'MedicalOrder': 3}\n\n15:43:52: Done\n\n\n-------------------------------------\n[Router]:\n15:43:52: Routed 9 chunks into 4 groups: {'chunks_Examination': 2, 'chunks_Clinical': 3, 'chunks_Discharge': 1, 'chunks_MedicalOrder': 3}\n\n15:43:52: Done\n\n\n-------------------------------------\n[LabExam]:\n15:43:52: Start to generate.\n\n15:43:52: Done\n\n\n-------------------------------------\n[Imaging]:\n15:43:52: Start to generate.\n\n15:43:57: Done\n\n\n-------------------------------------\n[Clinical]:\n15:43:57: Start to generate.\n\n15:45:28: [Extractor] 1/3 chunks done\n\n15:46:04: [Extractor] 2/3 chunks done\n\n15:46:40: [Extractor] 3/3 chunks done\n\n15:46:40: Done\n\n\n-------------------------------------\n[Medication]:\n15:46:40: Start to generate.\n\n15:46:41: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:41: Start to generate.\n\n15:46:41: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:41: Start to generate.\n\n15:56:02: [Extractor] 1/1 chunks done\n\n15:56:02: Done\n\n\n-------------------------------------\n[Admission]:\n15:56:02: Start to generate.\n\n15:56:02: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:56:02: Start to generate.\n\n15:56:21: [Extractor] 1/2 chunks done\n\n15:58:13: [Extractor] 2/2 chunks done\n\n15:58:13: Done\n\n\n-------------------------------------\n[Admission]:\n15:58:13: Start to generate.\n\n15:58:13: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:58:13: Start to generate.\n\n15:58:53: [Extractor] 1/3 chunks done\n\n15:59:47: [Extractor] 2/3 chunks done\n\n16:05:07: [Extractor] 3/3 chunks done\n\n16:05:07: Done\n\n\n-------------------------------------\n[Merger]:\n16:05:07: Merged 9 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 3, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 2, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 3} (filtered 6 noise chunks)\n\n16:05:07: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:05:07: Start to tokenize.\n\n16:05:08: Finish tokenizing.\n\n16:05:08: Start embedding inference.\n\n16:05:09: Finish embedding.\n\n16:05:09: Done\n\n16:05:09 [DOC Engine]:\nStart to index...\n16:05:09 Indexing done (0.14s). Task done (1637.96s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 17,
+        "pages_total_log": 17,
+        "sections": 1152
+      }
+    },
+    {
+      "doc_id": "e5bd4bd29ba011f1b417bf081885db4b",
+      "name": "ZLME-男-66岁-胃癌.pdf",
+      "pages": 14,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126071.5880525,
+      "process_begin_at": "2026-08-19T15:37:59",
+      "process_duration": 980.37256,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:43:27: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:43:27: Start SmartSplitter: semantic split + classify.\n\n15:43:27: Loaded 560 OCR bboxes.\n\n15:43:27: Full document: 16134 chars, 560 bboxes.\n\n15:43:27: Calling LLM for semantic splitting...\n\n15:43:45: LLM responded. Parsing segments...\n\n15:43:45: LLM returned 13 segments. Cutting text...\n\n15:43:45: All 13 segments used bbox_id slicing. Saving images...\n\n15:43:45: SmartSplitter done: 13 chunks from 13 LLM segments (all bbox_id). Types: {'ExaminationReport': 6, 'AdmissionRecord': 1, 'LabReport': 6}\n\n15:43:45: Done\n\n\n-------------------------------------\n[Router]:\n15:43:45: Routed 13 chunks into 3 groups: {'chunks_Examination': 6, 'chunks_Admission': 1, 'chunks_LabExam': 6}\n\n15:43:45: Done\n\n\n-------------------------------------\n[LabExam]:\n15:43:45: Start to generate.\n\n15:44:33: [Extractor] 1/6 chunks done\n\n15:44:35: [Extractor] 2/6 chunks done\n\n15:44:41: [Extractor] 3/6 chunks done\n\n15:45:14: [Extractor] 4/6 chunks done\n\n15:45:27: [Extractor] 5/6 chunks done\n\n15:45:49: [Extractor] 6/6 chunks done\n\n15:45:49: Done\n\n\n-------------------------------------\n[Imaging]:\n15:45:49: Start to generate.\n\n15:45:50: Done\n\n\n-------------------------------------\n[Clinical]:\n15:45:50: Start to generate.\n\n15:45:50: Done\n\n\n-------------------------------------\n[Medication]:\n15:45:50: Start to generate.\n\n15:45:51: Done\n\n\n-------------------------------------\n[Prescription]:\n15:45:51: Start to generate.\n\n15:45:51: Done\n\n\n-------------------------------------\n[Discharge]:\n15:45:51: Start to generate.\n\n15:45:53: Done\n\n\n-------------------------------------\n[Admission]:\n15:45:53: Start to generate.\n\n15:50:40: [Extractor] 1/1 chunks done\n\n15:50:40: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:50:40: Start to generate.\n\n15:51:33: [Extractor] 1/6 chunks done\n\n15:52:23: [Extractor] 2/6 chunks done\n\n15:52:24: [Extractor] 3/6 chunks done\n\n15:53:02: [Extractor] 4/6 chunks done\n\n15:53:07: [Extractor] 5/6 chunks done\n\n15:54:16: [Extractor] 6/6 chunks done\n\n15:54:16: Done\n\n\n-------------------------------------\n[Admission]:\n15:54:16: Start to generate.\n\n15:54:17: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:54:17: Start to generate.\n\n15:54:17: Done\n\n\n-------------------------------------\n[Merger]:\n15:54:17: Merged 13 chunks from 10 sources: {'Extractor:LabExam': 6, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 6, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:54:17: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:54:17: Start to tokenize.\n\n15:54:17: Finish tokenizing.\n\n15:54:17: Start embedding inference.\n\n15:54:18: Finish embedding.\n\n15:54:18: Done\n\n15:54:19 [DOC Engine]:\nStart to index...\n15:54:19 Indexing done (0.15s). Task done (979.20s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "e794ceee9ba011f1b417bf081885db4b",
+      "name": "XLLI-女-42岁-子宫肌瘤.pdf",
+      "pages": 3,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125394.5553944,
+      "process_begin_at": "2026-08-19T15:38:02",
+      "process_duration": 300.04062,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:03 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:03: File fetched.\n\n15:38:03: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:03: Start to work on a PDF.\n\n15:38:04: [QwenVL] Processing 3 pages...\n\n15:38:50: [QwenVL] 1/3 pages done\n\n15:38:50: [QwenVL] 2/3 pages done\n\n15:39:21: [QwenVL] 3/3 pages done\n\n15:39:21: [QwenVL] Done: 64 sections from 3 pages.\n\n15:39:21: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:39:21: Start SmartSplitter: semantic split + classify.\n\n15:39:21: Loaded 64 OCR bboxes.\n\n15:39:21: Full document: 1820 chars, 64 bboxes.\n\n15:39:21: Calling LLM for semantic splitting...\n\n15:39:24: LLM responded. Parsing segments...\n\n15:39:24: LLM returned 3 segments. Cutting text...\n\n15:39:24: All 3 segments used bbox_id slicing. Saving images...\n\n15:39:24: SmartSplitter done: 3 chunks from 3 LLM segments (all bbox_id). Types: {'ExaminationReport': 2, 'OutpatientRecord': 1}\n\n15:39:24: Done\n\n\n-------------------------------------\n[Router]:\n15:39:24: Routed 3 chunks into 2 groups: {'chunks_Examination': 2, 'chunks_Clinical': 1}\n\n15:39:24: Done\n\n\n-------------------------------------\n[LabExam]:\n15:39:24: Start to generate.\n\n15:39:25: Done\n\n\n-------------------------------------\n[Imaging]:\n15:39:25: Start to generate.\n\n15:39:25: Done\n\n\n-------------------------------------\n[Clinical]:\n15:39:25: Start to generate.\n\n15:40:37: [Extractor] 1/1 chunks done\n\n15:40:37: Done\n\n\n-------------------------------------\n[Medication]:\n15:40:37: Start to generate.\n\n15:40:37: Done\n\n\n-------------------------------------\n[Prescription]:\n15:40:37: Start to generate.\n\n15:40:38: Done\n\n\n-------------------------------------\n[Discharge]:\n15:40:38: Start to generate.\n\n15:40:38: Done\n\n\n-------------------------------------\n[Admission]:\n15:40:38: Start to generate.\n\n15:40:39: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:40:39: Start to generate.\n\n15:41:46: [Extractor] 1/2 chunks done\n\n15:43:00: [Extractor] 2/2 chunks done\n\n15:43:00: Done\n\n\n-------------------------------------\n[Admission]:\n15:43:00: Start to generate.\n\n15:43:00: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:43:00: Start to generate.\n\n15:43:01: Done\n\n\n-------------------------------------\n[Merger]:\n15:43:01: Merged 3 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 2, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 8 noise chunks)\n\n15:43:01: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:43:01: Start to tokenize.\n\n15:43:01: Finish tokenizing.\n\n15:43:01: Start embedding inference.\n\n15:43:01: Finish embedding.\n\n15:43:01: Done\n\n15:43:01 [DOC Engine]:\nStart to index...\n15:43:01 Indexing done (0.06s). Task done (298.61s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 3,
+        "pages_total_log": 3,
+        "sections": 64
+      }
+    },
+    {
+      "doc_id": "e9584bf29ba011f1b417bf081885db4b",
+      "name": "XQME-女-54岁-非小细胞肺癌.pdf",
+      "pages": 10,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126010.0093732,
+      "process_begin_at": "2026-08-19T15:38:05",
+      "process_duration": 924.8745,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "15:43:19: Start SmartSplitter: semantic split + classify.\n\n15:43:20: Loaded 347 OCR bboxes.\n\n15:43:20: Full document: 14768 chars, 347 bboxes.\n\n15:43:20: Calling LLM for semantic splitting...\n\n15:43:57: LLM responded. Parsing segments...\n\n15:43:57: LLM returned 15 segments. Cutting text...\n\n15:43:57: All 15 segments used bbox_id slicing. Saving images...\n\n15:43:57: SmartSplitter done: 15 chunks from 15 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'ExaminationReport': 1, 'LabReport': 13}\n\n15:43:57: Done\n\n\n-------------------------------------\n[Router]:\n15:43:57: Routed 15 chunks into 3 groups: {'chunks_Admission': 1, 'chunks_Examination': 1, 'chunks_LabExam': 13}\n\n15:43:57: Done\n\n\n-------------------------------------\n[LabExam]:\n15:43:57: Start to generate.\n\n15:44:19: [Extractor] 1/13 chunks done\n\n15:44:20: [Extractor] 2/13 chunks done\n\n15:44:22: [Extractor] 3/13 chunks done\n\n15:44:29: [Extractor] 4/13 chunks done\n\n15:44:30: [Extractor] 5/13 chunks done\n\n15:44:33: [Extractor] 6/13 chunks done\n\n15:44:40: [Extractor] 7/13 chunks done\n\n15:44:42: [Extractor] 8/13 chunks done\n\n15:44:45: [Extractor] 9/13 chunks done\n\n15:44:54: [Extractor] 10/13 chunks done\n\n15:44:55: [Extractor] 11/13 chunks done\n\n15:45:01: [Extractor] 12/13 chunks done\n\n15:46:20: [Extractor] 13/13 chunks done\n\n15:46:20: Done\n\n\n-------------------------------------\n[Imaging]:\n15:46:20: Start to generate.\n\n15:46:27: Done\n\n\n-------------------------------------\n[Clinical]:\n15:46:27: Start to generate.\n\n15:46:29: Done\n\n\n-------------------------------------\n[Medication]:\n15:46:29: Start to generate.\n\n15:46:30: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:30: Start to generate.\n\n15:46:30: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:30: Start to generate.\n\n15:46:32: Done\n\n\n-------------------------------------\n[Admission]:\n15:46:32: Start to generate.\n\n15:51:59: [Extractor] 1/1 chunks done\n\n15:51:59: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:51:59: Start to generate.\n\n15:53:26: [Extractor] 1/1 chunks done\n\n15:53:26: Done\n\n\n-------------------------------------\n[Admission]:\n15:53:26: Start to generate.\n\n15:53:27: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:53:27: Start to generate.\n\n15:53:27: Done\n\n\n-------------------------------------\n[Merger]:\n15:53:27: Merged 15 chunks from 10 sources: {'Extractor:LabExam': 13, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:53:27: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:53:27: Start to tokenize.\n\n15:53:27: Finish tokenizing.\n\n15:53:27: Start embedding inference.\n\n15:53:29: Finish embedding.\n\n15:53:29: Done\n\n15:53:29 [DOC Engine]:\nStart to index...\n15:53:29 Indexing done (0.20s). Task done (923.99s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "eb8055c89ba011f1b417bf081885db4b",
+      "name": "CHQU-男-49岁-胰腺癌.pdf",
+      "pages": 24,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126749.229083,
+      "process_begin_at": "2026-08-19T15:38:09",
+      "process_duration": 1655.4167,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n16:00:37: LLM returned 19 segments. Cutting text...\n\n16:00:37: All 19 segments used bbox_id slicing. Saving images...\n\n16:00:37: SmartSplitter done: 19 chunks from 19 LLM segments (all bbox_id). Types: {'ExaminationReport': 10, 'OutpatientRecord': 1, 'AdmissionRecord': 1, 'DischargeRecord': 1, 'LabReport': 6}\n\n16:00:37: Done\n\n\n-------------------------------------\n[Router]:\n16:00:37: Routed 19 chunks into 5 groups: {'chunks_Examination': 10, 'chunks_Clinical': 1, 'chunks_Admission': 1, 'chunks_Discharge': 1, 'chunks_LabExam': 6}\n\n16:00:37: Done\n\n\n-------------------------------------\n[LabExam]:\n16:00:37: Start to generate.\n\n16:00:48: [Extractor] 1/6 chunks done\n\n16:00:54: [Extractor] 2/6 chunks done\n\n16:00:56: [Extractor] 3/6 chunks done\n\n16:01:09: [Extractor] 4/6 chunks done\n\n16:01:14: [Extractor] 5/6 chunks done\n\n16:01:16: [Extractor] 6/6 chunks done\n\n16:01:16: Done\n\n\n-------------------------------------\n[Imaging]:\n16:01:16: Start to generate.\n\n16:01:17: Done\n\n\n-------------------------------------\n[Clinical]:\n16:01:17: Start to generate.\n\n16:01:43: [Extractor] 1/1 chunks done\n\n16:01:43: Done\n\n\n-------------------------------------\n[Medication]:\n16:01:43: Start to generate.\n\n16:01:44: Done\n\n\n-------------------------------------\n[Prescription]:\n16:01:44: Start to generate.\n\n16:01:44: Done\n\n\n-------------------------------------\n[Discharge]:\n16:01:44: Start to generate.\n\n16:03:13: [Extractor] 1/1 chunks done\n\n16:03:13: Done\n\n\n-------------------------------------\n[Admission]:\n16:03:13: Start to generate.\n\n16:04:15: [Extractor] 1/1 chunks done\n\n16:04:15: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n16:04:15: Start to generate.\n\n16:04:28: [Extractor] 1/10 chunks done\n\n16:04:36: [Extractor] 2/10 chunks done\n\n16:04:41: [Extractor] 3/10 chunks done\n\n16:04:47: [Extractor] 4/10 chunks done\n\n16:04:50: [Extractor] 5/10 chunks done\n\n16:04:53: [Extractor] 6/10 chunks done\n\n16:04:58: [Extractor] 7/10 chunks done\n\n16:05:15: [Extractor] 8/10 chunks done\n\n16:05:15: [Extractor] 9/10 chunks done\n\n16:05:40: [Extractor] 10/10 chunks done\n\n16:05:40: Done\n\n\n-------------------------------------\n[Admission]:\n16:05:40: Start to generate.\n\n16:05:41: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n16:05:41: Start to generate.\n\n16:05:41: Done\n\n\n-------------------------------------\n[Merger]:\n16:05:41: Merged 19 chunks from 10 sources: {'Extractor:LabExam': 6, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 10, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 5 noise chunks)\n\n16:05:41: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:05:41: Start to tokenize.\n\n16:05:42: Finish tokenizing.\n\n16:05:42: Start embedding inference.\n\n16:05:43: Finish embedding.\n\n16:05:43: Done\n\n16:05:43 [DOC Engine]:\nStart to index...\n16:05:44 Indexing done (0.23s). Task done (1654.82s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "ed1e83969ba011f1b417bf081885db4b",
+      "name": "CDLI-男-57岁-肺癌.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125230.5161004,
+      "process_begin_at": "2026-08-19T15:38:11",
+      "process_duration": 139.02364,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:11 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:12: File fetched.\n\n15:38:12: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:12: Start to work on a PDF.\n\n15:38:12: [QwenVL] Processing 2 pages...\n\n15:38:27: [QwenVL] 1/2 pages done\n\n15:39:03: [QwenVL] 2/2 pages done\n\n15:39:03: [QwenVL] Done: 18 sections from 2 pages.\n\n15:39:03: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:39:04: Start SmartSplitter: semantic split + classify.\n\n15:39:05: Loaded 18 OCR bboxes.\n\n15:39:05: Full document: 560 chars, 18 bboxes.\n\n15:39:05: Calling LLM for semantic splitting...\n\n15:39:08: LLM responded. Parsing segments...\n\n15:39:08: LLM returned 1 segments. Cutting text...\n\n15:39:08: All 1 segments used bbox_id slicing. Saving images...\n\n15:39:08: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'ExaminationReport': 1}\n\n15:39:08: Done\n\n\n-------------------------------------\n[Router]:\n15:39:08: Routed 1 chunks into 1 groups: {'chunks_Examination': 1}\n\n15:39:08: Done\n\n\n-------------------------------------\n[LabExam]:\n15:39:08: Start to generate.\n\n15:39:09: Done\n\n\n-------------------------------------\n[Imaging]:\n15:39:09: Start to generate.\n\n15:39:09: Done\n\n\n-------------------------------------\n[Clinical]:\n15:39:09: Start to generate.\n\n15:39:10: Done\n\n\n-------------------------------------\n[Medication]:\n15:39:10: Start to generate.\n\n15:39:10: Done\n\n\n-------------------------------------\n[Prescription]:\n15:39:11: Start to generate.\n\n15:39:11: Done\n\n\n-------------------------------------\n[Discharge]:\n15:39:11: Start to generate.\n\n15:39:11: Done\n\n\n-------------------------------------\n[Admission]:\n15:39:11: Start to generate.\n\n15:39:12: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:39:12: Start to generate.\n\n15:40:28: [Extractor] 1/1 chunks done\n\n15:40:28: Done\n\n\n-------------------------------------\n[Admission]:\n15:40:28: Start to generate.\n\n15:40:28: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:40:28: Start to generate.\n\n15:40:29: Done\n\n\n-------------------------------------\n[Merger]:\n15:40:29: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:40:29: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:40:29: Start to tokenize.\n\n15:40:29: Finish tokenizing.\n\n15:40:29: Start embedding inference.\n\n15:40:29: Finish embedding.\n\n15:40:29: Done\n\n15:40:29 [DOC Engine]:\nStart to index...\n15:40:29 Indexing done (0.05s). Task done (138.00s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 2,
+        "pages_total_log": 2,
+        "sections": 18
+      }
+    },
+    {
+      "doc_id": "f03616669ba011f1b417bf081885db4b",
+      "name": "HCYU-男-81岁-慢性阻塞性肺疾病.pdf",
+      "pages": 18,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126769.744263,
+      "process_begin_at": "2026-08-19T15:38:17",
+      "process_duration": 1654.0476,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:46:16: [QwenVL] Done: 1340 sections from 18 pages.\n\n15:46:16: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:46:16: Start SmartSplitter: semantic split + classify.\n\n15:46:16: Loaded 1340 OCR bboxes.\n\n15:46:16: Full document: 28030 chars, 1340 bboxes.\n\n15:46:16: Calling LLM for semantic splitting...\n\n15:46:41: LLM responded. Parsing segments...\n\n15:46:41: LLM returned 9 segments. Cutting text...\n\n15:46:41: All 9 segments used bbox_id slicing. Saving images...\n\n15:46:41: SmartSplitter done: 9 chunks from 9 LLM segments (all bbox_id). Types: {'DischargeRecord': 2, 'AdmissionRecord': 1, 'MedicalOrder': 1, 'ExaminationReport': 3, 'MedicationRecord': 2}\n\n15:46:41: Done\n\n\n-------------------------------------\n[Router]:\n15:46:41: Routed 9 chunks into 5 groups: {'chunks_Discharge': 2, 'chunks_Admission': 1, 'chunks_MedicalOrder': 1, 'chunks_Examination': 3, 'chunks_Medication': 2}\n\n15:46:41: Done\n\n\n-------------------------------------\n[LabExam]:\n15:46:41: Start to generate.\n\n15:46:41: Done\n\n\n-------------------------------------\n[Imaging]:\n15:46:41: Start to generate.\n\n15:46:42: Done\n\n\n-------------------------------------\n[Clinical]:\n15:46:42: Start to generate.\n\n15:46:42: Done\n\n\n-------------------------------------\n[Medication]:\n15:46:42: Start to generate.\n\n15:47:26: [Extractor] 1/2 chunks done\n\n15:47:45: [Extractor] 2/2 chunks done\n\n15:47:45: Done\n\n\n-------------------------------------\n[Prescription]:\n15:47:45: Start to generate.\n\n15:47:45: Done\n\n\n-------------------------------------\n[Discharge]:\n15:47:45: Start to generate.\n\n15:49:18: [Extractor] 1/2 chunks done\n\n15:49:23: [Extractor] 2/2 chunks done\n\n15:49:23: Done\n\n\n-------------------------------------\n[Admission]:\n15:49:23: Start to generate.\n\n15:54:32: [Extractor] 1/1 chunks done\n\n15:54:32: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:54:32: Start to generate.\n\n15:55:34: [Extractor] 1/3 chunks done\n\n15:55:50: [Extractor] 2/3 chunks done\n\n16:00:24: [Extractor] 3/3 chunks done\n\n16:00:24: Done\n\n\n-------------------------------------\n[Admission]:\n16:00:24: Start to generate.\n\n16:00:25: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n16:00:25: Start to generate.\n\n16:05:48: [Extractor] 1/1 chunks done\n\n16:05:48: Done\n\n\n-------------------------------------\n[Merger]:\n16:05:49: Merged 9 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 2, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 5 noise chunks)\n\n16:05:49: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:05:49: Start to tokenize.\n\n16:05:49: Finish tokenizing.\n\n16:05:49: Start embedding inference.\n\n16:05:50: Finish embedding.\n\n16:05:50: Done\n\n16:05:50 [DOC Engine]:\nStart to index...\n16:05:50 Indexing done (0.20s). Task done (1651.67s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": 1340
+      }
+    },
+    {
+      "doc_id": "f24b1aa09ba011f1b417bf081885db4b",
+      "name": "QXLI-男-56岁-类风湿关节炎.pdf",
+      "pages": 14,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126010.009365,
+      "process_begin_at": "2026-08-19T15:38:20",
+      "process_duration": 909.7646,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:43:53: All 21 segments used bbox_id slicing. Saving images...\n\n15:43:53: SmartSplitter done: 21 chunks from 21 LLM segments (all bbox_id). Types: {'OutpatientRecord': 7, 'PrescriptionRecord': 7, 'LabReport': 5, 'MedicationRecord': 2}\n\n15:43:53: Done\n\n\n-------------------------------------\n[Router]:\n15:43:53: Routed 21 chunks into 4 groups: {'chunks_Clinical': 7, 'chunks_Prescription': 7, 'chunks_LabExam': 5, 'chunks_Medication': 2}\n\n15:43:53: Done\n\n\n-------------------------------------\n[LabExam]:\n15:43:53: Start to generate.\n\n15:44:01: [Extractor] 1/5 chunks done\n\n15:44:09: [Extractor] 2/5 chunks done\n\n15:44:20: [Extractor] 3/5 chunks done\n\n15:44:53: [Extractor] 4/5 chunks done\n\n15:45:36: [Extractor] 5/5 chunks done\n\n15:45:36: Done\n\n\n-------------------------------------\n[Imaging]:\n15:45:36: Start to generate.\n\n15:45:36: Done\n\n\n-------------------------------------\n[Clinical]:\n15:45:36: Start to generate.\n\n15:46:50: [Extractor] 1/7 chunks done\n\n15:46:56: [Extractor] 2/7 chunks done\n\n15:47:15: [Extractor] 3/7 chunks done\n\n15:47:20: [Extractor] 4/7 chunks done\n\n15:47:51: [Extractor] 5/7 chunks done\n\n15:48:21: [Extractor] 6/7 chunks done\n\n15:48:48: [Extractor] 7/7 chunks done\n\n15:48:48: Done\n\n\n-------------------------------------\n[Medication]:\n15:48:48: Start to generate.\n\n15:50:52: [Extractor] 1/2 chunks done\n\n15:50:56: [Extractor] 2/2 chunks done\n\n15:50:56: Done\n\n\n-------------------------------------\n[Prescription]:\n15:50:56: Start to generate.\n\n15:51:50: [Extractor] 1/7 chunks done\n\n15:51:57: [Extractor] 2/7 chunks done\n\n15:52:02: [Extractor] 3/7 chunks done\n\n15:52:10: [Extractor] 4/7 chunks done\n\n15:53:00: [Extractor] 5/7 chunks done\n\n15:53:07: [Extractor] 6/7 chunks done\n\n15:53:16: [Extractor] 7/7 chunks done\n\n15:53:16: Done\n\n\n-------------------------------------\n[Discharge]:\n15:53:16: Start to generate.\n\n15:53:16: Done\n\n\n-------------------------------------\n[Admission]:\n15:53:16: Start to generate.\n\n15:53:19: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:53:19: Start to generate.\n\n15:53:22: Done\n\n\n-------------------------------------\n[Admission]:\n15:53:22: Start to generate.\n\n15:53:26: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:53:26: Start to generate.\n\n15:53:26: Done\n\n\n-------------------------------------\n[Merger]:\n15:53:26: Merged 21 chunks from 10 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 7, 'Extractor:Medication': 2, 'Extractor:Prescription': 7, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 6 noise chunks)\n\n15:53:26: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:53:27: Start to tokenize.\n\n15:53:27: Finish tokenizing.\n\n15:53:27: Start embedding inference.\n\n15:53:28: Finish embedding.\n\n15:53:28: Done\n\n15:53:29 [DOC Engine]:\nStart to index...\n15:53:29 Indexing done (0.24s). Task done (908.34s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "f4035b649ba011f1b417bf081885db4b",
+      "name": "WCGA-男-42岁-痛风.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125333.0256932,
+      "process_begin_at": "2026-08-19T15:38:23",
+      "process_duration": 218.10387,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:24 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:25: File fetched.\n\n15:38:25: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:25: Start to work on a PDF.\n\n15:38:25: [QwenVL] Processing 2 pages...\n\n15:39:16: [QwenVL] 1/2 pages done\n\n15:39:36: [QwenVL] 2/2 pages done\n\n15:39:36: [QwenVL] Done: 70 sections from 2 pages.\n\n15:39:36: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:39:36: Start SmartSplitter: semantic split + classify.\n\n15:39:36: Loaded 70 OCR bboxes.\n\n15:39:36: Full document: 1774 chars, 70 bboxes.\n\n15:39:36: Calling LLM for semantic splitting...\n\n15:39:39: LLM responded. Parsing segments...\n\n15:39:39: LLM returned 2 segments. Cutting text...\n\n15:39:39: All 2 segments used bbox_id slicing. Saving images...\n\n15:39:39: SmartSplitter done: 2 chunks from 2 LLM segments (all bbox_id). Types: {'PrescriptionRecord': 1, 'LabReport': 1}\n\n15:39:39: Done\n\n\n-------------------------------------\n[Router]:\n15:39:39: Routed 2 chunks into 2 groups: {'chunks_Prescription': 1, 'chunks_LabExam': 1}\n\n15:39:39: Done\n\n\n-------------------------------------\n[LabExam]:\n15:39:39: Start to generate.\n\n15:40:42: [Extractor] 1/1 chunks done\n\n15:40:42: Done\n\n\n-------------------------------------\n[Imaging]:\n15:40:42: Start to generate.\n\n15:40:43: Done\n\n\n-------------------------------------\n[Clinical]:\n15:40:43: Start to generate.\n\n15:40:43: Done\n\n\n-------------------------------------\n[Medication]:\n15:40:43: Start to generate.\n\n15:40:44: Done\n\n\n-------------------------------------\n[Prescription]:\n15:40:44: Start to generate.\n\n15:41:57: [Extractor] 1/1 chunks done\n\n15:41:57: Done\n\n\n-------------------------------------\n[Discharge]:\n15:41:57: Start to generate.\n\n15:41:57: Done\n\n\n-------------------------------------\n[Admission]:\n15:41:57: Start to generate.\n\n15:41:58: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:41:58: Start to generate.\n\n15:41:59: Done\n\n\n-------------------------------------\n[Admission]:\n15:41:59: Start to generate.\n\n15:41:59: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:41:59: Start to generate.\n\n15:42:00: Done\n\n\n-------------------------------------\n[Merger]:\n15:42:00: Merged 2 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 8 noise chunks)\n\n15:42:00: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:42:00: Start to tokenize.\n\n15:42:00: Finish tokenizing.\n\n15:42:00: Start embedding inference.\n\n15:42:00: Finish embedding.\n\n15:42:00: Done\n\n15:42:00 [DOC Engine]:\nStart to index...\n15:42:01 Indexing done (0.05s). Task done (216.28s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 2,
+        "pages_total_log": 2,
+        "sections": 70
+      }
+    },
+    {
+      "doc_id": "f5c5c3b09ba011f1b417bf081885db4b",
+      "name": "LHCH-男-70岁-哮喘.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125292.0471034,
+      "process_begin_at": "2026-08-19T15:38:26",
+      "process_duration": 170.37413,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:26 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:26: File fetched.\n\n15:38:26: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:27: Start to work on a PDF.\n\n15:38:27: [QwenVL] Processing 1 pages...\n\n15:38:51: [QwenVL] 1/1 pages done\n\n15:38:51: [QwenVL] Done: 29 sections from 1 pages.\n\n15:38:51: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:38:51: Start SmartSplitter: semantic split + classify.\n\n15:38:51: Loaded 29 OCR bboxes.\n\n15:38:51: Full document: 549 chars, 29 bboxes.\n\n15:38:51: Calling LLM for semantic splitting...\n\n15:38:53: LLM responded. Parsing segments...\n\n15:38:53: LLM returned 1 segments. Cutting text...\n\n15:38:53: All 1 segments used bbox_id slicing. Saving images...\n\n15:38:53: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1}\n\n15:38:53: Done\n\n\n-------------------------------------\n[Router]:\n15:38:53: Routed 1 chunks into 1 groups: {'chunks_Clinical': 1}\n\n15:38:53: Done\n\n\n-------------------------------------\n[LabExam]:\n15:38:53: Start to generate.\n\n15:38:54: Done\n\n\n-------------------------------------\n[Imaging]:\n15:38:54: Start to generate.\n\n15:38:54: Done\n\n\n-------------------------------------\n[Clinical]:\n15:38:54: Start to generate.\n\n15:41:11: [Extractor] 1/1 chunks done\n\n15:41:11: Done\n\n\n-------------------------------------\n[Medication]:\n15:41:11: Start to generate.\n\n15:41:12: Done\n\n\n-------------------------------------\n[Prescription]:\n15:41:12: Start to generate.\n\n15:41:12: Done\n\n\n-------------------------------------\n[Discharge]:\n15:41:12: Start to generate.\n\n15:41:13: Done\n\n\n-------------------------------------\n[Admission]:\n15:41:13: Start to generate.\n\n15:41:13: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:41:13: Start to generate.\n\n15:41:14: Done\n\n\n-------------------------------------\n[Admission]:\n15:41:14: Start to generate.\n\n15:41:15: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:41:15: Start to generate.\n\n15:41:15: Done\n\n\n-------------------------------------\n[Merger]:\n15:41:15: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:41:15: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:41:15: Start to tokenize.\n\n15:41:15: Finish tokenizing.\n\n15:41:15: Start embedding inference.\n\n15:41:16: Finish embedding.\n\n15:41:16: Done\n\n15:41:16 [DOC Engine]:\nStart to index...\n15:41:16 Indexing done (0.04s). Task done (169.68s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 1,
+        "pages_total_log": 1,
+        "sections": 29
+      }
+    },
+    {
+      "doc_id": "f799f6ac9ba011f1b417bf081885db4b",
+      "name": "SYZH-女-61岁-肺癌.pdf",
+      "pages": 15,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125989.429171,
+      "process_begin_at": "2026-08-19T15:38:29",
+      "process_duration": 862.3101,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:44:48: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:44:48: Start SmartSplitter: semantic split + classify.\n\n15:44:48: Loaded 438 OCR bboxes.\n\n15:44:48: Full document: 13125 chars, 438 bboxes.\n\n15:44:48: Calling LLM for semantic splitting...\n\n15:45:03: LLM responded. Parsing segments...\n\n15:45:04: LLM returned 13 segments. Cutting text...\n\n15:45:04: All 13 segments used bbox_id slicing. Saving images...\n\n15:45:04: SmartSplitter done: 13 chunks from 13 LLM segments (all bbox_id). Types: {'DischargeRecord': 1, 'ExaminationReport': 8, 'LabReport': 4}\n\n15:45:04: Done\n\n\n-------------------------------------\n[Router]:\n15:45:04: Routed 13 chunks into 3 groups: {'chunks_Discharge': 1, 'chunks_Examination': 8, 'chunks_LabExam': 4}\n\n15:45:05: Done\n\n\n-------------------------------------\n[LabExam]:\n15:45:05: Start to generate.\n\n15:45:26: [Extractor] 1/4 chunks done\n\n15:45:27: [Extractor] 2/4 chunks done\n\n15:45:36: [Extractor] 3/4 chunks done\n\n15:46:43: [Extractor] 4/4 chunks done\n\n15:46:43: Done\n\n\n-------------------------------------\n[Imaging]:\n15:46:43: Start to generate.\n\n15:46:44: Done\n\n\n-------------------------------------\n[Clinical]:\n15:46:44: Start to generate.\n\n15:46:46: Done\n\n\n-------------------------------------\n[Medication]:\n15:46:46: Start to generate.\n\n15:46:46: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:46: Start to generate.\n\n15:46:47: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:47: Start to generate.\n\n15:49:10: [Extractor] 1/1 chunks done\n\n15:49:10: Done\n\n\n-------------------------------------\n[Admission]:\n15:49:10: Start to generate.\n\n15:49:10: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:49:10: Start to generate.\n\n15:50:04: [Extractor] 1/8 chunks done\n\n15:50:27: [Extractor] 2/8 chunks done\n\n15:50:39: [Extractor] 3/8 chunks done\n\n15:51:20: [Extractor] 4/8 chunks done\n\n15:52:20: [Extractor] 5/8 chunks done\n\n15:52:28: [Extractor] 6/8 chunks done\n\n15:52:43: [Extractor] 7/8 chunks done\n\n15:52:47: [Extractor] 8/8 chunks done\n\n15:52:47: Done\n\n\n-------------------------------------\n[Admission]:\n15:52:47: Start to generate.\n\n15:52:48: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:52:48: Start to generate.\n\n15:52:49: Done\n\n\n-------------------------------------\n[Merger]:\n15:52:49: Merged 13 chunks from 10 sources: {'Extractor:LabExam': 4, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 8, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:52:49: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:52:49: Start to tokenize.\n\n15:52:49: Finish tokenizing.\n\n15:52:49: Start embedding inference.\n\n15:52:50: Finish embedding.\n\n15:52:50: Done\n\n15:52:51 [DOC Engine]:\nStart to index...\n15:52:51 Indexing done (0.16s). Task done (860.85s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "f95c33569ba011f1b417bf081885db4b",
+      "name": "ZHYI-女-48岁-糖尿病.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125230.516095,
+      "process_begin_at": "2026-08-19T15:38:32",
+      "process_duration": 112.97385,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 1,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:35 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:36: File fetched.\n\n15:38:37: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:37: Start to work on a PDF.\n\n15:38:37: [QwenVL] Processing 1 pages...\n\n15:40:14: [QwenVL] 1/1 pages done\n\n15:40:14: [QwenVL] Done: 39 sections from 1 pages.\n\n15:40:14: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:40:14: Start SmartSplitter: semantic split + classify.\n\n15:40:14: Loaded 39 OCR bboxes.\n\n15:40:14: Full document: 1386 chars, 39 bboxes.\n\n15:40:14: Calling LLM for semantic splitting...\n\n15:40:16: LLM responded. Parsing segments...\n\n15:40:16: LLM returned 0 segments.\n\n15:40:16: Done\n\n\n-------------------------------------\n[Router]:\n15:40:16: Routed 0 chunks into 0 groups: {}\n\n15:40:16: Done\n\n\n-------------------------------------\n[LabExam]:\n15:40:16: Start to generate.\n\n15:40:16: Done\n\n\n-------------------------------------\n[Imaging]:\n15:40:16: Start to generate.\n\n15:40:17: Done\n\n\n-------------------------------------\n[Clinical]:\n15:40:17: Start to generate.\n\n15:40:17: Done\n\n\n-------------------------------------\n[Medication]:\n15:40:17: Start to generate.\n\n15:40:18: Done\n\n\n-------------------------------------\n[Prescription]:\n15:40:18: Start to generate.\n\n15:40:18: Done\n\n\n-------------------------------------\n[Discharge]:\n15:40:18: Start to generate.\n\n15:40:19: Done\n\n\n-------------------------------------\n[Admission]:\n15:40:19: Start to generate.\n\n15:40:19: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:40:19: Start to generate.\n\n15:40:20: Done\n\n\n-------------------------------------\n[Admission]:\n15:40:20: Start to generate.\n\n15:40:21: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:40:22: Start to generate.\n\n15:40:22: Done\n\n\n-------------------------------------\n[Merger]:\n15:40:22: Merged 0 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 10 noise chunks)\n\n15:40:22: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:40:23: No chunks to process, skipping.\n\n15:40:23: Done\n\n15:40:23 No chunks produced. Task done (108.20s)",
+      "vlm2": {
+        "err_lines": 1,
+        "pages_done_max": 1,
+        "pages_total_log": 1,
+        "sections": 39
+      }
+    },
+    {
+      "doc_id": "fb2d578c9ba011f1b417bf081885db4b",
+      "name": "ZXHU-女-69岁-肺癌.pdf",
+      "pages": 7,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125640.7957768,
+      "process_begin_at": "2026-08-19T15:38:35",
+      "process_duration": 519.6358,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:39:39: [QwenVL] 2/7 pages done\n\n15:39:40: [QwenVL] 3/7 pages done\n\n15:39:49: [QwenVL] 4/7 pages done\n\n15:40:42: [QwenVL] 5/7 pages done\n\n15:41:22: [QwenVL] 6/7 pages done\n\n15:41:43: [QwenVL] 7/7 pages done\n\n15:41:43: [QwenVL] Done: 171 sections from 7 pages.\n\n15:41:43: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:41:43: Start SmartSplitter: semantic split + classify.\n\n15:41:43: Loaded 171 OCR bboxes.\n\n15:41:43: Full document: 5835 chars, 171 bboxes.\n\n15:41:43: Calling LLM for semantic splitting...\n\n15:41:51: LLM responded. Parsing segments...\n\n15:41:51: LLM returned 7 segments. Cutting text...\n\n15:41:51: All 7 segments used bbox_id slicing. Saving images...\n\n15:41:51: SmartSplitter done: 7 chunks from 7 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1, 'ExaminationReport': 3, 'LabReport': 3}\n\n15:41:51: Done\n\n\n-------------------------------------\n[Router]:\n15:41:51: Routed 7 chunks into 3 groups: {'chunks_Clinical': 1, 'chunks_Examination': 3, 'chunks_LabExam': 3}\n\n15:41:51: Done\n\n\n-------------------------------------\n[LabExam]:\n15:41:51: Start to generate.\n\n15:42:52: [Extractor] 1/3 chunks done\n\n15:43:23: [Extractor] 2/3 chunks done\n\n15:43:43: [Extractor] 3/3 chunks done\n\n15:43:43: Done\n\n\n-------------------------------------\n[Imaging]:\n15:43:43: Start to generate.\n\n15:43:48: Done\n\n\n-------------------------------------\n[Clinical]:\n15:43:48: Start to generate.\n\n15:45:06: [Extractor] 1/1 chunks done\n\n15:45:06: Done\n\n\n-------------------------------------\n[Medication]:\n15:45:06: Start to generate.\n\n15:45:07: Done\n\n\n-------------------------------------\n[Prescription]:\n15:45:08: Start to generate.\n\n15:45:13: Done\n\n\n-------------------------------------\n[Discharge]:\n15:45:13: Start to generate.\n\n15:45:13: Done\n\n\n-------------------------------------\n[Admission]:\n15:45:13: Start to generate.\n\n15:45:14: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:45:14: Start to generate.\n\n15:46:23: [Extractor] 1/3 chunks done\n\n15:46:39: [Extractor] 2/3 chunks done\n\n15:47:12: [Extractor] 3/3 chunks done\n\n15:47:12: Done\n\n\n-------------------------------------\n[Admission]:\n15:47:12: Start to generate.\n\n15:47:12: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:47:12: Start to generate.\n\n15:47:13: Done\n\n\n-------------------------------------\n[Merger]:\n15:47:13: Merged 7 chunks from 10 sources: {'Extractor:LabExam': 3, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:47:13: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:47:13: Start to tokenize.\n\n15:47:13: Finish tokenizing.\n\n15:47:13: Start embedding inference.\n\n15:47:14: Finish embedding.\n\n15:47:14: Done\n\n15:47:14 [DOC Engine]:\nStart to index...\n15:47:14 Indexing done (0.10s). Task done (518.79s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 7,
+        "pages_total_log": 7,
+        "sections": 171
+      }
+    },
+    {
+      "doc_id": "fd198ef89ba011f1b417bf081885db4b",
+      "name": "LYHU-男-55岁-食管癌.pdf",
+      "pages": 11,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126092.104933,
+      "process_begin_at": "2026-08-19T15:38:39",
+      "process_duration": 965.0548,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:43:39: [QwenVL] Done: 378 sections from 11 pages.\n\n15:43:39: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:43:39: Start SmartSplitter: semantic split + classify.\n\n15:43:39: Loaded 378 OCR bboxes.\n\n15:43:39: Full document: 13075 chars, 378 bboxes.\n\n15:43:39: Calling LLM for semantic splitting...\n\n15:44:01: LLM responded. Parsing segments...\n\n15:44:01: LLM returned 10 segments. Cutting text...\n\n15:44:01: All 10 segments used bbox_id slicing. Saving images...\n\n15:44:01: SmartSplitter done: 10 chunks from 10 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'DischargeRecord': 1, 'OutpatientRecord': 3, 'ExaminationReport': 4, 'LabReport': 1}\n\n15:44:01: Done\n\n\n-------------------------------------\n[Router]:\n15:44:01: Routed 10 chunks into 5 groups: {'chunks_Admission': 1, 'chunks_Discharge': 1, 'chunks_Clinical': 3, 'chunks_Examination': 4, 'chunks_LabExam': 1}\n\n15:44:01: Done\n\n\n-------------------------------------\n[LabExam]:\n15:44:01: Start to generate.\n\n15:45:47: [Extractor] 1/1 chunks done\n\n15:45:47: Done\n\n\n-------------------------------------\n[Imaging]:\n15:45:47: Start to generate.\n\n15:45:48: Done\n\n\n-------------------------------------\n[Clinical]:\n15:45:48: Start to generate.\n\n15:47:26: [Extractor] 1/3 chunks done\n\n15:47:59: [Extractor] 2/3 chunks done\n\n15:48:00: [Extractor] 3/3 chunks done\n\n15:48:00: Done\n\n\n-------------------------------------\n[Medication]:\n15:48:00: Start to generate.\n\n15:48:01: Done\n\n\n-------------------------------------\n[Prescription]:\n15:48:01: Start to generate.\n\n15:48:02: Done\n\n\n-------------------------------------\n[Discharge]:\n15:48:02: Start to generate.\n\n15:50:28: [Extractor] 1/1 chunks done\n\n15:50:28: Done\n\n\n-------------------------------------\n[Admission]:\n15:50:28: Start to generate.\n\n15:52:41: [Extractor] 1/1 chunks done\n\n15:52:41: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:52:41: Start to generate.\n\n15:53:43: [Extractor] 1/4 chunks done\n\n15:53:48: [Extractor] 2/4 chunks done\n\n15:53:58: [Extractor] 3/4 chunks done\n\n15:54:36: [Extractor] 4/4 chunks done\n\n15:54:36: Done\n\n\n-------------------------------------\n[Admission]:\n15:54:36: Start to generate.\n\n15:54:36: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:54:36: Start to generate.\n\n15:54:42: Done\n\n\n-------------------------------------\n[Merger]:\n15:54:42: Merged 10 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 3, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 4, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 5 noise chunks)\n\n15:54:42: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:54:42: Start to tokenize.\n\n15:54:42: Finish tokenizing.\n\n15:54:42: Start embedding inference.\n\n15:54:43: Finish embedding.\n\n15:54:43: Done\n\n15:54:43 [DOC Engine]:\nStart to index...\n15:54:43 Indexing done (0.14s). Task done (962.98s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": 378
+      }
+    },
+    {
+      "doc_id": "ff1adcd49ba011f1b417bf081885db4b",
+      "name": "WSYU-女-63岁-糖尿病.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125353.5189972,
+      "process_begin_at": "2026-08-19T15:38:42",
+      "process_duration": 217.7117,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:42 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:42: File fetched.\n\n15:38:42: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:42: Start to work on a PDF.\n\n15:38:43: [QwenVL] Processing 1 pages...\n\n15:40:05: [QwenVL] 1/1 pages done\n\n15:40:05: [QwenVL] Done: 38 sections from 1 pages.\n\n15:40:05: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:40:05: Start SmartSplitter: semantic split + classify.\n\n15:40:05: Loaded 38 OCR bboxes.\n\n15:40:05: Full document: 1062 chars, 38 bboxes.\n\n15:40:05: Calling LLM for semantic splitting...\n\n15:40:08: LLM responded. Parsing segments...\n\n15:40:08: LLM returned 1 segments. Cutting text...\n\n15:40:08: All 1 segments used bbox_id slicing. Saving images...\n\n15:40:08: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1}\n\n15:40:08: Done\n\n\n-------------------------------------\n[Router]:\n15:40:08: Routed 1 chunks into 1 groups: {'chunks_Clinical': 1}\n\n15:40:08: Done\n\n\n-------------------------------------\n[LabExam]:\n15:40:08: Start to generate.\n\n15:40:08: Done\n\n\n-------------------------------------\n[Imaging]:\n15:40:08: Start to generate.\n\n15:40:09: Done\n\n\n-------------------------------------\n[Clinical]:\n15:40:09: Start to generate.\n\n15:42:14: [Extractor] 1/1 chunks done\n\n15:42:14: Done\n\n\n-------------------------------------\n[Medication]:\n15:42:14: Start to generate.\n\n15:42:15: Done\n\n\n-------------------------------------\n[Prescription]:\n15:42:15: Start to generate.\n\n15:42:15: Done\n\n\n-------------------------------------\n[Discharge]:\n15:42:15: Start to generate.\n\n15:42:16: Done\n\n\n-------------------------------------\n[Admission]:\n15:42:16: Start to generate.\n\n15:42:16: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:42:16: Start to generate.\n\n15:42:17: Done\n\n\n-------------------------------------\n[Admission]:\n15:42:17: Start to generate.\n\n15:42:18: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:42:18: Start to generate.\n\n15:42:18: Done\n\n\n-------------------------------------\n[Merger]:\n15:42:18: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:42:18: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:42:18: Start to tokenize.\n\n15:42:18: Finish tokenizing.\n\n15:42:18: Start embedding inference.\n\n15:42:19: Finish embedding.\n\n15:42:19: Done\n\n15:42:19 [DOC Engine]:\nStart to index...\n15:42:19 Indexing done (0.03s). Task done (217.13s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 1,
+        "pages_total_log": 1,
+        "sections": 38
+      }
+    },
+    {
+      "doc_id": "00e328289ba111f1b417bf081885db4b",
+      "name": "MZMI-女-68岁-乳腺癌.pdf",
+      "pages": 11,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126112.6382065,
+      "process_begin_at": "2026-08-19T15:38:45",
+      "process_duration": 972.79364,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:44:28: [QwenVL] 9/11 pages done\n\n15:44:47: [QwenVL] 10/11 pages done\n\n15:45:06: [QwenVL] 11/11 pages done\n\n15:45:06: [QwenVL] Done: 468 sections from 11 pages.\n\n15:45:06: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:45:06: Start SmartSplitter: semantic split + classify.\n\n15:45:06: Loaded 468 OCR bboxes.\n\n15:45:06: Full document: 17698 chars, 468 bboxes.\n\n15:45:06: Calling LLM for semantic splitting...\n\n15:45:21: LLM responded. Parsing segments...\n\n15:45:21: LLM returned 9 segments. Cutting text...\n\n15:45:21: All 9 segments used bbox_id slicing. Saving images...\n\n15:45:21: SmartSplitter done: 9 chunks from 9 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'ExaminationReport': 2, 'LabReport': 6}\n\n15:45:21: Done\n\n\n-------------------------------------\n[Router]:\n15:45:21: Routed 9 chunks into 3 groups: {'chunks_Admission': 1, 'chunks_Examination': 2, 'chunks_LabExam': 6}\n\n15:45:21: Done\n\n\n-------------------------------------\n[LabExam]:\n15:45:21: Start to generate.\n\n15:46:25: [Extractor] 1/6 chunks done\n\n15:46:50: [Extractor] 2/6 chunks done\n\n15:46:50: [Extractor] 3/6 chunks done\n\n15:47:17: [Extractor] 4/6 chunks done\n\n15:47:28: [Extractor] 5/6 chunks done\n\n15:47:48: [Extractor] 6/6 chunks done\n\n15:47:48: Done\n\n\n-------------------------------------\n[Imaging]:\n15:47:48: Start to generate.\n\n15:47:48: Done\n\n\n-------------------------------------\n[Clinical]:\n15:47:48: Start to generate.\n\n15:47:49: Done\n\n\n-------------------------------------\n[Medication]:\n15:47:49: Start to generate.\n\n15:47:49: Done\n\n\n-------------------------------------\n[Prescription]:\n15:47:50: Start to generate.\n\n15:47:50: Done\n\n\n-------------------------------------\n[Discharge]:\n15:47:50: Start to generate.\n\n15:47:50: Done\n\n\n-------------------------------------\n[Admission]:\n15:47:50: Start to generate.\n\n15:53:13: [Extractor] 1/1 chunks done\n\n15:53:13: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:53:13: Start to generate.\n\n15:54:31: [Extractor] 1/2 chunks done\n\n15:54:44: [Extractor] 2/2 chunks done\n\n15:54:44: Done\n\n\n-------------------------------------\n[Admission]:\n15:54:44: Start to generate.\n\n15:54:54: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:54:54: Start to generate.\n\n15:54:54: Done\n\n\n-------------------------------------\n[Merger]:\n15:54:54: Merged 9 chunks from 10 sources: {'Extractor:LabExam': 6, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 2, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:54:54: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:54:54: Start to tokenize.\n\n15:54:55: Finish tokenizing.\n\n15:54:55: Start embedding inference.\n\n15:54:56: Finish embedding.\n\n15:54:56: Done\n\n15:54:57 [DOC Engine]:\nStart to index...\n15:54:57 Indexing done (0.12s). Task done (971.33s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 11,
+        "pages_total_log": 11,
+        "sections": 468
+      }
+    },
+    {
+      "doc_id": "02a93a8a9ba111f1b417bf081885db4b",
+      "name": "LWXI-男-52岁-甲状腺髓样癌.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125456.045106,
+      "process_begin_at": "2026-08-19T15:38:48",
+      "process_duration": 318.92117,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:51 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:51: File fetched.\n\n15:38:51: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:52: Start to work on a PDF.\n\n15:38:52: [QwenVL] Processing 2 pages...\n\n15:39:41: [QwenVL] 1/2 pages done\n\n15:41:16: [QwenVL] 2/2 pages done\n\n15:41:16: [QwenVL] Done: 14 sections from 2 pages.\n\n15:41:16: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:41:16: Start SmartSplitter: semantic split + classify.\n\n15:41:16: Loaded 14 OCR bboxes.\n\n15:41:16: Full document: 1722 chars, 14 bboxes.\n\n15:41:16: Calling LLM for semantic splitting...\n\n15:41:18: LLM responded. Parsing segments...\n\n15:41:18: LLM returned 1 segments. Cutting text...\n\n15:41:18: All 1 segments used bbox_id slicing. Saving images...\n\n15:41:18: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'ProgressNote': 1}\n\n15:41:18: Done\n\n\n-------------------------------------\n[Router]:\n15:41:18: Routed 1 chunks into 1 groups: {'chunks_Progress': 1}\n\n15:41:18: Done\n\n\n-------------------------------------\n[LabExam]:\n15:41:18: Start to generate.\n\n15:41:19: Done\n\n\n-------------------------------------\n[Imaging]:\n15:41:19: Start to generate.\n\n15:41:19: Done\n\n\n-------------------------------------\n[Clinical]:\n15:41:19: Start to generate.\n\n15:41:20: Done\n\n\n-------------------------------------\n[Medication]:\n15:41:20: Start to generate.\n\n15:41:20: Done\n\n\n-------------------------------------\n[Prescription]:\n15:41:20: Start to generate.\n\n15:41:21: Done\n\n\n-------------------------------------\n[Discharge]:\n15:41:21: Start to generate.\n\n15:41:21: Done\n\n\n-------------------------------------\n[Admission]:\n15:41:21: Start to generate.\n\n15:41:22: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:41:22: Start to generate.\n\n15:41:23: Done\n\n\n-------------------------------------\n[Admission]:\n15:41:23: Start to generate.\n\n15:43:58: [Extractor] 1/1 chunks done\n\n15:43:58: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:43:58: Start to generate.\n\n15:44:06: Done\n\n\n-------------------------------------\n[Merger]:\n15:44:06: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:44:06: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:44:06: Start to tokenize.\n\n15:44:06: Finish tokenizing.\n\n15:44:06: Start embedding inference.\n\n15:44:06: Finish embedding.\n\n15:44:06: Done\n\n15:44:06 [DOC Engine]:\nStart to index...\n15:44:06 Indexing done (0.05s). Task done (315.26s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 2,
+        "pages_total_log": 2,
+        "sections": 14
+      }
+    },
+    {
+      "doc_id": "047d02ba9ba111f1b417bf081885db4b",
+      "name": "QZCU-男-42岁-痛风.pdf",
+      "pages": 4,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125558.5404565,
+      "process_begin_at": "2026-08-19T15:38:51",
+      "process_duration": 416.60684,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "15:38:52: File fetched.\n\n15:38:52: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:52: Start to work on a PDF.\n\n15:38:53: [QwenVL] Processing 4 pages...\n\n15:39:42: [QwenVL] 1/4 pages done\n\n15:40:02: [QwenVL] 2/4 pages done\n\n15:40:18: [QwenVL] 3/4 pages done\n\n15:40:33: [QwenVL] 4/4 pages done\n\n15:40:33: [QwenVL] Done: 108 sections from 4 pages.\n\n15:40:33: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:40:33: Start SmartSplitter: semantic split + classify.\n\n15:40:33: Loaded 108 OCR bboxes.\n\n15:40:33: Full document: 3901 chars, 108 bboxes.\n\n15:40:33: Calling LLM for semantic splitting...\n\n15:40:38: LLM responded. Parsing segments...\n\n15:40:38: LLM returned 4 segments. Cutting text...\n\n15:40:38: All 4 segments used bbox_id slicing. Saving images...\n\n15:40:38: SmartSplitter done: 4 chunks from 4 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1, 'ExaminationReport': 1, 'LabReport': 2}\n\n15:40:38: Done\n\n\n-------------------------------------\n[Router]:\n15:40:38: Routed 4 chunks into 3 groups: {'chunks_Clinical': 1, 'chunks_Examination': 1, 'chunks_LabExam': 2}\n\n15:40:38: Done\n\n\n-------------------------------------\n[LabExam]:\n15:40:38: Start to generate.\n\n15:41:29: [Extractor] 1/2 chunks done\n\n15:42:13: [Extractor] 2/2 chunks done\n\n15:42:13: Done\n\n\n-------------------------------------\n[Imaging]:\n15:42:13: Start to generate.\n\n15:42:13: Done\n\n\n-------------------------------------\n[Clinical]:\n15:42:13: Start to generate.\n\n15:44:27: [Extractor] 1/1 chunks done\n\n15:44:27: Done\n\n\n-------------------------------------\n[Medication]:\n15:44:27: Start to generate.\n\n15:44:28: Done\n\n\n-------------------------------------\n[Prescription]:\n15:44:28: Start to generate.\n\n15:44:29: Done\n\n\n-------------------------------------\n[Discharge]:\n15:44:29: Start to generate.\n\n15:44:29: Done\n\n\n-------------------------------------\n[Admission]:\n15:44:29: Start to generate.\n\n15:44:30: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:44:30: Start to generate.\n\n15:45:43: [Extractor] 1/1 chunks done\n\n15:45:43: Done\n\n\n-------------------------------------\n[Admission]:\n15:45:43: Start to generate.\n\n15:45:43: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:45:44: Start to generate.\n\n15:45:45: Done\n\n\n-------------------------------------\n[Merger]:\n15:45:45: Merged 4 chunks from 10 sources: {'Extractor:LabExam': 2, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:45:45: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:45:45: Start to tokenize.\n\n15:45:45: Finish tokenizing.\n\n15:45:45: Start embedding inference.\n\n15:45:47: Finish embedding.\n\n15:45:47: Done\n\n15:45:47 [DOC Engine]:\nStart to index...\n15:45:47 Indexing done (0.06s). Task done (415.49s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 4,
+        "pages_total_log": 4,
+        "sections": 108
+      }
+    },
+    {
+      "doc_id": "062bc11e9ba111f1b417bf081885db4b",
+      "name": "LDBA-男-70岁-转移性骨肿瘤.pdf",
+      "pages": 3,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125763.901995,
+      "process_begin_at": "2026-08-19T15:38:53",
+      "process_duration": 617.63666,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:38:57 Task has been received.\n\n-------------------------------------\n[File]:\n15:38:57: File fetched.\n\n15:38:57: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:38:57: Start to work on a PDF.\n\n15:38:57: [QwenVL] Processing 3 pages...\n\n15:39:47: [QwenVL] 1/3 pages done\n\n15:40:21: [QwenVL] 2/3 pages done\n\n15:46:30: [QwenVL] 3/3 pages done\n\n15:46:30: [QwenVL] Done: 70 sections from 3 pages.\n\n15:46:30: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:46:30: Start SmartSplitter: semantic split + classify.\n\n15:46:30: Loaded 70 OCR bboxes.\n\n15:46:30: Full document: 2923 chars, 70 bboxes.\n\n15:46:30: Calling LLM for semantic splitting...\n\n15:46:34: LLM responded. Parsing segments...\n\n15:46:34: LLM returned 2 segments. Cutting text...\n\n15:46:35: All 2 segments used bbox_id slicing. Saving images...\n\n15:46:35: SmartSplitter done: 2 chunks from 2 LLM segments (all bbox_id). Types: {'ExaminationReport': 2}\n\n15:46:35: Done\n\n\n-------------------------------------\n[Router]:\n15:46:35: Routed 2 chunks into 1 groups: {'chunks_Examination': 2}\n\n15:46:35: Done\n\n\n-------------------------------------\n[LabExam]:\n15:46:35: Start to generate.\n\n15:46:35: Done\n\n\n-------------------------------------\n[Imaging]:\n15:46:35: Start to generate.\n\n15:46:36: Done\n\n\n-------------------------------------\n[Clinical]:\n15:46:36: Start to generate.\n\n15:46:37: Done\n\n\n-------------------------------------\n[Medication]:\n15:46:37: Start to generate.\n\n15:46:37: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:37: Start to generate.\n\n15:46:38: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:38: Start to generate.\n\n15:46:38: Done\n\n\n-------------------------------------\n[Admission]:\n15:46:38: Start to generate.\n\n15:46:39: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:46:39: Start to generate.\n\n15:48:16: [Extractor] 1/2 chunks done\n\n15:49:08: [Extractor] 2/2 chunks done\n\n15:49:08: Done\n\n\n-------------------------------------\n[Admission]:\n15:49:08: Start to generate.\n\n15:49:09: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:49:09: Start to generate.\n\n15:49:09: Done\n\n\n-------------------------------------\n[Merger]:\n15:49:09: Merged 2 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 2, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:49:09: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:49:09: Start to tokenize.\n\n15:49:09: Finish tokenizing.\n\n15:49:09: Start embedding inference.\n\n15:49:10: Finish embedding.\n\n15:49:10: Done\n\n15:49:10 [DOC Engine]:\nStart to index...\n15:49:10 Indexing done (0.06s). Task done (613.15s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 3,
+        "pages_total_log": 3,
+        "sections": 70
+      }
+    },
+    {
+      "doc_id": "08f324469ba111f1b417bf081885db4b",
+      "name": "CWCH-女-45岁-特异性性皮炎（AD).pdf",
+      "pages": 9,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125251.0370378,
+      "process_begin_at": "2026-08-19T15:38:58",
+      "process_duration": 108.88947,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 1,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:39:02 Task has been received.\n\n-------------------------------------\n[File]:\n15:39:03: File fetched.\n\n15:39:03: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:39:03: Start to work on a PDF.\n\n15:39:05: [QwenVL] Processing 9 pages...\n\n15:39:33: [QwenVL] 1/9 pages done\n\n15:39:44: [QwenVL] 2/9 pages done\n\n15:39:45: [QwenVL] 3/9 pages done\n\n15:40:01: [QwenVL] 4/9 pages done\n\n15:40:14: [QwenVL] 5/9 pages done\n\n15:40:20: [QwenVL] 6/9 pages done\n\n15:40:21: [QwenVL] 7/9 pages done\n\n15:40:32: [QwenVL] 8/9 pages done\n\n15:40:37: [QwenVL] 9/9 pages done\n\n15:40:37: [QwenVL] Done: 0 sections from 9 pages.\n\n15:40:37: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:40:37: Start SmartSplitter: semantic split + classify.\n\n15:40:37: No input bboxes.\n\n15:40:37: Done\n\n\n-------------------------------------\n[Router]:\n15:40:37: Routed 0 chunks into 0 groups: {}\n\n15:40:37: Done\n\n\n-------------------------------------\n[LabExam]:\n15:40:37: Start to generate.\n\n15:40:38: Done\n\n\n-------------------------------------\n[Imaging]:\n15:40:38: Start to generate.\n\n15:40:38: Done\n\n\n-------------------------------------\n[Clinical]:\n15:40:38: Start to generate.\n\n15:40:39: Done\n\n\n-------------------------------------\n[Medication]:\n15:40:39: Start to generate.\n\n15:40:41: Done\n\n\n-------------------------------------\n[Prescription]:\n15:40:41: Start to generate.\n\n15:40:41: Done\n\n\n-------------------------------------\n[Discharge]:\n15:40:41: Start to generate.\n\n15:40:42: Done\n\n\n-------------------------------------\n[Admission]:\n15:40:42: Start to generate.\n\n15:40:43: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:40:43: Start to generate.\n\n15:40:44: Done\n\n\n-------------------------------------\n[Admission]:\n15:40:45: Start to generate.\n\n15:40:46: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:40:46: Start to generate.\n\n15:40:46: Done\n\n\n-------------------------------------\n[Merger]:\n15:40:46: Merged 0 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 10 noise chunks)\n\n15:40:46: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:40:46: No chunks to process, skipping.\n\n15:40:46: Done\n\n15:40:46 No chunks produced. Task done (103.90s)",
+      "vlm2": {
+        "err_lines": 1,
+        "pages_done_max": 9,
+        "pages_total_log": 9,
+        "sections": 0
+      }
+    },
+    {
+      "doc_id": "0acb3e349ba111f1b417bf081885db4b",
+      "name": "WQFU-男-63岁-哮喘.pdf",
+      "pages": 4,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125743.3133848,
+      "process_begin_at": "2026-08-19T15:39:01",
+      "process_duration": 586.0193,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n-------------------------------------\n[Parser_0]:\n15:40:25: Start to work on a PDF.\n\n15:40:26: [QwenVL] Processing 4 pages...\n\n15:41:30: [QwenVL] 1/4 pages done\n\n15:41:39: [QwenVL] 2/4 pages done\n\n15:42:00: [QwenVL] 3/4 pages done\n\n15:42:29: [QwenVL] 4/4 pages done\n\n15:42:29: [QwenVL] Done: 195 sections from 4 pages.\n\n15:42:29: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:42:29: Start SmartSplitter: semantic split + classify.\n\n15:42:29: Loaded 195 OCR bboxes.\n\n15:42:29: Full document: 4358 chars, 195 bboxes.\n\n15:42:29: Calling LLM for semantic splitting...\n\n15:42:35: LLM responded. Parsing segments...\n\n15:42:35: LLM returned 5 segments. Cutting text...\n\n15:42:35: All 5 segments used bbox_id slicing. Saving images...\n\n15:42:35: SmartSplitter done: 5 chunks from 5 LLM segments (all bbox_id). Types: {'OutpatientRecord': 2, 'ExaminationReport': 1, 'MedicationRecord': 2}\n\n15:42:35: Done\n\n\n-------------------------------------\n[Router]:\n15:42:35: Routed 5 chunks into 3 groups: {'chunks_Clinical': 2, 'chunks_Examination': 1, 'chunks_Medication': 2}\n\n15:42:35: Done\n\n\n-------------------------------------\n[LabExam]:\n15:42:35: Start to generate.\n\n15:42:36: Done\n\n\n-------------------------------------\n[Imaging]:\n15:42:36: Start to generate.\n\n15:42:36: Done\n\n\n-------------------------------------\n[Clinical]:\n15:42:36: Start to generate.\n\n15:43:58: [Extractor] 1/2 chunks done\n\n15:44:45: [Extractor] 2/2 chunks done\n\n15:44:45: Done\n\n\n-------------------------------------\n[Medication]:\n15:44:45: Start to generate.\n\n15:46:12: [Extractor] 1/2 chunks done\n\n15:46:22: [Extractor] 2/2 chunks done\n\n15:46:22: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:22: Start to generate.\n\n15:46:23: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:23: Start to generate.\n\n15:46:23: Done\n\n\n-------------------------------------\n[Admission]:\n15:46:23: Start to generate.\n\n15:46:23: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:46:23: Start to generate.\n\n15:48:44: [Extractor] 1/1 chunks done\n\n15:48:44: Done\n\n\n-------------------------------------\n[Admission]:\n15:48:44: Start to generate.\n\n15:48:45: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:48:45: Start to generate.\n\n15:48:45: Done\n\n\n-------------------------------------\n[Merger]:\n15:48:45: Merged 5 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:48:45: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:48:45: Start to tokenize.\n\n15:48:46: Finish tokenizing.\n\n15:48:46: Start embedding inference.\n\n15:48:46: Finish embedding.\n\n15:48:46: Done\n\n15:48:46 [DOC Engine]:\nStart to index...\n15:48:46 Indexing done (0.08s). Task done (501.58s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 4,
+        "pages_total_log": 4,
+        "sections": 195
+      }
+    },
+    {
+      "doc_id": "0c87055a9ba111f1b417bf081885db4b",
+      "name": "YDFE-男-60岁-哮喘.pdf",
+      "pages": 7,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125640.795775,
+      "process_begin_at": "2026-08-19T15:39:04",
+      "process_duration": 483.73492,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:41:07: [QwenVL] 3/7 pages done\n\n15:42:23: [QwenVL] 4/7 pages done\n\n15:42:31: [QwenVL] 5/7 pages done\n\n15:42:52: [QwenVL] 6/7 pages done\n\n15:43:19: [QwenVL] 7/7 pages done\n\n15:43:19: [QwenVL] Done: 135 sections from 7 pages.\n\n15:43:20: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:43:20: Start SmartSplitter: semantic split + classify.\n\n15:43:20: Loaded 135 OCR bboxes.\n\n15:43:20: Full document: 4451 chars, 135 bboxes.\n\n15:43:20: Calling LLM for semantic splitting...\n\n15:43:37: LLM responded. Parsing segments...\n\n15:43:37: LLM returned 8 segments. Cutting text...\n\n15:43:37: All 8 segments used bbox_id slicing. Saving images...\n\n15:43:37: SmartSplitter done: 8 chunks from 8 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1, 'LabReport': 5, 'MedicationRecord': 2}\n\n15:43:37: Done\n\n\n-------------------------------------\n[Router]:\n15:43:37: Routed 8 chunks into 3 groups: {'chunks_Clinical': 1, 'chunks_LabExam': 5, 'chunks_Medication': 2}\n\n15:43:37: Done\n\n\n-------------------------------------\n[LabExam]:\n15:43:37: Start to generate.\n\n15:43:45: [Extractor] 1/5 chunks done\n\n15:43:59: [Extractor] 2/5 chunks done\n\n15:44:19: [Extractor] 3/5 chunks done\n\n15:44:30: [Extractor] 4/5 chunks done\n\n15:44:31: [Extractor] 5/5 chunks done\n\n15:44:31: Done\n\n\n-------------------------------------\n[Imaging]:\n15:44:31: Start to generate.\n\n15:44:31: Done\n\n\n-------------------------------------\n[Clinical]:\n15:44:31: Start to generate.\n\n15:45:06: [Extractor] 1/1 chunks done\n\n15:45:06: Done\n\n\n-------------------------------------\n[Medication]:\n15:45:06: Start to generate.\n\n15:46:08: [Extractor] 1/2 chunks done\n\n15:46:58: [Extractor] 2/2 chunks done\n\n15:46:58: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:58: Start to generate.\n\n15:46:58: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:58: Start to generate.\n\n15:46:59: Done\n\n\n-------------------------------------\n[Admission]:\n15:46:59: Start to generate.\n\n15:46:59: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:46:59: Start to generate.\n\n15:47:01: Done\n\n\n-------------------------------------\n[Admission]:\n15:47:01: Start to generate.\n\n15:47:02: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:47:02: Start to generate.\n\n15:47:03: Done\n\n\n-------------------------------------\n[Merger]:\n15:47:04: Merged 8 chunks from 10 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:47:04: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:47:04: Start to tokenize.\n\n15:47:04: Finish tokenizing.\n\n15:47:05: Start embedding inference.\n\n15:47:06: Finish embedding.\n\n15:47:06: Done\n\n15:47:07 [DOC Engine]:\nStart to index...\n15:47:07 Indexing done (0.26s). Task done (397.29s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 7,
+        "pages_total_log": 7,
+        "sections": 135
+      }
+    },
+    {
+      "doc_id": "0e4fcce69ba111f1b417bf081885db4b",
+      "name": "QWWE-男-38岁-痛风.pdf",
+      "pages": 5,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125763.901993,
+      "process_begin_at": "2026-08-19T15:39:07",
+      "process_duration": 615.774,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:40:47: Start to work on a PDF.\n\n15:40:48: [QwenVL] Processing 5 pages...\n\n15:42:15: [QwenVL] 1/5 pages done\n\n15:42:18: [QwenVL] 2/5 pages done\n\n15:42:37: [QwenVL] 3/5 pages done\n\n15:43:19: [QwenVL] 4/5 pages done\n\n15:44:19: [QwenVL] 5/5 pages done\n\n15:44:19: [QwenVL] Done: 157 sections from 5 pages.\n\n15:44:19: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:44:19: Start SmartSplitter: semantic split + classify.\n\n15:44:19: Loaded 157 OCR bboxes.\n\n15:44:19: Full document: 5780 chars, 157 bboxes.\n\n15:44:19: Calling LLM for semantic splitting...\n\n15:44:25: LLM responded. Parsing segments...\n\n15:44:25: LLM returned 4 segments. Cutting text...\n\n15:44:25: All 4 segments used bbox_id slicing. Saving images...\n\n15:44:25: SmartSplitter done: 4 chunks from 4 LLM segments (all bbox_id). Types: {'OutpatientRecord': 2, 'ExaminationReport': 1, 'LabReport': 1}\n\n15:44:25: Done\n\n\n-------------------------------------\n[Router]:\n15:44:25: Routed 4 chunks into 3 groups: {'chunks_Clinical': 2, 'chunks_Examination': 1, 'chunks_LabExam': 1}\n\n15:44:25: Done\n\n\n-------------------------------------\n[LabExam]:\n15:44:25: Start to generate.\n\n15:46:23: [Extractor] 1/1 chunks done\n\n15:46:23: Done\n\n\n-------------------------------------\n[Imaging]:\n15:46:23: Start to generate.\n\n15:46:27: Done\n\n\n-------------------------------------\n[Clinical]:\n15:46:27: Start to generate.\n\n15:47:22: [Extractor] 1/2 chunks done\n\n15:47:45: [Extractor] 2/2 chunks done\n\n15:47:45: Done\n\n\n-------------------------------------\n[Medication]:\n15:47:45: Start to generate.\n\n15:47:46: Done\n\n\n-------------------------------------\n[Prescription]:\n15:47:46: Start to generate.\n\n15:47:46: Done\n\n\n-------------------------------------\n[Discharge]:\n15:47:46: Start to generate.\n\n15:47:47: Done\n\n\n-------------------------------------\n[Admission]:\n15:47:47: Start to generate.\n\n15:47:47: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:47:47: Start to generate.\n\n15:49:20: [Extractor] 1/1 chunks done\n\n15:49:20: Done\n\n\n-------------------------------------\n[Admission]:\n15:49:20: Start to generate.\n\n15:49:21: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:49:21: Start to generate.\n\n15:49:21: Done\n\n\n-------------------------------------\n[Merger]:\n15:49:21: Merged 4 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:49:21: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:49:21: Start to tokenize.\n\n15:49:21: Finish tokenizing.\n\n15:49:21: Start embedding inference.\n\n15:49:22: Finish embedding.\n\n15:49:22: Done\n\n15:49:22 [DOC Engine]:\nStart to index...\n15:49:22 Indexing done (0.07s). Task done (515.54s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 5,
+        "pages_total_log": 5,
+        "sections": 157
+      }
+    },
+    {
+      "doc_id": "102693ce9ba111f1b417bf081885db4b",
+      "name": "ZZHE-女-32岁-结直肠癌.pdf",
+      "pages": 5,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125948.3780775,
+      "process_begin_at": "2026-08-19T15:39:10",
+      "process_duration": 792.02814,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:41:16 Task has been received.\n\n-------------------------------------\n[File]:\n15:41:16: File fetched.\n\n15:41:16: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:41:16: Start to work on a PDF.\n\n15:41:17: [QwenVL] Processing 5 pages...\n\n15:43:03: [QwenVL] 1/5 pages done\n\n15:43:21: [QwenVL] 2/5 pages done\n\n15:43:42: [QwenVL] 3/5 pages done\n\n15:43:45: [QwenVL] 4/5 pages done\n\n15:43:58: [QwenVL] 5/5 pages done\n\n15:43:58: [QwenVL] Done: 130 sections from 5 pages.\n\n15:43:58: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:43:58: Start SmartSplitter: semantic split + classify.\n\n15:43:58: Loaded 130 OCR bboxes.\n\n15:43:58: Full document: 5706 chars, 130 bboxes.\n\n15:43:58: Calling LLM for semantic splitting...\n\n15:44:05: LLM responded. Parsing segments...\n\n15:44:05: LLM returned 1 segments. Cutting text...\n\n15:44:05: All 1 segments used bbox_id slicing. Saving images...\n\n15:44:05: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1}\n\n15:44:05: Done\n\n\n-------------------------------------\n[Router]:\n15:44:05: Routed 1 chunks into 1 groups: {'chunks_Admission': 1}\n\n15:44:05: Done\n\n\n-------------------------------------\n[LabExam]:\n15:44:05: Start to generate.\n\n15:44:06: Done\n\n\n-------------------------------------\n[Imaging]:\n15:44:06: Start to generate.\n\n15:44:07: Done\n\n\n-------------------------------------\n[Clinical]:\n15:44:07: Start to generate.\n\n15:44:08: Done\n\n\n-------------------------------------\n[Medication]:\n15:44:08: Start to generate.\n\n15:44:09: Done\n\n\n-------------------------------------\n[Prescription]:\n15:44:09: Start to generate.\n\n15:44:09: Done\n\n\n-------------------------------------\n[Discharge]:\n15:44:09: Start to generate.\n\n15:44:10: Done\n\n\n-------------------------------------\n[Admission]:\n15:44:10: Start to generate.\n\n15:52:18: [Extractor] 1/1 chunks done\n\n15:52:18: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:52:18: Start to generate.\n\n15:52:20: Done\n\n\n-------------------------------------\n[Admission]:\n15:52:20: Start to generate.\n\n15:52:20: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:52:20: Start to generate.\n\n15:52:21: Done\n\n\n-------------------------------------\n[Merger]:\n15:52:21: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:52:21: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:52:21: Start to tokenize.\n\n15:52:21: Finish tokenizing.\n\n15:52:21: Start embedding inference.\n\n15:52:21: Finish embedding.\n\n15:52:21: Done\n\n15:52:21 [DOC Engine]:\nStart to index...\n15:52:21 Indexing done (0.04s). Task done (665.38s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 5,
+        "pages_total_log": 5,
+        "sections": 130
+      }
+    },
+    {
+      "doc_id": "1204dba69ba111f1b417bf081885db4b",
+      "name": "WYXI-男-61岁-肺癌.pdf",
+      "pages": 12,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126174.1991568,
+      "process_begin_at": "2026-08-19T15:39:13",
+      "process_duration": 1003.1595,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:48:11: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:48:11: Start SmartSplitter: semantic split + classify.\n\n15:48:11: Loaded 471 OCR bboxes.\n\n15:48:11: Full document: 17454 chars, 471 bboxes.\n\n15:48:11: Calling LLM for semantic splitting...\n\n15:48:28: LLM responded. Parsing segments...\n\n15:48:28: LLM returned 13 segments. Cutting text...\n\n15:48:28: All 13 segments used bbox_id slicing. Saving images...\n\n15:48:28: SmartSplitter done: 13 chunks from 13 LLM segments (all bbox_id). Types: {'ExaminationReport': 8, 'DischargeRecord': 1, 'LabReport': 4}\n\n15:48:28: Done\n\n\n-------------------------------------\n[Router]:\n15:48:28: Routed 13 chunks into 3 groups: {'chunks_Examination': 8, 'chunks_Discharge': 1, 'chunks_LabExam': 4}\n\n15:48:28: Done\n\n\n-------------------------------------\n[LabExam]:\n15:48:28: Start to generate.\n\n15:48:46: [Extractor] 1/4 chunks done\n\n15:49:00: [Extractor] 2/4 chunks done\n\n15:50:00: [Extractor] 3/4 chunks done\n\n15:50:00: [Extractor] 4/4 chunks done\n\n15:50:00: Done\n\n\n-------------------------------------\n[Imaging]:\n15:50:00: Start to generate.\n\n15:50:01: Done\n\n\n-------------------------------------\n[Clinical]:\n15:50:01: Start to generate.\n\n15:50:01: Done\n\n\n-------------------------------------\n[Medication]:\n15:50:01: Start to generate.\n\n15:50:02: Done\n\n\n-------------------------------------\n[Prescription]:\n15:50:02: Start to generate.\n\n15:50:04: Done\n\n\n-------------------------------------\n[Discharge]:\n15:50:04: Start to generate.\n\n15:52:15: [Extractor] 1/1 chunks done\n\n15:52:15: Done\n\n\n-------------------------------------\n[Admission]:\n15:52:15: Start to generate.\n\n15:52:15: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:52:15: Start to generate.\n\n15:53:36: [Extractor] 1/8 chunks done\n\n15:53:47: [Extractor] 2/8 chunks done\n\n15:54:01: [Extractor] 3/8 chunks done\n\n15:54:38: [Extractor] 4/8 chunks done\n\n15:54:41: [Extractor] 5/8 chunks done\n\n15:55:02: [Extractor] 6/8 chunks done\n\n15:55:18: [Extractor] 7/8 chunks done\n\n15:55:53: [Extractor] 8/8 chunks done\n\n15:55:53: Done\n\n\n-------------------------------------\n[Admission]:\n15:55:53: Start to generate.\n\n15:55:54: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:55:54: Start to generate.\n\n15:55:54: Done\n\n\n-------------------------------------\n[Merger]:\n15:55:54: Merged 13 chunks from 10 sources: {'Extractor:LabExam': 4, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 8, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:55:54: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:55:54: Start to tokenize.\n\n15:55:54: Finish tokenizing.\n\n15:55:54: Start embedding inference.\n\n15:55:55: Finish embedding.\n\n15:55:55: Done\n\n15:55:55 [DOC Engine]:\nStart to index...\n15:55:56 Indexing done (0.15s). Task done (834.61s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "151606589ba111f1b417bf081885db4b",
+      "name": "KLYY-男-65岁-肺腺癌.pdf",
+      "pages": 26,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126708.097522,
+      "process_begin_at": "2026-08-19T15:39:19",
+      "process_duration": 1533.4075,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:59:01: LLM responded. Parsing segments...\n\n15:59:01: LLM returned 19 segments. Cutting text...\n\n15:59:01: All 19 segments used bbox_id slicing. Saving images...\n\n15:59:01: SmartSplitter done: 19 chunks from 19 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'ProgressNote': 1, 'ExaminationReport': 6, 'LabReport': 11}\n\n15:59:01: Done\n\n\n-------------------------------------\n[Router]:\n15:59:01: Routed 19 chunks into 4 groups: {'chunks_Admission': 1, 'chunks_Progress': 1, 'chunks_Examination': 6, 'chunks_LabExam': 11}\n\n15:59:01: Done\n\n\n-------------------------------------\n[LabExam]:\n15:59:01: Start to generate.\n\n15:59:08: [Extractor] 1/11 chunks done\n\n15:59:12: [Extractor] 2/11 chunks done\n\n15:59:13: [Extractor] 3/11 chunks done\n\n15:59:14: [Extractor] 4/11 chunks done\n\n15:59:23: [Extractor] 5/11 chunks done\n\n15:59:44: [Extractor] 6/11 chunks done\n\n15:59:49: [Extractor] 7/11 chunks done\n\n15:59:49: [Extractor] 8/11 chunks done\n\n15:59:54: [Extractor] 9/11 chunks done\n\n16:00:14: [Extractor] 10/11 chunks done\n\n16:00:16: [Extractor] 11/11 chunks done\n\n16:00:16: Done\n\n\n-------------------------------------\n[Imaging]:\n16:00:16: Start to generate.\n\n16:00:16: Done\n\n\n-------------------------------------\n[Clinical]:\n16:00:16: Start to generate.\n\n16:00:18: Done\n\n\n-------------------------------------\n[Medication]:\n16:00:18: Start to generate.\n\n16:00:19: Done\n\n\n-------------------------------------\n[Prescription]:\n16:00:19: Start to generate.\n\n16:00:20: Done\n\n\n-------------------------------------\n[Discharge]:\n16:00:20: Start to generate.\n\n16:00:20: Done\n\n\n-------------------------------------\n[Admission]:\n16:00:20: Start to generate.\n\n16:02:10: [Extractor] 1/1 chunks done\n\n16:02:10: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n16:02:10: Start to generate.\n\n16:02:31: [Extractor] 1/6 chunks done\n\n16:02:49: [Extractor] 2/6 chunks done\n\n16:02:50: [Extractor] 3/6 chunks done\n\n16:02:52: [Extractor] 4/6 chunks done\n\n16:03:21: [Extractor] 5/6 chunks done\n\n16:03:40: [Extractor] 6/6 chunks done\n\n16:03:40: Done\n\n\n-------------------------------------\n[Admission]:\n16:03:40: Start to generate.\n\n16:04:49: [Extractor] 1/1 chunks done\n\n16:04:49: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n16:04:49: Start to generate.\n\n16:04:49: Done\n\n\n-------------------------------------\n[Merger]:\n16:04:49: Merged 19 chunks from 10 sources: {'Extractor:LabExam': 11, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 6, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 6 noise chunks)\n\n16:04:49: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:04:49: Start to tokenize.\n\n16:04:49: Finish tokenizing.\n\n16:04:49: Start embedding inference.\n\n16:04:51: Finish embedding.\n\n16:04:51: Done\n\n16:04:51 [DOC Engine]:\nStart to index...\n16:04:52 Indexing done (0.23s). Task done (1352.14s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "16cf5f4e9ba111f1b417bf081885db4b",
+      "name": "SUFA-女-65岁-哮喘.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125558.5404532,
+      "process_begin_at": "2026-08-19T15:39:21",
+      "process_duration": 383.85553,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:43:02 Task has been received.\n\n-------------------------------------\n[File]:\n15:43:02: File fetched.\n\n15:43:02: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:43:02: Start to work on a PDF.\n\n15:43:02: [QwenVL] Processing 1 pages...\n\n15:43:38: [QwenVL] 1/1 pages done\n\n15:43:38: [QwenVL] Done: 43 sections from 1 pages.\n\n15:43:38: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:43:38: Start SmartSplitter: semantic split + classify.\n\n15:43:38: Loaded 43 OCR bboxes.\n\n15:43:38: Full document: 1082 chars, 43 bboxes.\n\n15:43:38: Calling LLM for semantic splitting...\n\n15:43:42: LLM responded. Parsing segments...\n\n15:43:42: LLM returned 1 segments. Cutting text...\n\n15:43:42: All 1 segments used bbox_id slicing. Saving images...\n\n15:43:42: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1}\n\n15:43:42: Done\n\n\n-------------------------------------\n[Router]:\n15:43:42: Routed 1 chunks into 1 groups: {'chunks_Clinical': 1}\n\n15:43:42: Done\n\n\n-------------------------------------\n[LabExam]:\n15:43:42: Start to generate.\n\n15:43:47: Done\n\n\n-------------------------------------\n[Imaging]:\n15:43:47: Start to generate.\n\n15:43:50: Done\n\n\n-------------------------------------\n[Clinical]:\n15:43:50: Start to generate.\n\n15:45:38: [Extractor] 1/1 chunks done\n\n15:45:38: Done\n\n\n-------------------------------------\n[Medication]:\n15:45:38: Start to generate.\n\n15:45:39: Done\n\n\n-------------------------------------\n[Prescription]:\n15:45:39: Start to generate.\n\n15:45:41: Done\n\n\n-------------------------------------\n[Discharge]:\n15:45:41: Start to generate.\n\n15:45:41: Done\n\n\n-------------------------------------\n[Admission]:\n15:45:41: Start to generate.\n\n15:45:41: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:45:41: Start to generate.\n\n15:45:43: Done\n\n\n-------------------------------------\n[Admission]:\n15:45:43: Start to generate.\n\n15:45:43: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:45:43: Start to generate.\n\n15:45:44: Done\n\n\n-------------------------------------\n[Merger]:\n15:45:44: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:45:44: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:45:44: Start to tokenize.\n\n15:45:44: Finish tokenizing.\n\n15:45:44: Start embedding inference.\n\n15:45:44: Finish embedding.\n\n15:45:44: Done\n\n15:45:44 [DOC Engine]:\nStart to index...\n15:45:44 Indexing done (0.04s). Task done (162.50s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 1,
+        "pages_total_log": 1,
+        "sections": 43
+      }
+    },
+    {
+      "doc_id": "1a378bc09ba111f1b417bf081885db4b",
+      "name": "ZSYA-女-68岁-哮喘.pdf",
+      "pages": 15,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126605.408923,
+      "process_begin_at": "2026-08-19T15:39:27",
+      "process_duration": 1422.6494,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "[SmartSplitter:MedLink]:\n15:48:56: Start SmartSplitter: semantic split + classify.\n\n15:48:56: Loaded 673 OCR bboxes.\n\n15:48:56: Full document: 16190 chars, 673 bboxes.\n\n15:48:56: Calling LLM for semantic splitting...\n\n15:49:16: LLM responded. Parsing segments...\n\n15:49:16: LLM returned 10 segments. Cutting text...\n\n15:49:16: All 10 segments used bbox_id slicing. Saving images...\n\n15:49:16: SmartSplitter done: 10 chunks from 10 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'DischargeRecord': 1, 'MedicalOrder': 1, 'ExaminationReport': 3, 'MedicationRecord': 1, 'PrescriptionRecord': 2, 'OutpatientRecord': 1}\n\n15:49:16: Done\n\n\n-------------------------------------\n[Router]:\n15:49:16: Routed 10 chunks into 7 groups: {'chunks_Admission': 1, 'chunks_Discharge': 1, 'chunks_MedicalOrder': 1, 'chunks_Examination': 3, 'chunks_Medication': 1, 'chunks_Prescription': 2, 'chunks_Clinical': 1}\n\n15:49:16: Done\n\n\n-------------------------------------\n[LabExam]:\n15:49:16: Start to generate.\n\n15:49:17: Done\n\n\n-------------------------------------\n[Imaging]:\n15:49:22: Start to generate.\n\n15:49:23: Done\n\n\n-------------------------------------\n[Clinical]:\n15:49:23: Start to generate.\n\n15:51:09: [Extractor] 1/1 chunks done\n\n15:51:09: Done\n\n\n-------------------------------------\n[Medication]:\n15:51:09: Start to generate.\n\n15:52:24: [Extractor] 1/1 chunks done\n\n15:52:24: Done\n\n\n-------------------------------------\n[Prescription]:\n15:52:24: Start to generate.\n\n15:53:25: [Extractor] 1/2 chunks done\n\n15:53:34: [Extractor] 2/2 chunks done\n\n15:53:34: Done\n\n\n-------------------------------------\n[Discharge]:\n15:53:34: Start to generate.\n\n15:56:18: [Extractor] 1/1 chunks done\n\n15:56:18: Done\n\n\n-------------------------------------\n[Admission]:\n15:56:18: Start to generate.\n\n15:58:01: [Extractor] 1/1 chunks done\n\n15:58:01: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:58:01: Start to generate.\n\n15:58:42: [Extractor] 1/3 chunks done\n\n15:59:15: [Extractor] 2/3 chunks done\n\n15:59:53: [Extractor] 3/3 chunks done\n\n15:59:53: Done\n\n\n-------------------------------------\n[Admission]:\n15:59:53: Start to generate.\n\n15:59:54: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:59:54: Start to generate.\n\n16:03:07: [Extractor] 1/1 chunks done\n\n16:03:07: Done\n\n\n-------------------------------------\n[Merger]:\n16:03:07: Merged 10 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 2, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 3, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 3 noise chunks)\n\n16:03:07: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:03:07: Start to tokenize.\n\n16:03:08: Finish tokenizing.\n\n16:03:08: Start embedding inference.\n\n16:03:08: Finish embedding.\n\n16:03:08: Done\n\n16:03:09 [DOC Engine]:\nStart to index...\n16:03:09 Indexing done (0.17s). Task done (1142.27s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "1bf7bb569ba111f1b417bf081885db4b",
+      "name": "ZXLA-男-57岁-乳腺癌.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125640.7957702,
+      "process_begin_at": "2026-08-19T15:39:30",
+      "process_duration": 452.01694,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:45:45 Task has been received.\n\n-------------------------------------\n[File]:\n15:45:45: File fetched.\n\n15:45:45: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:45:45: Start to work on a PDF.\n\n15:45:45: [QwenVL] Processing 2 pages...\n\n15:45:48: [QwenVL] 1/2 pages done\n\n15:46:09: [QwenVL] 2/2 pages done\n\n15:46:09: [QwenVL] Done: 13 sections from 2 pages.\n\n15:46:09: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:46:09: Start SmartSplitter: semantic split + classify.\n\n15:46:09: Loaded 13 OCR bboxes.\n\n15:46:09: Full document: 302 chars, 13 bboxes.\n\n15:46:09: Calling LLM for semantic splitting...\n\n15:46:11: LLM responded. Parsing segments...\n\n15:46:11: LLM returned 1 segments. Cutting text...\n\n15:46:11: All 1 segments used bbox_id slicing. Saving images...\n\n15:46:11: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'ExaminationReport': 1}\n\n15:46:11: Done\n\n\n-------------------------------------\n[Router]:\n15:46:11: Routed 1 chunks into 1 groups: {'chunks_Examination': 1}\n\n15:46:11: Done\n\n\n-------------------------------------\n[LabExam]:\n15:46:11: Start to generate.\n\n15:46:11: Done\n\n\n-------------------------------------\n[Imaging]:\n15:46:11: Start to generate.\n\n15:46:12: Done\n\n\n-------------------------------------\n[Clinical]:\n15:46:12: Start to generate.\n\n15:46:12: Done\n\n\n-------------------------------------\n[Medication]:\n15:46:12: Start to generate.\n\n15:46:13: Done\n\n\n-------------------------------------\n[Prescription]:\n15:46:13: Start to generate.\n\n15:46:13: Done\n\n\n-------------------------------------\n[Discharge]:\n15:46:13: Start to generate.\n\n15:46:14: Done\n\n\n-------------------------------------\n[Admission]:\n15:46:14: Start to generate.\n\n15:46:14: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:46:14: Start to generate.\n\n15:46:59: [Extractor] 1/1 chunks done\n\n15:47:00: Done\n\n\n-------------------------------------\n[Admission]:\n15:47:00: Start to generate.\n\n15:47:00: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:47:00: Start to generate.\n\n15:47:01: Done\n\n\n-------------------------------------\n[Merger]:\n15:47:01: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:47:01: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:47:01: Start to tokenize.\n\n15:47:01: Finish tokenizing.\n\n15:47:01: Start embedding inference.\n\n15:47:01: Finish embedding.\n\n15:47:01: Done\n\n15:47:01 [DOC Engine]:\nStart to index...\n15:47:01 Indexing done (0.05s). Task done (76.83s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 2,
+        "pages_total_log": 2,
+        "sections": 13
+      }
+    },
+    {
+      "doc_id": "1ee031369ba111f1b417bf081885db4b",
+      "name": "CXJI-男-62岁-胃癌.pdf",
+      "pages": 25,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126461.6932657,
+      "process_begin_at": "2026-08-19T15:39:35",
+      "process_duration": 1281.3314,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:53:45: LLM responded. Parsing segments...\n\n15:53:45: LLM returned 18 segments. Cutting text...\n\n15:53:45: All 18 segments used bbox_id slicing. Saving images...\n\n15:53:45: SmartSplitter done: 18 chunks from 18 LLM segments (all bbox_id). Types: {'AdmissionRecord': 1, 'DischargeRecord': 1, 'ExaminationReport': 11, 'LabReport': 5}\n\n15:53:45: Done\n\n\n-------------------------------------\n[Router]:\n15:53:45: Routed 18 chunks into 4 groups: {'chunks_Admission': 1, 'chunks_Discharge': 1, 'chunks_Examination': 11, 'chunks_LabExam': 5}\n\n15:53:45: Done\n\n\n-------------------------------------\n[LabExam]:\n15:53:45: Start to generate.\n\n15:54:14: [Extractor] 1/5 chunks done\n\n15:54:16: [Extractor] 2/5 chunks done\n\n15:54:37: [Extractor] 3/5 chunks done\n\n15:54:44: [Extractor] 4/5 chunks done\n\n15:54:49: [Extractor] 5/5 chunks done\n\n15:54:49: Done\n\n\n-------------------------------------\n[Imaging]:\n15:54:49: Start to generate.\n\n15:54:49: Done\n\n\n-------------------------------------\n[Clinical]:\n15:54:49: Start to generate.\n\n15:54:54: Done\n\n\n-------------------------------------\n[Medication]:\n15:54:54: Start to generate.\n\n15:54:54: Done\n\n\n-------------------------------------\n[Prescription]:\n15:54:54: Start to generate.\n\n15:54:55: Done\n\n\n-------------------------------------\n[Discharge]:\n15:54:55: Start to generate.\n\n15:55:59: [Extractor] 1/1 chunks done\n\n15:55:59: Done\n\n\n-------------------------------------\n[Admission]:\n15:55:59: Start to generate.\n\n15:59:10: [Extractor] 1/1 chunks done\n\n15:59:10: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:59:10: Start to generate.\n\n15:59:46: [Extractor] 1/11 chunks done\n\n15:59:55: [Extractor] 2/11 chunks done\n\n15:59:56: [Extractor] 3/11 chunks done\n\n15:59:56: [Extractor] 4/11 chunks done\n\n16:00:10: [Extractor] 5/11 chunks done\n\n16:00:14: [Extractor] 6/11 chunks done\n\n16:00:18: [Extractor] 7/11 chunks done\n\n16:00:45: [Extractor] 8/11 chunks done\n\n16:00:46: [Extractor] 9/11 chunks done\n\n16:00:49: [Extractor] 10/11 chunks done\n\n16:00:50: [Extractor] 11/11 chunks done\n\n16:00:50: Done\n\n\n-------------------------------------\n[Admission]:\n16:00:50: Start to generate.\n\n16:00:51: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n16:00:51: Start to generate.\n\n16:00:52: Done\n\n\n-------------------------------------\n[Merger]:\n16:00:52: Merged 18 chunks from 10 sources: {'Extractor:LabExam': 5, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 11, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 6 noise chunks)\n\n16:00:52: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:00:52: Start to tokenize.\n\n16:00:52: Finish tokenizing.\n\n16:00:52: Start embedding inference.\n\n16:00:54: Finish embedding.\n\n16:00:54: Done\n\n16:00:54 [DOC Engine]:\nStart to index...\n16:00:56 Indexing done (1.24s). Task done (908.21s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": null,
+        "pages_total_log": null,
+        "sections": null
+      }
+    },
+    {
+      "doc_id": "20e7e8e89ba111f1b417bf081885db4b",
+      "name": "GLYI-男-54岁-肾细胞癌.pdf",
+      "pages": 51,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126769.7442605,
+      "process_begin_at": "2026-08-19T15:39:38",
+      "process_duration": 1590.5204,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:54:24: [QwenVL] 49/51 pages done\n\n15:54:26: [QwenVL] 50/51 pages done\n\n15:54:36: [QwenVL] 51/51 pages done\n\n15:54:36: [QwenVL] Done: 1701 sections from 51 pages.\n\n15:54:36: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:54:36: Start SmartSplitter: semantic split + classify.\n\n15:54:36: Loaded 1701 OCR bboxes.\n\n15:54:36: Full document: 45993 chars, 1701 bboxes.\n\n15:54:36: Calling LLM for semantic splitting...\n\n15:55:04: LLM responded. Parsing segments...\n\n15:55:04: LLM returned 8 segments. Cutting text...\n\n15:55:04: All 8 segments used bbox_id slicing. Saving images...\n\n15:55:04: SmartSplitter done: 8 chunks from 8 LLM segments (all bbox_id). Types: {'DischargeRecord': 1, 'OutpatientRecord': 1, 'ExaminationReport': 4, 'LabReport': 2}\n\n15:55:04: Done\n\n\n-------------------------------------\n[Router]:\n15:55:04: Routed 8 chunks into 4 groups: {'chunks_Discharge': 1, 'chunks_Clinical': 1, 'chunks_Examination': 4, 'chunks_LabExam': 2}\n\n15:55:04: Done\n\n\n-------------------------------------\n[LabExam]:\n15:55:04: Start to generate.\n\n15:55:18: [Extractor] 1/2 chunks done\n\n15:56:20: [Extractor] 2/2 chunks done\n\n15:56:20: Done\n\n\n-------------------------------------\n[Imaging]:\n15:56:20: Start to generate.\n\n15:56:21: Done\n\n\n-------------------------------------\n[Clinical]:\n15:56:21: Start to generate.\n\n15:57:02: [Extractor] 1/1 chunks done\n\n15:57:02: Done\n\n\n-------------------------------------\n[Medication]:\n15:57:02: Start to generate.\n\n15:57:03: Done\n\n\n-------------------------------------\n[Prescription]:\n15:57:03: Start to generate.\n\n15:57:03: Done\n\n\n-------------------------------------\n[Discharge]:\n15:57:03: Start to generate.\n\n15:57:50: [Extractor] 1/1 chunks done\n\n15:57:50: Done\n\n\n-------------------------------------\n[Admission]:\n15:57:50: Start to generate.\n\n15:57:50: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:57:50: Start to generate.\n\n15:58:37: [Extractor] 1/4 chunks done\n\n15:58:47: [Extractor] 2/4 chunks done\n\n15:59:35: [Extractor] 3/4 chunks done\n\n16:06:05: [Extractor] 4/4 chunks done\n\n16:06:05: Done\n\n\n-------------------------------------\n[Admission]:\n16:06:05: Start to generate.\n\n16:06:05: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n16:06:05: Start to generate.\n\n16:06:06: Done\n\n\n-------------------------------------\n[Merger]:\n16:06:06: Merged 8 chunks from 10 sources: {'Extractor:LabExam': 2, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 4, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 6 noise chunks)\n\n16:06:06: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n16:06:06: Start to tokenize.\n\n16:06:06: Finish tokenizing.\n\n16:06:06: Start embedding inference.\n\n16:06:07: Finish embedding.\n\n16:06:07: Done\n\n16:06:08 [DOC Engine]:\nStart to index...\n16:06:08 Indexing done (0.11s). Task done (1145.92s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 51,
+        "pages_total_log": 51,
+        "sections": 1701
+      }
+    },
+    {
+      "doc_id": "22b7df209ba111f1b417bf081885db4b",
+      "name": "SYRO-男-45岁-黄斑变性.pdf",
+      "pages": 4,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126071.588049,
+      "process_begin_at": "2026-08-19T15:39:41",
+      "process_duration": 882.5822,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:47:07 Task has been received.\n\n-------------------------------------\n[File]:\n15:47:08: File fetched.\n\n15:47:08: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:47:08: Start to work on a PDF.\n\n15:47:09: [QwenVL] Processing 4 pages...\n\n15:47:48: [QwenVL] 1/4 pages done\n\n15:48:10: [QwenVL] 2/4 pages done\n\n15:48:10: [QwenVL] 3/4 pages done\n\n15:48:54: [QwenVL] 4/4 pages done\n\n15:48:54: [QwenVL] Done: 212 sections from 4 pages.\n\n15:48:54: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:48:54: Start SmartSplitter: semantic split + classify.\n\n15:48:54: Loaded 212 OCR bboxes.\n\n15:48:54: Full document: 3894 chars, 212 bboxes.\n\n15:48:54: Calling LLM for semantic splitting...\n\n15:48:57: LLM responded. Parsing segments...\n\n15:48:57: LLM returned 1 segments. Cutting text...\n\n15:48:57: All 1 segments used bbox_id slicing. Saving images...\n\n15:48:57: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'ExaminationReport': 1}\n\n15:48:57: Done\n\n\n-------------------------------------\n[Router]:\n15:48:57: Routed 1 chunks into 1 groups: {'chunks_Examination': 1}\n\n15:48:57: Done\n\n\n-------------------------------------\n[LabExam]:\n15:48:57: Start to generate.\n\n15:48:57: Done\n\n\n-------------------------------------\n[Imaging]:\n15:48:57: Start to generate.\n\n15:48:58: Done\n\n\n-------------------------------------\n[Clinical]:\n15:48:58: Start to generate.\n\n15:49:02: Done\n\n\n-------------------------------------\n[Medication]:\n15:49:02: Start to generate.\n\n15:49:03: Done\n\n\n-------------------------------------\n[Prescription]:\n15:49:03: Start to generate.\n\n15:49:03: Done\n\n\n-------------------------------------\n[Discharge]:\n15:49:03: Start to generate.\n\n15:49:03: Done\n\n\n-------------------------------------\n[Admission]:\n15:49:03: Start to generate.\n\n15:49:04: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:49:04: Start to generate.\n\n15:54:21: [Extractor] 1/1 chunks done\n\n15:54:21: Done\n\n\n-------------------------------------\n[Admission]:\n15:54:21: Start to generate.\n\n15:54:22: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:54:22: Start to generate.\n\n15:54:22: Done\n\n\n-------------------------------------\n[Merger]:\n15:54:22: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:54:22: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:54:22: Start to tokenize.\n\n15:54:22: Finish tokenizing.\n\n15:54:22: Start embedding inference.\n\n15:54:23: Finish embedding.\n\n15:54:23: Done\n\n15:54:23 [DOC Engine]:\nStart to index...\n15:54:23 Indexing done (0.05s). Task done (435.46s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 4,
+        "pages_total_log": 4,
+        "sections": 212
+      }
+    },
+    {
+      "doc_id": "246e80769ba111f1b417bf081885db4b",
+      "name": "ZYYI-女-19岁-特异性性皮炎（AD).pdf",
+      "pages": 11,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126051.105721,
+      "process_begin_at": "2026-08-19T15:39:44",
+      "process_duration": 849.3463,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:48:32: [QwenVL] 5/11 pages done\n\n15:48:34: [QwenVL] 6/11 pages done\n\n15:48:46: [QwenVL] 7/11 pages done\n\n15:48:58: [QwenVL] 8/11 pages done\n\n15:48:58: [QwenVL] 9/11 pages done\n\n15:49:03: [QwenVL] 10/11 pages done\n\n15:49:04: [QwenVL] 11/11 pages done\n\n15:49:04: [QwenVL] Done: 214 sections from 11 pages.\n\n15:49:04: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:49:04: Start SmartSplitter: semantic split + classify.\n\n15:49:04: Loaded 214 OCR bboxes.\n\n15:49:04: Full document: 4251 chars, 214 bboxes.\n\n15:49:04: Calling LLM for semantic splitting...\n\n15:49:13: LLM responded. Parsing segments...\n\n15:49:13: LLM returned 5 segments. Cutting text...\n\n15:49:13: All 5 segments used bbox_id slicing. Saving images...\n\n15:49:13: SmartSplitter done: 5 chunks from 5 LLM segments (all bbox_id). Types: {'OutpatientRecord': 2, 'PrescriptionRecord': 1, 'MedicationRecord': 2}\n\n15:49:13: Done\n\n\n-------------------------------------\n[Router]:\n15:49:13: Routed 5 chunks into 3 groups: {'chunks_Clinical': 2, 'chunks_Prescription': 1, 'chunks_Medication': 2}\n\n15:49:13: Done\n\n\n-------------------------------------\n[LabExam]:\n15:49:15: Start to generate.\n\n15:49:16: Done\n\n\n-------------------------------------\n[Imaging]:\n15:49:16: Start to generate.\n\n15:49:17: Done\n\n\n-------------------------------------\n[Clinical]:\n15:49:17: Start to generate.\n\n15:50:41: [Extractor] 1/2 chunks done\n\n15:50:51: [Extractor] 2/2 chunks done\n\n15:50:51: Done\n\n\n-------------------------------------\n[Medication]:\n15:50:51: Start to generate.\n\n15:52:54: [Extractor] 1/2 chunks done\n\n15:52:56: [Extractor] 2/2 chunks done\n\n15:52:56: Done\n\n\n-------------------------------------\n[Prescription]:\n15:52:56: Start to generate.\n\n15:53:47: [Extractor] 1/1 chunks done\n\n15:53:47: Done\n\n\n-------------------------------------\n[Discharge]:\n15:53:47: Start to generate.\n\n15:53:48: Done\n\n\n-------------------------------------\n[Admission]:\n15:53:48: Start to generate.\n\n15:53:49: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:53:49: Start to generate.\n\n15:53:50: Done\n\n\n-------------------------------------\n[Admission]:\n15:53:50: Start to generate.\n\n15:53:51: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:53:51: Start to generate.\n\n15:53:52: Done\n\n\n-------------------------------------\n[Merger]:\n15:53:52: Merged 5 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 2, 'Extractor:Medication': 2, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:53:52: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:53:52: Start to tokenize.\n\n15:53:52: Finish tokenizing.\n\n15:53:52: Start embedding inference.\n\n15:53:52: Finish embedding.\n\n15:53:52: Done\n\n15:53:53 [DOC Engine]:\nStart to index...\n15:53:53 Indexing done (0.14s). Task done (398.28s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 11,
+        "pages_total_log": 11,
+        "sections": 214
+      }
+    },
+    {
+      "doc_id": "2611acfa9ba111f1b417bf081885db4b",
+      "name": "LLYU-女-37岁-哮喘.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125907.3875039,
+      "process_begin_at": "2026-08-19T15:39:47",
+      "process_duration": 705.5846,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:48:47 Task has been received.\n\n-------------------------------------\n[File]:\n15:48:47: File fetched.\n\n15:48:47: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n15:48:47: Start to work on a PDF.\n\n15:48:47: [QwenVL] Processing 1 pages...\n\n15:50:02: [QwenVL] 1/1 pages done\n\n15:50:02: [QwenVL] Done: 34 sections from 1 pages.\n\n15:50:02: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:50:02: Start SmartSplitter: semantic split + classify.\n\n15:50:02: Loaded 34 OCR bboxes.\n\n15:50:02: Full document: 860 chars, 34 bboxes.\n\n15:50:02: Calling LLM for semantic splitting...\n\n15:50:05: LLM responded. Parsing segments...\n\n15:50:05: LLM returned 1 segments. Cutting text...\n\n15:50:05: All 1 segments used bbox_id slicing. Saving images...\n\n15:50:05: SmartSplitter done: 1 chunks from 1 LLM segments (all bbox_id). Types: {'OutpatientRecord': 1}\n\n15:50:05: Done\n\n\n-------------------------------------\n[Router]:\n15:50:05: Routed 1 chunks into 1 groups: {'chunks_Clinical': 1}\n\n15:50:05: Done\n\n\n-------------------------------------\n[LabExam]:\n15:50:05: Start to generate.\n\n15:50:06: Done\n\n\n-------------------------------------\n[Imaging]:\n15:50:06: Start to generate.\n\n15:50:06: Done\n\n\n-------------------------------------\n[Clinical]:\n15:50:06: Start to generate.\n\n15:51:27: [Extractor] 1/1 chunks done\n\n15:51:27: Done\n\n\n-------------------------------------\n[Medication]:\n15:51:27: Start to generate.\n\n15:51:28: Done\n\n\n-------------------------------------\n[Prescription]:\n15:51:28: Start to generate.\n\n15:51:28: Done\n\n\n-------------------------------------\n[Discharge]:\n15:51:28: Start to generate.\n\n15:51:29: Done\n\n\n-------------------------------------\n[Admission]:\n15:51:29: Start to generate.\n\n15:51:29: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:51:29: Start to generate.\n\n15:51:30: Done\n\n\n-------------------------------------\n[Admission]:\n15:51:30: Start to generate.\n\n15:51:31: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:51:31: Start to generate.\n\n15:51:31: Done\n\n\n-------------------------------------\n[Merger]:\n15:51:31: Merged 1 chunks from 10 sources: {'Extractor:LabExam': 1, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 1, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 1, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 9 noise chunks)\n\n15:51:31: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:51:31: Start to tokenize.\n\n15:51:32: Finish tokenizing.\n\n15:51:32: Start embedding inference.\n\n15:51:32: Finish embedding.\n\n15:51:32: Done\n\n15:51:32 [DOC Engine]:\nStart to index...\n15:51:32 Indexing done (0.04s). Task done (165.12s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 1,
+        "pages_total_log": 1,
+        "sections": 34
+      }
+    },
+    {
+      "doc_id": "27d6eeec9ba111f1b417bf081885db4b",
+      "name": "XSJU-男-60岁-肺癌.pdf",
+      "pages": 12,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126277.0563798,
+      "process_begin_at": "2026-08-19T15:39:50",
+      "process_duration": 1079.2888,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      },
+      "progress_msg": "\n15:53:16: [QwenVL] 12/12 pages done\n\n15:53:16: [QwenVL] Done: 299 sections from 12 pages.\n\n15:53:16: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n15:53:16: Start SmartSplitter: semantic split + classify.\n\n15:53:16: Loaded 299 OCR bboxes.\n\n15:53:16: Full document: 11736 chars, 299 bboxes.\n\n15:53:16: Calling LLM for semantic splitting...\n\n15:53:30: LLM responded. Parsing segments...\n\n15:53:30: LLM returned 11 segments. Cutting text...\n\n15:53:30: All 11 segments used bbox_id slicing. Saving images...\n\n15:53:30: SmartSplitter done: 11 chunks from 11 LLM segments (all bbox_id). Types: {'DischargeRecord': 2, 'ExaminationReport': 5, 'LabReport': 4}\n\n15:53:30: Done\n\n\n-------------------------------------\n[Router]:\n15:53:30: Routed 11 chunks into 3 groups: {'chunks_Discharge': 2, 'chunks_Examination': 5, 'chunks_LabExam': 4}\n\n15:53:30: Done\n\n\n-------------------------------------\n[LabExam]:\n15:53:30: Start to generate.\n\n15:54:03: [Extractor] 1/4 chunks done\n\n15:54:12: [Extractor] 2/4 chunks done\n\n15:54:21: [Extractor] 3/4 chunks done\n\n15:54:32: [Extractor] 4/4 chunks done\n\n15:54:32: Done\n\n\n-------------------------------------\n[Imaging]:\n15:54:32: Start to generate.\n\n15:54:33: Done\n\n\n-------------------------------------\n[Clinical]:\n15:54:33: Start to generate.\n\n15:54:33: Done\n\n\n-------------------------------------\n[Medication]:\n15:54:33: Start to generate.\n\n15:54:34: Done\n\n\n-------------------------------------\n[Prescription]:\n15:54:34: Start to generate.\n\n15:54:34: Done\n\n\n-------------------------------------\n[Discharge]:\n15:54:35: Start to generate.\n\n15:55:53: [Extractor] 1/2 chunks done\n\n15:56:55: [Extractor] 2/2 chunks done\n\n15:56:55: Done\n\n\n-------------------------------------\n[Admission]:\n15:56:55: Start to generate.\n\n15:56:55: Done\n\n\n-------------------------------------\n[ExaminationReport]:\n15:56:55: Start to generate.\n\n15:57:22: [Extractor] 1/5 chunks done\n\n15:57:37: [Extractor] 2/5 chunks done\n\n15:57:38: [Extractor] 3/5 chunks done\n\n15:57:41: [Extractor] 4/5 chunks done\n\n15:57:46: [Extractor] 5/5 chunks done\n\n15:57:46: Done\n\n\n-------------------------------------\n[Admission]:\n15:57:46: Start to generate.\n\n15:57:47: Done\n\n\n-------------------------------------\n[MedicalOrder]:\n15:57:47: Start to generate.\n\n15:57:47: Done\n\n\n-------------------------------------\n[Merger]:\n15:57:47: Merged 11 chunks from 10 sources: {'Extractor:LabExam': 4, 'Extractor:Imaging': 1, 'Extractor:Clinical': 1, 'Extractor:Medication': 1, 'Extractor:Prescription': 1, 'Extractor:Discharge': 2, 'Extractor:Admission': 1, 'Extractor:ExaminationReport': 5, 'Extractor:Progress': 1, 'Extractor:MedicalOrder': 1} (filtered 7 noise chunks)\n\n15:57:47: Done\n\n\n-------------------------------------\n[Tokenizer_0]:\n15:57:47: Start to tokenize.\n\n15:57:47: Finish tokenizing.\n\n15:57:47: Start embedding inference.\n\n15:57:48: Finish embedding.\n\n15:57:48: Done\n\n15:57:48 [DOC Engine]:\nStart to index...\n15:57:49 Indexing done (0.16s). Task done (517.75s)",
+      "vlm2": {
+        "err_lines": 0,
+        "pages_done_max": 12,
+        "pages_total_log": 12,
+        "sections": 299
+      }
+    }
+  ]
+}

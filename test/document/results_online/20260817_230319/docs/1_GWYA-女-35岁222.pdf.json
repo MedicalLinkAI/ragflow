@@ -1,0 +1,92 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "1_GWYA-女-35岁222.pdf",
+    "size_kb": 1177.0,
+    "pages": null,
+    "doc_id": "bb8ca2d096c911f19d3ab1cda0a97c3d",
+    "patient_id": "PAT-14ce737df060"
+  },
+  "doc_id": "bb8ca2d096c911f19d3ab1cda0a97c3d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": false,
+  "process_duration": 171.55368,
+  "begin_at": "2026-08-17T23:39:48",
+  "end_at": "2026-08-17T23:42:44",
+  "elapsed_s": 176.0,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 4
+  },
+  "chunks": [
+    {
+      "chunk_id": "6a16f9629c2519ee",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 100,
+      "content": "长葛市华健医院\n入院记录\n姓名\n科室：呼吸内科\n床\n住院\n姓名\n性别：女\n年龄：34岁\n床号\n住院号\n职业：农民\n民族：汉\n婚姻：已婚\n身份证\n籍贯：河南省许昌市\n联系\n住址\n入院时间：2024-02-14 11:14\n工作单位\n病历采集时间：2024-02-14 11:27\n联系人\n与患者关系：本人\n联系电话：1515\n病史陈述人：本人及家属\n过敏史：布洛芬、青霉素\n呼吸内科 第(4)次住院\n主诉：间断咳嗽、咳痰伴胸闷8年余，加重伴发热5天。\n现病史：8余年前受凉后出现咳嗽、咳痰，咳嗽呈间断性，不剧烈，咳痰初期为黄痰，后\n期白粘痰，量较大，可咳出，遇冷及刺激性气味咳嗽加重，伴有气喘，闻刺激性"
+    },
+    {
+      "chunk_id": "ab07d730ccc1fa36",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 19,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门诊)\n科别: 内 25年12月20日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛老线\nR P:\n本地奈德福莫特罗吸入剂160ug×60μx3\nSy: 320ug 吸入每天二次\n华健医院\n收费专用章\n4110820322963\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    },
+    {
+      "chunk_id": "abc69bb8f8356738",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 21,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门诊)\n科别: 内 26年 1月 24日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 陈志成\nRp:\n布地奈德福莫特罗粉吸入剂 160ug×60s×2支\n甲泼尼龙片\nSy: 320ug 吸入 每天二次\n4mg×24片×1盒\nSy: 8mg 吸入 每天二次\n华健医院\n收费专用章\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    },
+    {
+      "chunk_id": "d68c163f3c06bd79",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 19,
+      "content": "长葛市华健医院处方笺\n(原创伤医院)\n姓名:\n性别: 男 女 年龄: 35 住院(门\n科别: 内 26年2月20日 费别: 自 职 农\n临床诊断: 支气管哮喘\n床号/地址 长葛市志诚\nR P:\n布地奈德福莫特罗吸入剂160ug×60μx7支\nSy: 320ug吸入每天二次\n长葛华健医院\n收费专用章\n1082032205\n医师\n审核:\n核对:\n调配:\n发药:\n药费:"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "23:39:49: File fetched.\n\n23:39:49: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n23:39:49: Start to work on a PDF.\n\n23:39:52: [QwenVL] Processing 5 pages...\n\n23:40:15: [QwenVL] 1/5 pages done\n\n23:40:15: [QwenVL] 2/5 pages done\n\n23:40:25: [QwenVL] 3/5 pages done\n\n23:4"
+}

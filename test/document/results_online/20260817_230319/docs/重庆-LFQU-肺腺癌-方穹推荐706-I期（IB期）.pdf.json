@@ -1,0 +1,182 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "重庆-LFQU-肺腺癌-方穹推荐706-I期（IB期）.pdf",
+    "size_kb": 6214.6,
+    "pages": null,
+    "doc_id": "82ffa866837f11f1af97e3985ba7f8da",
+    "patient_id": "PAT-54737e72342b"
+  },
+  "doc_id": "82ffa866837f11f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 12,
+  "orm_synced": true,
+  "process_duration": 526.5118,
+  "begin_at": "2026-08-18T00:28:51",
+  "end_at": "2026-08-18T00:37:39",
+  "elapsed_s": 528.5,
+  "before": {
+    "chunk_count": 12,
+    "run": "DONE",
+    "type_counts": {
+      "ProgressNote": 3,
+      "LabReport": 5,
+      "AdmissionRecord": 1,
+      "ExaminationReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "a573dcfbade2fc20",
+      "pages": [
+        1,
+        2
+      ],
+      "page_count_raw": 48,
+      "content": "2026年02月18日\n姓名：\n性别：(男)\n年龄：(65岁)\n籍贯：(长寿)\n民族：(汉族)\n婚姻：(已婚)\n主诉：(临床诊断肺癌1+月，胸痛、纳差10天)。\n现病史：患者于1+月前因咳嗽、咳痰伴气喘于我科住院行胸部CT检查提示“右肺下叶背段见一软组织密度团块影，大小约43.1mm×32.5mm，表征：分叶、毛刺、不规则，邻近叶间裂稍增厚粘连，提示肿瘤？”，患者拒绝进一步活检明确诊断，出院诊断考虑：1、右肺恶性肿瘤伴左肺、纵隔及肺门淋巴结、双侧肾上腺、盆腔骶前转移（临床诊断）T2NxM1c [VB期 2、慢性阻塞性肺病，院外未行特殊治疗，\n腹部疼痛，伴纳差、乏力、轻倚咳嗽，10天前患者无明显"
+    },
+    {
+      "chunk_id": "0339733d57266a1d",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 17,
+      "content": "首次病程：\n2026年02月18日 13时25分10秒\n姓名：[李福泉] ，性别：（男），年龄：（65岁）岁，因“[临床诊断肺癌1+月，胸痛、纳差10天]”于[2026年02月18日 09时57分] 收入[呼吸与危重症医学科]\nI\n一、病例特点：\n1.老年男性，病程1+月，起病隐匿；\n2.患者1+月前因咳嗽、咳痰伴气喘行胸部CT检查提示“右肺下叶背段见一软组织密度团块影，大小约43.1mm × 32.5mm，表征：分叶、毛刺、不规则，邻近叶间裂稍增厚粘连，提示肿瘤性病变，肺癌？”，患者\n进一步活检明确诊断，出院诊断考虑：1、右肺恶性肿瘤伴左肺、纵隔及肺门淋巴结、双侧肾上腺、盆腔骶前转移（临床诊"
+    },
+    {
+      "chunk_id": "d67c05d5ca925715",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 26,
+      "content": "2025年12月22日 15时29分57秒\n姓名：[李福泉]，性别：(男)，年龄：(65岁)，因“咳嗽、咳痰伴气喘1+月。]”于(2025年12月22日 14时37分)收入[呼吸与危重症医学科]\n一、病例特点：\n1.老年男性，病程长，起病隐匿；\n2.现病史：患者于1+月前无明显诱因开始出现咳嗽，咳少许白色泡沫痰，伴活动后气喘，休息可缓解，不伴胸痛、咯血，院外未行特殊治疗，今日门诊完善胸部CT后以“肺部阴影”收入院。\n3.既往史：吸烟史多年。\n4.入院查体：体温 36.9℃，脉搏 58次/分，呼吸 18次/分，血压 129/66mHg。神志清楚，口唇无发绀，颈软，无抵抗。桶状胸，叩呈过清音，双肺"
+    },
+    {
+      "chunk_id": "2717c1f9b38d23cb",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 3,
+      "content": "2025年12月23日 10时30分14秒 彭雷王治医师查房记录\n今日查房主治医师查房 听取病史汇报及查看患者后体格下，老年男性 住院V 住院病历。现病史 患者于：因肺下叶背段见一软组织密度团块影 小气道功能障碍 肺功能检查结果 体重可保持 了伴胸痛\n扫描全能王 创建"
+    },
+    {
+      "chunk_id": "07b1ad456c7872fd",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 21,
+      "content": "病理诊断报告单\n性别：男\n年龄：66岁\n送检日期：2026-02-24\n门诊号：\n住院号：279852\n床号：10\n申请科室：呼吸与危重\n临床诊断：慢性阻塞性肺病肺恶性肿瘤\n送检材料：右肺下叶活检\n大体所见：\n灰白色线状组织2条，长1.5-1.8cm，直径均0.1cm，全送一盒。\n镜检所见：\nTTFl\n病理诊断：\n补充诊断：\n（右肺下叶穿刺活检）非小细胞癌，结合免疫组化结果，考虑肺腺癌。\n免疫组化结果[1]：TTFl(+)；CK7(+)；NapsinA(-)；Ki-67(+，约30%)；CD56(-)；CgA(-)\n）；P40(-)；P63(-)；Pax-8(-)；Syn(-)；CDX2(-)"
+    },
+    {
+      "chunk_id": "b83f530652607791",
+      "pages": [
+        5,
+        6
+      ],
+      "page_count_raw": 32,
+      "content": "姓名：\n性别：男\n年龄：\n申请单号：\n科别：呼吸与危重症医学科\n住院号：279852\n床号：10\n临床诊断：慢性阻塞性肺病,肺恶性\n备\n注：\n检查部位及方法：CT检查(胸部CT增强扫描【胸部】，临床操作的CT引导，一次性使用留置针（增强用），管路系统CT)\n检查所见：\n结合2025-12-23CT：\n1.右肺下叶背段软组织密度团块影穿刺后，周围见斑片状渗\n出，右侧胸膜腔新见微量积气；肿块形态及大小较前变化不\n大，目前大小约为44.6mm×30.72mm。\n2.左肺上叶前段见一实性结节，大小约20.2mm×17.9mm，\n表征：分叶、毛刺、胸膜凹陷，较前略增大，增强显示轻度强\n化；左肺上叶下舌段"
+    },
+    {
+      "chunk_id": "2dcd65fd17884eb5",
+      "pages": [
+        12
+      ],
+      "page_count_raw": 55,
+      "content": "肺功能综合检查报告\n姓名：\n测试号：2026031831-1\n性别：男\n体重：55 kg\n住址：\n床号：肿瘤门诊\n门诊/住院号：A002299160\n出生日期：1960/2/22\n身高：167 cm\n年龄：66 岁\n电话：\n通气功能\n实测值 预计值 实/预%\nVC MAX 4.08 3.69 110.7\nFVC 4.08 3.56 114.6\nFEV 1 2.79 2.78 100.5\nFEV1%M 68.39 75.33 90.8\nFEV1%F 68.39 83.69 81.7\nFEV6 4.02\nFEV*30 83.75 107.48 77.9\nMVV 87.15 107.48 81.1\n"
+    },
+    {
+      "chunk_id": "411bb0a808699592",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 21,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>None</td><td>24.8</td><td>U/L</td><td>9-50</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>None</td><td>21.8</td><td>U/L</td><td>15-40</td><td>False</td></tr><tr><td>碱性磷酸酶</td><td>None</td><td>121.8</td><td>U/L</td><td>45-125</td><td>False</td></tr><tr><td>γ-谷酰转移酶</"
+    },
+    {
+      "chunk_id": "f579a86670f733f5",
+      "pages": [
+        10,
+        11
+      ],
+      "page_count_raw": 49,
+      "content": "<table><tr><td>EGFR L858R</td><td>None</td><td>未检出</td><td>None</td><td>None</td><td>False</td></tr><tr><td>EGFR 19号外显子缺失突变(19 del)</td><td>None</td><td>未检出</td><td>None</td><td>None</td><td>False</td></tr><tr><td>EGFR G719</td><td>None</td><td>未检出</td><td>None</td><td>None</td><td>False</td></tr><t"
+    },
+    {
+      "chunk_id": "a5de940723fd3b25",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞</td><td>None</td><td>6.89</td><td>*10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>红细胞</td><td>None</td><td>3.66</td><td>*10^12/L</td><td>4.3-5.8</td><td>True</td></tr><tr><td>血红蛋白</td><td>None</td><td>113</td><td>g/L</td><td>130.0-175.0</td><td>True</td></tr><tr><td>红细胞比容</"
+    },
+    {
+      "chunk_id": "ba2b70fb18baf8e1",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 8,
+      "content": "<table><tr><td>凝血酶原时间测定</td><td>None</td><td>11.77</td><td>秒</td><td>9.4-13.8</td><td>False</td></tr><tr><td>凝血酶原活度</td><td>None</td><td>96</td><td>%</td><td>70.0-185.0</td><td>False</td></tr><tr><td>凝血酶原比值</td><td>None</td><td>1.03</td><td>None</td><td>0.5-1.6</td><td>False</td></tr><tr><td>国际标准化比值"
+    },
+    {
+      "chunk_id": "4cd92ce791d2e68b",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>丙型肝炎抗体</td><td>None</td><td>0.10(-)</td><td>S/CO</td><td>0~1 S/CO</td><td>False</td></tr><tr><td>梅毒螺旋体抗体</td><td>None</td><td>0.04(-)</td><td>COI</td><td>0~1 COI</td><td>False</td></tr><tr><td>乙肝表面抗原</td><td>None</td><td>0.00(-)</td><td>IU/mL</td><td>0~0.05 IU/mL</td><td>False</td></t"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "page_sum": 16,
+    "check": {
+      "covered": 12,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "ProgressNote": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n00:29:44: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n00:29:44: Start SmartSplitter: semantic split + classify.\n\n00:29:44: Loaded 429 OCR bboxes.\n\n00:29:44: Full document: 15402 chars, 429 bboxes.\n\n00:29:44: Calling LLM for semantic splitting...\n\n00:30:42: LLM responded. P"
+}

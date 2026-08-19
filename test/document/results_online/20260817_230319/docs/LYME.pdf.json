@@ -1,0 +1,184 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LYME.pdf",
+    "size_kb": 2679.1,
+    "pages": null,
+    "doc_id": "74df3e7878f211f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-ba9819c3a83a"
+  },
+  "doc_id": "74df3e7878f211f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 14,
+  "orm_synced": true,
+  "process_duration": 210.05956,
+  "begin_at": "2026-08-18T02:14:48",
+  "end_at": "2026-08-18T02:18:21",
+  "elapsed_s": 212.5,
+  "before": {
+    "chunk_count": 12,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "LabReport": 8,
+      "ExaminationReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "2c2a0dac819992f3",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 25,
+      "content": "营口方大医院有限公司\n病理报告单\n病理号:\n姓名:\n住院\n5024\n年龄: 54岁\n性别: 女\n申请科室:\n申请医生:\n送检医院:\n送检时间: 2026.3.11\n镜下所见:\n大体所见:\n条形碎组织0.5*0.5*0.1cm。\n病理诊断:\n（肺占位穿刺活检）结合免疫组化符合腺癌，考虑肠型分化，请结合临床除外转移\n性，必要时上级医院会诊;\n免疫组化结果:\nCK7(-)、CK20(+)、TTF-1(-)、CDX-2(+)、Ki-67(70%)、Her-2(3+)、\nMLH1、PMS2、MSH2、MSH6均+，符合pMMR。\n报告医生: 戴云峰\n审核医生: 韩\n本报告仅供临床参考，不做证明材料!\n报"
+    },
+    {
+      "chunk_id": "008a98492545d7bc",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 47,
+      "content": "营口方大医院\n核医学科 PET/CT 报告单\n检查号:\n姓名:\n性别: 女\n年龄: 54\n门诊/住院号: 10、935\n显像剂: ¹⁸F-FDG\n剂量: 7.88mCi\n申请科室: 21.\n老年病门诊 检查项目: PET/CT(全身)\n临床诊断: 肺占位性病变\n检查日期: 2026-03-27\n检查所见:\n禁食6小时以上，测定空腹血糖6.0mmol/L，静脉注射显像剂 ¹⁸F-FDG7.88mCi，静卧104分钟后行全身\nPET/CT断层显像，图像同机融合，各部位显像清晰。纵隔血池 SUVmax: 2.13，肝脏本底 SUVmax: 2.33。\n脑显像清晰，各脑叶、纹状体、丘脑FDG呈生理性分"
+    },
+    {
+      "chunk_id": "a8c5b33ccf915e71",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 26,
+      "content": "营口方大医院\n核医学科 PET/CT 报告单\n检查号\n姓名:\n性别: 女\n检查日期: 2026-03-27\n门诊/住院号: m00\n年龄: 54\n显像剂: ¹⁸F-FDG\n剂 量: 7.88mCi\n申请科室: 老年病门诊\n检查项目: PET/CT(全身)\n临床诊断: 肺占位性病变\n诊断意见:\n1、左肺下叶FDG高代谢肿块，结合病理，考虑肺原发恶性肿瘤，远端阻塞性炎症，伴左肺结节转移。\n2、前纵隔多发软组织肿块代谢明显增高，考虑恶性：(1)多发淋巴结转移伴融合及坏死可能性大；(2)原\n发前纵隔恶性肿瘤，淋巴瘤？胸腺癌？请结合病理。\n3、右侧颌下腺增大，FDG代谢增高，考虑生理性摄取，必要时专科检"
+    },
+    {
+      "chunk_id": "fe34cf86b27ea245",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 26,
+      "content": "营口方大医院\n复诊记录\nM000747\n介入科(肿瘤方向)/老年病\n日期选择:\n2026-03-09 09:49:2\n病情描述:\n咳嗽2月,白痰,难咔出,自服多种药物症状缓解不明显,来诊。肺CT:左肺下叶外基底段\n(IM122)见约3.2×4.0cm分叶、毛刺样软组织密度团块影,周围见片状影;左肺上叶上舌\n段(IM106)见约8×9mm结节。肺门影不大,气管及各支气管通畅。\n纵隔窗:胸廓对称,胸壁光滑。前纵隔多发形态不规则、密度不均匀结节,较大者约3×\n5cm。心脏及大血管未见异常。\n影像诊断:左肺下叶占位性病变,伴阻塞性炎症,请结合临床,必要时进一步检查。\n左肺小结节,性质待定。\n前纵隔多发"
+    },
+    {
+      "chunk_id": "9cc0ecce09110568",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 22,
+      "content": "\\begin{tabular}{lllllllll}\n报告时间: 2026-03-14\n\\hline\n\\multicolumn{1}{c}{\\textbf{1}} & \\multicolumn{1}{c}{\\textbf{2}} & \\multicolumn{1}{c}{\\textbf{3}} & \\multicolumn{1}{c}{\\textbf{4}} & \\multicolumn{1}{c}{\\textbf{5}} & \\multicolumn{1}{c}{\\textbf{6}} & \\multicolumn{1}{c}{\\textbf{7}} & \\multicolumn{1}{c}"
+    },
+    {
+      "chunk_id": "a5d427a7c847ee03",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 18,
+      "content": "\\begin{tabular}{ccccccll}\n报告时间: 2026-03-14\n\\hline\n1 & 血细胞分析+C反应蛋白 & 2026-03-10 10:34 & 2026-03-10 10:43 & 静脉血 & 住院 & 10057741 \\\\\n2 & D-二聚体+凝血四项 & 2026-03-10 10:33 & 2026-03-10 11:05 & 抗凝全血 & 住院 & 10057741 \\\\\n3 & 血型鉴定 & 2026-03-10 10:34 & 2026-03-10 11:17 & 静脉血 & 住院 & 10057741 \\\\\n4 & 肝功能八项^肾功三项^电解质四项"
+    },
+    {
+      "chunk_id": "ca800fb9afe139f9",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>6.14</td><td>10^9/L</td><td>3.5--9.5</td><td>False</td></tr><tr><td>中性粒细胞比率</td><td>NEUT%</td><td>65.6</td><td>%</td><td>40--75</td><td>False</td></tr><tr><td>淋巴细胞比率</td><td>LYMPH%</td><td>25.4</td><td>%</td><td>20--50</td><td>False</td></tr><tr><td>单核细胞比率</td>"
+    },
+    {
+      "chunk_id": "659622dad88531ac",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>谷丙转氨酶</td><td>ALT</td><td>29</td><td>U/L</td><td>7~40</td><td>False</td></tr><tr><td>谷草转氨酶</td><td>AST</td><td>42</td><td>U/L</td><td>13~35</td><td>True</td></tr><tr><td>AST/ALT</td><td>AST/ALT</td><td>1.45</td><td>None</td><td>None</td><td>False</td></tr><tr><td>总蛋白</td><td>TP</td><t"
+    },
+    {
+      "chunk_id": "f64c69bb4b2b5bd8",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>癌胚抗原</td><td>CEA</td><td>>1000</td><td>None</td><td>None</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "8ff59d825f2f5421",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>人类免疫缺陷病毒抗体</td><td>HIV</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr><tr><td>乙型肝炎表面抗原</td><td>HBsAg</td><td>阴性</td><td>None</td><td>阴性</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "093a544c075282bd",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>神经元特异性烯醇化酶</td><td>NSE</td><td>13.2</td><td>ng/mL</td><td>0~15.7</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "111f1b1918a4adf6",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>胚胎抗原125</td><td>CA125</td><td>7.83</td><td>U/mL</td><td>0-35</td><td>False</td></tr><tr><td>胚胎抗原199</td><td>CA199</td><td>34.8</td><td>U/mL</td><td>0-28</td><td>True</td></tr><tr><td>细胞角蛋白19片段</td><td>CYFRA21-1</td><td>4.49</td><td>ng/mL</td><td>0-3.3</td><td>True</td></tr><tr><td>糖链抗"
+    },
+    {
+      "chunk_id": "83770c4af2ea7720",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>尿胆原</td><td>UBG</td><td>Normal</td><td>umol/L</td><td>正常</td><td>False</td></tr><tr><td>胆红素</td><td>BIL</td><td>Neg</td><td>umol/L</td><td>正常</td><td>False</td></tr><tr><td>酮体</td><td>KET</td><td>Neg</td><td>mmol/L</td><td>正常</td><td>False</td></tr><tr><td>隐血</td><td>BLD</td><td>Neg</"
+    },
+    {
+      "chunk_id": "973980a55ddeb727",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>癌胚抗原测定</td><td>CEA</td><td>1159</td><td>ng/mL</td><td>0-5.093</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 14,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 10,
+      "clinical": 8,
+      "match": false
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "[SmartSplitter:MedLink]:\n02:15:52: Start SmartSplitter: semantic split + classify.\n\n02:15:52: Loaded 339 OCR bboxes.\n\n02:15:52: Full document: 16067 chars, 339 bboxes.\n\n02:15:52: Calling LLM for semantic splitting...\n\n02:16:13: LLM responded. Parsing segments...\n\n02:16:13: LLM returned 14 segments. "
+}

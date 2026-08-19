@@ -1,0 +1,26 @@
+{
+  "source": "RRUU-男-23岁-哮喘(1).pdf",
+  "levels": [
+    32
+  ],
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "max_capacity_n": 32,
+  "rounds": [
+    {
+      "n": 32,
+      "makespan_min": 12.98,
+      "done": 32,
+      "total": 32,
+      "starts": 576,
+      "timeouts": 0,
+      "rate": 0.0,
+      "passed": true,
+      "reason": "通过",
+      "window": [
+        "2026-08-18 14:56",
+        "2026-08-18 15:10"
+      ]
+    }
+  ]
+}

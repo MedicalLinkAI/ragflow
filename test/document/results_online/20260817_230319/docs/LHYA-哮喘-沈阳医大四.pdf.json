@@ -1,0 +1,122 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LHYA-哮喘-沈阳医大四.pdf",
+    "size_kb": 4483.0,
+    "pages": null,
+    "doc_id": "a57842ea96d011f19d3ab1cda0a97c3d",
+    "patient_id": "PAT-71c1148a66a0"
+  },
+  "doc_id": "a57842ea96d011f19d3ab1cda0a97c3d",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 180.26682,
+  "begin_at": "2026-08-17T23:31:56",
+  "end_at": "2026-08-17T23:34:58",
+  "elapsed_s": 182.1,
+  "before": null,
+  "baseline": {
+    "dir": "20260814_095003",
+    "chunks": 7
+  },
+  "chunks": [
+    {
+      "chunk_id": "a9592912a0b4655f",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 24,
+      "content": "四平市中心人民医院\n门诊诊断书\n0003316\n(患者保管)\nSPZXYy-JLLC-042\n姓名\n性别\n女\n年龄\n54岁\n单位\n诊断\n支气管哮喘\n病情诊断摘要依据\n发作性喘息30余年，双肺干\n啰音，诊断支气管哮喘\n医生处理意见\n1.平喘治疗\n2.随访\n医生签字：\n门诊部负责人签字：\n科主任签字：\n门诊部盖章：2023年12月27日\n(无公章和医生章无效)"
+    },
+    {
+      "chunk_id": "88a1b1affa72233f",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 31,
+      "content": "四平市中医医院\n门诊病历\n初诊\n2025年11月26日\n肾病糖尿病科\n姓名\n性别 女性\n年龄 55岁\n门诊号码 202511260272 (1)\n发病日期 2025-11-26\n类别 自费\n保险卡号\n就诊方式 便民门诊费\n医生 王亚新\n联系地址 四平铁西\n联系电话 13689710485\n身份证号\n职业\n体温 36.5 ℃ 血压 130、80 mmHg 脉搏 70 次/分\n药物过敏史 无\n主诉: 自述糖尿病4年，支气管哮喘30余年\n病史: 糖尿病4年，尿中有沫。伴双下肢水肿+。现二甲双胍片，0.5，日3次，口服。血糖控制不佳。葡萄糖：12.39mmol/l.，糖化：\n10.1%，一周前感冒山现"
+    },
+    {
+      "chunk_id": "d1018e4eeb133398",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 29,
+      "content": "四平市中医医院\n内二疗区\n门诊病历\n初诊\n2025年12月31日\n姓名\n性别：女性\n年龄：55岁\n门诊号码：202512310183\n（1）\n发病日期：2025-12-31\n类别：自费\n保险卡号\n就诊方式：服务号\n医生：张楷婷\n联系地址：吉林省四平市\n联系电话：13689710485\n身份证号：220303197009242283\n职业：\n体温 36.4 ℃ 血压 120/78 mmHg 脉搏 66 次/分\n药物过敏史：否\n主诉：发现血糖升高4年\n病史：发现血糖升高4年，现二甲双胍片0.5g日3次口服控制血糖。测空腹血糖11.41mmol/L，糖化血红蛋白8.9%，尿糖3+。\n临床诊断：2型糖"
+    },
+    {
+      "chunk_id": "fc6e0da8c56418a6",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 117,
+      "content": "四平市中心人民医院\n常规通气+舒张试验\n姓名：\n年龄：53岁\n住院号：111630435\n身高：168 cm\n性别：女\n吸烟史：\n测试号：20231227014\n体重：82 kg\nFlow [L/s]\nF/V ex\nVol [L]\nVol%VCmax\nVCmax\nTime [s]\nF/V in\n测试日期\n测试时间\n预计值\n药前\n前/预%\n药后\n后/预% 改善率 (%)\n23/12/27\n15:36:14\n23/12/27\n15:51:45\nMV\n[L/min]\n11.71\n27.39\n233.8\n3.78\n115.4\n7.6\nVC MAX\n[L]\n3.28\n3.52\n107.3\nFVC\n[L]"
+    },
+    {
+      "chunk_id": "4fadddc1ba19d2cb",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 148,
+      "content": "四平市中心人民医院\n常规通气\n姓名：李洪燕\n性别：女\n年龄：53岁\n吸烟史：\n住院号：111630435\n测试号：20231227014\n身高：168cm\n体重：82kg\nFlow [L/s]\nF/V ex\n8\nVol [L]\n10\n6\n5\n0\n1\n2\n3\n4\n5\n6\n7\n8\n1\nVol%VQmax\n100\nVCmax\n80\n60\n40\n20\n0\n0\n1\n2\n3\n4\n5\n6\n7\nTime [s]\nF/V in\n预计值\n实测值\n实/预\n测试日期\n23/12/27\n测试时间\n15:36:14下午\nVT\n[L]\n0.59\n1.51\n258.6\nBF\n[1/min]\n20.00\n18.08\n90.4\n"
+    },
+    {
+      "chunk_id": "dad2f80ec680a9da",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 37,
+      "content": "信康大药房--佳合分店\n单号：250927207100156\n日期：2025-09-27 17:52:20\n会员卡号：13689710485\n姓名：\n积分：37\n总积分：47\n药品名称\n规格\n生产企业/药品上市许可持有人\n产地\n剂型\n批号\n有效期\n数量\n单价\n金额\n12534\n185.00\n沙美特罗替卡松吸入粉雾剂\n50微克/250微克/60泡/盒\n葛兰素史克集团吸入粉雾剂\nJD6K\n2027-06-18\n2盒\n185.00\n370.00\n信康大药房温馨提示：您购买的\n药品需要常温储存(10℃-30℃)\n合计：\n370.00\n实收：\n370.00\n开票员：王影\n营业员：7139\n药品售出无质量"
+    },
+    {
+      "chunk_id": "102142f7614f8a0f",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 37,
+      "content": "信康大药房--佳合分店\n单号：251128207100163\n日期：2025-11-28 16:38:41\n会员卡号：13689710485\n姓名：\n积分：37\n总积分：84\n药品名称\n规格\n生产企业/药品上市许可持有人\n产地\n剂型\n批号\n有效期\n数量\n单价\n金额\n12534\n185.00\n沙美特罗替卡松吸入粉雾剂\n50微克/250微克/60泡/盒\n葛兰素史克集团吸入粉雾剂\nJD6K\n2027-06-18\n2盒\n185.00\n370.00\n信康大药房温馨提示：您购买的\n药品需要常温储存（10℃-30℃）\n合计：\n370.00\n实收：\n370.00\n开票员：张欣\n营业员：7140\n药品售出无质量"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "page_sum": 7,
+    "check": {
+      "covered": 7,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n23:32:10: [QwenVL] 3/7 pages done\n\n23:32:17: [QwenVL] 4/7 pages done\n\n23:32:19: [QwenVL] 5/7 pages done\n\n23:32:19: [QwenVL] 6/7 pages done\n\n23:32:22: [QwenVL] 7/7 pages done\n\n23:32:22: [QwenVL] Done: 423 sections from 7 pages.\n\n23:32:22: Done\n\n\n-------------------------------------\n[SmartSplitter:M"
+}

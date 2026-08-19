@@ -1,0 +1,131 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "HBDE-男-67岁-肺鳞癌初治-辽宁.pdf",
+    "size_kb": 6279.3,
+    "pages": null,
+    "doc_id": "6baa1b5e7b8e11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-69cd07230c1b"
+  },
+  "doc_id": "6baa1b5e7b8e11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 8,
+  "orm_synced": true,
+  "process_duration": 208.04094,
+  "begin_at": "2026-08-18T01:39:20",
+  "end_at": "2026-08-18T01:42:53",
+  "elapsed_s": 212.4,
+  "before": {
+    "chunk_count": 8,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 5,
+      "LabReport": 3
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "32c7aa6298875d37",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 25,
+      "content": "中国医科大学附属第一医院\n病理检查补充报告\n病理号:\n姓名: 男\n性别: 男\n年龄: 67岁\n诊断日期: 2026-03-13\n登记号:\n病案号:\n送检科别: 介入治疗科\n送检日期: 2026-03-10\n临床诊断: 1.肺肿瘤;2.肺占位性病变\n标本信息: 1:肺\n肉眼所见:\n(肺)灰白条形组织长约0.2-1厘米3条全取\n光镜所见:\n病理诊断:\n(肺):免疫组化结果符合鳞状细胞癌\n免疫组化结果:\n蜡块号: B0837506--: CK(pan)(+),p63(+),p40(+),TTF-1(-),CD56(部分+),Ki-6\n7(70%+),NapsinA(-),SMARCA4(+)\n初诊医"
+    },
+    {
+      "chunk_id": "2da929605f5b0051",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 54,
+      "content": "中国医科大学附属第一医院核医学科\nPET/CT 检查报告\nPET/CT 号\n姓名:\n性别: 男\n检查日期: 2026.03.23\n身高: 170.00 cm\n体重: 55.00 kg\n年龄: 67岁\n显像剂: ¹⁸F-FDG\n活度: 7.2 mCi\n血糖: 5.40 mmol/l\n注射部位: 右手背部\n注射时间: 09:16:40\n给药途径: 静脉注射\n检查部位: 体部+头部\n层厚: 3.0mm\n采集方式: 断层采集3D\n临床诊断: 纵隔恶性肿瘤\n衰减校正: √\n检查方法:\n设备型号: uMI 780\n空腹4小时以上, 静脉注射显像剂平静休息后行PET/CT断层显像。PET图像经衰减校正、迭代"
+    },
+    {
+      "chunk_id": "caa9427dcfd1b9fe",
+      "pages": [
+        3,
+        4
+      ],
+      "page_count_raw": 69,
+      "content": "RiMAG\n一脉阳光医学影像\n辽宁HR\n辽宁一脉阳光医学影像诊断中心\n*扫一扫看影像*\nCT检查报告单\n姓名：\n性别：男\n年龄：67岁\n病人编号：\n检查编号：\n门诊号：\n检查日期：2026-03-07\n报告日期：2026-03-07\n巴结转移可能性大，右侧锁骨上窝、左侧锁骨下窝淋巴结转移不除外，请结合\n临床，建议PET-CT检查。\n右肺小叶间隔增厚，癌性淋巴管炎不除外，请结合临床。\n双肺多发微、小结节，部分呈磨玻璃密度，建议随诊复查。\n双肺下叶少许炎症；双肺散在纤维灶。\n右侧胸腔少量积液。\n心包少量积液。主动脉、冠状动脉粥样硬化改变。\n右侧胸壁肩胛下肌前下方脂肪瘤可能性大。\n左侧肾上腺形态增粗"
+    },
+    {
+      "chunk_id": "8fe3fb0b85a144cf",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 32,
+      "content": "辽宁HR\n营口市人民医院\n(营口经济技术开发区中心医院)\n全身CT检查报告单\n微信扫码阅片\n姓名：\n性别：男\n年龄：67岁\n登记号：\n检查号：\n检查日期：2026-03-06\n报告日期：2026-03-06\n病人来源：呼吸内科门诊\nCT检查部位与所见诊断\n胸部CT扫描\n双肺纹理模糊，伴多发模糊淡片条影，肺内见小泡状透亮影，肺内见多发结节，\n较明显者大小约11mm×6mm，位于右肺上叶后段（IM89）。右肺上叶纵隔旁见不规则\n条片样软组织影，较大截面大小约52mm×33mm。双侧肺门大小正常，纵隔居中，纵隔\n内见多发增大淋巴结。心脏及大血管形态如常，心包少许积液，冠脉见高密度影；双\n侧胸腔无积液"
+    },
+    {
+      "chunk_id": "734b07ecd8b52721",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 21,
+      "content": "营口市人民医院(营口经济技术开发区中心医院)\n彩色超声检查图文报告\n姓名：\n性别：男\n年龄：67岁\n仪器型号：\n送检科室：呼吸内科门诊\n检查部位：腹部常规\n门诊号：\n超声所见：\n肝右叶最大斜径约14cm，表面光滑，实质回声细密稍增强，门静脉主干内径1.0cm。\n肝内外胆管未见扩张。\n胆囊大小正常，壁规整，胆囊内未见明确团块状回声。\n脾脏肋间厚约3.3cm，实质回声均匀。\n因气体干扰胰腺显示不清，轮廓清晰，实质回声均匀。\n超声提示：\n肝回声稍增强（请结合临床）\n记录员：张惠\n报告医师：周杰梅\n报告日期：2026-03-06\n此报告仅供本次就诊临床参考，不作其他依据。复诊时请带此报告"
+    },
+    {
+      "chunk_id": "c74cbcdd4fbef7ed",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 23,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>10.44</td><td>10^9/L</td><td>3.5--9.5</td><td>True</td></tr><tr><td>红细胞</td><td>RBC</td><td>4.93</td><td>10^12/L</td><td>4.3--5.8</td><td>False</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>161</td><td>g/L</td><td>130--175</td><td>False</td></tr><tr><td>红细胞压积</td><"
+    },
+    {
+      "chunk_id": "b796de2313792b51",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>总胆红素</td><td>TBil</td><td>14.2</td><td>µmol/L</td><td>0--23</td><td>False</td></tr><tr><td>直接胆红素</td><td>DBil</td><td>5.5</td><td>µmol/L</td><td>0--8</td><td>False</td></tr><tr><td>间接胆红素</td><td>IBil</td><td>8.7</td><td>µmol/L</td><td>1.7--15.2</td><td>False</td></tr><tr><td>总蛋白</td><"
+    },
+    {
+      "chunk_id": "3401cecf8e1738ce",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 13,
+      "content": "<table><tr><td>酸碱度</td><td>None</td><td>5.0</td><td>None</td><td>4.50 - 8.50</td><td>False</td></tr><tr><td>亚硝酸盐</td><td>None</td><td></td><td>None</td><td>None</td><td>False</td></tr><tr><td>葡萄糖</td><td>None</td><td>0</td><td>mmol/L</td><td>0</td><td>False</td></tr><tr><td>蛋白质</td><td>None</td><td>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "page_sum": 9,
+    "check": {
+      "covered": 8,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 5,
+      "clinical": 5,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n01:39:52: [QwenVL] 3/8 pages done\n\n01:39:55: [QwenVL] 4/8 pages done\n\n01:40:00: [QwenVL] 5/8 pages done\n\n01:40:12: [QwenVL] 6/8 pages done\n\n01:40:16: [QwenVL] 7/8 pages done\n\n01:40:43: [QwenVL] 8/8 pages done\n\n01:40:43: [QwenVL] Done: 280 sections from 8 pages.\n\n01:40:43: Done\n\n\n-------------------"
+}

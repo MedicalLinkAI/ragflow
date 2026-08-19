@@ -1,0 +1,609 @@
+{
+  "summary": {
+    "mode": "fresh_upload",
+    "dataset_id": "fb850778372011f195bd2a5fbb884e34",
+    "n_docs": 35,
+    "total_pages": 350,
+    "uploaded": 35,
+    "done": 35,
+    "makespan_poll_s": 1580.3885498046875,
+    "within_30min": true
+  },
+  "results_slim": {
+    "e0e9a92a9ba011f1b417bf081885db4b": {
+      "doc_id": "e0e9a92a9ba011f1b417bf081885db4b",
+      "name": "哮喘-HJCH222   2.27.pdf",
+      "pages": 17,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126728.692426,
+      "process_begin_at": "2026-08-19T15:37:51",
+      "process_duration": 1640.022,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "e5bd4bd29ba011f1b417bf081885db4b": {
+      "doc_id": "e5bd4bd29ba011f1b417bf081885db4b",
+      "name": "ZLME-男-66岁-胃癌.pdf",
+      "pages": 14,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126071.5880525,
+      "process_begin_at": "2026-08-19T15:37:59",
+      "process_duration": 980.37256,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "e794ceee9ba011f1b417bf081885db4b": {
+      "doc_id": "e794ceee9ba011f1b417bf081885db4b",
+      "name": "XLLI-女-42岁-子宫肌瘤.pdf",
+      "pages": 3,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125394.5553944,
+      "process_begin_at": "2026-08-19T15:38:02",
+      "process_duration": 300.04062,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "e9584bf29ba011f1b417bf081885db4b": {
+      "doc_id": "e9584bf29ba011f1b417bf081885db4b",
+      "name": "XQME-女-54岁-非小细胞肺癌.pdf",
+      "pages": 10,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126010.0093732,
+      "process_begin_at": "2026-08-19T15:38:05",
+      "process_duration": 924.8745,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "eb8055c89ba011f1b417bf081885db4b": {
+      "doc_id": "eb8055c89ba011f1b417bf081885db4b",
+      "name": "CHQU-男-49岁-胰腺癌.pdf",
+      "pages": 24,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126749.229083,
+      "process_begin_at": "2026-08-19T15:38:09",
+      "process_duration": 1655.4167,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "ed1e83969ba011f1b417bf081885db4b": {
+      "doc_id": "ed1e83969ba011f1b417bf081885db4b",
+      "name": "CDLI-男-57岁-肺癌.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125230.5161004,
+      "process_begin_at": "2026-08-19T15:38:11",
+      "process_duration": 139.02364,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "f03616669ba011f1b417bf081885db4b": {
+      "doc_id": "f03616669ba011f1b417bf081885db4b",
+      "name": "HCYU-男-81岁-慢性阻塞性肺疾病.pdf",
+      "pages": 18,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126769.744263,
+      "process_begin_at": "2026-08-19T15:38:17",
+      "process_duration": 1654.0476,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "f24b1aa09ba011f1b417bf081885db4b": {
+      "doc_id": "f24b1aa09ba011f1b417bf081885db4b",
+      "name": "QXLI-男-56岁-类风湿关节炎.pdf",
+      "pages": 14,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126010.009365,
+      "process_begin_at": "2026-08-19T15:38:20",
+      "process_duration": 909.7646,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "f4035b649ba011f1b417bf081885db4b": {
+      "doc_id": "f4035b649ba011f1b417bf081885db4b",
+      "name": "WCGA-男-42岁-痛风.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125333.0256932,
+      "process_begin_at": "2026-08-19T15:38:23",
+      "process_duration": 218.10387,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "f5c5c3b09ba011f1b417bf081885db4b": {
+      "doc_id": "f5c5c3b09ba011f1b417bf081885db4b",
+      "name": "LHCH-男-70岁-哮喘.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125292.0471034,
+      "process_begin_at": "2026-08-19T15:38:26",
+      "process_duration": 170.37413,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "f799f6ac9ba011f1b417bf081885db4b": {
+      "doc_id": "f799f6ac9ba011f1b417bf081885db4b",
+      "name": "SYZH-女-61岁-肺癌.pdf",
+      "pages": 15,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125989.429171,
+      "process_begin_at": "2026-08-19T15:38:29",
+      "process_duration": 862.3101,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "f95c33569ba011f1b417bf081885db4b": {
+      "doc_id": "f95c33569ba011f1b417bf081885db4b",
+      "name": "ZHYI-女-48岁-糖尿病.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125230.516095,
+      "process_begin_at": "2026-08-19T15:38:32",
+      "process_duration": 112.97385,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 1,
+        "timeout_kw": 0
+      }
+    },
+    "fb2d578c9ba011f1b417bf081885db4b": {
+      "doc_id": "fb2d578c9ba011f1b417bf081885db4b",
+      "name": "ZXHU-女-69岁-肺癌.pdf",
+      "pages": 7,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125640.7957768,
+      "process_begin_at": "2026-08-19T15:38:35",
+      "process_duration": 519.6358,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "fd198ef89ba011f1b417bf081885db4b": {
+      "doc_id": "fd198ef89ba011f1b417bf081885db4b",
+      "name": "LYHU-男-55岁-食管癌.pdf",
+      "pages": 11,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126092.104933,
+      "process_begin_at": "2026-08-19T15:38:39",
+      "process_duration": 965.0548,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "ff1adcd49ba011f1b417bf081885db4b": {
+      "doc_id": "ff1adcd49ba011f1b417bf081885db4b",
+      "name": "WSYU-女-63岁-糖尿病.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125353.5189972,
+      "process_begin_at": "2026-08-19T15:38:42",
+      "process_duration": 217.7117,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "00e328289ba111f1b417bf081885db4b": {
+      "doc_id": "00e328289ba111f1b417bf081885db4b",
+      "name": "MZMI-女-68岁-乳腺癌.pdf",
+      "pages": 11,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126112.6382065,
+      "process_begin_at": "2026-08-19T15:38:45",
+      "process_duration": 972.79364,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "02a93a8a9ba111f1b417bf081885db4b": {
+      "doc_id": "02a93a8a9ba111f1b417bf081885db4b",
+      "name": "LWXI-男-52岁-甲状腺髓样癌.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125456.045106,
+      "process_begin_at": "2026-08-19T15:38:48",
+      "process_duration": 318.92117,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "047d02ba9ba111f1b417bf081885db4b": {
+      "doc_id": "047d02ba9ba111f1b417bf081885db4b",
+      "name": "QZCU-男-42岁-痛风.pdf",
+      "pages": 4,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125558.5404565,
+      "process_begin_at": "2026-08-19T15:38:51",
+      "process_duration": 416.60684,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "062bc11e9ba111f1b417bf081885db4b": {
+      "doc_id": "062bc11e9ba111f1b417bf081885db4b",
+      "name": "LDBA-男-70岁-转移性骨肿瘤.pdf",
+      "pages": 3,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125763.901995,
+      "process_begin_at": "2026-08-19T15:38:53",
+      "process_duration": 617.63666,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "08f324469ba111f1b417bf081885db4b": {
+      "doc_id": "08f324469ba111f1b417bf081885db4b",
+      "name": "CWCH-女-45岁-特异性性皮炎（AD).pdf",
+      "pages": 9,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125251.0370378,
+      "process_begin_at": "2026-08-19T15:38:58",
+      "process_duration": 108.88947,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 1,
+        "timeout_kw": 0
+      }
+    },
+    "0acb3e349ba111f1b417bf081885db4b": {
+      "doc_id": "0acb3e349ba111f1b417bf081885db4b",
+      "name": "WQFU-男-63岁-哮喘.pdf",
+      "pages": 4,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125743.3133848,
+      "process_begin_at": "2026-08-19T15:39:01",
+      "process_duration": 586.0193,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "0c87055a9ba111f1b417bf081885db4b": {
+      "doc_id": "0c87055a9ba111f1b417bf081885db4b",
+      "name": "YDFE-男-60岁-哮喘.pdf",
+      "pages": 7,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125640.795775,
+      "process_begin_at": "2026-08-19T15:39:04",
+      "process_duration": 483.73492,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "0e4fcce69ba111f1b417bf081885db4b": {
+      "doc_id": "0e4fcce69ba111f1b417bf081885db4b",
+      "name": "QWWE-男-38岁-痛风.pdf",
+      "pages": 5,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125763.901993,
+      "process_begin_at": "2026-08-19T15:39:07",
+      "process_duration": 615.774,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "102693ce9ba111f1b417bf081885db4b": {
+      "doc_id": "102693ce9ba111f1b417bf081885db4b",
+      "name": "ZZHE-女-32岁-结直肠癌.pdf",
+      "pages": 5,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125948.3780775,
+      "process_begin_at": "2026-08-19T15:39:10",
+      "process_duration": 792.02814,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "1204dba69ba111f1b417bf081885db4b": {
+      "doc_id": "1204dba69ba111f1b417bf081885db4b",
+      "name": "WYXI-男-61岁-肺癌.pdf",
+      "pages": 12,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126174.1991568,
+      "process_begin_at": "2026-08-19T15:39:13",
+      "process_duration": 1003.1595,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "151606589ba111f1b417bf081885db4b": {
+      "doc_id": "151606589ba111f1b417bf081885db4b",
+      "name": "KLYY-男-65岁-肺腺癌.pdf",
+      "pages": 26,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126708.097522,
+      "process_begin_at": "2026-08-19T15:39:19",
+      "process_duration": 1533.4075,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "16cf5f4e9ba111f1b417bf081885db4b": {
+      "doc_id": "16cf5f4e9ba111f1b417bf081885db4b",
+      "name": "SUFA-女-65岁-哮喘.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125558.5404532,
+      "process_begin_at": "2026-08-19T15:39:21",
+      "process_duration": 383.85553,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "1a378bc09ba111f1b417bf081885db4b": {
+      "doc_id": "1a378bc09ba111f1b417bf081885db4b",
+      "name": "ZSYA-女-68岁-哮喘.pdf",
+      "pages": 15,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126605.408923,
+      "process_begin_at": "2026-08-19T15:39:27",
+      "process_duration": 1422.6494,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "1bf7bb569ba111f1b417bf081885db4b": {
+      "doc_id": "1bf7bb569ba111f1b417bf081885db4b",
+      "name": "ZXLA-男-57岁-乳腺癌.pdf",
+      "pages": 2,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125640.7957702,
+      "process_begin_at": "2026-08-19T15:39:30",
+      "process_duration": 452.01694,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "1ee031369ba111f1b417bf081885db4b": {
+      "doc_id": "1ee031369ba111f1b417bf081885db4b",
+      "name": "CXJI-男-62岁-胃癌.pdf",
+      "pages": 25,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126461.6932657,
+      "process_begin_at": "2026-08-19T15:39:35",
+      "process_duration": 1281.3314,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "20e7e8e89ba111f1b417bf081885db4b": {
+      "doc_id": "20e7e8e89ba111f1b417bf081885db4b",
+      "name": "GLYI-男-54岁-肾细胞癌.pdf",
+      "pages": 51,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126769.7442605,
+      "process_begin_at": "2026-08-19T15:39:38",
+      "process_duration": 1590.5204,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "22b7df209ba111f1b417bf081885db4b": {
+      "doc_id": "22b7df209ba111f1b417bf081885db4b",
+      "name": "SYRO-男-45岁-黄斑变性.pdf",
+      "pages": 4,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126071.588049,
+      "process_begin_at": "2026-08-19T15:39:41",
+      "process_duration": 882.5822,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "246e80769ba111f1b417bf081885db4b": {
+      "doc_id": "246e80769ba111f1b417bf081885db4b",
+      "name": "ZYYI-女-19岁-特异性性皮炎（AD).pdf",
+      "pages": 11,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126051.105721,
+      "process_begin_at": "2026-08-19T15:39:44",
+      "process_duration": 849.3463,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "2611acfa9ba111f1b417bf081885db4b": {
+      "doc_id": "2611acfa9ba111f1b417bf081885db4b",
+      "name": "LLYU-女-37岁-哮喘.pdf",
+      "pages": 1,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787125907.3875039,
+      "process_begin_at": "2026-08-19T15:39:47",
+      "process_duration": 705.5846,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    },
+    "27d6eeec9ba111f1b417bf081885db4b": {
+      "doc_id": "27d6eeec9ba111f1b417bf081885db4b",
+      "name": "XSJU-男-60岁-肺癌.pdf",
+      "pages": 12,
+      "via": "upload",
+      "final_run": "DONE",
+      "ok": true,
+      "finish_ts": 1787126277.0563798,
+      "process_begin_at": "2026-08-19T15:39:50",
+      "process_duration": 1079.2888,
+      "vlm": {
+        "page_attempts": 0,
+        "failed_lines": 0,
+        "skipping": 0,
+        "timeout_kw": 0
+      }
+    }
+  }
+}

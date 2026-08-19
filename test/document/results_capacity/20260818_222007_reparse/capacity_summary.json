@@ -1,0 +1,205 @@
+{
+  "mode": "reparse-band",
+  "band": "中5-10MB",
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "round": {
+    "band": "中5-10MB",
+    "n": 30,
+    "makespan_min": 34.03,
+    "done": 30,
+    "total": 30,
+    "starts": 846,
+    "timeouts": 12,
+    "rate": 1.399,
+    "passed": false,
+    "reason": "总时长 34.0min 超预算 30.0min",
+    "window": [
+      "2026-08-18 22:20",
+      "2026-08-18 22:55"
+    ],
+    "not_done": {},
+    "docs": [
+      {
+        "name": "麦济WZWA222.pdf",
+        "doc_id": "6d7206c496e411f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "YJXI 68 哮喘 山西(1).pdf",
+        "doc_id": "0c14c48e96df11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "MARO-四川省人民.pdf",
+        "doc_id": "006bbade96da11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LZK 哮喘 广三(1).pdf",
+        "doc_id": "749dd6e696d311f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "lzga-哮喘-沈阳(1).pdf",
+        "doc_id": "c6c7d30096d211f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "HXJ 哮喘 广三.pdf",
+        "doc_id": "8e88044096cf11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "chho-麦济122-哮喘-沈阳-医大四院.pdf",
+        "doc_id": "56be42c296ca11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "lsju-哮喘-沈阳(1).pdf",
+        "doc_id": "a456f64a96bc11f19d3ab1cda0a97c3d",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LIQU高血糖郑州.pdf",
+        "doc_id": "39b727fe948e11f18f67cb8e99b562ad",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "BBYU-男-23岁-哮喘.pdf",
+        "doc_id": "4413853e923211f19f644920a769b91a",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "UUPP-男-12岁-哮喘.pdf",
+        "doc_id": "aae2af00920611f19f644920a769b91a",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "RRTY-男-34岁-胃腺癌.pdf",
+        "doc_id": "5d2374ee872911f1bb8027103a248952",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ERTT-男-34岁-哮喘.pdf",
+        "doc_id": "1a743da4872911f1bb8027103a248952",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "26945ff7cd72c8da337c6a476738dd22f67c04e4053128f61b0c8bcd400cd9541784722540248.pdf",
+        "doc_id": "103afc8c85c711f1bb8027103a248952",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "重庆-LFQU-肺腺癌-方穹推荐706-I期（IB期）.pdf",
+        "doc_id": "82ffa866837f11f1af97e3985ba7f8da",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "Wlge-肝癌-男-57岁.pdf",
+        "doc_id": "a714377c7eb011f1af97e3985ba7f8da",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "06-临沂人民-LSPI，后线肺癌，方穹招募.pdf",
+        "doc_id": "5a79e2fa7c5c11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "类风湿-LHGE-郑州(1).pdf",
+        "doc_id": "a2dc44f47c5011f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "类风湿-JCYU-河北医科大学第二医院.pdf",
+        "doc_id": "7e74f3fe7c5011f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LJLA-女-类风湿-山东菏泽中心.pdf",
+        "doc_id": "513714c87c4e11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LGPI-女-类风湿性关节炎-山东菏泽中心.pdf",
+        "doc_id": "368f4d2a7c4e11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "糖尿病-潍坊-WYLI.pdf",
+        "doc_id": "246392427c3e11f18d62dd81525255fa",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "CHQU 49 肺癌 山东.pdf",
+        "doc_id": "d74367507b9111f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "ZYXI.pdf",
+        "doc_id": "909ccb847b9111f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "MDXU-58-肺鳞癌.pdf",
+        "doc_id": "a0fdc04e7b8e11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "HBDE-男-67岁-肺鳞癌初治-辽宁.pdf",
+        "doc_id": "6baa1b5e7b8e11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LQLI 男 57 鳞癌.pdf",
+        "doc_id": "695fc5f679b811f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "JLYI初治胃癌，含补充资料.pdf",
+        "doc_id": "8554c62878f811f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "LIYA-脑卒中(4).pdf",
+        "doc_id": "2b9cd54e75ba11f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      },
+      {
+        "name": "MZLO-甘李-保定.pdf",
+        "doc_id": "652f919e75b911f1b6baf3b5d53eafd8",
+        "run": "DONE",
+        "note": ""
+      }
+    ]
+  }
+}

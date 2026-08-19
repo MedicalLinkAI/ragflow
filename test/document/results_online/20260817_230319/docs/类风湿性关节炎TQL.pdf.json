@@ -1,0 +1,85 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "类风湿性关节炎TQL.pdf",
+    "size_kb": 274.6,
+    "pages": null,
+    "doc_id": "60a35dfc7c5011f18d62dd81525255fa",
+    "patient_id": "PAT-358e7d198c7f"
+  },
+  "doc_id": "60a35dfc7c5011f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 3,
+  "orm_synced": true,
+  "process_duration": 224.3419,
+  "begin_at": "2026-08-18T01:08:56",
+  "end_at": "2026-08-18T01:12:45",
+  "elapsed_s": 228.9,
+  "before": {
+    "chunk_count": 3,
+    "run": "DONE",
+    "type_counts": {
+      "DischargeRecord": 1,
+      "LabReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "b05fd9c525b0e170",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 67,
+      "content": "TQL一男.44.\n类风湿性关节炎\n出院记录\n蛋白:15.75mg/L↑;类风湿因子:172IU/ml.↑;D-二聚体测定569.00ng/ml↑;(中段尿)尿标\n本培养加菌落真菌计数:接种10μL,7天无真菌生长菌落数:<1x100CFU/mL。计算出院时患者D\nAS28评分:患者关节肿胀数=2,关节压痛数=4,ESR=27mm/h,VAS=10,DAS28评分得3.96,提示疾\n病中活动度。\n出院诊断:壮医诊断:滚克/骆滚供[Ndokgut/Ndok ngutgung](廷痹/类风湿关节炎)\n壮医证型:阳证-湿热型\n中医诊断:尪痹\n中医证型:湿热痹阻证\n西医诊断:1.类风湿性关节炎;2、重"
+    },
+    {
+      "chunk_id": "3e72de750179d315",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 28,
+      "content": "<table><tr><td>钾</td><td>K</td><td>3.90</td><td>mmol/L</td><td>3.50--5.30</td><td>False</td></tr><tr><td>钠</td><td>Na</td><td>140</td><td>mmol/L</td><td>137--147</td><td>False</td></tr><tr><td>氯</td><td>Cl</td><td>110</td><td>mmol/L</td><td>99--110</td><td>False</td></tr><tr><td>钙</td><td>CA</td><td"
+    },
+    {
+      "chunk_id": "219ab433dcc9194f",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 24,
+      "content": "<table><tr><td>白细胞总数</td><td>WBC</td><td>7.41</td><td>10^9/L</td><td>3.50--9.50</td><td>False</td></tr><tr><td>淋巴细胞绝对值</td><td>LYM#</td><td>3.15</td><td>10^9/L</td><td>1.10--3.20</td><td>False</td></tr><tr><td>中性粒细胞绝对值</td><td>NEUT#</td><td>3.44</td><td>10^9/L</td><td>1.80--6.30</td><td>False</td></"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3
+    ],
+    "page_sum": 3,
+    "check": {
+      "covered": 3,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n01:08:59 Task has been received.\n\n-------------------------------------\n[File]:\n01:08:59: File fetched.\n\n01:08:59: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n01:08:59: Start to work on a PDF.\n\n01:08:59: [QwenVL] Processing 3 pages...\n\n01:09:34: [QwenVL] 1/3 pages"
+}

@@ -1,0 +1,100 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "XZGU(1).pdf",
+    "size_kb": 1015.7,
+    "pages": null,
+    "doc_id": "2753e13278f111f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-171101080804"
+  },
+  "doc_id": "2753e13278f111f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 4,
+  "orm_synced": true,
+  "process_duration": 72.18965,
+  "begin_at": "2026-08-18T02:18:21",
+  "end_at": "2026-08-18T02:19:34",
+  "elapsed_s": 73.3,
+  "before": {
+    "chunk_count": 4,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 2,
+      "LabReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "2c126f892f684b8f",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 25,
+      "content": "西安市未央宫社区卫生服务中心\n门诊病历\n姓名：\n性别：男\n年龄：47岁\n费别：自费\n就诊号：\n科室：全科\n就诊时间：2024-04-07\n联系电话：1\n联系地址：朱宏路\n生命体征：血压134-70mmHg\n心率70次/分\n体温36.2°\n主诉：口干、多饮3年余。\n现病史：口干、多饮、大便偏干，饮食一般，小便尚可。\n既往病史：‘2型糖尿病’病史，口服二甲双胍药物治疗。\n过敏史：无\n体格查体：查体未见异常。\n诊断：2型糖尿病。\n治疗意见：\n处理意见：盐酸二甲双胍缓释片(0.5g*60s)【60片】口服一日三次\n不适随诊\n打印时间：2025-04-10 16:25:50\n医生"
+    },
+    {
+      "chunk_id": "5a45d4b9406821e4",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 37,
+      "content": "电子发票(普通发票)\n发票号码:25612000000015125917\n开票日期:2025年01月07日\n陕西省税务局\n共1页第1页\n购买方信息\n名称:\n统一社会信用代码/纳税人识别号:\n销售方信息\n名称:陕西合德堂医药超市有限公司\n统一社会信用代码/纳税人识别号:91611105562234060T\n项目名称\n规格型号\n单位\n数量\n单价\n金额\n税率/征收率\n税额\n*化学药品制剂*盐酸二甲\n盒\n5\n9.70\n48.51\n1%\n0.49\n双胍缓释片\n合计\n¥48.51\n¥0.49\n价税合计(大写)\n肆拾玖圆整\n(小写)¥49.00\n备注\n开票人:万敏华\n91611105562234060T\n发"
+    },
+    {
+      "chunk_id": "1cca4a200b30cb41",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 26,
+      "content": "合德堂医药超市\n单据号：XC05013042501070089\n日期:2025-01-07  时间：15:26:13\n类型：正常销售\n收银员：王颖飞  机号：04\n通用名\n生产厂家\n批号  单位  剂型\n规格  产地\n上市许可持有人\n销售价  数量  金额\n盐酸二甲双胍缓释片 0.5g*60片\nH20051289  盒  其它\n0.5g*60片*5盒\n悦达宁\n9.80  5  49.00\n合计金额：  49.00元\n应收金额：\n实收金额：\n京东聚合付：\n会员：11520031\n电话：\n地址：大兴西路80号新悦城1幢1单\n元1层10104号\n除药品质量原因外，药品一经售出，\n不得退换！"
+    },
+    {
+      "chunk_id": "88b7d70d0059dc4f",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白*陕HR</td><td>HbA1c</td><td>8.9</td><td>None</td><td>4.0-6.0</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "page_sum": 4,
+    "check": {
+      "covered": 4,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "[File]:\n02:18:23: File fetched.\n\n02:18:23: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n02:18:23: Start to work on a PDF.\n\n02:18:24: [QwenVL] Processing 4 pages...\n\n02:18:29: [QwenVL] 1/4 pages done\n\n02:18:31: [QwenVL] 2/4 pages done\n\n02:18:31: [QwenVL] 3/4 pages do"
+}

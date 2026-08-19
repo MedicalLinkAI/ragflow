@@ -1,0 +1,121 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "ZTKA-二糖-北京(2).pdf",
+    "size_kb": 2573.5,
+    "pages": null,
+    "doc_id": "4fe9672078f111f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-a43f799031e7"
+  },
+  "doc_id": "4fe9672078f111f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 6,
+  "orm_synced": true,
+  "process_duration": 85.97302,
+  "begin_at": "2026-08-18T02:17:44",
+  "end_at": "2026-08-18T02:19:13",
+  "elapsed_s": 88.7,
+  "before": {
+    "chunk_count": 4,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "PrescriptionRecord": 2,
+      "LabReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "94ae514e8c45270d",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 16,
+      "content": "全科医疗诊疗记录\n姓名\n性别:男\n年龄:30岁\n档案号\n2025-02-01\n崔村社区卫生服务中心\n全科医疗\n李瑞林\nS:主诉:糖尿病,取药\n现病史:无流行病学史\n既往史:无\nO:体检:体温:36.6℃;血压值:120/80mmHg;\nA:诊断:2型糖尿病;\nP:处理:1:盐酸二甲双胍片0.25g*100片/盒4盒1g/次口服每日二次(BID)50天\n医师签名"
+    },
+    {
+      "chunk_id": "33b1bb6370334cfb",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 26,
+      "content": "男 30岁 北京医保(持卡)\n已签约 签约时间: 2024-12-23~2025-12-23 未付费\n历史处方\n当前加载 339 天内历史处方\n开始日期 * 2024-04-01\n结束日期 * 2025-03-05\n查询\n已收费,开具医生:李瑞林,处方日期:2025-02-01 11:46:29,诊断:2型糖尿病\n导入\n药品名称\n包装规格\n每次用量\n发药量\n用法\n频度\n用药天数\n金额(元)\n诊断\n(甲类)盐酸二甲双胍片\n0.25g*100片 1g\n4盒\n口服\n每日二次\n50\n14.24\n2型糖尿病"
+    },
+    {
+      "chunk_id": "30ac8de8745f19c0",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 15,
+      "content": "二月取药\n已收费,开具医生:韩松,处方日期:2024-08-30 10:50:22,诊断:2型糖尿病\n已收费,开具医生:李岩,处方日期:2024-04-24 16:24:41,诊断:2型糖尿病\n注射单补打\n北京市昌平区崔村社区卫生服务中心北京...\n门诊\n2025-02-01 11:47:49\n总费用\n14.24 元\n现金支付\n14.24 元\n基金支付\n0.00 元\n个账支付\n0.00 元"
+    },
+    {
+      "chunk_id": "fa1ad26e374ea5cf",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 19,
+      "content": "崔村社区卫生服务中心处方笺\n西医普通 医保处方\n定点医疗机构编码: 14110007 处方编号: 25383003101\n科别: 全科医疗 处方日期: 2025-03-20 病人类型: 基本医疗保险 就诊卡号:\n姓名: 性别: 男 年龄: 30岁 健康档案号/病历号:\n临床诊断:\n2型糖尿病\nRx\n盐酸二甲双胍片 0.25g*100片/盒 1g/次\n4盒 单价:3.56 小计:14.24 每日二次 口服\n过敏史\n否认(√)\n曾有( )\n过敏试验:\n该药名后注明\n医师签名(签章):\n金额: 14.24元 调配签名(签章):\n审核/核对/发药签名(签章):\n药师提示:1、请遵医嘱服药;2、请在窗口"
+    },
+    {
+      "chunk_id": "40741e135d1aa8ce",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 7,
+      "content": "北京市昌平区崔村社区卫生服务中心北京… 门诊\n2025-03-20 16:28:13\n总费用 14.24元\n现金支付 14.24元\n三月取药\n基金支付 0.00元\n个账支付 0.00元"
+    },
+    {
+      "chunk_id": "d3e9183207c932ae",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白A1c</td><td>HbA1c</td><td>8.40</td><td>%</td><td>4.00-6.00</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "page_sum": 6,
+    "check": {
+      "covered": 4,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n02:17:47: [QwenVL] Processing 4 pages...\n\n02:17:55: [QwenVL] 1/4 pages done\n\n02:17:58: [QwenVL] 2/4 pages done\n\n02:17:59: [QwenVL] 3/4 pages done\n\n02:18:10: [QwenVL] 4/4 pages done\n\n02:18:10: [QwenVL] Done: 121 sections from 4 pages.\n\n02:18:10: Done\n\n\n-------------------------------------\n[SmartSpl"
+}

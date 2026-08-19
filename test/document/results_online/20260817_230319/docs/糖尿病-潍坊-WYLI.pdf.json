@@ -1,0 +1,184 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "糖尿病-潍坊-WYLI.pdf",
+    "size_kb": 7573.9,
+    "pages": null,
+    "doc_id": "246392427c3e11f18d62dd81525255fa",
+    "patient_id": "PAT-58ba0b80f1bc"
+  },
+  "doc_id": "246392427c3e11f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 13,
+  "orm_synced": true,
+  "process_duration": 182.13937,
+  "begin_at": "2026-08-18T01:19:11",
+  "end_at": "2026-08-18T01:22:19",
+  "elapsed_s": 187.2,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 2,
+      "PrescriptionRecord": 3,
+      "MedicationRecord": 1,
+      "LabReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "4fa5edd748111872",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 16,
+      "content": "门诊病历\n姓名\n性别：女 年龄：64岁 卡号\n2024-12-18 14:20 内分泌科\n主诉：糖尿病10余年\n现病史：患者10余年确诊为“2型糖尿病”，长期使用药物治疗，门诊取药。\n既往史：否认高血压病史。有糖尿病史10年。否认心脏病病史。否认手术外伤\n史。否认吸烟史。\n药物过敏史：\n查体：体温：36.5℃ 脉搏：72次/分 呼吸：18次/分 血压：130/80mmHg 身高：\n体重：体格检查：一般情况可。\n辅助检查（与本次疾病相关）：\n诊断：2型糖尿病\n处理：\n处方：1. [甲]盐酸二甲双胍缓释片0.5g*60片/瓶1g 每日两次 口服\n2. [甲]瑞格列奈片1mg*30片/盒1mg 每日"
+    },
+    {
+      "chunk_id": "2b3b52048c06e7d0",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 17,
+      "content": "门诊病历\n姓名\n性别：女 年龄：65岁 卡号\n2025-02-14 11:24 内分泌科\n主诉：糖尿病10年，门诊复诊取药。\n现病史：患者10年确诊为“糖尿病”，长期使用药物治疗，门诊复查取药。\n既往史：否认高血压病史。否认心脏病病史。否认手术外伤史。否认吸烟史。\n药物过敏史：\n查体：体温：脉搏：72次/分 呼吸：18次/分 血压：130/80mmHg 身高：体重：\n体格检查：一般情况可。一般情况可。\n辅助检查（与本次疾病相关）：\n诊断：2型糖尿病\n处理：\n处方：1. [甲]盐酸二甲双胍缓释片0.5g*60片/瓶1g 每日两次 口服\n2. [甲]格列吡嗪片5mg*50片/盒10mg 每日三次 "
+    },
+    {
+      "chunk_id": "3fb8b77647e0521c",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 8,
+      "content": "方明细\n全部 西成药 中草药 项目 检验 检查 显示无库存 显示控制或停用药品\n组 名称 规格 剂量 剂量单位 用法 天数 数量 单位\nRp 病： 康复楼药房 已缴费 2025-02-14 11:24:32\n[甲]盐酸二甲双胍缓释片 0.5g*60片/瓶 1 g 口服 30 2 瓶\n[甲]格列吡嗪片 5mg*50片/盒 10 mg 口服 30 3 盒\nRp:1 张黛 特病： 内分泌科 已缴费 2025-02-14 11:25:34\n[甲]一般诊疗费(基层医疗机构)(非注射型) 人次 1 1 1 人次"
+    },
+    {
+      "chunk_id": "ecfb9f2b2cbeb3cf",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 16,
+      "content": "康复楼药房 已缴费 2025-03-23 09:18:49\n2\n[甲]盐酸二甲双胍缓释片\n0.5g*60片/瓶\n1\ng\n口服\n30\n2\n[甲]格列吡嗪片\n5mg*50片/盒\n10\nmg\n口服\n30\n3"
+    },
+    {
+      "chunk_id": "5b2b06c8bc540b9d",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 10,
+      "content": "Rp:3\n康复楼药房 已缴费 2025-03-23 09:19:51\n3\n[甲]硝苯地平缓释片(II)\n1片*50片/盒\n1\n片\n口服\n30\n1"
+    },
+    {
+      "chunk_id": "92ce91131ed9ea1e",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 11,
+      "content": "Rp:4\n病：康复楼药房 已缴费 2025-03-23 09:20:36\n4\n[甲]奥\n胶囊\n20mg*28粒/瓶\n20\nmg\n口服\n7\n1"
+    },
+    {
+      "chunk_id": "145edf587b94de5b",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 7,
+      "content": "Rp:1 季\n待病：内分泌科 已缴费 2025-03-23 09:21:11\n1\n[甲]一般诊疗费(基层医疗机构)(非注射型)\n人次\n1\n1"
+    },
+    {
+      "chunk_id": "bba1901542af8c71",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 40,
+      "content": "历史处方明细\n全部\n西成药\n中草药\n项目\n检验\n检查\nRp 组\n名称\n规格\n剂量\n剂量单位\n用法\nRp:2\n特病：内分泌科 已缴费 2025-04-28 13:54:57\n2\n[甲]糖化血红蛋白测定ks(色谱法)(门诊)\n项\n1\nRp:1\n康复楼药房 已缴费 2025-04-28 14:06:35\n1\n[甲]盐酸二甲双胍缓释片\n0.5g*60片/瓶\n1\ng\n口服\n[甲]格列吡嗪片\n5mg*50片/盒\n10\nmg\n口服\nRp:2\n康复楼药房 已缴费 2025-04-28 14:06:54\n2\n[甲]缬沙坦氢氯噻嗪片\n80mg:12.5mg*80\nmg\n口服\nRp:1"
+    },
+    {
+      "chunk_id": "e8e434410ed2c4f8",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 16,
+      "content": "姓名：\n性别：女\n年龄：65岁\n收款员：3013\n打印时间：2025-04-28 14:11:07\n药品费：16.13\n检查费：0\n治疗费：24\n其他费：0\n合计（人民币）：40.13元\n医保支付金额：18.99\n个人支付金额：21.14优惠：0.00\n温馨提示：\n西药房在一楼C区；检验科在二楼D区；\n彩超室在三楼北侧；放射科在一楼D区\n如需取药请到药房扫描上方二维码"
+    },
+    {
+      "chunk_id": "23092a1b7e5ed615",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 20,
+      "content": "<table><tr><td>丙氨酸氨基转移酶</td><td>ALT</td><td>7.00</td><td>U/L</td><td>0.00~35.00</td><td>False</td></tr><tr><td>天门冬氨酸氨基转移酶</td><td>AST</td><td>13.00</td><td>U/L</td><td>0.00~35.00</td><td>False</td></tr><tr><td>谷草/谷丙</td><td>AST/ALT</td><td>1.86</td><td>None</td><td>None</td><td>False</td></tr><tr><t"
+    },
+    {
+      "chunk_id": "6906fc24046a9fcb",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 10,
+      "content": "<table><tr><td>尿隐血(尿干化学)</td><td>BLD</td><td>+ - P</td><td>None</td><td>None</td><td>True</td></tr><tr><td>尿胆原(尿干化学)</td><td>UBG</td><td></td><td>None</td><td>None</td><td>False</td></tr><tr><td>亚硝酸盐(尿干化学)</td><td>NIT</td><td></td><td>None</td><td>None</td><td>False</td></tr><tr><td>尿蛋白(尿干化学)</td><t"
+    },
+    {
+      "chunk_id": "4e0b3abcb66b2571",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>尿微量白蛋白</td><td>U-mAlb</td><td>13.20</td><td>mg/L</td><td>0.00~19.00</td><td>False</td></tr><tr><td>尿肌酐</td><td>U-CREA</td><td>6.30</td><td>mmol/L</td><td>1.60~22.60</td><td>False</td></tr><tr><td>尿微量ALB/尿肌酐</td><td>UALB/UCREA</td><td>18.52</td><td>mg/g</td><td>0.00~30.00</td><td>False"
+    },
+    {
+      "chunk_id": "a429cd1e21baee1b",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>HbA1c</td><td>9.50</td><td>%</td><td>4.00~6.00</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 13,
+    "check": {
+      "covered": 10,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 6,
+      "clinical": 6,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "[SmartSplitter:MedLink]:\n01:19:41: Start SmartSplitter: semantic split + classify.\n\n01:19:41: Loaded 273 OCR bboxes.\n\n01:19:41: Full document: 7443 chars, 273 bboxes.\n\n01:19:41: Calling LLM for semantic splitting...\n\n01:19:58: LLM responded. Parsing segments...\n\n01:19:58: LLM returned 13 segments. C"
+}

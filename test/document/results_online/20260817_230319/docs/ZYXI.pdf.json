@@ -1,0 +1,157 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "ZYXI.pdf",
+    "size_kb": 6020.8,
+    "pages": null,
+    "doc_id": "909ccb847b9111f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-7bea0663ba15"
+  },
+  "doc_id": "909ccb847b9111f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 9,
+  "orm_synced": true,
+  "process_duration": 283.36636,
+  "begin_at": "2026-08-18T01:26:12",
+  "end_at": "2026-08-18T01:30:57",
+  "elapsed_s": 284.9,
+  "before": {
+    "chunk_count": 9,
+    "run": "DONE",
+    "type_counts": {
+      "LabReport": 2,
+      "ExaminationReport": 6,
+      "AdmissionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "b91df2305c9ec866",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 80,
+      "content": "临清市人民医院\n入院记录\n床号：\n别：男\n年龄：66岁\n科别：血液肿瘤科\n住院\n姓名\n性别：男\n年龄：66岁\n民族：汉族\n婚姻：已婚\n出生\n职\n入院时间：2025-12-02 08:43\n记录时间：2025-12-02 15:42\n病史陈述者：患者本人\n主诉：咳嗽、头痛、下肢乏力1个月余。\n现病史：1个月余前患者无明显诱因地出现阵发性咳嗽、咳痰，多为刺激性干咳，无咳痰及活动后闷喘，后渐出现头痛、头晕，伴下肢乏力，上腹部隐痛，NRS评分2-3分，无发热、寒战，无恶心、呕吐，无咯血，无腹泻，就诊于山东大学齐鲁医院，完善肺部肿瘤标记物示：732ng/ml，非小细胞肺癌相关抗原5.23ng/ml，余指"
+    },
+    {
+      "chunk_id": "dd448d4964416053",
+      "pages": [
+        13
+      ],
+      "page_count_raw": 28,
+      "content": "山东大学齐鲁医院\n病理检查报告单\n申请号\n病理号：2025111633\n姓名\n性别：男\n年龄：66岁\n送检科室：肿瘤内科门诊\n门诊\n住院号：\n送检医生：\n病区：\n床号：\n送检医院：\n送检日期：2025-11-26\n送检标本：活检物 左下叶\n备注：\n临床诊断：肺癌肺占位\n大体描述：\n活检物：灰白小组织8块，总直径1.2cm，全。\n镜下所见：\n病理诊断：\n(左下叶活检)低分化癌，考虑为低分化腺癌，建议免疫组化明确诊断。\n初诊医生：吕宗玲\n张翠娟\n报告日期：2025-11-27\n只做临床参考，不作证明材料，签字有效。\n第1页共1页"
+    },
+    {
+      "chunk_id": "400b742c01b7a4f2",
+      "pages": [
+        14
+      ],
+      "page_count_raw": 39,
+      "content": "印报告 - IMPAX RIS\n山东大学齐鲁医院\n扫一扫查看云胶片\n放射科CT报告单\n姓名\n性别 男\n年龄 66岁\n病人编号\n检查编号 102605071\n门诊号\n检查日期 2025-11-25 16:02 报告日期 2025-11-26 11:27 病人来源 门诊\n检查方法及部位 上腹部CT增强,胸部CT增强\n检查所见:\n胸廓对称,双肺纹理增多,左下肺门旁见不规则形软组织肿块影,肺窗截\n面约7.7×2.7cm,增强扫描轻中度不均匀强化,与增大左肺门分界不清,相\n邻胸膜增厚;左肺上叶IM14见不规则形部分实性结节,大小约13×9mm;\n双肺另见多发小结节,大者位于右肺下叶IM43,长径约10m"
+    },
+    {
+      "chunk_id": "b064a65753ca382a",
+      "pages": [
+        15
+      ],
+      "page_count_raw": 22,
+      "content": "山东大学齐鲁医院\n一扫查看云胶片\n放射科CT报告单\n姓名\n性别 男\n年龄 66岁\n病人编\n检查\n门诊号\n检查日期 2025-11-25 16:02 报告日期 2025-11-26 10:38 病人来源 门诊\n检查方法及部位 颅脑CT增强\n检查所见：\n脑内见多发类圆形不均匀强化灶，大者位于右额叶，截面约2.6cm×2.3c\nm，周围见片状水肿带；左侧小脑半球见片状低密度灶，边界清。双侧放射\n冠、基底节区见小片状低密度灶。右侧侧脑室略受压，脑沟裂不宽，中线结\n构居中。\n检查结论：\n脑内多发异常强化灶，考虑转移瘤可能，请结合临床\n脑内软化灶可能，请结合MR检查\n报告医生：\n审核医生：王义平\n此意见非"
+    },
+    {
+      "chunk_id": "7cdd16a10746516b",
+      "pages": [
+        16
+      ],
+      "page_count_raw": 41,
+      "content": "山东大学齐鲁医院呼吸科\n电子支气管镜检查治疗报告单\n检查编号\n姓\n性别：男\n年龄：66岁\n送诊科室：\n门诊号：\n住院号：\n送诊医师：\n内镜号：\n病床号：\n仪器型号：\n病史摘要：肺占位\n胸片所见：肺占位\n隆突\n左主支气管\n左上叶\n左下叶\n左下叶背段\n左下叶背段\n左下叶基底段\n左下叶外后基底段\n镜下所见：局部麻醉成功后经鼻进镜顺利；双侧声带未见明显异常；声门闭合可。\n气管全程管腔通畅，未见明显异常；隆突锐利。\n右肺可视各支段支气管管腔通畅，未见明显异常。\n左肺下叶基底段开口粘膜充血、局部隆起，浸润改变，外后基底段新生物，背段\n新生物，于左下叶活检，基底段开口刷检，余可视各支段支气管管腔通畅，未见\n"
+    },
+    {
+      "chunk_id": "a00b2f63d58df9c8",
+      "pages": [
+        6,
+        7,
+        8,
+        10,
+        11
+      ],
+      "page_count_raw": 10,
+      "content": "<table><tr><td>基因组变异检测结果</td><td>None</td><td>KRAS p.G12V ; TP53 p.V274A</td><td>None</td><td>None</td><td>True</td></tr><tr><td>临床意义不明的变异</td><td>None</td><td>1个</td><td>None</td><td>None</td><td>False</td></tr><tr><td>NGS 质量控制评估结果</td><td>None</td><td>合格</td><td>None</td><td>None</td><td>False</td"
+    },
+    {
+      "chunk_id": "2f9f9a8f821771a0",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>PD-L1 蛋白表达水平 (TPS)</td><td>TPS</td><td>95%</td><td>%</td><td>None</td><td>False</td></tr><tr><td>PD-L1 蛋白表达水平 (CPS)</td><td>CPS</td><td>95</td><td>None</td><td>None</td><td>False</td></tr></table>"
+    },
+    {
+      "chunk_id": "9f5e4ead8ca16fea",
+      "pages": [
+        17
+      ],
+      "page_count_raw": 4,
+      "content": "<table><tr><td>*★癌胚抗原</td><td>CEA</td><td>732.00</td><td>ng/ml</td><td>0.00-5.00</td><td>True</td></tr><tr><td>非小细胞肺癌相关抗原</td><td>CYFRA21-1</td><td>5.23</td><td>ng/ml</td><td>0.00-3.30</td><td>True</td></tr><tr><td>鳞状细胞癌相关抗原</td><td>SCC</td><td>2.000</td><td>ng/ml</td><td>0.000-2.700</td><td>False</"
+    },
+    {
+      "chunk_id": "976b86dd612598dd",
+      "pages": [
+        18
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>8.41</td><td>10^9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>中性粒细胞比率</td><td>NEU%</td><td>69.80</td><td>%</td><td>40-75</td><td>False</td></tr><tr><td>淋巴细胞比率</td><td>LYM%</td><td>23.40</td><td>%</td><td>20-50</td><td>False</td></tr><tr><td>嗜酸性粒细胞比率</td><t"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      10,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "page_sum": 15,
+    "check": {
+      "covered": 15,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n01:27:32: [QwenVL] 16/18 pages done\n\n01:27:34: [QwenVL] 17/18 pages done\n\n01:27:42: [QwenVL] 18/18 pages done\n\n01:27:42: [QwenVL] Done: 678 sections from 18 pages.\n\n01:27:42: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n01:27:42: Start SmartSplitter: semantic split + classi"
+}

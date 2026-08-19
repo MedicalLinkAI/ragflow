@@ -1,0 +1,92 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "HSQI-哮喘-成都七医.pdf",
+    "size_kb": 543.6,
+    "pages": null,
+    "doc_id": "9b33ca087c1211f18d62dd81525255fa",
+    "patient_id": "PAT-301d94fa2786"
+  },
+  "doc_id": "9b33ca087c1211f18d62dd81525255fa",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 3,
+  "orm_synced": true,
+  "process_duration": 231.48842,
+  "begin_at": "2026-08-18T01:22:18",
+  "end_at": "2026-08-18T01:26:12",
+  "elapsed_s": 234.2,
+  "before": {
+    "chunk_count": 3,
+    "run": "DONE",
+    "type_counts": {
+      "ExaminationReport": 1,
+      "OutpatientRecord": 1,
+      "PrescriptionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "9463148baba50144",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 213,
+      "content": "四川大学华西天府医院\n肺功能报告\n测试ID:\nTF0035519712\n姓名：\n女\n性别：\n39岁\n年龄：\n155cm\n身高：\n69kg\n体重：\n01-20241021145929\n测试号：\n病室：\n床号：\n操作者：\nW\n通气功能\nRef\nPreM\nPre%Ref\nAct1\nAct2\nAct3\nAct4\nAct5\nAct6\nFVC\n2.96\n3.15\n106.5\n3.08\n3.15\n3.13\nFEV 1\n2.55\n2.23\n87.7\n2.18\n2.23\n2.18\nFEV1%F\n70.84\n70.72\n70.84\n69.55\nPEF\n6.25\n5.62\n90.0\n5.82\n5.62\n5.70\nM"
+    },
+    {
+      "chunk_id": "84b9afa7b96c8e9d",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 19,
+      "content": "门诊病历\n就诊时间：2025-01-08 08:18:16\n就诊号：250108730788\n姓名：\n性别：女性 年龄：39岁 职业：其他 科室：门诊呼吸内科\n民族：汉族 婚姻状况：未说明的婚姻状况 工作单位：[工作单位] 转入\\转出机构：转入\\转出医院机构\n身份证：511528198510040442 电话：13518153283 [末次月经时间] [末次月经时间]\n地址：四川省遂宁市安居区自马镇麻子滩村5社6号\n主诉：反复咳嗽1年\n现病史：反复咳嗽1年，在华西做支气管激发试验阳性，给予规律吸入药物治疗，今日复诊开药\n既往史：既往有高血压\n个人史：无特殊\n过敏史：无食物及药物过敏史。\n生育史"
+    },
+    {
+      "chunk_id": "7030b824fd082bcc",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 23,
+      "content": "姓名：\n年龄：39岁 性别：女性 体重： 就诊号：250108730788\n西药-普通-2501080000723407(2025-01-08 08:22) 西药-普通-\n四川天府新区人民医院\n普通\n4号窗口\n处方笺\nNo:2501080000723409\n门诊/住院病历号 250108730788 科室/病区 门诊呼吸内科 床位号\n姓名 性别 女性 年龄 39岁\n日期 2025 年 01 月 08 日 08 时 21 分 08 秒 费别 普通病人\n临床诊断及证型 支气管哮喘；高血压\nR.\n(基) 布地奈德福莫特罗吸入粉雾剂(II)(集采) 160ug/4.5ug/吸，60吸/支 ×\n1支\n用"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3
+    ],
+    "page_sum": 4,
+    "check": {
+      "covered": 3,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "ExaminationReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n-------------------------------------\n[File]:\n01:22:20: File fetched.\n\n01:22:20: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n01:22:20: Start to work on a PDF.\n\n01:22:21: [QwenVL] Processing 3 pages...\n\n01:22:29: [QwenVL] 1/3 pages done\n\n01:22:31: [QwenVL] 2/3 page"
+}

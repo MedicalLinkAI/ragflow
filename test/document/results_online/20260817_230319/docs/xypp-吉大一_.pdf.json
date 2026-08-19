@@ -1,0 +1,95 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "xypp-吉大一 .pdf",
+    "size_kb": 1353.1,
+    "pages": null,
+    "doc_id": "7132fab8858f11f1bb8027103a248952",
+    "patient_id": "PAT-9d079c64e259"
+  },
+  "doc_id": "7132fab8858f11f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 3,
+  "orm_synced": true,
+  "process_duration": 65.292885,
+  "begin_at": "2026-08-18T00:25:57",
+  "end_at": "2026-08-18T00:27:06",
+  "elapsed_s": 68.3,
+  "before": {
+    "chunk_count": 3,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 1,
+      "LabReport": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "ec5eb57c8bde9d78",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "page_count_raw": 42,
+      "content": "联勤保障部队第九六四医院\n中国人民解放军\n第九六四医院\n中国人民解放军\n第九六四医院\n全军骨科中心\n无假日医院\n门诊急诊\n肿瘤治疗中心\n门诊病历\n姓名：\n性别：女\n年龄：58\n证件号码：\n门诊号（就诊ID）No：7980383\n药物过敏史：\n工作单位或住址：\n联系电话：\n扫描全能王 创建\n病历记录\n2023年6月7日\n主诉:类风湿关节炎5年,近期加重.\n病史:双侧腕关节,膝关节,近端指关节等肿胀,\n晨僵半小时缓解.\n关节活动时疼痛加重.\n查体:\n双侧膝关节肿胀疼痛,\n双侧腕关节肿胀疼痛,\n双侧近端指关节肿胀疼痛,\n病历记录\n2023年6月7日\n辅助检查：\nASO: 262.3 IU/ml\nRF"
+    },
+    {
+      "chunk_id": "9a276c58d7426762",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 18,
+      "content": "益诚大药房\n单号:2023090125002651\n日期:2023-09-01 13:10:45\n名称 数量 单价 金额\n甲氨蝶呤片 2.5mg*100片\n1 180 180\n华润紫竹药业有限公司\n卡片类型银行 会员姓名\n会员卡号:302123213255\n本次积分:180 剩余积分:652\n合计:180 数量累及:1\n优惠:0.0 收款员:周林\n应收:180 营业员:李子墨\n实付:180 找零:0\n温馨提示:药品属于特殊商品一经\n出售,若不质量问题,不退不换,\n敬请谅解。\n顾客留存联"
+    },
+    {
+      "chunk_id": "e9a72f4415f2edeb",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>ESR</td><td>None</td><td>33</td><td>mm/H</td><td>0-20</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "page_sum": 5,
+    "check": {
+      "covered": 5,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "[File]:\n00:26:00: File fetched.\n\n00:26:00: Done\n\nStart the pipeline...\n\n-------------------------------------\n[Parser_0]:\n00:26:00: Start to work on a PDF.\n\n00:26:01: [QwenVL] Processing 5 pages...\n\n00:26:08: [QwenVL] 1/5 pages done\n\n00:26:08: [QwenVL] 2/5 pages done\n\n00:26:08: [QwenVL] 3/5 pages do"
+}

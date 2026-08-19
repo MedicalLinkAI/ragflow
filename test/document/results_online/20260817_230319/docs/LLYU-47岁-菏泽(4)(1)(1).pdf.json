@@ -1,0 +1,160 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "LLYU-47岁-菏泽(4)(1)(1).pdf",
+    "size_kb": 4326.9,
+    "pages": null,
+    "doc_id": "0b3ff00485bb11f1bb8027103a248952",
+    "patient_id": "PAT-544821e7dece"
+  },
+  "doc_id": "0b3ff00485bb11f1bb8027103a248952",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 10,
+  "orm_synced": true,
+  "process_duration": 154.2785,
+  "begin_at": "2026-08-18T00:22:05",
+  "end_at": "2026-08-18T00:24:41",
+  "elapsed_s": 156.5,
+  "before": {
+    "chunk_count": 10,
+    "run": "DONE",
+    "type_counts": {
+      "MedicationRecord": 4,
+      "OutpatientRecord": 1,
+      "LabReport": 4,
+      "PrescriptionRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "d7bd2646806866b6",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 47,
+      "content": "山东省医疗门诊收费票据（电子）\n山东省\n财政部监制\n票据代码：97060124\n票据号码：1731498632\n交款人统一社会信用代码：37292319770921****\n校验码：f3b48d\n交款人：李兰云\n开票日期：2025-09-08\n项目名称\n数量/单位\n金额（元）\n备注\n项目名称\n数量/单位\n金额（元）\n备注\n西药费\n57.60\n甲磺蝶呤片\n32\n2.5mg\n57.60\n金额合计（大写）伍拾柒元陆角\n(小写)57.60\n其\n业务流水号：70BBECF6191805\n门诊号：K2022091800000186\n就诊日期：20250908\n他\n医疗机构类型：\n医保类型：自费\n医保编号："
+    },
+    {
+      "chunk_id": "a72f3a70328c4865",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 20,
+      "content": "菏泽市定陶区中医医院\n门诊病历\n姓名：*\n性别：女\n年龄：47岁\n门诊号：K2022091800000186\n2024-11-06 09:21:46\n杏林堂门诊：治未病科\n就诊类型：复诊\n主诉：多关节肿胀、疼痛4年余，病情加重半月。\n现病史：患者4年前无名诱因出现多关节疼痛、肿胀、晨僵，完在外院善各项检查后诊断为类风湿性关节炎，\n患者于2024年5月在菏泽市立医院就诊，遵医嘱服用来氟米特片，效果欠佳，为求进一步治疗，今来院就诊。\n过敏史：无药物过敏史；无食物过敏史。\n体格检查：心律齐，无杂音，腹部平软，肝未触及，脾未触及，多关节肿痛，活动受限。\n诊断：类风湿性关节炎\n诊疗意见：\n处方：甲氨蝶呤"
+    },
+    {
+      "chunk_id": "dd99b5afc9a2aea6",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 22,
+      "content": "菏泽市定陶区中医医院\n处方笺\n372923197709211747\n姓名：\n性别：男 女\n年龄：47岁\n联系地址：\n联系电话：\n处方费别：医保 非医保 医保/就诊卡号：\n门诊病历号：K202200190000018 科室名称：杏林堂门诊\n临床诊断：类风湿性关节炎\n皮试结果：\n开具日期：2025年09月08日\nRp\n甲氨蝶呤片 2.5mg*16片/瓶 2瓶\n每周一次*1天 10mg/次 口服\n以下空白，修改无效\n审核：\n调配：\n医师：王永俊\n核对、发药：\n药品金额(元)：57.60"
+    },
+    {
+      "chunk_id": "b3dbc628a7f82042",
+      "pages": [
+        8
+      ],
+      "page_count_raw": 48,
+      "content": "山东省医疗门诊收费票据（电子）\n山东省\n财政部监制\n票据代码\n票据号码：...\n交款人统一社会信用代码：37292319770921****\n校验码：c181d1\n交款人：李兰云\n开票日期：2025-08-16\n项目名称\n数量/单位\n金额（元）\n备注\n项目名称\n数量/单位\n金额（元）\n备注\n西药费\n28.80\n甲氨蝶呤片\n16\n2.5mg\n28.80\n金额合计（大写）贰拾捌元捌角\n(小写)28.80\n其\n业务流水号：70BE99DB183054\n门诊号：K2022091800000186\n就诊日期：20250816\n他\n医疗机构类型：\n医保类型：市医保居民\n医保编号：\n性别：女\n信\n医保统筹基"
+    },
+    {
+      "chunk_id": "366ebe6341466c73",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 19,
+      "content": "陶健人药房\n名称：甲氨蝶呤片\n规格：2.5mg*16片\n单价：38.00\n数量：3\n厂家：上海上药信谊药厂有限公司\n合计数量：3\n合计金额：114.00\n实收金额：124.00\n找零：10.00\n付款方式：现金\n付款人：\n收款人：06\n营业员：02\n日期：2025-05-21\n时间：15:56\n单号：202505211556063\n地址：定陶区滨河办事处府新路西段\n所有药品请遵医嘱使用！谢谢惠顾！"
+    },
+    {
+      "chunk_id": "ac447f17641b6b01",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 23,
+      "content": "泽卿大药房\n单号:202407231508032\n姓名\n日期:2024-07-23 15:08\n名称/规格/数量/单价/厂家\n来氟米特片\n10mg/30片/盒*5盒\n12.50/盒\n齐鲁制药有限公司\n合计数量 5盒\n合计金额 62.50\n应收金额 62.500\n实收金额: 65.00\n找 零: 2.50\n支付方式: 现金\n地址: 定陶区仿山镇温馨邻里\n社区东区西门往南50米处\n温馨提示*\n1 请遵医嘱用药\n2.发出药品, 不允退换\n3 祝早日康复\nCS 扫描全能王\n3亿人都在用的扫描App"
+    },
+    {
+      "chunk_id": "4c273938119b5f86",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 22,
+      "content": "<table><tr><td>白细胞计数</td><td>WBC</td><td>8.03</td><td>10~9/L</td><td>3.5-9.5</td><td>False</td></tr><tr><td>红细胞计数</td><td>RBC</td><td>4.47</td><td>10~12/L</td><td>3.8-5.1</td><td>False</td></tr><tr><td>淋巴细胞百分数</td><td>Lym%</td><td>19.3</td><td>%</td><td>20-50</td><td>True</td></tr><tr><td>血红蛋白量</td>"
+    },
+    {
+      "chunk_id": "ddceafc916fdc747",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 2,
+      "content": "<table><tr><td>尿酸</td><td>UA</td><td>206</td><td>μmol/L</td><td>155-357</td><td>False</td></tr><tr><td>肌酐</td><td>CREA</td><td><30</td><td>μmol/L</td><td>41-73</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "8afed0bc07aac174",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 19,
+      "content": "<table><tr><td>类风湿因子</td><td>RF</td><td>65</td><td>IU/ml</td><td>≤30</td><td>True</td></tr><tr><td>抗链球菌溶血素O</td><td>ASO</td><td>46</td><td>IU/ml</td><td>≤160</td><td>False</td></tr><tr><td>C反应蛋白</td><td>CRP</td><td>34.7</td><td>mg/L</td><td>0-6</td><td>True</td></tr><tr><td>免疫球蛋白G</td><td>IgG</td><t"
+    },
+    {
+      "chunk_id": "3b28251ed468dee1",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 3,
+      "content": "<table><tr><td>超敏C反应蛋白</td><td>hs-CRP</td><td>>5.000</td><td>mg/L</td><td>0.00~1.00</td><td>True</td></tr><tr><td>C反应蛋白</td><td>CRP</td><td>27.84</td><td>mg/L</td><td>0.00~10.00</td><td>True</td></tr><tr><td>红细胞沉降率</td><td>ESR</td><td>44.00</td><td>mm/H</td><td>0.00~20.00</td><td>True</td></tr></tab"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 10,
+    "check": {
+      "covered": 10,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n00:22:29: [QwenVL] 10/10 pages done\n\n00:22:29: [QwenVL] Done: 249 sections from 10 pages.\n\n00:22:29: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n00:22:29: Start SmartSplitter: semantic split + classify.\n\n00:22:29: Loaded 249 OCR bboxes.\n\n00:22:30: Full document: 7544 chars"
+}

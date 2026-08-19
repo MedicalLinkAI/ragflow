@@ -1,0 +1,158 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "MZLO-甘李-保定.pdf",
+    "size_kb": 8557.9,
+    "pages": null,
+    "doc_id": "652f919e75b911f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-387e4cbda904"
+  },
+  "doc_id": "652f919e75b911f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 10,
+  "orm_synced": true,
+  "process_duration": 169.11186,
+  "begin_at": "2026-08-18T02:22:57",
+  "end_at": "2026-08-18T02:25:49",
+  "elapsed_s": 171.3,
+  "before": {
+    "chunk_count": 10,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 4,
+      "PrescriptionRecord": 3,
+      "LabReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "64d312d05891e002",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 29,
+      "content": "固安县中医院\n门诊病历\n姓名:\n性别:男\n年龄:36岁\n就诊科室:内分泌科门诊\n就诊卡号:JZ00476717\n就诊时间:2024-08-08 09:37\n主诉:\n糖尿病复查\n现病史:\n患者糖尿病病史3年,要求复查\n既往史:\n糖尿病\n过敏史:\n否认。\n体格检查:无特殊\n辅助检查:\n诊断\n西医诊断:\n糖尿病【主】\n处理意见:\n1、糖化血红蛋白测定各种免疫学方法\n2、葡萄糖测定各种酶法\n3、盐酸二甲双胍片(基药)两病0.5g*60一次1g口服bid30天共120片\n4、糖尿病饮食,适量运动,不适随诊!\n医生签名\n2024-08-08 09:43:42\n第1页"
+    },
+    {
+      "chunk_id": "6e32372a547470ae",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 48,
+      "content": "河北省医疗门诊收费票据(电子)\n河北省\n财政部监制\n票据代码:13061025\n交款人统一社会信用代码:110224********0316\n交款人\n票据号码:0246886339\n校验码:438776\n开票日期:20260102\n项目名称\n数量/单位\n金额(元)\n备注\n项目名称\n数量/单位\n金额(元)\n备注\n西药费\n1.00\n6.80\n盐酸二甲双胍片(基\n120.00/片\n6.8000\n甲\n药)两病\n金额合计(大写)陆元捌角整\n(小写)6.80\n其他\n业务流水号:8385643183678462711\n门诊号:JZ00476717\n就诊日期:20260102\n医疗机构类型:\n医保类型:自费\n"
+    },
+    {
+      "chunk_id": "1ad156a410c32068",
+      "pages": [
+        2
+      ],
+      "page_count_raw": 36,
+      "content": "固安县中医院\n药品处方笺\n普通\n支付宝扫一扫，医保支付。\n处方编号:180264\n时间:2026/01/02\n就诊码\n姓名\n年龄\n37岁\n性别\n男\n费别\n自费\n门诊病历号\nJZ00476717\n科别\n内分泌科门诊\n临床诊断:\n糖尿病\nRp:\n盐酸二甲双胍片(基药)两病\n0.5g*60\n120片\n用法:1g\nbid\n口服\n底\n方\n医师印\n审核印\n调配印\n核对印\n发药印\n药品金额\n6.8元"
+    },
+    {
+      "chunk_id": "7014ad9ebf23fd1c",
+      "pages": [
+        3
+      ],
+      "page_count_raw": 44,
+      "content": "河北省医疗门诊收费票据（电子）\n河北省\n财政部监制\n票据代码:13061026\n交款人统一社会信用代码:110224********0316\n交款/\n票据号码:0011624978\n校验码:717385\n开票日期:20260113\n项目名称\n数量/单位\n金额（元）\n备注\n项目名称\n数量/单位\n金额（元）\n备注\n西药费\n1.00\n6.80\n盐酸二甲双胍片(基\n120.00/片\n6.8000\n甲\n药）两病\n金额合计（大写）陆元捌角整\n(小写)6.80\n业务流水号:8504890251341464966\n门诊号:JZ00476717\n就诊日期:20260112\n医疗机构类型:\n医保类型:自费\n医保编"
+    },
+    {
+      "chunk_id": "d7e3d54a6ef37044",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 34,
+      "content": "固安县中医院\n药品处方笺\n普通\n支付宝扫一扫，医保支付。\n处方编号:1074760\n时间:2026/02/02\n就诊码\n姓名\n年龄\n37岁\n性别\n男\n费别\n自费\n门诊病历号\nJZ00476717\n科别\n内分泌科门诊\n临床诊断:\n糖尿病\nRp:\n盐酸二甲双胍片(基药)两病\n0.5g*60\n120片\n用法:1g\nbid\n口服\n医师印\n审核印\n调配印\n核对印\n发药印\n药品金额\n6.8元"
+    },
+    {
+      "chunk_id": "d2fb2d08d90278f4",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 44,
+      "content": "河北省医疗门诊收费票据（电子）\n票据代码:13061026\n交款人统一社会信用代码:110224********0316\n交款人\n票据号码:0026999452\n校验码:847182\n开票日期:20260202\n项目名称\n数量/单位\n金额（元）\n备注\n项目名称\n数量/单位\n金额（元）\n备注\n西药费\n1.00\n6.80\n盐酸二甲双胍片(基\n120.00/片\n6.8000\n甲\n药)两病\n金额合计（大写）陆元捌角整\n(小写)6.80\n其\n业务流水号:8565731552128533376\n门诊号:JZ00476717\n就诊日期:20260202\n他\n医疗机构类型:\n医保类型:自费\n医保编号:\n性别:"
+    },
+    {
+      "chunk_id": "c352e9286d1b07c4",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 36,
+      "content": "河北省\n财政部监制\n固安县中医院\n药品处方笺\n普通\n支付宝扫一扫，医保支付。\n处方编号:1074760\n时间:2026/03/02\n就诊码\n姓名\n年龄\n37岁\n性别\n男\n费别\n自费\n门诊病历号\nJZ00476717\n科别\n内分泌科门诊\n临床诊断:\n糖尿病\nRp:\n盐酸二甲双胍片(基药)两病\n0.5g*60\n120片\n用法:1g\nbid\n口服\n医师印\n审核印\n调配印\n核对印\n发药印\n药品金额\n6.8元"
+    },
+    {
+      "chunk_id": "88c211d95d465676",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 44,
+      "content": "河北省医疗门诊收费票据(电子)\n河北省\n财政部监制\n票据代码:13061026\n交款人统一社会信用代码:110224********0316\n交款人:\n票据号码:0049689630\n校验码:777954\n开票日期:20260302\n项目名称\n数量/单位\n金额(元)\n备注\n项目名称\n数量/单位\n金额(元)\n备注\n西药费\n1.00\n6.80\n盐酸二甲双胍片(基\n120.00/片\n6.8000\n甲\n药)两病\n金额合计(大写)陆元捌角整\n(小写)6.80\n其他\n业务流水号:8646935665209378560\n门诊号:JZ00476717\n就诊日期:20260302\n医疗机构类型:\n医保类型:自费"
+    },
+    {
+      "chunk_id": "001507ddc1627daf",
+      "pages": [
+        7
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>糖化血红蛋白</td><td>None</td><td>8.50</td><td>%</td><td>4~6</td><td>True</td></tr></table>"
+    },
+    {
+      "chunk_id": "e1f64f2dcf3cfa9c",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 1,
+      "content": "<table><tr><td>葡萄糖测定</td><td>GLU</td><td>9.04</td><td>mmol/L</td><td>4~6</td><td>True</td></tr></table>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "page_sum": 11,
+    "check": {
+      "covered": 7,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 4,
+      "clinical": 4,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n02:23:24: [QwenVL] 7/7 pages done\n\n02:23:24: [QwenVL] Done: 337 sections from 7 pages.\n\n02:23:24: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n02:23:24: Start SmartSplitter: semantic split + classify.\n\n02:23:24: Loaded 337 OCR bboxes.\n\n02:23:24: Full document: 6692 chars, 3"
+}

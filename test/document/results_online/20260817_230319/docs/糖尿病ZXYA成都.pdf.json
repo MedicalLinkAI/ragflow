@@ -1,0 +1,127 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "糖尿病ZXYA成都.pdf",
+    "size_kb": 2026.0,
+    "pages": null,
+    "doc_id": "0948b6b47e6811f1af97e3985ba7f8da",
+    "patient_id": "PAT-343a77931dc3"
+  },
+  "doc_id": "0948b6b47e6811f1af97e3985ba7f8da",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 6,
+  "orm_synced": true,
+  "process_duration": 126.54758,
+  "begin_at": "2026-08-18T00:57:33",
+  "end_at": "2026-08-18T00:59:44",
+  "elapsed_s": 130.4,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "OutpatientRecord": 1,
+      "MedicationRecord": 2,
+      "PrescriptionRecord": 2,
+      "LabReport": 2
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "35e66bd650204569",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 32,
+      "content": "成都市武侯区玉林社区卫生服务中心\n全科门诊病历\n门诊号：2404093152\n姓名：\n性别：女\n年龄：32岁\n电话：\n职业：不便分类的其他从业人员\n科室：全科门诊\n就诊时间：2024-04-09 11:57\n地址或者工作单位：四川省成都市温江区涌泉江浦路\n主观资料（S）\n主诉：2型糖尿病复诊\n现病史：2型糖尿病规律服药二甲双胍缓释片1g bid\n既往史：无\n个人史：否认传染病病史，否认手术外伤输血史，预防接种史不详。\n家族史：否认家族遗传病病史。\n客观资料（O）\n体格信息：身高：153.0cm 体重：65.0KG 心率：78次/分 体温：36.5℃ 呼吸：18次/分 血压：\n125/72mmh"
+    },
+    {
+      "chunk_id": "f8ae3c61f0c255c5",
+      "pages": [
+        4
+      ],
+      "page_count_raw": 33,
+      "content": "23:12\n京东买药\n[力唐宁] 盐酸二甲双胍缓释片0.5g*30片/盒\n盐酸二甲双胍缓释片\n数量：10\n¥23.50/件\n品牌直供\n正品好药\n多仓发货\n品质保障\n用药人信息\n女 33岁\n问诊单\n查看详情 >\n不良反应登记 京东大药房执业药师提示：合格药品在正常\n用法用量下仍有可能出现与用药目的无关的或\n查看详情 >\n用药指导\n力唐宁 盐酸二甲双胍缓释片\n查看更多 >\n功能主治\n肥胖的2型糖尿病。\n用法用量\n口服,一日两次,一次2.0片\n添加专属企业药师微信\n守护您的用药安全\n立即添加\n订单号：311446230457 复制\n下单时间：2025-01-26 20:18:01\n删除订单\n查看发票"
+    },
+    {
+      "chunk_id": "13e22ed96e6727dc",
+      "pages": [
+        5
+      ],
+      "page_count_raw": 28,
+      "content": "银川京东互联网医院\n普通\n处方\n处方笺\nNO. 127961482746935\n2025-01-26\n姓名：\n性别：女\n年龄：33岁\n费别：自费\n科别：内科\n临床诊断：2型糖尿病\nRp：\n盐酸二甲双胍缓释片\n0.5g*30片\nx 10盒\n用法用量：\n口服,一日两次,一次2.0片;\n补充说明：\n医师：\n初审药师：段娜\n审核：支露红\n处方金额：\n药房审核：\n药房调配：\n药房核对：\n药房发药：\n注：处方自开具日起3日内有效。"
+    },
+    {
+      "chunk_id": "582bbf54614f3792",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 32,
+      "content": "23:12\n京东买药\n[力唐宁] 盐酸二甲双胍缓释片0.5g*30片/盒\n数量：10\n¥23.50/件\n品牌直供\n正品好药\n多仓发货\n品质保障\n用药人信息\n女 33岁\n问诊单\n查看详情 >\n不良反应登记 京东大药房执业药师提示：合格药品在正常\n用法用量下仍有可能出现与用药目的无关的或\n查看详情 >\n用药指导\n力唐宁 盐酸二甲双胍缓释片\n查看更多 >\n功能主治\n肥胖的2型糖尿病。\n用法用量\n口服,一日两次,一次2.0片\n添加专属企业药师微信\n守护您的用药安全\n立即添加\n订单号：311755125163\n复制\n下单时间：2025-03-17 23:19:48\n删除订单\n查看发票\n再次购买"
+    },
+    {
+      "chunk_id": "e1d80d75acac8f5c",
+      "pages": [
+        6,
+        7
+      ],
+      "page_count_raw": 37,
+      "content": "CS 扫描全能王\n3亿人都在用的扫描App\n银川京东互联网医院\n普通\n处方\n已使用\n已使用\n处方笺\n已使用\nNO. 128461534704432\n2025-03-17\n姓名：\n性别：女\n年龄：33岁\n费别：自费\n科别：内科\n临床诊断：2型糖尿病\nRp：\n盐酸二甲双胍缓释片\n0.5g*30片\nx 10盒\n用法用量：\n口服,一日两次,一次2.0片;\n补充说明：患者因病情需要开具超7天药量；。患者因病情需要开具超7\n天药量；\n医师：张珊珊\n初审药师刘晓东\n审核：王海娇\n处方金额：\n药房审核：李敏\n药房调配：\n药房核对：\n药房发药：\n注：处方自开具日起3日内有效。\nCS\n扫描全能王\n3亿人都在用的扫"
+    },
+    {
+      "chunk_id": "5c9d25897f7bad71",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 5,
+      "content": "<table><tr><td>葡萄糖</td><td>Glu</td><td>10.56</td><td>mmol/L</td><td>3.9-6.1</td><td>True</td></tr><tr><td>标本黄疸指数</td><td>I.I</td><td>(-)</td><td>None</td><td>“+”代表黄疸程度</td><td>False</td></tr><tr><td>标本脂血指数</td><td>L.I</td><td>(-)</td><td>None</td><td>“+”代表脂血程度</td><td>False</td></tr><tr><td>标本溶血指数</"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "page_sum": 8,
+    "check": {
+      "covered": 7,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "LabReport": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "MedicationRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    },
+    "OutpatientRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "PrescriptionRecord": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n00:57:46: [QwenVL] 3/7 pages done\n\n00:57:49: [QwenVL] 4/7 pages done\n\n00:57:50: [QwenVL] 5/7 pages done\n\n00:57:52: [QwenVL] 6/7 pages done\n\n00:57:53: [QwenVL] 7/7 pages done\n\n00:57:53: [QwenVL] Done: 184 sections from 7 pages.\n\n00:57:53: Done\n\n\n-------------------------------------\n[SmartSplitter:M"
+}

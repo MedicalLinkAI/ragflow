@@ -1,0 +1,139 @@
+{
+  "pdf": {
+    "path": null,
+    "name": "SXCH 66 肺鳞癌 推天津.pdf",
+    "size_kb": 11966.1,
+    "pages": null,
+    "doc_id": "f223409c7b8f11f1b6baf3b5d53eafd8",
+    "patient_id": "PAT-d84d54d0f2f2"
+  },
+  "doc_id": "f223409c7b8f11f1b6baf3b5d53eafd8",
+  "mode": "reparse-list",
+  "run": "DONE",
+  "progress": 1.0,
+  "chunk_count_api": 7,
+  "orm_synced": true,
+  "process_duration": 300.0605,
+  "begin_at": "2026-08-18T01:29:13",
+  "end_at": "2026-08-18T01:34:15",
+  "elapsed_s": 302.3,
+  "before": {
+    "chunk_count": 7,
+    "run": "DONE",
+    "type_counts": {
+      "AdmissionRecord": 1,
+      "LabReport": 2,
+      "ExaminationReport": 3,
+      "DischargeRecord": 1
+    }
+  },
+  "baseline": null,
+  "chunks": [
+    {
+      "chunk_id": "19109687e552c83c",
+      "pages": [
+        1
+      ],
+      "page_count_raw": 20,
+      "content": "病理补充报告单\n性别：女\n年龄：66岁\n病理号：\n送检医院：总院\n送检科室：\n送检医：\n门诊/住院号\n送检日期：2025-12-03\n报告日期：2025-12-08\n示本名称：左肺上叶占位穿刺活检组织\n临床诊断：(R91.x03)肺占位性病变\n病理补充诊断：\n（左肺上叶占位穿刺活检组织）肺组织内见鳞癌浸润。\n免疫组化(25-59536-A):CK7 (+), CK20 (个别细胞+), TTF-1 (-), NapsinA (-),\nP40 (+), P63 (+), Syn (-), CgA (-)。\n疑问，请2个工作日内与病理科联系。\n7076710\n主诊医生\n审核医"
+    },
+    {
+      "chunk_id": "602607832ffcd5be",
+      "pages": [
+        2,
+        3
+      ],
+      "page_count_raw": 39,
+      "content": "入院时间：2025-11-26 12:25\n出院时间：2025-12-05 10:00\n主诉：咳嗽咳痰伴声音嘶哑2月余。\n入院情况：①老年女性，王因“咳嗽咳痰伴声音嘶哑2月余”入院；②既在2021年因外伤致骨盆及左下肢骨折并行手术治疗（体内植入钢板，具体术式不详）。术后曾输血；③查体：胸廓两侧对称无畸形；双肺呼吸音清，未闻及干湿性啰音。心律齐，各瓣膜听诊区未闻及杂音，无心包摩擦音。腹软，无压痛及反跳痛，双下肢无浮肿；④辅助检查：胸部CT（2025-11-25 沭源县医院），1.左肺上叶肺癌，大小约4.0×3.3cm，可见毛刺，边缘呈分状，与纵隔分界不清；2.右肺上叶肺大泡；3.扫及肝驻多发低密"
+    },
+    {
+      "chunk_id": "245ef78a88b48c96",
+      "pages": [
+        4,
+        5
+      ],
+      "page_count_raw": 50,
+      "content": "性别：女\n职业：农民\n年龄：66岁\n出生地：河北省保定市\n民族：汉族\n入院时间：2025-11-26 12:25\n婚姻状况：已婚\n记录时间：2025-11-26 12:30\n工作单位：无\n病史陈\n现住址：河\n与患者关系：子女\n主诉：咳嗽咳痰伴声音嘶哑2月余。\n现病史：终于入院前2月余，患者无明显诱因出现咳嗽，咳少量白粘痰，伴声音嘶哑，\n无饮水呛咳，平素患者偶有胸闷，无活动后加重，无胸痛，无低热盗汗，口服药物后症状无\n明显缓解，就诊于当地医院，胸部CT提示左肺上叶占位，考虑恶性，现患者及家属为求进\n一步诊治就诊于我院，门诊以“肺占位性病变”为诊断收入我科。\n患者自发病以来，一般情况尚可，饮食及睡"
+    },
+    {
+      "chunk_id": "2b28355490b601e7",
+      "pages": [
+        6
+      ],
+      "page_count_raw": 17,
+      "content": "检查名称：\n颅脑,胸部 平扫,平扫+增强扫描\n检查技术：\n检查所见：\n双侧侧脑室周围脑白质密度减低，双侧侧脑室稍扩张，脑沟裂增宽、加深，中线结构居中。\n双肺透过度欠均，左肺上叶尖后段可见不规则高密度影，大小约50*44mm，局部边界欠清，边缘可见\n毛刺，部分支气管欠通畅，增强扫描呈不均匀强化，平扫及增强各期CT值约43、63、53HU，内可见不规\n则无强化区，双肺可见9mm以下结节样高密度影，部分为磨玻璃结节，边界尚清，纵隔窗未见显示，增强\n扫描评估受限；右肺可见囊状透亮影；右肺中叶可见条索状高密度影；双侧胸膜下可见网状稍高密度影。\n心影及大血管形态正常，纵隔内未见肿大淋巴结。双侧胸膜无增厚。"
+    },
+    {
+      "chunk_id": "52f1380f53282dde",
+      "pages": [
+        7,
+        8
+      ],
+      "page_count_raw": 55,
+      "content": "PET/CT报告单\n姓\n别：女\n年龄：66岁\n床号：\n送诊科室\n送诊医\n住院号：\n门诊号：\n影像号：\n61检查日期：2025-11-28\n检查项目：PET/CT全身显像\n(含头颅)\n临床诊断：(420024)肺占位性病变\n腹部PET图像示胃壁呈生理性糖代谢增强；肠道呈生理性糖代谢增强；肝、\n胆囊、胰、脾、双肾上腺、肾、输尿管及大血管处未见明显糖代谢异常增高灶。\nCT平扫所示肝内外胆管无扩张；脾脏不大，密度均匀，未见明显占位；胆囊、\n胰、双肾上腺未见明显异常；双肾可见囊状低密度影，边界欠清，糖代谢减低；\n腹膜后无明显肿大淋巴结；腹腔无积液。\n盆部PET图像示膀胱内大量显像剂生理性积聚；肠道呈生理"
+    },
+    {
+      "chunk_id": "e7a90482e0c873db",
+      "pages": [
+        9
+      ],
+      "page_count_raw": 28,
+      "content": "<table><tr><td>白细胞</td><td>WBC</td><td>5.55</td><td>10^9/L</td><td>3.50--9.50</td><td>False</td></tr><tr><td>红细胞</td><td>RBC</td><td>4.51</td><td>10^12/L</td><td>3.80--5.10</td><td>False</td></tr><tr><td>血红蛋白</td><td>HGB</td><td>138.0</td><td>g/L</td><td>115.0--150.</td><td>False</td></tr><tr><td>红细"
+    },
+    {
+      "chunk_id": "d1ac69ab0476815c",
+      "pages": [
+        10
+      ],
+      "page_count_raw": 11,
+      "content": "<table><tr><td>甘油三酯</td><td>TG</td><td>1.20</td><td>mmol/L</td><td>0.56--1.70</td><td>False</td></tr><tr><td>高密度脂蛋白胆固醇</td><td>HDL-C</td><td>1.63</td><td>mmol/L</td><td>1.04--1.55</td><td>True</td></tr><tr><td>低密度脂蛋白胆固醇</td><td>LDL-C</td><td>3.5</td><td>mmol/L</td><td>1.8--3.4</td><td>True</td></tr>"
+    }
+  ],
+  "pages": {
+    "union": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "page_sum": 10,
+    "check": {
+      "covered": 10,
+      "total": null,
+      "coverage_pct": null,
+      "missing": [],
+      "out_of_range": [],
+      "verdict": "⚠️ PDF 页数未知，无法核对"
+    }
+  },
+  "type_match": {
+    "AdmissionRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "DischargeRecord": {
+      "splitter": 1,
+      "clinical": 1,
+      "match": true
+    },
+    "ExaminationReport": {
+      "splitter": 3,
+      "clinical": 3,
+      "match": true
+    },
+    "LabReport": {
+      "splitter": 2,
+      "clinical": 2,
+      "match": true
+    }
+  },
+  "note": "",
+  "progress_msg": "\n01:29:46: [QwenVL] 7/10 pages done\n\n01:29:47: [QwenVL] 8/10 pages done\n\n01:29:48: [QwenVL] 9/10 pages done\n\n01:29:51: [QwenVL] 10/10 pages done\n\n01:29:51: [QwenVL] Done: 236 sections from 10 pages.\n\n01:29:51: Done\n\n\n-------------------------------------\n[SmartSplitter:MedLink]:\n01:29:51: Start Smar"
+}

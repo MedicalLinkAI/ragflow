@@ -74,8 +74,8 @@ class Extractor(ProcessBase, LLM):
     component_name = "Extractor"
 
     # chunk 级并发度：同时在飞的 chunk 数上限。坐标定位走 VL 卡、结构化提取走
-    # 27B 文本模型，两端实测 4 并发零排队，与 QwenVLParser.PAGE_CONCURRENCY 对齐。
-    CHUNK_CONCURRENCY = 4
+    # 27B 文本模型，两端实测 6 并发零排队，与 QwenVLParser.PAGE_CONCURRENCY 对齐。
+    CHUNK_CONCURRENCY = 6
 
     async def _build_TOC(self, docs):
         self.callback(0.2,message="Start to generate table of content ...")

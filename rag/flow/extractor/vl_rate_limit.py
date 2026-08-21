@@ -19,7 +19,7 @@ import os
 import threading
 import time
 
-_DEFAULT_CONCURRENCY = 18
+_DEFAULT_CONCURRENCY = 26
 
 
 def _resolve_limit() -> int:

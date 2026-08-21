@@ -479,7 +479,7 @@ class QwenVLParser(RAGFlowPdfParser):
 
     # 页级并发度：同时在飞的页数上限。实测 vLLM 接 4~6 并发零排队，
     # 超过后单请求速度被摊薄且总吞吐不再增长。
-    PAGE_CONCURRENCY = 9
+    PAGE_CONCURRENCY = 13
 
     def __init__(
         self,

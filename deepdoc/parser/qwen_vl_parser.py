@@ -172,7 +172,7 @@ def _fix_tabular_colspec(latex: str, max_cols: int = 20) -> str:
     )
 
 
-_MIN_COLSPEC_RUN = 8
+_MIN_COLSPEC_RUN = 4
 
 # Runaway loop INSIDE the tabular column spec itself: the VLM emits
 # \begin{tabular}{|c|c|c|... (hundreds/thousands of repeats, often one

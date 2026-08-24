@@ -171,11 +171,12 @@ def _call_qwen30b_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg: t
     )
     # 进程级 VL 全局限流：防止 chunk 级并发叠加打爆 vLLM prefill
     from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+    from rag.flow.extractor.vl_engine_retry import post_with_engine_retry
 
     t0 = time.time()
     acquire_vl_slot()
     try:
-        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
+        r = post_with_engine_retry(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} coord API request failed: {e}")

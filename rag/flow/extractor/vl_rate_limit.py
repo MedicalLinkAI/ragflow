@@ -21,6 +21,13 @@ import time
 
 _DEFAULT_CONCURRENCY = 8
 
+# Incident 2026-08-22 §4.3: acquire() without timeout can block a consumer
+# thread forever when the engine stalls (vLLM crash / zombie holders),
+# cascading into a fully occupied executor. Fail fast instead — the bound
+# matches the 60-minute task watchdog so a healthy request queued behind
+# normal work is never killed early.
+VL_SLOT_ACQUIRE_TIMEOUT = 60 * 60
+
 
 def _resolve_limit() -> int:
     raw = os.environ.get("VL_GLOBAL_CONCURRENCY", "")
@@ -48,9 +55,17 @@ def _rebuild_semaphore() -> None:
 
 
 def acquire_vl_slot() -> None:
-    """获取 VL 请求槽位；排队超过 0.5s 时输出等待日志。"""
+    """获取 VL 请求槽位；排队超过 0.5s 时输出等待日志。
+
+    等待超过 VL_SLOT_ACQUIRE_TIMEOUT 时抛 TimeoutError 快速失败（事故 §4.3：
+    无超时等待会在引擎停摆时永久阻塞消费线程，进而占满整个执行器）。
+    """
     t0 = time.time()
-    _VL_SEMAPHORE.acquire()
+    if not _VL_SEMAPHORE.acquire(timeout=VL_SLOT_ACQUIRE_TIMEOUT):
+        raise TimeoutError(
+            f"[vl-rate-limit] waited {time.time() - t0:.1f}s for a VL slot "
+            f"(limit={VL_GLOBAL_CONCURRENCY}) and gave up; engine likely stalled"
+        )
     wait = time.time() - t0
     if wait > 0.5:
         logging.info(f"[vl-rate-limit] waited {wait:.1f}s for a VL slot (limit={VL_GLOBAL_CONCURRENCY})")

@@ -480,13 +480,20 @@ class RedisDB:
                 )
         return []
 
-    def recover_stale_pending_msgs(self, queue_names, group_name, min_idle_ms, count=100) -> int:
+    def recover_stale_pending_msgs(self, queue_names, group_name, min_idle_ms, count=100, should_requeue=None) -> int:
         """Requeue pending messages that stayed unacked longer than min_idle_ms.
 
         When an executor container restarts, messages delivered to the old
         consumers remain in the consumer group PEL forever, because live
         consumers only read new messages. This re-adds such stale entries to
         the stream and acks the old ones so tasks are picked up again.
+
+        should_requeue(consumer_name, task_id) -> bool is an optional liveness
+        guard consulted before requeuing. Idle alone cannot distinguish a dead
+        consumer from a live one processing a long task (the message stays in
+        the PEL until ack on completion), so with periodic recovery an
+        idle-only rule clones in-flight tasks (regression 2026-08-24). When
+        the guard declines, the entry is left untouched for the next beat.
         Returns the number of requeued messages.
         """
         recovered = 0
@@ -518,6 +525,29 @@ class RedisDB:
                             f"RedisDB.recover_stale_pending_msgs {queue_name} msg {msg_id} missing in stream, acked only"
                         )
                         continue
+                    task_id = None
+                    payload = messages[0][1].get("message") if isinstance(messages[0][1], dict) else None
+                    if isinstance(payload, bytes):
+                        payload = payload.decode(errors="replace")
+                    if isinstance(payload, str):
+                        try:
+                            task_id = json.loads(payload).get("id")
+                        except Exception:
+                            task_id = None
+                    if should_requeue is not None:
+                        try:
+                            keep = not should_requeue(consumer, task_id)
+                        except Exception as e:
+                            logging.warning(
+                                f"RedisDB.recover_stale_pending_msgs should_requeue raised, skipping {msg_id}: {e}"
+                            )
+                            keep = True
+                        if keep:
+                            logging.info(
+                                f"RedisDB.recover_stale_pending_msgs skipped live-held msg {queue_name} {msg_id} "
+                                f"consumer={consumer} task={task_id} idle={idle}ms"
+                            )
+                            continue
                     self.REDIS.xadd(queue_name, messages[0][1])
                     self.REDIS.xack(queue_name, group_name, msg_id)
                     recovered += 1

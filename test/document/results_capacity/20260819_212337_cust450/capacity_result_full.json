@@ -1,0 +1,545 @@
+{
+  "mode": "customer-batch",
+  "meta": {
+    "seed": 450,
+    "target_pages": 450,
+    "total_pages": 450,
+    "n": 36,
+    "band_dist": {
+      "小<5MB": 20,
+      "中5-10MB": 9,
+      "大>10MB": 7
+    },
+    "customer_base": "http://123.157.144.10:30080",
+    "customer_dataset": "fb850778372011f195bd2a5fbb884e34"
+  },
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "metrics_url": "http://10.16.3.16:8090/metrics",
+  "round": {
+    "makespan_min": 31.61,
+    "upload_sec": 91.3,
+    "done": 32,
+    "total": 36,
+    "total_pages": 450,
+    "agg": {
+      "timeouts": 0,
+      "errors": 0,
+      "failed_pages": 0,
+      "skipping": 0
+    },
+    "rate": 0.0,
+    "passed": false,
+    "reason": "总时长 31.6min 超预算 30.0min",
+    "window": [
+      "2026-08-19 21:24:54",
+      "2026-08-19 21:56:30"
+    ]
+  },
+  "docs": [
+    {
+      "name": "TXHU-男-54岁-头颈鳞癌.pdf",
+      "doc_id": "5f3077989bd111f19edd03a633658cdc",
+      "pages": 41,
+      "run": "RUNNING",
+      "note": "进度等待超时（未达终态）。 ",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WGXI-男-74岁-肺癌.pdf",
+      "doc_id": "6192f1469bd111f19edd03a633658cdc",
+      "pages": 25,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "YHGA-男-61岁-慢性阻塞性肺疾病(1).pdf",
+      "doc_id": "62e6694c9bd111f19edd03a633658cdc",
+      "pages": 9,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "YHBI-男-56岁-慢性肾病.pdf",
+      "doc_id": "64171d2a9bd111f19edd03a633658cdc",
+      "pages": 9,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WXQI-女-57岁-哮喘.pdf",
+      "doc_id": "6534d7ce9bd111f19edd03a633658cdc",
+      "pages": 1,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "ZFXI-男-66岁-食管癌.pdf",
+      "doc_id": "66fa11aa9bd111f19edd03a633658cdc",
+      "pages": 12,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "CHUI-女-46岁-乳腺癌.pdf",
+      "doc_id": "680d54c69bd111f19edd03a633658cdc",
+      "pages": 2,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "BJYU-女-67岁-系统性红斑狼疮（SLE).pdf",
+      "doc_id": "6900c9c69bd111f19edd03a633658cdc",
+      "pages": 1,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "LITA-男-63岁-肠癌.pdf",
+      "doc_id": "6a7c38c69bd111f19edd03a633658cdc",
+      "pages": 26,
+      "run": "RUNNING",
+      "note": "进度等待超时（未达终态）。 ",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WAXI-女-43岁-哮喘.pdf",
+      "doc_id": "6bd71d6c9bd111f19edd03a633658cdc",
+      "pages": 9,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "QXQI-男-62岁-类风湿关节炎.pdf",
+      "doc_id": "6d21e2749bd111f19edd03a633658cdc",
+      "pages": 12,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "TYCH-女-29岁-创面感染.pdf",
+      "doc_id": "6e3adb849bd111f19edd03a633658cdc",
+      "pages": 2,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "RWXI-女-60岁-卵巢癌.pdf",
+      "doc_id": "72603f749bd111f19edd03a633658cdc",
+      "pages": 64,
+      "run": "RUNNING",
+      "note": "进度等待超时（未达终态）。 ",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "CQLI-男-72岁-胆道癌.pdf",
+      "doc_id": "73f1f59e9bd111f19edd03a633658cdc",
+      "pages": 5,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "ZSYA-女-68岁-哮喘.pdf",
+      "doc_id": "76d7e6929bd111f19edd03a633658cdc",
+      "pages": 15,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "YWMI-男-56岁-实体瘤.pdf",
+      "doc_id": "783b4f889bd111f19edd03a633658cdc",
+      "pages": 15,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "LXJN-女-39岁-左乳浸润性导管癌.pdf",
+      "doc_id": "796b399a9bd111f19edd03a633658cdc",
+      "pages": 15,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "LWJI-男-62岁-胰腺癌.pdf",
+      "doc_id": "7ac128c29bd111f19edd03a633658cdc",
+      "pages": 9,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "ZJYI-女-59岁-哮喘.pdf",
+      "doc_id": "7bc6dd989bd111f19edd03a633658cdc",
+      "pages": 1,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "CYJU-男-61岁-慢性阻塞性肺疾病.pdf",
+      "doc_id": "7cf90ab09bd111f19edd03a633658cdc",
+      "pages": 11,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "GXXI-男-70岁-肺癌.pdf",
+      "doc_id": "7e0699e09bd111f19edd03a633658cdc",
+      "pages": 3,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "CRGU-男-54岁-食管癌.pdf",
+      "doc_id": "7f88c6a89bd111f19edd03a633658cdc",
+      "pages": 10,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WMXU-男-67岁-慢性阻塞性肺疾病.pdf",
+      "doc_id": "80d888729bd111f19edd03a633658cdc",
+      "pages": 11,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "LYHU-男-55岁-食管癌.pdf",
+      "doc_id": "8225d4829bd111f19edd03a633658cdc",
+      "pages": 11,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "ZXMI-男-53岁-特异性性皮炎（AD).pdf",
+      "doc_id": "8405d0189bd111f19edd03a633658cdc",
+      "pages": 9,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "SZXI-男-64岁-胆管癌.pdf",
+      "doc_id": "85fa07369bd111f19edd03a633658cdc",
+      "pages": 35,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "SUFA-女-65岁-哮喘.pdf",
+      "doc_id": "872796dc9bd111f19edd03a633658cdc",
+      "pages": 1,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "XZHA-男-43岁-痛风.pdf",
+      "doc_id": "885566569bd111f19edd03a633658cdc",
+      "pages": 3,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "GZPI-男-60岁-肝癌.pdf",
+      "doc_id": "89963e1e9bd111f19edd03a633658cdc",
+      "pages": 5,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WZJU-男-68岁-肺癌.pdf",
+      "doc_id": "8ad4cb929bd111f19edd03a633658cdc",
+      "pages": 18,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "LFLI-男-67岁-慢性阻塞性肺疾病.pdf",
+      "doc_id": "8c3fdf449bd111f19edd03a633658cdc",
+      "pages": 6,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WFHA-女-62岁-肺癌.pdf",
+      "doc_id": "8d80d9629bd111f19edd03a633658cdc",
+      "pages": 6,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "WXTI-男-62岁-特异性性皮炎（AD).pdf",
+      "doc_id": "8eb1aaf09bd111f19edd03a633658cdc",
+      "pages": 14,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "SCME-女-55岁-左乳浸润性导管癌.pdf",
+      "doc_id": "91291e309bd111f19edd03a633658cdc",
+      "pages": 31,
+      "run": "RUNNING",
+      "note": "进度等待超时（未达终态）。 ",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "LWXI-男-52岁-甲状腺髓样癌.pdf",
+      "doc_id": "9262d8729bd111f19edd03a633658cdc",
+      "pages": 2,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    },
+    {
+      "name": "KOMI-男-52岁-高血压.pdf",
+      "doc_id": "938c9e189bd111f19edd03a633658cdc",
+      "pages": 1,
+      "run": "DONE",
+      "note": "",
+      "err": {
+        "timeouts": 0,
+        "errors": 0,
+        "failed_pages": 0,
+        "skipping": 0
+      },
+      "progress_msg": ""
+    }
+  ]
+}

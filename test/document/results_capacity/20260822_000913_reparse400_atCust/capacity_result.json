@@ -1,0 +1,35 @@
+{
+  "mode": "reparse-plan",
+  "meta": {
+    "mode": "reparse-plan",
+    "plan_source": "results_capacity\\20260821_184551_cust400_atCust\\capacity_result_full.json",
+    "n": 27,
+    "total_pages": 400,
+    "target_base": "http://123.157.144.10:30080",
+    "target_dataset": "fb850778372011f195bd2a5fbb884e34"
+  },
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "metrics_url": null,
+  "round": {
+    "makespan_min": 47.27,
+    "true_makespan_min": null,
+    "trigger_sec": 29.3,
+    "done": 27,
+    "total": 27,
+    "total_pages": 400,
+    "agg": {
+      "timeouts": 0,
+      "errors": 0,
+      "failed_pages": 0,
+      "skipping": 0
+    },
+    "rate": 0.0,
+    "passed": false,
+    "reason": "总时长 47.3min 超预算 30.0min",
+    "window": [
+      "2026-08-22 00:09:13",
+      "2026-08-22 00:56:29"
+    ]
+  }
+}

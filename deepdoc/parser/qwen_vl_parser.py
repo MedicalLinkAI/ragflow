@@ -939,6 +939,18 @@ class QwenVLParser(RAGFlowPdfParser):
                 # 瞬时网络错误（含 300s read timeout）：重试而非整篇判失败
                 last_exc = e
                 logging.error(f"{self._log_tag} {prompt_tag} API call failed (attempt {attempt}/{max_attempts}): {e}")
+            except requests.exceptions.HTTPError as e:
+                # 事故 §11 S6：vLLM 引擎死亡时 APIServer 回 500（EngineDeadError），
+                # 容器 ~15s 内自动拉起；5xx 走重试等引擎回来，4xx 快速失败
+                if getattr(e.response, "status_code", 0) >= 500:
+                    last_exc = e
+                    logging.error(
+                        f"{self._log_tag} {prompt_tag} engine-dead HTTP "
+                        f"{e.response.status_code} (attempt {attempt}/{max_attempts}): {e}"
+                    )
+                else:
+                    logging.error(f"{self._log_tag} {prompt_tag} API call failed: {e}")
+                    raise
             except Exception as e:
                 logging.error(f"{self._log_tag} {prompt_tag} API call failed: {e}")
                 raise

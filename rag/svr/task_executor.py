@@ -172,6 +172,11 @@ embed_limiter = asyncio.Semaphore(MAX_CONCURRENT_CHUNK_BUILDERS)
 minio_limiter = asyncio.Semaphore(MAX_CONCURRENT_MINIO)
 kg_limiter = asyncio.Semaphore(int(os.environ.get('MAX_CONCURRENT_KG_TASKS', '10')))
 WORKER_HEARTBEAT_TIMEOUT = int(os.environ.get('WORKER_HEARTBEAT_TIMEOUT', '120'))
+# Incident 2026-08-22 §4.2: PEL stale-message recovery ran only once at
+# startup, so messages stranded by zombie consumers were never requeued.
+# The heartbeat loop now re-runs it at most once per this interval.
+STALE_RECOVERY_INTERVAL = 30
+_LAST_STALE_RECOVERY_AT = 0.0
 stop_event = threading.Event()
 
 
@@ -291,7 +296,7 @@ async def get_storage_binary(bucket, name):
     return await asyncio.to_thread(settings.STORAGE_IMPL.get, bucket, name)
 
 
-@timeout(60 * 80, 1)
+@timeout(60 * 60, 1)
 async def build_chunks(task, progress_callback):
     if task["size"] > settings.DOC_MAXIMUM_SIZE:
         set_progress(task["id"], prog=-1, msg="File size exceeds( <= %dMb )" %
@@ -1320,13 +1325,37 @@ async def get_server_ip() -> str:
         return 'Unknown'
 
 
+def _stale_msg_should_requeue(consumer, task_id) -> bool:
+    """Liveness guard for PEL stale-message recovery (regression 2026-08-24).
+
+    Idle > threshold alone cannot tell a dead consumer from a live one
+    processing a long task — a task's message stays in the PEL until the ack
+    on completion, so with periodic recovery an idle-only rule requeued and
+    cloned in-flight tasks every beat (one document parsed 3 times). Only
+    requeue when the holder is actually dead:
+
+    - own consumer name: requeue unless that task is currently executing in
+      this process (CURRENT_TASKS, populated by handle_task). After a restart
+      CURRENT_TASKS is empty, so entries left by the dead previous incarnation
+      under the same consumer name are still recovered;
+    - other consumer names: requeue only when their heartbeat zset has no
+      entry within WORKER_HEARTBEAT_TIMEOUT (same freshness convention as the
+      dead-executor cleanup in report_status).
+    """
+    if consumer == CONSUMER_NAME:
+        return task_id not in CURRENT_TASKS
+    return REDIS_CONN.zcount(consumer, time.time() - WORKER_HEARTBEAT_TIMEOUT, time.time() + 10) == 0
+
+
 def recover_stale_pending_messages() -> int:
     """Requeue pending messages left behind by dead consumers.
 
     After a container restart, messages delivered to the previous executors
     stay in the consumer group PEL forever since live consumers only read new
-    messages. Run once at startup under a distributed lock so that exactly one
-    executor re-adds messages idle longer than WORKER_HEARTBEAT_TIMEOUT.
+    messages. Run once at startup and periodically from the heartbeat loop,
+    under a distributed lock so that exactly one executor re-adds messages
+    idle longer than WORKER_HEARTBEAT_TIMEOUT. The _stale_msg_should_requeue
+    guard keeps legitimately in-flight long tasks from being cloned.
     """
     lock = RedisDistributedLock("recover_stale_pending_messages", lock_value=CONSUMER_NAME, timeout=60, blocking_timeout=1)
     if not lock.acquire():
@@ -1337,6 +1366,7 @@ def recover_stale_pending_messages() -> int:
             settings.get_svr_queue_names(),
             SVR_CONSUMER_GROUP_NAME,
             WORKER_HEARTBEAT_TIMEOUT * 1000,
+            should_requeue=_stale_msg_should_requeue,
         )
         if recovered:
             logging.info(f"recover_stale_pending_messages requeued {recovered} stale pending message(s)")
@@ -1349,7 +1379,7 @@ def recover_stale_pending_messages() -> int:
 
 
 async def report_status():
-    global CONSUMER_NAME, BOOT_AT, PENDING_TASKS, LAG_TASKS, DONE_TASKS, FAILED_TASKS
+    global CONSUMER_NAME, BOOT_AT, PENDING_TASKS, LAG_TASKS, DONE_TASKS, FAILED_TASKS, _LAST_STALE_RECOVERY_AT
     REDIS_CONN.sadd("TASKEXE", CONSUMER_NAME)
     redis_lock = RedisDistributedLock("clean_task_executor", lock_value=CONSUMER_NAME, timeout=60)
     while True:
@@ -1399,6 +1429,20 @@ async def report_status():
             logging.exception(f"report_status got exception: {e}")
         finally:
             redis_lock.release()
+
+        # Incident 2026-08-22 §4.2: periodically re-run PEL stale-message
+        # recovery so messages stranded by zombie consumers get requeued
+        # without waiting for a process restart. Exception-isolated so a
+        # recovery failure never breaks the heartbeat loop; the timestamp is
+        # updated even on failure to avoid hammering a broken Redis.
+        if time.time() - _LAST_STALE_RECOVERY_AT >= STALE_RECOVERY_INTERVAL:
+            try:
+                recover_stale_pending_messages()
+            except Exception as e:
+                logging.exception(f"periodic recover_stale_pending_messages got exception: {e}")
+            finally:
+                _LAST_STALE_RECOVERY_AT = time.time()
+
         await asyncio.sleep(30)
 
 

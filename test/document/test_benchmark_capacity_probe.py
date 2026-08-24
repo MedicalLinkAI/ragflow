@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """benchmark_capacity_probe.py 纯逻辑单元测试（TDD 红灯先行）。"""
+import json
 import sys
 from pathlib import Path
 
@@ -8,16 +9,21 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from benchmark_capacity_probe import (  # noqa: E402
+    build_auth_headers,
     capacity_verdict,
     copy_names,
     doc_pages_from_msg,
     fmt_metrics_line,
     gen_ladder,
+    load_reparse_plan,
     makespan_ok,
+    normalize_pdf_bytes,
     parse_case_from_name,
+    parse_doc_update_epoch,
     parse_vllm_metrics,
     pick_batch_by_pages,
     refine_range,
+    resolve_target_env,
     sample_docs,
     select_band,
     vlm_err_stats,
@@ -279,6 +285,19 @@ class TestPickBatchByPages:
         chosen, _ = pick_batch_by_pages(infos, 100, seed=1)
         assert all(d["name"] != "bad.pdf" for d in chosen)
 
+    def test_max_doc_pages_excludes_large_docs(self):
+        # 7 页的 d3.pdf 超上限 5，不得入选
+        chosen, used = pick_batch_by_pages(self._infos(), 20, seed=1, max_doc_pages=5)
+        assert all(d["pages"] <= 5 for d in chosen)
+        assert all(d["name"] != "d3.pdf" for d in chosen)
+        assert used <= 20
+
+    def test_max_doc_pages_zero_means_no_limit(self):
+        a, ua = pick_batch_by_pages(self._infos(), 100, seed=1, max_doc_pages=0)
+        assert ua == 22 and len(a) == 6
+        b, ub = pick_batch_by_pages(self._infos(), 100, seed=1)
+        assert ua == ub and [d["name"] for d in a] == [d["name"] for d in b]
+
 
 class TestParseCaseFromName:
     """从客户侧文件名 <缩写>-<性别>-<年龄>岁-<疾病>.pdf 解析病案字段。"""
@@ -289,10 +308,13 @@ class TestParseCaseFromName:
         assert c["name_abbr"] == "ZLME"
         assert c["gender"] == "man"
         assert c["age"] == 66
+        # 编码口径以客户现场 dataset 实测值为准（归档 batch_manifest.json）
+        assert c["illness_label_l1"] == "肿瘤"
+        assert c["illness_label_l2"] == "消化道"
         assert c["illness_label_l3"] == "胃癌"
-        assert c["illness_code_l1"].endswith("000000")
-        assert c["illness_code_l2"].endswith("0000")
-        assert c["illness_code_l3"].endswith("00")
+        assert c["illness_code_l1"] == "2000000"
+        assert c["illness_code_l2"] == "2002000"
+        assert c["illness_code_l3"] == "2002001"
 
     def test_female(self):
         c = parse_case_from_name("XLLI-女-42岁-子宫肌瘤.pdf")
@@ -302,6 +324,28 @@ class TestParseCaseFromName:
         # 非四段式命名无法解析病案字段
         assert parse_case_from_name("哮喘-HJCH222   2.27.pdf") is None
         assert parse_case_from_name("random.pdf") is None
+
+
+class TestNormalizePdfBytes:
+    """下载内容魔数清洗：部分响应因分块传输在 %PDF 前带 CRLF 前缀。"""
+
+    def test_clean_pdf_unchanged(self):
+        data = b"%PDF-1.4 body"
+        assert normalize_pdf_bytes(data) == data
+
+    def test_strip_leading_crlf(self):
+        assert normalize_pdf_bytes(b"\r\n%PDF-1.4 body") == b"%PDF-1.4 body"
+
+    def test_strip_leading_lf_and_spaces(self):
+        assert normalize_pdf_bytes(b"\n %PDF-1.7 x") == b"%PDF-1.7 x"
+
+    def test_non_pdf_returns_none(self):
+        assert normalize_pdf_bytes(b"<html>404</html>") is None
+        assert normalize_pdf_bytes(b"") is None
+
+    def test_long_junk_prefix_returns_none(self):
+        # %PDF 出现在 1KB 之后视为异常内容，不放行
+        assert normalize_pdf_bytes(b"x" * 2000 + b"%PDF") is None
 
 
 class TestVlmErrStats:
@@ -395,5 +439,128 @@ class TestFmtMetricsLine:
                 "prompt_tokens": None, "req_failure": None, "preemptions": None}
         line = fmt_metrics_line("15:50:53", vals, {})
         assert "run=-" in line and "kv=-" in line
+
+
+class TestBuildAuthHeaders:
+    """请求凭据构造：X-Api-Key 头 + Basic Auth 元组（与 MedlinkaiClient 同契约）。"""
+
+    def test_both(self):
+        headers, auth = build_auth_headers("k1", "u:p")
+        assert headers == {"X-Api-Key": "k1"}
+        assert auth == ("u", "p")
+
+    def test_api_key_only(self):
+        headers, auth = build_auth_headers("k1", "")
+        assert headers == {"X-Api-Key": "k1"}
+        assert auth is None
+
+    def test_basic_auth_only_keeps_colon_in_password(self):
+        headers, auth = build_auth_headers("", "user:pass:extra")
+        assert headers == {}
+        assert auth == ("user", "pass:extra")
+
+    def test_none(self):
+        headers, auth = build_auth_headers("", "")
+        assert headers == {}
+        assert auth is None
+
+    def test_basic_auth_without_colon_ignored(self):
+        _, auth = build_auth_headers("", "nocolon")
+        assert auth is None
+
+
+class TestResolveTargetEnv:
+    """--in-customer-env 把压测目标环境切到客户现场；默认仍为 medlinkai 目标。"""
+
+    def _args(self, **kw):
+        import types
+        base = dict(in_customer_env=False,
+                    customer_base="http://123.157.144.10:30080",
+                    customer_dataset="cust_ds",
+                    medlinkai_base="http://10.16.3.16:3160",
+                    dataset_id="test_ds")
+        base.update(kw)
+        return types.SimpleNamespace(**base)
+
+    def test_default_target_is_medlinkai(self):
+        base, ds = resolve_target_env(self._args())
+        assert base == "http://10.16.3.16:3160"
+        assert ds == "test_ds"
+
+    def test_in_customer_env_points_to_customer(self):
+        base, ds = resolve_target_env(self._args(in_customer_env=True))
+        assert base == "http://123.157.144.10:30080"
+        assert ds == "cust_ds"
+
+    def test_strips_trailing_slash(self):
+        a = self._args(in_customer_env=True,
+                       customer_base="http://123.157.144.10:30080/")
+        base, _ = resolve_target_env(a)
+        assert base == "http://123.157.144.10:30080"
+
+    def test_missing_flag_attr_treated_as_false(self):
+        import types
+        a = types.SimpleNamespace(medlinkai_base="http://10.16.3.16:3160",
+                                  dataset_id="test_ds")
+        base, ds = resolve_target_env(a)
+        assert base == "http://10.16.3.16:3160" and ds == "test_ds"
+
+
+class TestLoadReparsePlan:
+    """从上一轮 capacity_result_full.json 读取存量文档重解析清单。"""
+
+    def _write_full(self, tmp_path, payload):
+        p = tmp_path / "capacity_result_full.json"
+        p.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+        return p
+
+    def test_load_valid_plan(self, tmp_path):
+        p = self._write_full(tmp_path, {
+            "meta": {"n": 2, "total_pages": 30},
+            "docs": [
+                {"doc_id": "a1", "name": "X.pdf", "pages": 10, "run": "DONE"},
+                {"doc_id": "b2", "name": "Y.pdf", "pages": 20, "run": "DONE"},
+            ],
+        })
+        plan, meta = load_reparse_plan(p)
+        assert plan == [{"doc_id": "a1", "name": "X.pdf", "pages": 10},
+                        {"doc_id": "b2", "name": "Y.pdf", "pages": 20}]
+        assert meta["n"] == 2 and meta["total_pages"] == 30
+
+    def test_skips_docs_without_doc_id(self, tmp_path):
+        p = self._write_full(tmp_path, {
+            "docs": [{"doc_id": "", "name": "skip.pdf", "pages": 5},
+                     {"doc_id": "c3", "name": "Z.pdf", "pages": 7}],
+        })
+        plan, meta = load_reparse_plan(p)
+        assert len(plan) == 1 and plan[0]["doc_id"] == "c3"
+        assert meta["total_pages"] == 7
+
+    def test_missing_docs_raises(self, tmp_path):
+        p = self._write_full(tmp_path, {"meta": {}})
+        with pytest.raises(ValueError):
+            load_reparse_plan(p)
+
+    def test_file_not_exists_raises(self, tmp_path):
+        with pytest.raises(ValueError):
+            load_reparse_plan(tmp_path / "nope.json")
+
+
+class TestParseDocUpdateEpoch:
+    """update_date（UTC 如 2026-08-21T11:34:04）→ epoch，用于真实终态 makespan。"""
+
+    def test_utc_parse(self):
+        from datetime import datetime, timezone
+        epoch = parse_doc_update_epoch("2026-08-21T11:34:04")
+        expect = datetime(2026, 8, 21, 11, 34, 4, tzinfo=timezone.utc).timestamp()
+        assert epoch == pytest.approx(expect)
+
+    def test_empty_returns_none(self):
+        assert parse_doc_update_epoch(None) is None
+        assert parse_doc_update_epoch("") is None
+
+    def test_invalid_returns_none(self):
+        assert parse_doc_update_epoch("not-a-date") is None
+
 
 

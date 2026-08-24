@@ -288,6 +288,22 @@ class TestQwenVLParserInit:
         assert ok is False
         assert "not configured" in reason.lower()
 
+    def test_page_concurrency_kwarg_sets_instance_attr(self):
+        """DSL 驱动的页级并发：传入时遮蔽类默认值。"""
+        parser = QwenVLParser(api_url="http://mock:8080/v1", page_concurrency=7)
+        assert parser.PAGE_CONCURRENCY == 7
+
+    def test_page_concurrency_default_keeps_class_attr(self):
+        """不传时保持类默认值（naive.py 等无 DSL 路径不受影响）。"""
+        parser = QwenVLParser(api_url="http://mock:8080/v1")
+        assert parser.PAGE_CONCURRENCY == QwenVLParser.PAGE_CONCURRENCY
+
+    def test_page_concurrency_invalid_falls_back(self):
+        """非法值（<=0 / 非 int）忽略，保持类默认值。"""
+        for bad in (0, -2, "13", None):
+            parser = QwenVLParser(api_url="http://mock:8080/v1", page_concurrency=bad)
+            assert parser.PAGE_CONCURRENCY == QwenVLParser.PAGE_CONCURRENCY
+
 
 # ================================================================
 # 6. _classify_page

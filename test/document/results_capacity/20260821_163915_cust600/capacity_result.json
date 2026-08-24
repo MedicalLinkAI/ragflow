@@ -1,0 +1,39 @@
+{
+  "mode": "customer-batch",
+  "meta": {
+    "seed": 600,
+    "target_pages": 600,
+    "total_pages": 600,
+    "n": 42,
+    "band_dist": {
+      "小<5MB": 18,
+      "中5-10MB": 14,
+      "大>10MB": 10
+    },
+    "customer_base": "http://123.157.144.10:30080",
+    "customer_dataset": "fb850778372011f195bd2a5fbb884e34"
+  },
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "metrics_url": "http://10.16.3.16:8090/metrics",
+  "round": {
+    "makespan_min": 31.94,
+    "upload_sec": 113.2,
+    "done": 39,
+    "total": 42,
+    "total_pages": 600,
+    "agg": {
+      "timeouts": 0,
+      "errors": 0,
+      "failed_pages": 0,
+      "skipping": 0
+    },
+    "rate": 0.0,
+    "passed": false,
+    "reason": "总时长 31.9min 超预算 30.0min",
+    "window": [
+      "2026-08-21 16:40:44",
+      "2026-08-21 17:12:40"
+    ]
+  }
+}

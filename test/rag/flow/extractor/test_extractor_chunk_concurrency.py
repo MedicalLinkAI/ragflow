@@ -149,7 +149,7 @@ Extractor = extractor_module.Extractor
 
 
 # ── Test helpers ──
-def _make_extractor(chunks, parse_method="", field_name="extracted_data_tks"):
+def _make_extractor(chunks, parse_method="", field_name="extracted_data_tks", vl_limit=None):
     """Build a bare Extractor instance with just enough plumbing for _invoke."""
     ext = Extractor.__new__(Extractor)
 
@@ -161,10 +161,13 @@ def _make_extractor(chunks, parse_method="", field_name="extracted_data_tks"):
 
     canvas = types.SimpleNamespace(components={}, _doc_id="doc-1")
     if parse_method:
+        _pdf_setups = {"parse_method": parse_method}
+        if vl_limit is not None:
+            _pdf_setups["vl_global_concurrency"] = vl_limit
         canvas.components["p0"] = {
             "obj": types.SimpleNamespace(
                 component_name="Parser",
-                _param=types.SimpleNamespace(setups={"pdf": {"parse_method": parse_method}}),
+                _param=types.SimpleNamespace(setups={"pdf": _pdf_setups}),
             )
         }
     ext._canvas = canvas
@@ -240,6 +243,33 @@ class TestExtractorChunkConcurrency:
 
         assert peak <= Extractor.CHUNK_CONCURRENCY
         assert peak >= 2
+
+    def test_chunk_concurrency_derived_from_dsl_vl_limit(self):
+        """DSL vl_global_concurrency=6 → chunk 并发 = 闸值一半（3）。"""
+        n = 12
+        chunks = [{"text": f"t{i}"} for i in range(n)]
+        ext = _make_extractor(chunks, parse_method="paddleocr", vl_limit=6)
+
+        ocr_mod = extractor_module.qwen30b_ocr
+        current = 0
+        peak = 0
+
+        async def fake_process_text(ext_, ck, llm_name):
+            nonlocal current, peak
+            current += 1
+            peak = max(peak, current)
+            await asyncio.sleep(0.05)
+            current -= 1
+
+        orig = ocr_mod.process_text
+        ocr_mod.process_text = fake_process_text
+        try:
+            asyncio.run(ext._invoke())
+        finally:
+            ocr_mod.process_text = orig
+
+        assert peak <= 3, f"chunk 并发 {peak} 超过闸值一半 3"
+        assert peak >= 2, f"chunk 并发 {peak} 低于预期（闸 6 时应能打满 3）"
 
     def test_output_order_preserved_despite_reversed_completion(self):
         """完成顺序颠倒时，输出 chunks 顺序和字段仍与输入一致。"""

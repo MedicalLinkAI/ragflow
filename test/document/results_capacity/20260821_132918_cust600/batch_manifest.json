@@ -1,0 +1,850 @@
+{
+  "meta": {
+    "seed": 600,
+    "target_pages": 600,
+    "total_pages": 600,
+    "n": 49,
+    "band_dist": {
+      "小<5MB": 28,
+      "中5-10MB": 9,
+      "大>10MB": 12
+    },
+    "customer_base": "http://123.157.144.10:30080",
+    "customer_dataset": "fb850778372011f195bd2a5fbb884e34"
+  },
+  "docs": [
+    {
+      "doc_id": "c8b9e2d897a011f19dbf5f959e8978a2",
+      "name": "WXYA-男-41岁-肺腺癌.pdf",
+      "pages": 30,
+      "size": 41146340,
+      "case": {
+        "name_abbr": "WXYA",
+        "gender": "man",
+        "age": 41,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001006",
+        "illness_label_l3": "肺腺癌"
+      }
+    },
+    {
+      "doc_id": "67eab0c699ef11f19dbf5f959e8978a2",
+      "name": "XSXI-女-60岁-肺癌.pdf",
+      "pages": 9,
+      "size": 29110205,
+      "case": {
+        "name_abbr": "XSXI",
+        "gender": "woman",
+        "age": 60,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "f7c6d2fa989711f19dbf5f959e8978a2",
+      "name": "OXLI-女-57岁-乳腺癌.pdf",
+      "pages": 4,
+      "size": 522411,
+      "case": {
+        "name_abbr": "OXLI",
+        "gender": "woman",
+        "age": 57,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001003",
+        "illness_label_l3": "乳腺癌"
+      }
+    },
+    {
+      "doc_id": "b812065499e411f19dbf5f959e8978a2",
+      "name": "JSYI-女-50岁-乳腺癌.pdf",
+      "pages": 2,
+      "size": 98719,
+      "case": {
+        "name_abbr": "JSYI",
+        "gender": "woman",
+        "age": 50,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001003",
+        "illness_label_l3": "乳腺癌"
+      }
+    },
+    {
+      "doc_id": "2fcdcdb0996111f19dbf5f959e8978a2",
+      "name": "FXBO-男-45岁-头颈鳞癌.pdf",
+      "pages": 29,
+      "size": 18352088,
+      "case": {
+        "name_abbr": "FXBO",
+        "gender": "man",
+        "age": 45,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2007000",
+        "illness_label_l2": "头颈",
+        "illness_code_l3": "2007001",
+        "illness_label_l3": "头颈鳞癌"
+      }
+    },
+    {
+      "doc_id": "3e2d7870999211f19dbf5f959e8978a2",
+      "name": "HXIO-男-70岁-肺癌.pdf",
+      "pages": 2,
+      "size": 80476,
+      "case": {
+        "name_abbr": "HXIO",
+        "gender": "man",
+        "age": 70,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "bafc20ce987811f19dbf5f959e8978a2",
+      "name": "CRQI-男-59岁-肠癌.pdf",
+      "pages": 11,
+      "size": 2309912,
+      "case": {
+        "name_abbr": "CRQI",
+        "gender": "man",
+        "age": 59,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2002000",
+        "illness_label_l2": "消化道",
+        "illness_code_l3": "2002002",
+        "illness_label_l3": "肠癌"
+      }
+    },
+    {
+      "doc_id": "626211a6994211f19dbf5f959e8978a2",
+      "name": "HJYU-女-21岁-哮喘.pdf",
+      "pages": 1,
+      "size": 64386,
+      "case": {
+        "name_abbr": "HJYU",
+        "gender": "woman",
+        "age": 21,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001001",
+        "illness_label_l3": "哮喘"
+      }
+    },
+    {
+      "doc_id": "edc4cb6c992911f19dbf5f959e8978a2",
+      "name": "SJHU-男-69岁-肝癌.pdf",
+      "pages": 11,
+      "size": 5075546,
+      "case": {
+        "name_abbr": "SJHU",
+        "gender": "man",
+        "age": 69,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2003000",
+        "illness_label_l2": "肝胆胰",
+        "illness_code_l3": "2003001",
+        "illness_label_l3": "肝癌"
+      }
+    },
+    {
+      "doc_id": "32d1c4ac992b11f19dbf5f959e8978a2",
+      "name": "JSMI-女-59岁-尿路上皮癌.pdf",
+      "pages": 10,
+      "size": 2703389,
+      "case": {
+        "name_abbr": "JSMI",
+        "gender": "woman",
+        "age": 59,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2005000",
+        "illness_label_l2": "泌尿",
+        "illness_code_l3": "2005003",
+        "illness_label_l3": "尿路上皮癌"
+      }
+    },
+    {
+      "doc_id": "18d7a612994311f19dbf5f959e8978a2",
+      "name": "WCME-女-50岁-哮喘.pdf",
+      "pages": 1,
+      "size": 64386,
+      "case": {
+        "name_abbr": "WCME",
+        "gender": "woman",
+        "age": 50,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001001",
+        "illness_label_l3": "哮喘"
+      }
+    },
+    {
+      "doc_id": "6a2dc89c99ee11f19dbf5f959e8978a2",
+      "name": "AFMI-男-63岁-结直肠癌.pdf",
+      "pages": 11,
+      "size": 8653242,
+      "case": {
+        "name_abbr": "AFMI",
+        "gender": "man",
+        "age": 63,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2002000",
+        "illness_label_l2": "消化道",
+        "illness_code_l3": "2002016",
+        "illness_label_l3": "结直肠癌"
+      }
+    },
+    {
+      "doc_id": "7f23fb0298a611f19dbf5f959e8978a2",
+      "name": "ZHYI-女-48岁-糖尿病.pdf",
+      "pages": 1,
+      "size": 764907,
+      "case": {
+        "name_abbr": "ZHYI",
+        "gender": "woman",
+        "age": 48,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004007",
+        "illness_label_l3": "糖尿病"
+      }
+    },
+    {
+      "doc_id": "eeba192e994611f19dbf5f959e8978a2",
+      "name": "CJHU-女-51岁-失眠症.pdf",
+      "pages": 1,
+      "size": 369740,
+      "case": {
+        "name_abbr": "CJHU",
+        "gender": "woman",
+        "age": 51,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1013000",
+        "illness_label_l2": "精神障碍",
+        "illness_code_l3": "1013003",
+        "illness_label_l3": "失眠症"
+      }
+    },
+    {
+      "doc_id": "3de26eca994211f19dbf5f959e8978a2",
+      "name": "BJYU-女-67岁-系统性红斑狼疮（SLE).pdf",
+      "pages": 1,
+      "size": 68500,
+      "case": {
+        "name_abbr": "BJYU",
+        "gender": "woman",
+        "age": 67,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1005000",
+        "illness_label_l2": "风湿免疫疾病",
+        "illness_code_l3": "1005001",
+        "illness_label_l3": "系统性红斑狼疮（SLE)"
+      }
+    },
+    {
+      "doc_id": "859fed96984d11f19dbf5f959e8978a2",
+      "name": "ZQDO-女-74岁-慢性阻塞性肺疾病.pdf",
+      "pages": 10,
+      "size": 8746553,
+      "case": {
+        "name_abbr": "ZQDO",
+        "gender": "woman",
+        "age": 74,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001002",
+        "illness_label_l3": "慢性阻塞性肺疾病"
+      }
+    },
+    {
+      "doc_id": "ae1ff99497e611f19dbf5f959e8978a2",
+      "name": "LZQI-男-59岁-哮喘.pdf",
+      "pages": 24,
+      "size": 14243480,
+      "case": {
+        "name_abbr": "LZQI",
+        "gender": "man",
+        "age": 59,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001001",
+        "illness_label_l3": "哮喘"
+      }
+    },
+    {
+      "doc_id": "b50d696898ee11f19dbf5f959e8978a2",
+      "name": "DWYO-女-71岁-乳腺癌(1).pdf",
+      "pages": 17,
+      "size": 14542448,
+      "case": {
+        "name_abbr": "DWYO",
+        "gender": "woman",
+        "age": 71,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001003",
+        "illness_label_l3": "乳腺癌"
+      }
+    },
+    {
+      "doc_id": "aeef1a76999e11f19dbf5f959e8978a2",
+      "name": "ZPHU-女-67岁-肺癌.pdf",
+      "pages": 61,
+      "size": 134567696,
+      "case": {
+        "name_abbr": "ZPHU",
+        "gender": "woman",
+        "age": 67,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "f8e3071c9b7111f19dbf5f959e8978a2",
+      "name": "QMQI-男-69岁-肺癌(1).pdf",
+      "pages": 25,
+      "size": 12260646,
+      "case": {
+        "name_abbr": "QMQI",
+        "gender": "man",
+        "age": 69,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "add0692a97ef11f19dbf5f959e8978a2",
+      "name": "YBGE-男-76岁-慢性阻塞性肺疾病.pdf",
+      "pages": 12,
+      "size": 6562944,
+      "case": {
+        "name_abbr": "YBGE",
+        "gender": "man",
+        "age": 76,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001002",
+        "illness_label_l3": "慢性阻塞性肺疾病"
+      }
+    },
+    {
+      "doc_id": "f106908299d111f19dbf5f959e8978a2",
+      "name": "YPJU-男-57岁-食管癌.pdf",
+      "pages": 31,
+      "size": 6836367,
+      "case": {
+        "name_abbr": "YPJU",
+        "gender": "man",
+        "age": 57,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2002000",
+        "illness_label_l2": "消化道",
+        "illness_code_l3": "2002003",
+        "illness_label_l3": "食管癌"
+      }
+    },
+    {
+      "doc_id": "eaa82f68982b11f19dbf5f959e8978a2",
+      "name": "ZJYU-男-65岁-肺腺癌.pdf",
+      "pages": 19,
+      "size": 28820386,
+      "case": {
+        "name_abbr": "ZJYU",
+        "gender": "man",
+        "age": 65,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001006",
+        "illness_label_l3": "肺腺癌"
+      }
+    },
+    {
+      "doc_id": "4c6d9e1499f711f19dbf5f959e8978a2",
+      "name": "FGMI-男-72岁-慢性阻塞性肺疾病.pdf",
+      "pages": 1,
+      "size": 70478,
+      "case": {
+        "name_abbr": "FGMI",
+        "gender": "man",
+        "age": 72,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001002",
+        "illness_label_l3": "慢性阻塞性肺疾病"
+      }
+    },
+    {
+      "doc_id": "b6afb5ae996c11f19dbf5f959e8978a2",
+      "name": "LGDO-男-54岁-肾细胞癌.pdf",
+      "pages": 86,
+      "size": 26222459,
+      "case": {
+        "name_abbr": "LGDO",
+        "gender": "man",
+        "age": 54,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2005000",
+        "illness_label_l2": "泌尿",
+        "illness_code_l3": "2005001",
+        "illness_label_l3": "肾细胞癌"
+      }
+    },
+    {
+      "doc_id": "908838aa98be11f19dbf5f959e8978a2",
+      "name": "CJXI-男-57岁-肾上腺皮质疾病.pdf",
+      "pages": 4,
+      "size": 1949435,
+      "case": {
+        "name_abbr": "CJXI",
+        "gender": "man",
+        "age": 57,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004002",
+        "illness_label_l3": "肾上腺皮质疾病"
+      }
+    },
+    {
+      "doc_id": "84ff31fa997711f19dbf5f959e8978a2",
+      "name": "CDLI-男-57岁-肺癌.pdf",
+      "pages": 2,
+      "size": 66772,
+      "case": {
+        "name_abbr": "CDLI",
+        "gender": "man",
+        "age": 57,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "627480c299bd11f19dbf5f959e8978a2",
+      "name": "LWJI-男-62岁-胰腺癌.pdf",
+      "pages": 9,
+      "size": 4456738,
+      "case": {
+        "name_abbr": "LWJI",
+        "gender": "man",
+        "age": 62,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2003000",
+        "illness_label_l2": "肝胆胰",
+        "illness_code_l3": "2003003",
+        "illness_label_l3": "胰腺癌"
+      }
+    },
+    {
+      "doc_id": "1f01289a983211f19dbf5f959e8978a2",
+      "name": "LCFA-女-63岁-哮喘.pdf",
+      "pages": 8,
+      "size": 38695956,
+      "case": {
+        "name_abbr": "LCFA",
+        "gender": "woman",
+        "age": 63,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001001",
+        "illness_label_l3": "哮喘"
+      }
+    },
+    {
+      "doc_id": "b433014699b211f19dbf5f959e8978a2",
+      "name": "XJZH-男-64岁-慢性阻塞性肺疾病.pdf",
+      "pages": 7,
+      "size": 4408322,
+      "case": {
+        "name_abbr": "XJZH",
+        "gender": "man",
+        "age": 64,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001002",
+        "illness_label_l3": "慢性阻塞性肺疾病"
+      }
+    },
+    {
+      "doc_id": "737de0b299f811f19dbf5f959e8978a2",
+      "name": "CRYI-女-38岁-哮喘.pdf",
+      "pages": 1,
+      "size": 62424,
+      "case": {
+        "name_abbr": "CRYI",
+        "gender": "woman",
+        "age": 38,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001001",
+        "illness_label_l3": "哮喘"
+      }
+    },
+    {
+      "doc_id": "1d6c76ce992711f19dbf5f959e8978a2",
+      "name": "YHGA-男-61岁-慢性阻塞性肺疾病(1).pdf",
+      "pages": 9,
+      "size": 4079757,
+      "case": {
+        "name_abbr": "YHGA",
+        "gender": "man",
+        "age": 61,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001002",
+        "illness_label_l3": "慢性阻塞性肺疾病"
+      }
+    },
+    {
+      "doc_id": "900e0bcc99b111f19dbf5f959e8978a2",
+      "name": "GWSU-女-33岁-荨麻疹.pdf",
+      "pages": 6,
+      "size": 879913,
+      "case": {
+        "name_abbr": "GWSU",
+        "gender": "woman",
+        "age": 33,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1006000",
+        "illness_label_l2": "皮肤病",
+        "illness_code_l3": "1006012",
+        "illness_label_l3": "荨麻疹"
+      }
+    },
+    {
+      "doc_id": "9c0d9f7a999111f19dbf5f959e8978a2",
+      "name": "THCH-男-61岁-非小细胞肺癌.pdf",
+      "pages": 11,
+      "size": 3845300,
+      "case": {
+        "name_abbr": "THCH",
+        "gender": "man",
+        "age": 61,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001004",
+        "illness_label_l3": "非小细胞肺癌"
+      }
+    },
+    {
+      "doc_id": "4656f0f898c011f19dbf5f959e8978a2",
+      "name": "WXQI-女-57岁-哮喘.pdf",
+      "pages": 1,
+      "size": 655941,
+      "case": {
+        "name_abbr": "WXQI",
+        "gender": "woman",
+        "age": 57,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001001",
+        "illness_label_l3": "哮喘"
+      }
+    },
+    {
+      "doc_id": "a5b8c684994711f19dbf5f959e8978a2",
+      "name": "NWLI-男-55岁-肺癌.pdf",
+      "pages": 17,
+      "size": 9264834,
+      "case": {
+        "name_abbr": "NWLI",
+        "gender": "man",
+        "age": 55,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "5d2f9b0897e011f19dbf5f959e8978a2",
+      "name": "CHQU-男-49岁-胰腺癌.pdf",
+      "pages": 24,
+      "size": 9263162,
+      "case": {
+        "name_abbr": "CHQU",
+        "gender": "man",
+        "age": 49,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2003000",
+        "illness_label_l2": "肝胆胰",
+        "illness_code_l3": "2003003",
+        "illness_label_l3": "胰腺癌"
+      }
+    },
+    {
+      "doc_id": "416fb60e98e011f19dbf5f959e8978a2",
+      "name": "GJCH-男-62岁-糖尿病.pdf",
+      "pages": 6,
+      "size": 6430495,
+      "case": {
+        "name_abbr": "GJCH",
+        "gender": "man",
+        "age": 62,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004007",
+        "illness_label_l3": "糖尿病"
+      }
+    },
+    {
+      "doc_id": "644ecad4994411f19dbf5f959e8978a2",
+      "name": "LMWE-男-65岁-慢性肾病.pdf",
+      "pages": 2,
+      "size": 1572036,
+      "case": {
+        "name_abbr": "LMWE",
+        "gender": "man",
+        "age": 65,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1016000",
+        "illness_label_l2": "肾病",
+        "illness_code_l3": "1016002",
+        "illness_label_l3": "慢性肾病"
+      }
+    },
+    {
+      "doc_id": "d89c4f3498ad11f19dbf5f959e8978a2",
+      "name": "LYHU-男-58岁-食管癌.pdf",
+      "pages": 11,
+      "size": 3118159,
+      "case": {
+        "name_abbr": "LYHU",
+        "gender": "man",
+        "age": 58,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2002000",
+        "illness_label_l2": "消化道",
+        "illness_code_l3": "2002003",
+        "illness_label_l3": "食管癌"
+      }
+    },
+    {
+      "doc_id": "ceadcc36989a11f19dbf5f959e8978a2",
+      "name": "CSZH-女-64岁-糖尿病.pdf",
+      "pages": 8,
+      "size": 9322761,
+      "case": {
+        "name_abbr": "CSZH",
+        "gender": "woman",
+        "age": 64,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004007",
+        "illness_label_l3": "糖尿病"
+      }
+    },
+    {
+      "doc_id": "7bb7b76298ea11f19dbf5f959e8978a2",
+      "name": "GYHU-男-62岁-实体瘤.pdf",
+      "pages": 14,
+      "size": 28677157,
+      "case": {
+        "name_abbr": "GYHU",
+        "gender": "man",
+        "age": 62,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2009000",
+        "illness_label_l2": "实体瘤",
+        "illness_code_l3": "2009001",
+        "illness_label_l3": "实体瘤"
+      }
+    },
+    {
+      "doc_id": "ca39a43e994611f19dbf5f959e8978a2",
+      "name": "ZXLA-男-57岁-乳腺癌.pdf",
+      "pages": 2,
+      "size": 44032,
+      "case": {
+        "name_abbr": "ZXLA",
+        "gender": "man",
+        "age": 57,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001003",
+        "illness_label_l3": "乳腺癌"
+      }
+    },
+    {
+      "doc_id": "fee0253899d611f19dbf5f959e8978a2",
+      "name": "ZJFU-男-67岁-慢性阻塞性肺疾病.pdf",
+      "pages": 32,
+      "size": 32153689,
+      "case": {
+        "name_abbr": "ZJFU",
+        "gender": "man",
+        "age": 67,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1001000",
+        "illness_label_l2": "呼吸系统疾病",
+        "illness_code_l3": "1001002",
+        "illness_label_l3": "慢性阻塞性肺疾病"
+      }
+    },
+    {
+      "doc_id": "0d77688c99db11f19dbf5f959e8978a2",
+      "name": "SZJU-男-2026岁-黄斑变性.pdf",
+      "pages": 3,
+      "size": 1581833,
+      "case": {
+        "name_abbr": "SZJU",
+        "gender": "man",
+        "age": 2026,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1015000",
+        "illness_label_l2": "眼科疾病",
+        "illness_code_l3": "1015004",
+        "illness_label_l3": "黄斑变性"
+      }
+    },
+    {
+      "doc_id": "cda3fd4a98f111f19dbf5f959e8978a2",
+      "name": "WFHA-女-62岁-肺癌.pdf",
+      "pages": 6,
+      "size": 7292190,
+      "case": {
+        "name_abbr": "WFHA",
+        "gender": "woman",
+        "age": 62,
+        "illness_code_l1": "2000000",
+        "illness_label_l1": "肿瘤",
+        "illness_code_l2": "2001000",
+        "illness_label_l2": "胸部",
+        "illness_code_l3": "2001001",
+        "illness_label_l3": "肺癌"
+      }
+    },
+    {
+      "doc_id": "b7277978985d11f19dbf5f959e8978a2",
+      "name": "ZHQI-男-40岁-痛风.pdf",
+      "pages": 5,
+      "size": 2974546,
+      "case": {
+        "name_abbr": "ZHQI",
+        "gender": "man",
+        "age": 40,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004005",
+        "illness_label_l3": "痛风"
+      }
+    },
+    {
+      "doc_id": "37bf135e994711f19dbf5f959e8978a2",
+      "name": "GXFE-女-26岁-脱发.pdf",
+      "pages": 1,
+      "size": 207519,
+      "case": {
+        "name_abbr": "GXFE",
+        "gender": "woman",
+        "age": 26,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004009",
+        "illness_label_l3": "脱发"
+      }
+    },
+    {
+      "doc_id": "3ccefd58994411f19dbf5f959e8978a2",
+      "name": "ZHBO-男-34岁-糖尿病.pdf",
+      "pages": 1,
+      "size": 534358,
+      "case": {
+        "name_abbr": "ZHBO",
+        "gender": "man",
+        "age": 34,
+        "illness_code_l1": "1000000",
+        "illness_label_l1": "慢病",
+        "illness_code_l2": "1004000",
+        "illness_label_l2": "内分泌疾病",
+        "illness_code_l3": "1004007",
+        "illness_label_l3": "糖尿病"
+      }
+    }
+  ]
+}

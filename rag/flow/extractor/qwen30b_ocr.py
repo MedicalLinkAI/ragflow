@@ -368,11 +368,12 @@ def _call_qwen30b_to_coord(img_bytes: bytes, prompt: str, tag: str, endpoint_cfg
     logging.info(f"{tag} API call start, endpoint={api_endpoint}, model={model_name}, img_bytes={len(img_bytes)}")
     
     from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+    from rag.flow.extractor.vl_engine_retry import post_with_engine_retry
 
     t0 = time.time()
     acquire_vl_slot()
     try:
-        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
+        r = post_with_engine_retry(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
@@ -454,11 +455,12 @@ def _call_qwen30b_text_only(img_bytes: bytes, prompt: str, tag: str, endpoint_cf
 
     logging.info(f"{tag} API call start, endpoint={api_endpoint}, model={model_name}, img_bytes={len(img_bytes)}")
     from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+    from rag.flow.extractor.vl_engine_retry import post_with_engine_retry
 
     t0 = time.time()
     acquire_vl_slot()
     try:
-        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
+        r = post_with_engine_retry(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")
@@ -523,11 +525,12 @@ def _call_qwen30b_latex_only(img_bytes: bytes, prompt: str, tag: str, endpoint_c
 
     logging.info(f"{tag} API call start (raw), endpoint={api_endpoint}, model={model_name}")
     from rag.flow.extractor.vl_rate_limit import acquire_vl_slot, release_vl_slot
+    from rag.flow.extractor.vl_engine_retry import post_with_engine_retry
 
     t0 = time.time()
     acquire_vl_slot()
     try:
-        r = requests.post(api_endpoint, json=payload, headers=headers, timeout=120)
+        r = post_with_engine_retry(api_endpoint, json=payload, headers=headers, timeout=120)
     except requests.RequestException as e:
         elapsed = time.time() - t0
         logging.warning(f"{tag} API request failed: {e}")

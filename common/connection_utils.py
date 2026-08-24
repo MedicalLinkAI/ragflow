@@ -27,6 +27,17 @@ TimeoutException = Union[Type[BaseException], BaseException]
 OnTimeoutCallback = Union[Callable[..., Any], Coroutine[Any, Any, Any]]
 
 
+def _timeout_assertion_enabled() -> bool:
+    """Timeout assertion is ENABLED by default since the 2026-08-22 incident:
+    zombie tasks occupied all executor slots for hours because the watchdog
+    only armed itself when ENABLE_TIMEOUT_ASSERTION was explicitly set.
+    Set ENABLE_TIMEOUT_ASSERTION=0/false/no/off to disable (escape hatch)."""
+    val = os.environ.get("ENABLE_TIMEOUT_ASSERTION")
+    if val is None:
+        return True
+    return val.strip().lower() not in ("", "0", "false", "no", "off")
+
+
 def timeout(seconds: float | int | str = None, attempts: int = 2, *, exception: Optional[TimeoutException] = None,
             on_timeout: Optional[OnTimeoutCallback] = None):
     if isinstance(seconds, str):
@@ -50,7 +61,7 @@ def timeout(seconds: float | int | str = None, attempts: int = 2, *, exception: 
 
             for a in range(attempts):
                 try:
-                    if os.environ.get("ENABLE_TIMEOUT_ASSERTION"):
+                    if _timeout_assertion_enabled():
                         result = result_queue.get(timeout=seconds)
                     else:
                         result = result_queue.get()
@@ -68,7 +79,7 @@ def timeout(seconds: float | int | str = None, attempts: int = 2, *, exception: 
 
             for a in range(attempts):
                 try:
-                    if os.environ.get("ENABLE_TIMEOUT_ASSERTION"):
+                    if _timeout_assertion_enabled():
                         return await asyncio.wait_for(func(*args, **kwargs), timeout=seconds)
                     else:
                         return await func(*args, **kwargs)
@@ -95,7 +106,13 @@ def timeout(seconds: float | int | str = None, attempts: int = 2, *, exception: 
                     raise RuntimeError("Invalid exception type provided")
 
         if asyncio.iscoroutinefunction(func):
+            # Expose the watchdog configuration on the wrapper so the
+            # timeout contract stays inspectable by tests and ops tooling.
+            async_wrapper._timeout_seconds = seconds
+            async_wrapper._timeout_attempts = attempts
             return async_wrapper
+        wrapper._timeout_seconds = seconds
+        wrapper._timeout_attempts = attempts
         return wrapper
 
     return decorator

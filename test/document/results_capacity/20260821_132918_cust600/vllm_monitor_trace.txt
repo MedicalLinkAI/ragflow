@@ -1,0 +1,3 @@
+13:30:30 run=5 wait=0 kv=0.069 prompt+0 gen+0 ok+0 fail+0 req_ok=3071 preemp=0
+13:31:01 run=17 wait=1 kv=0.124 prompt+75422 gen+6522 ok+10 fail+0 req_ok=3081 preemp=0
+13:31:31 run=44 wait=0 kv=0.285 prompt+333493 gen+9914 ok+49 fail+0 req_ok=3130 preemp=0

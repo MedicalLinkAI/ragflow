@@ -1,0 +1,39 @@
+{
+  "mode": "customer-batch",
+  "meta": {
+    "seed": 550,
+    "target_pages": 550,
+    "total_pages": 550,
+    "n": 51,
+    "band_dist": {
+      "小<5MB": 29,
+      "中5-10MB": 9,
+      "大>10MB": 13
+    },
+    "customer_base": "http://123.157.144.10:30080",
+    "customer_dataset": "fb850778372011f195bd2a5fbb884e34"
+  },
+  "budget_min": 30.0,
+  "max_timeout_rate": 2.0,
+  "metrics_url": "http://10.16.3.16:8090/metrics",
+  "round": {
+    "makespan_min": 29.85,
+    "upload_sec": 131.8,
+    "done": 51,
+    "total": 51,
+    "total_pages": 550,
+    "agg": {
+      "timeouts": 0,
+      "errors": 0,
+      "failed_pages": 0,
+      "skipping": 0
+    },
+    "rate": 0.0,
+    "passed": true,
+    "reason": "通过",
+    "window": [
+      "2026-08-21 14:28:48",
+      "2026-08-21 14:58:39"
+    ]
+  }
+}

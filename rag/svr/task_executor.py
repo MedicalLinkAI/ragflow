@@ -40,6 +40,8 @@ from rag.prompts.generator import keyword_extraction, question_proposal, content
 import logging
 import os
 from datetime import datetime
+import ctypes
+import gc
 import json
 import xxhash
 import copy
@@ -185,6 +187,28 @@ def signal_handler(sig, frame):
     stop_event.set()
     time.sleep(1)
     sys.exit(0)
+
+
+def _release_task_memory() -> None:
+    """每任务收尾强制归还内存（8/23 客户事故取证结论的根治项）。
+
+    executor 常驻进程下，解析产生的大对象（全本页图、编码字节、
+    chunks 深拷贝）任务结束后无人触发回收：gc 分代阈值使大对象滞留
+    老年代，glibc malloc 又不把释放的堆块归还 OS → RSS 只涨不降，
+    4 进程 3 天累积 160G 挤干主机页缓存，引发 8/23 IO 风暴。
+    gc.collect() 回收滞留大对象；Linux 下 malloc_trim(0) 把空闲堆块
+    归还 OS，RSS 真实回落。释放失败不得影响任务收尾。
+    """
+    try:
+        gc.collect()
+    except Exception as e:
+        logging.warning(f"_release_task_memory gc.collect failed: {e}")
+    if sys.platform.startswith("linux"):
+        try:
+            libc = ctypes.CDLL(None)
+            libc.malloc_trim(0)
+        except Exception as e:
+            logging.warning(f"_release_task_memory malloc_trim failed: {e}")
 
 
 def set_progress(task_id, from_page=0, to_page=-1, prog=None, msg="Processing..."):
@@ -1303,6 +1327,9 @@ async def handle_task():
         logging.exception(f"handle_task got exception for task {json.dumps(task)}")
     finally:
         clear_trace_context()
+        # 三路径（done/canceled/exception）收尾都强制归还内存：
+        # 回收本任务滞留的大对象并把空闲堆块交还 OS（见 _release_task_memory）
+        _release_task_memory()
         task_document_ids = []
         if task_type in ["graphrag", "raptor", "mindmap"]:
             task_document_ids = task["doc_ids"]

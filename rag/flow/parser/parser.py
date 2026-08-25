@@ -451,6 +451,24 @@ class Parser(ProcessBase):
             # 模型端点/密钥直接用 parse_method 作 llm_name 查 tenant_llm 表
             from deepdoc.parser.qwen_vl_parser import QwenVLParser
             from rag.flow.extractor.vl_ocr_endpoint import resolve_vl_ocr_endpoint
+            from rag.flow.extractor.vl_rate_limit import derived_sub_concurrency, resolve_vl_limit, set_vl_limit
+
+            # VL 并发闸值由 DSL setups.pdf.vl_global_concurrency 驱动（环境变量已废弃）：
+            # 进程级信号量动态调闸；页级并发派生为闸值一半；未配置时传 None 保持类默认
+            # 注意：本文件顶部 `from litellm import logging` 遮蔽了标准库（bool 值），
+            # 此处必须局部别名导入才能打日志（与 L577 DIAG-LOG-2 同款处理）
+            import logging as _stdlib_logging
+
+            _setups = getattr(self._param, "setups", None)
+            _pdf_setups = _setups.get("pdf", {}) if isinstance(_setups, dict) else {}
+            _vl_raw = _pdf_setups.get("vl_global_concurrency") if isinstance(_pdf_setups, dict) else None
+            _vl_limit = resolve_vl_limit(_vl_raw)
+            set_vl_limit(_vl_limit)
+            _page_conc = derived_sub_concurrency(_vl_limit) if _vl_raw is not None else None
+            _stdlib_logging.info(
+                f"[vl-rate-limit] DSL vl_global_concurrency={_vl_raw!r} -> limit={_vl_limit}, "
+                f"page_concurrency={_page_conc}"
+            )
 
             api_endpoint, model_name, api_key = resolve_vl_ocr_endpoint(self._canvas.get_tenant_id(), parse_method)
             pdf_parser = QwenVLParser(
@@ -460,6 +478,7 @@ class Parser(ProcessBase):
                 doc_id=self._canvas._doc_id,
                 task_id=self._canvas.task_id,
                 doc_name=self._canvas._doc_name,
+                page_concurrency=_page_conc,
             )
             lines, tables = pdf_parser.parse_pdf(
                 filepath=name,

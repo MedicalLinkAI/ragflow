@@ -169,7 +169,8 @@ class TestCollapseColspecRun:
         assert "\\begin{tabular}{" + "c" * 20 + "}" in result
 
     def test_short_run_below_threshold_untouched(self):
-        latex = "\\begin{tabular}{" + "c" * 25 + "}"
+        # 阈值 20（63adff7e6 实证下调）：19 列及以下视为正常宽表不截断
+        latex = "\\begin{tabular}{" + "c" * 19 + "}"
         result, rep = _collapse_colspec_run(latex)
         assert result == latex
         assert rep is None
@@ -630,6 +631,97 @@ class TestParsePdf:
 
 
 # ================================================================
+# 9a. parse_pdf 页图内存释放（page image memory release）
+# ================================================================
+
+class TestParsePdfPageImageRelease:
+    """页图用完即弃：消除全本页图驻留（8/23 客户事故取证结论）。
+
+    现状缺陷：_render_page_images 一次性渲染整本 PDF 全部页图驻留
+    self.page_images（客户文档单页 6545×9067 ≈ 178MB/页），直到
+    parse_pdf 返回后仍随实例滞留 → 4 个 task_executor 累积 160G RSS
+    挤干主机页缓存，引发 8/23 IO 风暴。
+    修复契约：
+      1) 单页 PIL 位图在该页编码送 VLM 之前即置 None；
+      2) parse_pdf 返回前 page_images 清空；
+      3) 页图以 JPEG 直出替代 PNG，压缩瞬时字节驻留。
+    """
+
+    def _make_parser(self):
+        return QwenVLParser(api_url="http://mock:8080/v1")
+
+    def _white_img(self):
+        from PIL import Image
+
+        return Image.new("RGB", (10, 10), color="white")
+
+    def test_page_images_cleared_after_parse_pdf(self):
+        parser = self._make_parser()
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [self._white_img() for _ in range(3)]
+            with patch.object(parser, "_classify_page", return_value=("text", None)):
+                with patch.object(parser, "_call_vlm", return_value='["line"]'):
+                    sections, tables = parser.parse_pdf("dummy.pdf")
+
+        assert len(sections) == 3
+        assert parser.page_images == []
+
+    def test_page_image_dropped_before_classify(self):
+        # 页级串行（page_concurrency=1）：第 i 页开始识别时，
+        # 它自己的 PIL 位图必须已经置 None（峰值=并发窗口，而非全本）
+        parser = QwenVLParser(api_url="http://mock:8080/v1", page_concurrency=1)
+        states = []
+
+        def spy_classify(img_bytes):
+            states.append([p is None for p in parser.page_images])
+            return "text", None
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [self._white_img() for _ in range(3)]
+            with patch.object(parser, "_classify_page", side_effect=spy_classify):
+                with patch.object(parser, "_call_vlm", return_value='["line"]'):
+                    parser.parse_pdf("dummy.pdf")
+
+        assert len(states) == 3
+        for i, state in enumerate(states):
+            assert state[i], f"page {i + 1} image still resident when its classify started"
+
+    def test_page_image_sent_to_vlm_as_jpeg(self):
+        parser = self._make_parser()
+        encoded = []
+
+        def spy_classify(img_bytes):
+            encoded.append(img_bytes)
+            return "text", None
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [self._white_img()]
+            with patch.object(parser, "_classify_page", side_effect=spy_classify):
+                with patch.object(parser, "_call_vlm", return_value='["line"]'):
+                    parser.parse_pdf("dummy.pdf")
+
+        assert len(encoded) == 1
+        # JPEG magic \xff\xd8\xff（PNG 为 \x89PNG）：下游 downscale_vl_image
+        # 按 magic 判定格式，VLM data URL 也按 magic 选 mime，JPEG 直通
+        assert encoded[0][:3] == b"\xff\xd8\xff"
+
+    def test_failed_page_image_still_released(self):
+        # 单页异常降级跳过时（既有隔离契约），页图同样不得滞留
+        parser = self._make_parser()
+
+        def boom(img_bytes):
+            raise requests.exceptions.ReadTimeout("Read timed out")
+
+        with patch.object(parser, "_render_page_images"):
+            parser.page_images = [self._white_img()]
+            with patch.object(parser, "_classify_page", side_effect=boom):
+                sections, tables = parser.parse_pdf("dummy.pdf")
+
+        assert sections == []
+        assert parser.page_images == []
+
+
+# ================================================================
 # 9a+. parse_pdf 单页失败隔离（page failure isolation）
 # ================================================================
 
@@ -749,7 +841,7 @@ class TestParsePdfPageConcurrency:
         # 用图片字节携带页标识（parse_pdf 会把 page_img.save 后的字节传给 VLM）
         imgs = self._make_images(3)
         for i, im in enumerate(imgs):
-            im.save = lambda buf, format=None, i=i: buf.write(str(i).encode())
+            im.save = lambda buf, format=None, quality=None, i=i: buf.write(str(i).encode())
 
         def classify_by_img(img_bytes):
             return "text", None
@@ -785,7 +877,7 @@ class TestParsePdfPageConcurrency:
 
         imgs = self._make_images(3)
         for i, im in enumerate(imgs):
-            im.save = lambda buf, format=None, i=i: buf.write(str(i).encode())
+            im.save = lambda buf, format=None, quality=None, i=i: buf.write(str(i).encode())
 
         def extract_by_img(img_bytes, page_1based, bbox_idx):
             tag = int(img_bytes.decode())
@@ -845,7 +937,7 @@ class TestParsePdfPageConcurrency:
 
         imgs = self._make_images(3)
         for i, im in enumerate(imgs):
-            im.save = lambda buf, format=None, i=i: buf.write(str(i).encode())
+            im.save = lambda buf, format=None, quality=None, i=i: buf.write(str(i).encode())
 
         def extract_failing(img_bytes, page_1based, bbox_idx):
             if img_bytes == b"1":

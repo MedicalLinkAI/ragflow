@@ -8,7 +8,7 @@
 #      两层并发叠加瞬时 16+ 请求打 vLLM(8090)，generation throughput 从
 #      200~300 跌至 0.1~24 tok/s，4 个 coord 请求 120s 超时
 #    - 本组测试验证进程级信号量：
-#      - 默认上限 26（无环境变量，由 DSL setups.pdf.vl_global_concurrency 驱动）
+#      - 默认上限 8（无环境变量，由 DSL setups.pdf.vl_global_concurrency 驱动）
 #      - 并发峰值不超上限
 #      - 异常路径释放信号量
 #      - 排队等待 > 0.5s 输出等待日志
@@ -37,16 +37,16 @@ def _load_module():
     return mod
 
 
-def test_default_limit_is_26():
+def test_default_limit_is_8():
     mod = _load_module()
-    assert mod.VL_GLOBAL_CONCURRENCY == 26
+    assert mod.VL_GLOBAL_CONCURRENCY == 8
 
 
 def test_no_env_override(monkeypatch):
-    """环境变量已废弃：即使设置了 env，默认值仍是 26。"""
+    """环境变量已废弃：即使设置了 env，默认值仍是 8。"""
     monkeypatch.setenv("VL_GLOBAL_CONCURRENCY", "4")
     mod = _load_module()
-    assert mod.VL_GLOBAL_CONCURRENCY == 26
+    assert mod.VL_GLOBAL_CONCURRENCY == 8
 
 
 def test_concurrency_capped_at_limit():
@@ -237,11 +237,11 @@ def test_resolve_vl_limit_rules():
     mod = _load_module()
     assert mod.resolve_vl_limit(40) == 40
     assert mod.resolve_vl_limit("40") == 40
-    assert mod.resolve_vl_limit(None) == 26
-    assert mod.resolve_vl_limit("abc") == 26
-    assert mod.resolve_vl_limit(-3) == 26
-    assert mod.resolve_vl_limit(0) == 26
-    assert mod.resolve_vl_limit(2.7) == 26  # 非整数不采纳
+    assert mod.resolve_vl_limit(None) == 8
+    assert mod.resolve_vl_limit("abc") == 8
+    assert mod.resolve_vl_limit(-3) == 8
+    assert mod.resolve_vl_limit(0) == 8
+    assert mod.resolve_vl_limit(2.7) == 8  # 非整数不采纳
 
 
 def test_derived_sub_concurrency_is_half():

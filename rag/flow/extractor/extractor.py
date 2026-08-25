@@ -51,6 +51,7 @@ from rag.utils.base64_image import id2image
 from common import settings
 from rag.flow.extractor import qwen30b_ocr
 from rag.flow.extractor import qwen_vl_ocr
+from rag.flow.extractor.vl_rate_limit import derived_sub_concurrency, resolve_vl_limit
 
 
 class ExtractorParam(ProcessParamBase, LLMParam):
@@ -135,6 +136,7 @@ class Extractor(ProcessBase, LLM):
 
             # Read Parser's parse_method from DSL (instead of env var)
             _parser_method = "paddleocr"  # default
+            _vl_raw = None
             for _cid, _cpn in self._canvas.components.items():
                 _obj = _cpn.get("obj")
                 if _obj and getattr(_obj, "component_name", "") in ("Parser", "parser", "OCRParser", "ocr_parser"):
@@ -145,11 +147,22 @@ class Extractor(ProcessBase, LLM):
                     _pm = _pdf.get("parse_method", "")
                     if _pm:
                         _parser_method = _pm
+                    _vl_raw = _pdf.get("vl_global_concurrency")
                     break
 
             # chunk 级并发：各 chunk 互相独立（各自持有 positions/img_id），
             # 结果原地写回各自的 ck，输出顺序天然与输入一致；信号量限流。
-            sem = asyncio.Semaphore(self.CHUNK_CONCURRENCY)
+            # 并发度由 DSL vl_global_concurrency 派生（闸值一半）；未配置时保持类默认。
+            _chunk_conc = (
+                derived_sub_concurrency(resolve_vl_limit(_vl_raw))
+                if _vl_raw is not None
+                else self.CHUNK_CONCURRENCY
+            )
+            logging.info(
+                f"[vl-rate-limit] chunk concurrency: dsl vl_global_concurrency={_vl_raw!r} -> "
+                f"chunk_concurrency={_chunk_conc} (doc={getattr(self._canvas, '_doc_id', '')})"
+            )
+            sem = asyncio.Semaphore(_chunk_conc)
             done_count = 0
 
             async def _process_chunk(ck):

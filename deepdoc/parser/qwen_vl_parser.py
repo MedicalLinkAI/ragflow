@@ -493,6 +493,7 @@ class QwenVLParser(RAGFlowPdfParser):
         doc_id: Optional[str] = None,
         task_id: Optional[str] = None,
         doc_name: Optional[str] = None,
+        page_concurrency: Optional[int] = None,
     ):
         super().__init__()
 
@@ -502,6 +503,13 @@ class QwenVLParser(RAGFlowPdfParser):
         self.model = model
         self.api_key = api_key or ""
         self.request_timeout = request_timeout
+        # 页级并发由 DSL 驱动（setups.pdf.vl_global_concurrency 派生一半）：
+        # 仅合法正整数遮蔽类默认值，非法值/未传保持类属性（naive 路径不受影响）
+        if isinstance(page_concurrency, int) and not isinstance(page_concurrency, bool) and page_concurrency > 0:
+            self.PAGE_CONCURRENCY = page_concurrency
+            logging.info(f"{TAG} page_concurrency overridden by DSL: {page_concurrency}")
+        elif page_concurrency is not None:
+            logging.warning(f"{TAG} invalid page_concurrency={page_concurrency!r}, keeping class default {self.PAGE_CONCURRENCY}")
         # 超时重试：8/17 压测实证 300s read timeout 后服务端仍会完成请求，
         # 洪峰已过时重试大概率成功；仅对瞬时网络错误生效，业务错误不重试
         self.max_retries = max_retries
@@ -575,10 +583,19 @@ class QwenVLParser(RAGFlowPdfParser):
             try:
                 page_img = self.page_images[page_idx]
 
-                # Convert page image to bytes
+                # Convert page image to bytes — JPEG 直出替代 PNG：
+                # PNG 无损编码在大页面上可达数十 MB，JPEG(q=90) 压缩一个
+                # 数量级，减少瞬时字节驻留。下游 downscale_vl_image 与
+                # vl_image_data_url 均按 magic bytes 判格式，JPEG 直通。
+                if page_img.mode != "RGB":
+                    page_img = page_img.convert("RGB")
                 buf = BytesIO()
-                page_img.save(buf, format="PNG")
+                page_img.save(buf, format="JPEG", quality=90)
                 img_bytes = buf.getvalue()
+                # 页图用完即弃：PIL 位图在送 VLM 前即置 None，峰值驻留
+                # 从"全本页图"降为"并发窗口×单页"（8/23 客户事故取证结论：
+                # 单页 6545×9067≈178MB 全本驻留是 worker RSS 160G 的主因）
+                self.page_images[page_idx] = None
 
                 # Step 1: Classify page
                 page_type, report_date = self._classify_page(img_bytes)
@@ -638,6 +655,11 @@ class QwenVLParser(RAGFlowPdfParser):
                     f"{self._log_tag} page={page_idx + 1} assigned global bbox {start}-{bbox_idx - 1}"
                 )
             sections.extend(page_sections)
+
+        # 收尾兜底清空：正常路径每页已在 _process_page 内置 None，
+        # 此处覆盖"编码前异常未置 None"的残余引用，确保 parse_pdf
+        # 返回后不再有任何页图随实例滞留
+        self.page_images = []
 
         logging.info(f"{self._log_tag} parse_pdf done: {len(sections)} sections from {total_pages} pages.")
 

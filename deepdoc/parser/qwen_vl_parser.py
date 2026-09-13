@@ -133,6 +133,102 @@ TABLE_PROMPT = (
 )
 
 
+# ERT 专用分类 prompt：只判断是否为 examination_report_table_text
+CLASSIFY_PROMPT_WITH_ERT = (
+    '判断这张图片是否同时满足以下全部条件：\n'
+    '1. 这是一份功能检查报告（肺功能检查、支气管舒张试验、FeNO等）\n'
+    '2. 页面同时包含叙述性描述文字和数据表格\n'
+    '3. 有明确的区域划分：检查所见区域 + 结论区域\n'
+    '\n'
+    '数据表格判断规则：\n'
+    '- 个人信息区（姓名、性别、年龄、科室、床号、住院号等）不视为数据表格\n'
+    '- 即使没有明确的边框线，只要行列对齐，就视为数据表格。\n'
+    '- 例如：肺功能参数表\n'
+    '\n'
+    '输出 JSON 格式：{"type": "examination_report_table_text" 或 "other", "report_date": "YYYY-MM-DD 或 null"}\n'
+    '\n'
+    '- 如果全部满足条件，type 输出 "examination_report_table_text"\n'
+    '- 否则 type 输出 "other"\n'
+    '- report_date：提取图片中的报告时间（如"报告时间"、"检查时间"等字段后的日期），格式 YYYY-MM-DD\n'
+    '- 如果不确定或找不到日期，report_date 填 null'
+)
+
+# ── Examination Report Table+Text (ERT) prompts ──────────────────
+# 用于检查报告（肺功能、支气管舒张试验、骨密度、心电图等）页面同时包含
+# 叙述文字和参数表格的场景。拆分为两个独立 prompt 分别提取，比混合 prompt 更可靠。
+
+EXAMINATION_TEXT_PROMPT = (
+    "你是一个专业的医疗文档OCR识别引擎。请逐行识别图片中所有叙述性文字内容。\n"
+    "\n"
+    "## 规则\n"
+    "1. 每一行叙述文字作为一个独立条目\n"
+    "2. 长段落按实际换行拆分为多行，每行单独一条\n"
+    "3. 同一行的标签+值（如'性别：女'、'检查日期：2026-01-01'）合并为一条\n"
+    "4. 不得跳过任何叙述性文字，包括签名、日期、声明、页码等\n"
+    "5. 严禁输出水印文字\n"
+    "6. 双栏布局时，左右栏分别作为独立条目\n"
+    "\n"
+    "## 严禁提取以下内容到 text_lines\n"
+    "- 表格标题行/表头行（如 Parameter、UM、Pred.、BEST#1 等列标题）\n"
+    "- 表格数据行（如 FVC、FEV1、PEF 等参数行及其对应的数值）\n"
+    "- 参考值表、对比表等任何行列对齐的数据区域\n"
+    "- 测量参数区域：在'检测结果'、'测量参数'、'测定条件'等小标题下的键值对数据\n"
+    "  （如'呼气方式：在线'、'测定温度：26℃'、'呼气时间：10s'等），"
+    "  即使它们是两列键值对形式，也必须作为表格输出\n"
+    "- 坐标图/曲线图/趋势图中的任何内容（图表标题、坐标轴刻度值、坐标轴标签等）\n"
+    "\n"
+    "## 以下区域属于叙述文字，必须提取\n"
+    "- 患者信息区（姓名、性别、年龄、科室、床号等）\n"
+    "- 报告标题/页眉\n"
+    "- 检查所见/检查描述的叙述段落\n"
+    "- 结论/诊断意见的叙述段落\n"
+    "- 签名区（医生签名、审核签名）\n"
+    "\n"
+    "## 输出格式\n"
+    "直接输出JSON字符串数组，每个元素是该行的文本内容。\n"
+    "请直接输出纯JSON数组，不要用markdown代码块包裹。"
+)
+
+EXAMINATION_TABLE_PROMPT = (
+    "你是一个专业的医疗文档表格识别引擎。请将图片中所有数据表格精确转换为 HTML <table> 格式，"
+    "并判断每张表格属于检查报告的哪个部分。\n"
+    "\n"
+    "## 表格提取规则\n"
+    "1. 使用标准 HTML 表格标签：<table>、<tr>、<th>（表头单元格）、<td>（数据单元格）\n"
+    "2. 表头行用 <th>，数据行用 <td>\n"
+    "3. 数据行的列数必须与表头列数一致，不丢列\n"
+    "4. 空单元格必须保留：<td></td>，不得跳过\n"
+    "5. 保留所有原文内容（包括↑↓箭头、★符号、H/L标识等），直接写入标签内，无需转义\n"
+    "6. 如果页面有多个独立表格，每个独立输出一个 <table>...</table>\n"
+    "7. ⚠️ 患者基本信息区绝对不是表格，严禁提取！包括：姓名、性别、年龄、科室、床号、住院号、就诊卡号、检查时间等字段区域，"
+    "即使这些字段排列整齐、有网格线或分隔线，也不是数据表格，不要提取为 <table>\n"
+    "8. 键值对不视为表格，不要提取为 <table>\n"
+    "\n"
+    "## 表格归属分类（table_sections）\n"
+    "检查报告中的表格按语义归属分类：\n"
+    "- \"findings\"（检查所见）：所有包含详细测量参数/指标数据的表格。"
+    "例如肺功能参数表（FVC、FEV1、PEF 等含实测值/预测值/百分比的表格）、"
+    "任何含具体数值/单位/参考区间的检验指标表。"
+    "规则：只要表格包含具体测量数值，一律归为 findings\n"
+    "- \"conclusion\"（结论）：出现在\"结论\"/\"诊断意见\"/\"临床解析\"标题下方的表格，"
+    "且表格内容为诊断结论性文字（如参考值范围、炎症类型判断标准、诊断分级等），"
+    "而非具体测量数值。例如：FeNO 临床解析中的参考值表格（<25ppb 非嗜酸性、25-50ppb 混合型等）应归为 conclusion\n"
+    "- 默认规则：不确定时，归为 findings（因为绝大多数检查报告的表格都是 findings）\n"
+    "- table_sections 数组长度必须与 tables_html 数组长度完全一致，一一对应\n"
+    "\n"
+    "## 输出格式\n"
+    "严格输出纯JSON，禁止使用代码块包裹，禁止输出任何非JSON文字：\n"
+    '{\n'
+    '  "tables_html": ["<table>表格1</table>", "<table>表格2</table>"],\n'
+    '  "table_sections": ["findings", "conclusion"]\n'
+    '}\n'
+    "- tables_html：HTML字符串数组，每个元素是一个完整的 <table>...</table> 代码\n"
+    "- table_sections：字符串数组，与 tables_html 一一对应，每个值为 \"findings\" 或 \"conclusion\"\n"
+    "- 如果页面没有数据表格，tables_html 输出 []，table_sections 也输出 []\n"
+    "- 严禁遗漏任何数据表格"
+)
+
+
 # ── Helpers ────────────────────────────────────────────────────────
 
 def _strip_fence(text: str) -> str:
@@ -494,10 +590,18 @@ class QwenVLParser(RAGFlowPdfParser):
         task_id: Optional[str] = None,
         doc_name: Optional[str] = None,
         page_concurrency: Optional[int] = None,
+        allow_ert: bool = False,
     ):
         super().__init__()
 
         self.outlines: list = []
+        self._allow_ert = allow_ert
+        # page_types: page_idx (0-based) → "table"|"text"|"examination_report_table_text"
+        self.page_types: dict[int, str] = {}
+        # page_table_html: page_idx (0-based) → list of HTML strings (one per table)
+        self.page_table_html: dict[int, list[str]] = {}
+        # page_table_sections: page_idx (0-based) → list of "findings"/"conclusion" per table
+        self.page_table_sections: dict[int, list[str]] = {}
         # 端点/模型/密钥由调用方从 tenant_llm 表解析后传入，不再读环境变量
         self.api_url = api_url
         self.model = model
@@ -601,12 +705,19 @@ class QwenVLParser(RAGFlowPdfParser):
                 page_type, report_date = self._classify_page(img_bytes)
                 logging.info(f"{self._log_tag} page={page_1based} classify={page_type} report_date={report_date}")
 
+                # Record page type for downstream canvas publishing
+                self.page_types[page_idx] = page_type
+
                 # Step 2: Extract content based on type.
                 # 传入 bbox_idx=0 做页内局部编号；全局编号在结果按页序
                 # 汇总后统一分配，避免乱序。
                 if page_type == "table":
                     page_sections, _ = self._extract_table_page(
                         img_bytes, page_1based, 0, report_date
+                    )
+                elif page_type == "examination_report_table_text":
+                    page_sections, _ = self._extract_ert_page(
+                        img_bytes, page_1based, 0
                     )
                 else:
                     page_sections, _ = self._extract_text_page(
@@ -692,8 +803,35 @@ class QwenVLParser(RAGFlowPdfParser):
             raise
 
     def _classify_page(self, img_bytes: bytes) -> tuple[str, Optional[str]]:
-        """Classify page as 'text' or 'table' via VLM, also extract report_date."""
+        """Classify page as 'text', 'table', or 'examination_report_table_text' via VLM.
+
+        Two-step approach when allow_ert is enabled:
+        1. First check if it's examination_report_table_text (ERT)
+        2. If not ERT, use CLASSIFY_PROMPT for table/text classification
+        """
         try:
+            import json
+
+            # Step 1: Check if ERT (when enabled)
+            if self._allow_ert:
+                raw_ert = self._call_vlm(img_bytes, CLASSIFY_PROMPT_WITH_ERT)
+                if raw_ert:
+                    raw_ert = raw_ert.strip()
+                    raw_ert = re.sub(r"^```(?:json)?\s*\n?", "", raw_ert)
+                    raw_ert = re.sub(r"\n?\s*```$", "", raw_ert)
+                    raw_ert = raw_ert.strip()
+                    try:
+                        result_ert = json.loads(raw_ert)
+                        page_type = result_ert.get("type", "").lower()
+                        report_date = result_ert.get("report_date", None)
+                        if page_type == "examination_report_table_text":
+                            return "examination_report_table_text", report_date
+                    except json.JSONDecodeError:
+                        # If JSON parse fails, check if raw contains type keyword
+                        if "examination_report_table_text" in raw_ert.lower():
+                            return "examination_report_table_text", None
+
+            # Step 2: Use CLASSIFY_PROMPT for table/text classification
             raw = self._call_vlm(img_bytes, CLASSIFY_PROMPT)
             if not raw:
                 return "text", None
@@ -705,7 +843,6 @@ class QwenVLParser(RAGFlowPdfParser):
             raw = re.sub(r"\n?\s*```$", "", raw)
             raw = raw.strip()
 
-            import json
             try:
                 result = json.loads(raw)
                 page_type = result.get("type", "text").lower()
@@ -714,7 +851,7 @@ class QwenVLParser(RAGFlowPdfParser):
                     page_type = "text"
                 return page_type, report_date
             except json.JSONDecodeError:
-                # Fallback: check if raw contains "table"
+                # Fallback: check if raw contains type keywords
                 if "table" in raw.lower():
                     return "table", None
                 return "text", None
@@ -897,6 +1034,91 @@ class QwenVLParser(RAGFlowPdfParser):
             bbox_idx += 1
 
         # LaTeX 行数/bbox 段摘要已去重：parse_pdf 层 sections 汇总 + 全局 bbox 分配日志已覆盖
+        return sections, bbox_idx
+
+    def _extract_ert_page(
+        self, img_bytes: bytes, page_1based: int, bbox_idx: int,
+    ) -> tuple[list[SectionTuple], int]:
+        """Extract mixed text+table page via two separate VLM calls.
+
+        1. EXAMINATION_TEXT_PROMPT → narrative text lines → sections
+        2. EXAMINATION_TABLE_PROMPT → HTML tables + section classification → canvas vars
+
+        Stores:
+        - self.page_table_html[page_idx] = list of HTML strings
+        - self.page_table_sections[page_idx] = list of "findings"/"conclusion" per table
+        """
+        import json as _json
+
+        # ── Call 1: Extract narrative text ──
+        raw_text = self._call_vlm(img_bytes, EXAMINATION_TEXT_PROMPT)
+        text_lines = _parse_json_array(raw_text) or []
+
+        # Filter: keep only string elements, skip pure symbol lines
+        text_lines = [
+            t for t in text_lines
+            if isinstance(t, str) and t.strip() and not _SYMBOL_ONLY_RE.match(t.strip())
+        ]
+
+        # Dedup repeated blocks
+        text_lines, rep = _dedup_repeated_blocks(text_lines)
+        if rep:
+            cycle, repeats, n = rep
+            logging.warning(
+                f"{self._log_tag} page={page_1based} ERT text detected repetition "
+                f"(cycle={cycle}, repeats={repeats}x), collapsing {n}→{len(text_lines)} lines"
+            )
+
+        # ── Call 2: Extract tables as HTML + section classification ──
+        raw_table = self._call_vlm(img_bytes, EXAMINATION_TABLE_PROMPT)
+        tables_html: list[str] = []
+        table_sections: list[str] = []
+
+        if raw_table:
+            cleaned = _strip_fence(raw_table).strip()
+            parsed = None
+            try:
+                parsed = _json.loads(cleaned)
+            except _json.JSONDecodeError:
+                try:
+                    from json_repair import repair_json
+                    parsed = _json.loads(repair_json(cleaned))
+                except Exception:
+                    pass
+            if isinstance(parsed, dict):
+                tables_html = [t for t in parsed.get("tables_html", []) if isinstance(t, str)]
+                table_sections = [
+                    s for s in parsed.get("table_sections", [])
+                    if isinstance(s, str) and s in ("findings", "conclusion")
+                ]
+
+        logging.info(
+            f"{self._log_tag} page={page_1based} ERT: "
+            f"{len(text_lines)} text_lines, {len(tables_html)} tables_html, "
+            f"table_sections={table_sections}"
+        )
+
+        # Store HTML tables and their section classification for downstream Extractor
+        if tables_html:
+            self.page_table_html[page_1based - 1] = tables_html
+            # Ensure table_sections length matches tables_html
+            if len(table_sections) == len(tables_html):
+                self.page_table_sections[page_1based - 1] = table_sections
+            else:
+                logging.warning(
+                    f"{self._log_tag} page={page_1based} ERT table_sections length mismatch: "
+                    f"{len(table_sections)} vs {len(tables_html)} tables, defaulting all to findings"
+                )
+                self.page_table_sections[page_1based - 1] = ["findings"] * len(tables_html)
+
+        # Build sections from text lines
+        sections: list[SectionTuple] = []
+        for line in text_lines:
+            text = line.strip()
+            if text:
+                sections.append((text, page_1based - 1))
+                bbox_idx += 1
+
         return sections, bbox_idx
 
     def _call_vlm(

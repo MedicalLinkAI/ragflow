@@ -737,6 +737,75 @@ async def process_text(ext, ck: dict, llm_name: str):
             f"lines per page: {[len(page_text_lines[p]) for p in sorted_pages]}"
         )
 
+        # ── Step 2a: ERT — read HTML tables from canvas, build summaries ──
+        # For ExaminationReport chunks on examination_report_table_text pages,
+        # the parser extracted tables via EXAMINATION_TABLE_PROMPT and classified
+        # each as "findings" or "conclusion" in page_table_sections.
+        _ert_tables_cells: list[list[list[str]]] = []  # global table index → 2-D cell array
+        _ert_page_table_sections: list[str] = []  # parallel: "findings"/"conclusion" per table
+        _ert_summary_line_count: int = 0  # number of summary lines appended to text_lines
+
+        _allow_ert = bool(ext._canvas.globals.get("allow_examination_report_table_text", False))
+        _page_table_html_raw = ext._canvas.globals.get("page_table_html")
+        _page_table_html: dict = {}
+        if _page_table_html_raw and isinstance(_page_table_html_raw, str):
+            try:
+                _page_table_html = json.loads(_page_table_html_raw)
+            except Exception:
+                pass
+        elif isinstance(_page_table_html_raw, dict):
+            _page_table_html = _page_table_html_raw
+
+        _page_table_sections_raw = ext._canvas.globals.get("page_table_sections")
+        _page_table_sections: dict = {}
+        if _page_table_sections_raw and isinstance(_page_table_sections_raw, str):
+            try:
+                _page_table_sections = json.loads(_page_table_sections_raw)
+            except Exception:
+                pass
+        elif isinstance(_page_table_sections_raw, dict):
+            _page_table_sections = _page_table_sections_raw
+
+        if _allow_ert and _page_table_html and rec_type == "ExaminationReport":
+            from rag.flow.extractor._table_extract import html_parse_all_tables
+            # Only process pages that belong to this chunk
+            chunk_page_set = set(sorted_pages)
+            for page_idx_str, html_list in sorted(_page_table_html.items(), key=lambda x: int(x[0])):
+                if not isinstance(html_list, list):
+                    continue
+                # Skip pages not in this chunk
+                if int(page_idx_str) not in chunk_page_set:
+                    continue
+                page_secs = _page_table_sections.get(page_idx_str, [])
+                sec_idx = 0
+                for html_str in html_list:
+                    parsed = html_parse_all_tables(html_str)
+                    for tbl in parsed:
+                        _ert_tables_cells.append(tbl)
+                        if sec_idx < len(page_secs):
+                            _ert_page_table_sections.append(page_secs[sec_idx])
+                        else:
+                            _ert_page_table_sections.append("findings")
+                        sec_idx += 1
+
+            # Append table summaries at the end of text_lines for LLM context
+            if _ert_tables_cells:
+                summary_lines = []
+                for tbl_num, tbl in enumerate(_ert_tables_cells, start=1):
+                    n = len(tbl)
+                    header = " ".join(tbl[0]) if n > 0 else ""
+                    section = _ert_page_table_sections[tbl_num - 1] if tbl_num - 1 < len(_ert_page_table_sections) else "findings"
+                    summary_lines.append(f"[表格{tbl_num}: 共{n}行，表头: {header}，归属: {section}]")
+                _ert_summary_line_count = 2 + len(summary_lines)
+                text_lines.append("")
+                text_lines.append("（以下为页面中提取的结构化表格，已单独存储，请勿将表格数据填入 findings/conclusion）")
+                text_lines.extend(summary_lines)
+
+            logging.info(
+                f"{TAG} ERT: {len(_ert_tables_cells)} tables from canvas, "
+                f"sections={_ert_page_table_sections}"
+            )
+
         # Render page images (no cropping)
         page_img_data = {}  # pn → (img_bytes, page_w, page_h)
         for pn in sorted_pages:
@@ -796,6 +865,55 @@ async def process_text(ext, ck: dict, llm_name: str):
                 logging.warning(f"{TAG} extracted_data is list, treat as empty")
                 extracted_data = {}
                 extracted_json_str = "{}"
+
+        # ── Step 3b: ERT table classification using page_table_sections ──
+        # For ExaminationReport with ERT tables, classify tables into findings
+        # vs conclusion using the page_table_sections from the VLM parser.
+        if _ert_tables_cells and rec_type == "ExaminationReport":
+            findings_tables: list = []
+            conclusion_tables: list = []
+
+            for ti, td in enumerate(_ert_tables_cells):
+                section = _ert_page_table_sections[ti] if ti < len(_ert_page_table_sections) else "findings"
+                if section == "conclusion":
+                    conclusion_tables.append(td)
+                else:
+                    findings_tables.append(td)
+
+            logging.info(
+                f"{TAG} ERT table classification via page_table_sections: "
+                f"sections={_ert_page_table_sections}, "
+                f"findings={len(findings_tables)}, conclusion={len(conclusion_tables)}"
+            )
+
+            extracted_data["findings_table_json"] = {"tables": findings_tables}
+            extracted_data["conclusion_table_json"] = {"tables": conclusion_tables}
+            extracted_json_str = json.dumps(extracted_data, ensure_ascii=False)
+
+        # Store table data as top-level chunk fields for ES persistence
+        # (extracted_data serializes to ck[field_name] string, but frontend needs separate fields)
+        if _ert_tables_cells and rec_type == "ExaminationReport":
+            ck["findings_table_json"] = {
+                "tables": [{"rows": td} for td in findings_tables]
+            }
+            ck["conclusion_table_json"] = {
+                "tables": [{"rows": td} for td in conclusion_tables]
+            }
+            print(
+                f"{TAG} Setting top-level ES fields: "
+                f"findings_table_json={len(findings_tables)} tables, "
+                f"conclusion_table_json={len(conclusion_tables)} tables",
+                flush=True
+            )
+            logging.info(
+                f"{TAG} Setting top-level ES fields: "
+                f"findings_table_json={len(findings_tables)} tables, "
+                f"conclusion_table_json={len(conclusion_tables)} tables"
+            )
+        else:
+            ck["findings_table_json"] = {"tables": []}
+            ck["conclusion_table_json"] = {"tables": []}
+            print(f"{TAG} No ERT tables or not ExaminationReport, setting empty dict", flush=True)
 
         # Save intermediate results
         ck["content_with_weight"] = assembled_text
@@ -881,6 +999,12 @@ async def process_text(ext, ck: dict, llm_name: str):
                 f"{TAG} page={pn} — {matched}/{len(lines)} coords, "
                 f"api_time={api_elapsed:.1f}s"
             )
+
+        # Add placeholder positions for table summary lines appended to text_lines
+        if _ert_summary_line_count > 0 and sorted_pages:
+            last_pn = sorted_pages[-1]
+            for _ in range(_ert_summary_line_count):
+                new_positions.append([last_pn, 0, 0, 0, 0])
 
         logging.info(f"{TAG} new_positions ({len(new_positions)}):\n{new_positions}")
         ck["positions"] = new_positions

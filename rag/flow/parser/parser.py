@@ -471,6 +471,7 @@ class Parser(ProcessBase):
             )
 
             api_endpoint, model_name, api_key = resolve_vl_ocr_endpoint(self._canvas.get_tenant_id(), parse_method)
+            _allow_ert = bool(self._canvas.globals.get("allow_examination_report_table_text", False))
             pdf_parser = QwenVLParser(
                 api_url=api_endpoint,
                 model=model_name,
@@ -479,6 +480,7 @@ class Parser(ProcessBase):
                 task_id=self._canvas.task_id,
                 doc_name=self._canvas._doc_name,
                 page_concurrency=_page_conc,
+                allow_ert=_allow_ert,
             )
             lines, tables = pdf_parser.parse_pdf(
                 filepath=name,
@@ -495,6 +497,25 @@ class Parser(ProcessBase):
                     "positions": [(item[1] + 1, 0, 0, 0, 0)],  # (page_1based, x0, x1, y0, y1)
                 }
                 bboxes.append(box)
+            # Publish page_types to canvas so downstream Extractors know which pages
+            # have mixed text+table content (examination_report_table_text)
+            if hasattr(pdf_parser, 'page_types') and pdf_parser.page_types:
+                self._canvas.set_variable_value(
+                    "page_types",
+                    json.dumps(pdf_parser.page_types, ensure_ascii=False),
+                )
+            # Publish HTML tables from ERT pages for downstream Extractor
+            if hasattr(pdf_parser, 'page_table_html') and pdf_parser.page_table_html:
+                self._canvas.set_variable_value(
+                    "page_table_html",
+                    json.dumps(pdf_parser.page_table_html, ensure_ascii=False),
+                )
+            # Publish table section classification (findings/conclusion per table)
+            if hasattr(pdf_parser, 'page_table_sections') and pdf_parser.page_table_sections:
+                self._canvas.set_variable_value(
+                    "page_table_sections",
+                    json.dumps(pdf_parser.page_table_sections, ensure_ascii=False),
+                )
         elif parse_method.lower() == "paddleocr":
 
             def resolve_paddleocr_llm_name():

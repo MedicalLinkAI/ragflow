@@ -309,6 +309,8 @@ async def collect():
         task["tenant_id"] = msg["tenant_id"]
         task["dataflow_id"] = msg["dataflow_id"]
         task["kb_id"] = msg.get("kb_id", "")
+        if msg.get("allow_examination_report_table_text"):
+            task["allow_examination_report_table_text"] = True
     if task_type[:6] == "memory":
         task["memory_id"] = msg["memory_id"]
         task["source_id"] = msg["source_id"]
@@ -721,6 +723,9 @@ async def run_dataflow(task: dict):
         flow_id=dataflow_id,
         custom_header=build_outbound_trace_headers(include_compatibility_header=True),
     )
+    # 注入上游传入的分类控制标识（由 MedLinkAI 在触发解析时判定）
+    if task.get("allow_examination_report_table_text"):
+        pipeline.globals["allow_examination_report_table_text"] = True
     chunks = await pipeline.run(file=task["file"]) if task.get("file") else await pipeline.run()
     if doc_id == CANVAS_DEBUG_DOC_ID:
         return

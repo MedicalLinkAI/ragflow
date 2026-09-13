@@ -544,6 +544,7 @@ def queue_dataflow(
     priority: int = 0,
     rerun: bool = False,
     trace_payload: dict | None = None,
+    allow_examination_report_table_text: bool = False,
 ) -> tuple[bool, str]:
     task = dict(
         id=task_id,
@@ -564,6 +565,7 @@ def queue_dataflow(
     queue_task["tenant_id"] = tenant_id
     queue_task["dataflow_id"] = flow_id
     queue_task["file"] = file
+    queue_task["allow_examination_report_table_text"] = allow_examination_report_table_text
 
     if not REDIS_CONN.queue_product(
             settings.get_svr_queue_name(priority), message=queue_task

@@ -89,6 +89,7 @@ class Graph:
         self.task_id = task_id if task_id else get_uuid()
         self.custom_header = custom_header
         self._thread_pool = ThreadPoolExecutor(max_workers=5)
+        self.globals: dict = {}
         self.load()
 
     def load(self):
